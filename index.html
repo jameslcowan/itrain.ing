@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>powerlift.ing</title>
+    <meta name="description" content="Shareable powerlifting program builder. State lives in the URL." />
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar__left">
+        <div class="brand">
+          <div class="brand__title">powerlift.ing</div>
+          <div class="brand__subtitle">Program state lives in your link</div>
+        </div>
+      </div>
+      <div class="topbar__right">
+        <button id="copyLinkBtn" class="btn btn--primary" type="button">Copy link</button>
+      </div>
+    </header>
+
+    <main class="app" id="app">
+      <section class="weekbar" aria-label="Week navigation">
+        <div class="weekbar__nav">
+          <button id="prevWeekBtn" class="btn" type="button" aria-label="Previous week">‹</button>
+          <div class="weekbar__title">
+            <div class="weekbar__label" id="weekLabel">Week</div>
+            <div class="weekbar__hint" id="weekHint"></div>
+          </div>
+          <button id="nextWeekBtn" class="btn" type="button" aria-label="Next week">›</button>
+        </div>
+
+        <div class="weekbar__actions">
+          <button id="addWeekBtn" class="btn btn--ghost" type="button">+ Week</button>
+        </div>
+      </section>
+
+      <div class="container">
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+        <div id="weekMount"></div>
+      </div>
+    </main>
+
+    <script src="./vendor/lz-string.min.js"></script>
+    <script src="./app.js" defer></script>
+  </body>
+</html>
+
+
