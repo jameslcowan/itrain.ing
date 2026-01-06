@@ -63,7 +63,7 @@
   }
 
   function defaultProgram() {
-    return { v: 1, c: [{ n: "Meso 1" }], weeks: [defaultWeek()] };
+    return { v: 1, u: "lb", c: [{ n: "Meso 1" }], weeks: [defaultWeek()] };
   }
 
   function normalizeProgram(input) {
@@ -80,6 +80,7 @@
 
     return {
       v: prog.v === 1 ? 1 : 1,
+      u: prog.u === "kg" ? "kg" : "lb",
       c: safeCycles,
       weeks: weeks.map((w) => {
         const incomingDays = Array.isArray(w.days) ? w.days : [];
@@ -208,6 +209,9 @@
     status: document.getElementById("status"),
     weekTabs: document.getElementById("weekTabs"),
     copyLinkBtn: document.getElementById("copyLinkBtn"),
+    shareDialog: document.getElementById("shareDialog"),
+    shareDialogText: document.getElementById("shareDialogText"),
+    shareDialogCloseBtn: document.getElementById("shareDialogCloseBtn"),
     menuBtn: document.getElementById("menuBtn"),
     menuOverlay: document.getElementById("menuOverlay"),
     menuCloseBtn: document.getElementById("menuCloseBtn"),
@@ -216,9 +220,11 @@
     homeLink: document.getElementById("homeLink"),
     standardWeekChk: document.getElementById("standardWeekChk"),
     dayCountSelect: document.getElementById("dayCountSelect"),
+    unitsSelect: document.getElementById("unitsSelect"),
     cycleSelect: document.getElementById("cycleSelect"),
     addCycleBtn: document.getElementById("addCycleBtn"),
     renameCycleBtn: document.getElementById("renameCycleBtn"),
+    deleteWeekBtn: document.getElementById("deleteWeekBtn"),
   };
 
   const app = {
@@ -293,6 +299,64 @@
     return node;
   }
 
+  function icon(name) {
+    return el("iconify-icon", { icon: name });
+  }
+
+  function sanitizeField(field, raw) {
+    const v = String(raw ?? "");
+
+    if (field === "sets" || field === "reps") {
+      // Up to 3 digits, integers only
+      return v.replace(/\D/g, "").slice(0, 3);
+    }
+
+    if (field === "load") {
+      // Up to 4 digits, integers only
+      return v.replace(/\D/g, "").slice(0, 4);
+    }
+
+    if (field === "pct") {
+      // 0–100, integer only
+      const digits = v.replace(/\D/g, "").slice(0, 3);
+      if (digits === "") return "";
+      const n = Math.max(0, Math.min(100, Number(digits)));
+      return String(n);
+    }
+
+    if (field === "rpe") {
+      // 0–11, allow one decimal place
+      let s = v.replace(/[^0-9.]/g, "");
+      const parts = s.split(".");
+      s = parts[0] + (parts.length > 1 ? "." + parts.slice(1).join("") : "");
+      if (s.includes(".")) {
+        const [a, b] = s.split(".");
+        s = a.slice(0, 2) + "." + (b || "").slice(0, 1);
+      } else {
+        s = s.slice(0, 2);
+      }
+      if (s === "" || s === ".") return "";
+      const n = Math.max(0, Math.min(11, Number(s)));
+      // Preserve trailing "." while typing is annoying; return normalized
+      return Number.isFinite(n) ? (String(n).includes(".") ? String(n) : String(n)) : "";
+    }
+
+    if (field === "rest") {
+      // mm:ss, numbers + single colon only, max length 5 (e.g. 12:34)
+      let s = v.replace(/[^0-9:]/g, "");
+      const firstColon = s.indexOf(":");
+      if (firstColon !== -1) {
+        s = s.slice(0, firstColon + 1) + s.slice(firstColon + 1).replace(/:/g, "");
+      }
+      const [mm, ss] = s.split(":");
+      const mm2 = (mm || "").slice(0, 2);
+      const ss2 = typeof ss === "string" ? ss.slice(0, 2) : "";
+      return firstColon === -1 ? mm2 : `${mm2}:${ss2}`;
+    }
+
+    return v;
+  }
+
   function renderWeekBar() {
     const total = app.program.weeks.length;
     const idx = app.currentWeek;
@@ -301,6 +365,7 @@
     const week = app.program.weeks[idx];
     if (dom.dayCountSelect) dom.dayCountSelect.value = String(week.days.length);
     if (dom.standardWeekChk) dom.standardWeekChk.checked = isStandardWeek(week);
+    if (dom.unitsSelect) dom.unitsSelect.value = app.program.u === "kg" ? "kg" : "lb";
 
     const ci = getCurrentCycleIndex();
     if (dom.cycleSelect) {
@@ -342,7 +407,7 @@
             "aria-label": "Add week",
             "data-action": "add-week",
           },
-          ["+"]
+          [icon("material-symbols-light:add")]
         )
       );
     }
@@ -360,7 +425,7 @@
         "aria-label": "Remove row",
         "data-action": "remove-row",
       },
-      ["×"]
+      [icon("material-symbols-light:close")]
     );
 
     const grid = el(
@@ -378,31 +443,31 @@
       ]),
       el("div", { class: "field field--mode" }, [
         el("label", { text: "Variation" }),
-        el("input", { class: "input", placeholder: showExamples ? "e.g. Paused / Comp / Tempo" : "", value: row.mode, "data-field": "mode" }),
+        el("input", { class: "input", placeholder: "", value: row.mode, "data-field": "mode" }),
       ]),
       el("div", { class: "field field--sets" }, [
         el("label", { text: "Sets" }),
-        el("input", { class: "input", inputmode: "numeric", placeholder: showExamples ? "e.g. 5" : "", value: row.sets, "data-field": "sets" }),
+        el("input", { class: "input", inputmode: "numeric", pattern: "\\d*", maxlength: "3", placeholder: "", value: row.sets, "data-field": "sets" }),
       ]),
       el("div", { class: "field field--reps" }, [
         el("label", { text: "Reps" }),
-        el("input", { class: "input", inputmode: "numeric", placeholder: showExamples ? "e.g. 3" : "", value: row.reps, "data-field": "reps" }),
+        el("input", { class: "input", inputmode: "numeric", pattern: "\\d*", maxlength: "3", placeholder: "", value: row.reps, "data-field": "reps" }),
       ]),
       el("div", { class: "field field--load" }, [
-        el("label", { text: "Load" }),
-        el("input", { class: "input", placeholder: showExamples ? "e.g. 185" : "", value: row.load, "data-field": "load" }),
+        el("label", { text: `Load (${app.program.u === "kg" ? "kg" : "lb"})` }),
+        el("input", { class: "input", inputmode: "numeric", pattern: "\\d*", maxlength: "4", placeholder: "", value: row.load, "data-field": "load" }),
       ]),
       el("div", { class: "field field--pct" }, [
         el("label", { text: "%1RM" }),
-        el("input", { class: "input", inputmode: "decimal", placeholder: showExamples ? "e.g. 75" : "", value: row.pct, "data-field": "pct" }),
+        el("input", { class: "input", inputmode: "numeric", pattern: "\\d*", maxlength: "3", placeholder: "", value: row.pct, "data-field": "pct" }),
       ]),
       el("div", { class: "field field--rpe" }, [
         el("label", { text: "RPE" }),
-        el("input", { class: "input", inputmode: "decimal", placeholder: showExamples ? "e.g. 7.5" : "", value: row.rpe, "data-field": "rpe" }),
+        el("input", { class: "input", inputmode: "decimal", placeholder: "", value: row.rpe, "data-field": "rpe" }),
       ]),
       el("div", { class: "field field--rest" }, [
         el("label", { text: "Rest (mm:ss)" }),
-        el("input", { class: "input", placeholder: showExamples ? "e.g. 2:00" : "", value: row.rest, "data-field": "rest" }),
+        el("input", { class: "input", inputmode: "numeric", placeholder: "", value: row.rest, "data-field": "rest" }),
       ]),
       el("div", { class: "field field--rm" }, [
         el("label", { text: "" }),
@@ -416,7 +481,11 @@
   function renderDay(wi, di, day) {
     const rowsMount = el("div", { class: "rows" }, day.rows.map((r, ri) => renderRow(wi, di, ri, r)));
 
-    const addRowBtn = el("button", { type: "button", class: "btn btn--ghost", "data-action": "add-row" }, ["+ Row"]);
+    const addRowBtn = el(
+      "button",
+      { type: "button", class: "btn btn--ghost btn--withIcon", "data-action": "add-row" },
+      [icon("material-symbols-light:add"), el("span", { text: "Add row" })]
+    );
 
     const headerRow = el("div", { class: "colHeader", "aria-hidden": "true" }, [
       el("div", { text: "Exercise" }),
@@ -443,13 +512,26 @@
       })
     );
 
+    const deleteDayBtn = el(
+      "button",
+      {
+        type: "button",
+        class: "iconBtn iconBtn--headerSm iconBtn--dangerSm",
+        title: "Delete day",
+        "aria-label": "Delete day",
+        "data-action": "delete-day",
+      },
+      [icon("material-symbols-light:delete-outline")]
+    );
+
     const summary = el("summary", {}, [
-      el("div", {}, [
-        el("div", { class: "day__headerLeft" }, [
-          el("div", { class: "day__label", text: `DAY ${di + 1}` }),
-          dowSelect,
-        ]),
+      el("div", { class: "day__headerLeft" }, [
+        el("div", { class: "day__label", text: `DAY ${di + 1}` }),
+        dowSelect,
+      ]),
+      el("div", { class: "day__headerRight" }, [
         el("div", { class: "day__meta", text: dayMeta }),
+        deleteDayBtn,
       ]),
     ]);
 
@@ -573,6 +655,58 @@
     });
   }
 
+  function renumberDays(wi) {
+    const week = app.program.weeks[wi];
+    if (!week?.days) return;
+    week.days.forEach((d, idx) => {
+      const currentDow = dowFromLabel(d.label) || standardDowPreset(week.days.length)[idx] || "MON";
+      d.label = labelForDay(idx, currentDow);
+    });
+  }
+
+  function deleteDay(wi, di) {
+    const week = app.program.weeks[wi];
+    if (!week?.days) return;
+    if (week.days.length <= 1) return;
+    week.days.splice(di, 1);
+    renumberDays(wi);
+    scheduleUrlUpdate();
+    render();
+  }
+
+  function cleanupEmptyCycles() {
+    // Remove mesocycles with zero weeks, and reindex weeks' c values.
+    const used = new Set(app.program.weeks.map((w) => w?.c ?? 0));
+    const keepMap = [];
+    const nextCycles = [];
+    for (let i = 0; i < app.program.c.length; i++) {
+      if (used.has(i) || app.program.c.length === 1) {
+        keepMap[i] = nextCycles.length;
+        nextCycles.push(app.program.c[i]);
+      } else {
+        keepMap[i] = -1;
+      }
+    }
+    // Ensure at least 1 cycle exists.
+    if (!nextCycles.length) nextCycles.push({ n: "Meso 1" });
+
+    app.program.c = nextCycles;
+    app.program.weeks.forEach((w) => {
+      const old = w?.c ?? 0;
+      const mapped = keepMap[old];
+      w.c = mapped >= 0 ? mapped : 0;
+    });
+  }
+
+  function deleteWeek(wi) {
+    if (app.program.weeks.length <= 1) return;
+    app.program.weeks.splice(wi, 1);
+    app.currentWeek = clamp(app.currentWeek, 0, app.program.weeks.length - 1);
+    cleanupEmptyCycles();
+    scheduleUrlUpdate();
+    render();
+  }
+
   function addRow(wi, di) {
     app.program.weeks[wi].days[di].rows.push(emptyRow());
     scheduleUrlUpdate();
@@ -590,7 +724,7 @@
   function setField(wi, di, ri, field, value) {
     const row = app.program.weeks[wi].days[di].rows[ri];
     if (!row) return;
-    row[field] = value;
+    row[field] = sanitizeField(field, value);
     scheduleUrlUpdate();
   }
 
@@ -610,6 +744,16 @@
     if (!Number.isFinite(idx)) return;
     app.currentWeek = clamp(idx, 0, app.program.weeks.length - 1);
     render();
+  });
+
+  dom.deleteWeekBtn?.addEventListener("click", () => {
+    if (app.program.weeks.length <= 1) {
+      window.alert("You can’t delete the last week.");
+      return;
+    }
+    const ok = window.confirm("Delete this week? This cannot be undone.");
+    if (!ok) return;
+    deleteWeek(app.currentWeek);
   });
 
   dom.cycleSelect?.addEventListener("change", () => {
@@ -654,18 +798,37 @@
     render();
   });
 
+  dom.unitsSelect?.addEventListener("change", () => {
+    const next = dom.unitsSelect.value === "kg" ? "kg" : "lb";
+    app.program.u = next;
+    scheduleUrlUpdate();
+    render();
+  });
+
   dom.copyLinkBtn.addEventListener("click", async () => {
     const link = window.location.href;
     try {
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(link);
-        setStatus("Link copied.");
+        if (dom.shareDialogText) dom.shareDialogText.textContent = "Link copied. Anyone with this link can open your program.";
+        if (dom.shareDialog?.showModal) {
+          dom.shareDialog.showModal();
+          window.setTimeout(() => {
+            try { dom.shareDialog.close(); } catch {}
+          }, 1600);
+        } else {
+          window.alert("Link copied. Anyone with this link can open your program.");
+        }
       } else {
         window.prompt("Copy this link:", link);
       }
     } catch {
       window.prompt("Copy this link:", link);
     }
+  });
+
+  dom.shareDialogCloseBtn?.addEventListener("click", () => {
+    try { dom.shareDialog?.close(); } catch {}
   });
 
   function openMenu() {
@@ -768,6 +931,12 @@
     const action = btn.getAttribute("data-action");
     if (!action) return;
 
+    // Don't toggle <details> when pressing controls inside <summary>.
+    if (btn.closest("summary")) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
     const rowEl = btn.closest(".row");
     const dayEl = btn.closest("details.day");
 
@@ -783,6 +952,20 @@
       const di = Number(rowEl.getAttribute("data-d"));
       const ri = Number(rowEl.getAttribute("data-r"));
       removeRow(wi, di, ri);
+      return;
+    }
+
+    if (action === "delete-day" && dayEl) {
+      const wi = Number(dayEl.getAttribute("data-w"));
+      const di = Number(dayEl.getAttribute("data-d"));
+      const week = app.program.weeks[wi];
+      if (week?.days?.length <= 1) {
+        window.alert("You can’t delete the last day.");
+        return;
+      }
+      const ok = window.confirm("Delete this day? This cannot be undone.");
+      if (!ok) return;
+      deleteDay(wi, di);
     }
   });
 
