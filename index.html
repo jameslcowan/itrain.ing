@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>powerlift.ing</title>
     <meta name="description" content="Shareable powerlifting program builder. State lives in the URL." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./app.css" />
   </head>
   <body>
@@ -16,8 +22,15 @@
         </a>
       </div>
       <div class="topbar__right">
-        <button id="themeBtn" class="btn btn--ghost" type="button">Theme</button>
-        <button id="copyLinkBtn" class="btn btn--primary" type="button">Copy link</button>
+        <button id="menuBtn" class="iconBtn iconBtn--header" type="button" aria-label="Menu">
+          <iconify-icon icon="material-symbols-light:menu"></iconify-icon>
+        </button>
+        <button id="themeToggleBtn" class="iconBtn iconBtn--header" type="button" aria-label="Toggle theme">
+          <iconify-icon id="themeIcon" icon="material-symbols-light:dark-mode"></iconify-icon>
+        </button>
+        <button id="copyLinkBtn" class="iconBtn iconBtn--header iconBtn--primary" type="button" aria-label="Copy link">
+          <iconify-icon icon="material-symbols-light:link"></iconify-icon>
+        </button>
       </div>
     </header>
 
@@ -25,18 +38,24 @@
       <section class="weekbar" aria-label="Week navigation">
         <div class="weekbar__nav">
           <div class="weekTabsWrap">
-            <div id="cycleTabs" class="cycleTabs" role="tablist" aria-label="Mesocycles"></div>
-            <div id="weekTabs" class="weekTabs" role="tablist" aria-label="Weeks"></div>
+            <div class="weekbar__row">
+              <div class="cyclePick" aria-label="Mesocycle">
+                <select id="cycleSelect" class="select select--compact cycleSelect" aria-label="Mesocycle"></select>
+                <button id="renameCycleBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Rename mesocycle">
+                  <iconify-icon icon="material-symbols-light:edit"></iconify-icon>
+                </button>
+                <button id="addCycleBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Add mesocycle">
+                  <iconify-icon icon="material-symbols-light:add"></iconify-icon>
+                </button>
+              </div>
+              <div id="weekTabs" class="weekTabs" role="tablist" aria-label="Weeks"></div>
+            </div>
             <div class="weekbar__hint" id="weekHint"></div>
           </div>
         </div>
 
         <div class="weekbar__actions">
           <div class="weekbar__settings" aria-label="Week settings">
-            <label class="control">
-              <span class="control__label">Meso</span>
-              <input id="cycleNameInput" class="input input--compact" type="text" placeholder="e.g. Hypertrophy" />
-            </label>
             <label class="control control--checkbox">
               <input id="standardWeekChk" type="checkbox" />
               <span>Standard week</span>
@@ -64,7 +83,40 @@
     </main>
 
     <script src="./vendor/lz-string.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <script src="./app.js" defer></script>
+
+    <div id="menuOverlay" class="overlay" hidden>
+      <div class="drawer" role="dialog" aria-modal="true" aria-label="Menu">
+        <div class="drawer__top">
+          <div class="drawer__title">Menu</div>
+          <button id="menuCloseBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Close menu">
+            <iconify-icon icon="material-symbols-light:close"></iconify-icon>
+          </button>
+        </div>
+
+        <div class="drawer__body">
+          <details class="drawerSection" open>
+            <summary>How this works</summary>
+            <p>
+              Your program is encoded into the URL as compressed JSON. As you edit, the link updates automatically.
+              Use the link button in the header to copy/share.
+            </p>
+          </details>
+          <details class="drawerSection">
+            <summary>Tips</summary>
+            <ul>
+              <li>Keep variation names short (e.g. “Paused”, “Comp”, “Tempo”).</li>
+              <li>RPE is optional; %1RM and Load can be blank.</li>
+            </ul>
+          </details>
+          <details class="drawerSection">
+            <summary>About</summary>
+            <p>powerlift.ing is a lightweight, link-shareable program template.</p>
+          </details>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
 

@@ -207,13 +207,18 @@
     weekHint: document.getElementById("weekHint"),
     status: document.getElementById("status"),
     weekTabs: document.getElementById("weekTabs"),
-    cycleTabs: document.getElementById("cycleTabs"),
     copyLinkBtn: document.getElementById("copyLinkBtn"),
-    themeBtn: document.getElementById("themeBtn"),
+    menuBtn: document.getElementById("menuBtn"),
+    menuOverlay: document.getElementById("menuOverlay"),
+    menuCloseBtn: document.getElementById("menuCloseBtn"),
+    themeToggleBtn: document.getElementById("themeToggleBtn"),
+    themeIcon: document.getElementById("themeIcon"),
     homeLink: document.getElementById("homeLink"),
     standardWeekChk: document.getElementById("standardWeekChk"),
     dayCountSelect: document.getElementById("dayCountSelect"),
-    cycleNameInput: document.getElementById("cycleNameInput"),
+    cycleSelect: document.getElementById("cycleSelect"),
+    addCycleBtn: document.getElementById("addCycleBtn"),
+    renameCycleBtn: document.getElementById("renameCycleBtn"),
   };
 
   const app = {
@@ -291,45 +296,20 @@
   function renderWeekBar() {
     const total = app.program.weeks.length;
     const idx = app.currentWeek;
-    dom.weekHint.textContent = `${total} week${total === 1 ? "" : "s"} • Shareable link updates as you type`;
+    dom.weekHint.textContent = `${total} week${total === 1 ? "" : "s"} • Link updates as you type`;
 
     const week = app.program.weeks[idx];
     if (dom.dayCountSelect) dom.dayCountSelect.value = String(week.days.length);
     if (dom.standardWeekChk) dom.standardWeekChk.checked = isStandardWeek(week);
 
     const ci = getCurrentCycleIndex();
-    if (dom.cycleNameInput) dom.cycleNameInput.value = app.program.c?.[ci]?.n || `Meso ${ci + 1}`;
-
-    if (dom.cycleTabs) {
-      dom.cycleTabs.innerHTML = "";
+    if (dom.cycleSelect) {
+      dom.cycleSelect.innerHTML = "";
       for (let i = 0; i < (app.program.c?.length || 0); i++) {
-        dom.cycleTabs.appendChild(
-          el(
-            "button",
-            {
-              type: "button",
-              class: `cycleTab${i === ci ? " cycleTab--active" : ""}`,
-              role: "tab",
-              "aria-selected": i === ci ? "true" : "false",
-              "data-cycle": String(i),
-            },
-            [app.program.c[i].n]
-          )
-        );
+        const opt = el("option", { value: String(i), text: app.program.c[i].n });
+        if (i === ci) opt.selected = true;
+        dom.cycleSelect.appendChild(opt);
       }
-      dom.cycleTabs.appendChild(
-        el(
-          "button",
-          {
-            type: "button",
-            class: "cycleTab cycleTab--add",
-            role: "tab",
-            "aria-label": "Add mesocycle",
-            "data-action": "add-cycle",
-          },
-          ["+"]
-        )
-      );
     }
 
     if (dom.weekTabs) {
@@ -465,10 +445,12 @@
 
     const summary = el("summary", {}, [
       el("div", {}, [
-        el("div", { class: "day__label", text: day.label }),
+        el("div", { class: "day__headerLeft" }, [
+          el("div", { class: "day__label", text: `DAY ${di + 1}` }),
+          dowSelect,
+        ]),
         el("div", { class: "day__meta", text: dayMeta }),
       ]),
-      el("div", { class: "day__headerRight" }, [dowSelect]),
     ]);
 
     const body = el("div", { class: "day__body" }, [
@@ -630,15 +612,8 @@
     render();
   });
 
-  dom.cycleTabs?.addEventListener("click", (e) => {
-    const addBtn = e.target.closest('button[data-action="add-cycle"]');
-    if (addBtn) {
-      addCycle();
-      return;
-    }
-    const tab = e.target.closest("button[data-cycle]");
-    if (!tab) return;
-    const ci = Number(tab.getAttribute("data-cycle"));
+  dom.cycleSelect?.addEventListener("change", () => {
+    const ci = Number(dom.cycleSelect.value);
     if (!Number.isFinite(ci)) return;
     const list = weeksInCycle(ci);
     if (list.length) {
@@ -647,11 +622,17 @@
     }
   });
 
-  dom.cycleNameInput?.addEventListener("input", () => {
+  dom.addCycleBtn?.addEventListener("click", () => {
+    addCycle();
+  });
+
+  dom.renameCycleBtn?.addEventListener("click", () => {
     const ci = getCurrentCycleIndex();
-    const val = dom.cycleNameInput.value;
+    const current = app.program.c?.[ci]?.n || `Meso ${ci + 1}`;
+    const next = window.prompt("Mesocycle name:", current);
+    if (next == null) return;
     if (!app.program.c?.[ci]) return;
-    app.program.c[ci].n = val;
+    app.program.c[ci].n = next.trim() || current;
     scheduleUrlUpdate();
     renderWeekBar();
   });
@@ -687,28 +668,92 @@
     }
   });
 
-  // Theme: auto (device) / dark / light (stored locally, not in URL)
+  function openMenu() {
+    if (!dom.menuOverlay) return;
+    dom.menuOverlay.hidden = false;
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeMenu() {
+    if (!dom.menuOverlay) return;
+    dom.menuOverlay.hidden = true;
+    document.body.style.overflow = "";
+  }
+
+  dom.menuBtn?.addEventListener("click", openMenu);
+  dom.menuCloseBtn?.addEventListener("click", closeMenu);
+  dom.menuOverlay?.addEventListener("click", (e) => {
+    if (e.target === dom.menuOverlay) closeMenu();
+  });
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMenu();
+  });
+
+  // Theme: follow device by default; user can toggle light/dark (stored locally, not in URL)
   const THEME_KEY = "pli_theme";
-  function applyTheme(mode) {
+  const mediaDark = window.matchMedia?.("(prefers-color-scheme: dark)");
+
+  function getStoredTheme() {
+    try {
+      const v = localStorage.getItem(THEME_KEY);
+      if (v === "dark" || v === "light") return v;
+      return null;
+    } catch {
+      return null;
+    }
+  }
+
+  function setStoredTheme(v) {
+    try {
+      if (v === "dark" || v === "light") localStorage.setItem(THEME_KEY, v);
+      else localStorage.removeItem(THEME_KEY);
+    } catch {}
+  }
+
+  function getEffectiveTheme() {
+    const stored = getStoredTheme();
+    if (stored) return stored;
+    return mediaDark && mediaDark.matches ? "dark" : "light";
+  }
+
+  function applyTheme(themeOrNull) {
     const html = document.documentElement;
-    if (mode === "dark" || mode === "light") html.setAttribute("data-theme", mode);
+    if (themeOrNull === "dark" || themeOrNull === "light") html.setAttribute("data-theme", themeOrNull);
     else html.removeAttribute("data-theme");
-    try { localStorage.setItem(THEME_KEY, mode); } catch {}
-    if (dom.themeBtn) dom.themeBtn.textContent = `Theme: ${mode === "auto" ? "Auto" : mode[0].toUpperCase() + mode.slice(1)}`;
+    updateThemeIcon();
   }
+
+  function updateThemeIcon() {
+    const effective = getEffectiveTheme();
+    if (dom.themeIcon) {
+      dom.themeIcon.setAttribute(
+        "icon",
+        effective === "dark" ? "material-symbols-light:dark-mode" : "material-symbols-light:light-mode"
+      );
+    }
+    if (dom.themeToggleBtn) {
+      dom.themeToggleBtn.setAttribute("aria-label", effective === "dark" ? "Switch to light mode" : "Switch to dark mode");
+      dom.themeToggleBtn.title = effective === "dark" ? "Light mode" : "Dark mode";
+    }
+  }
+
   function initTheme() {
-    let mode = "auto";
-    try { mode = localStorage.getItem(THEME_KEY) || "auto"; } catch {}
-    if (!["auto", "dark", "light"].includes(mode)) mode = "auto";
-    applyTheme(mode);
+    const stored = getStoredTheme();
+    applyTheme(stored); // null -> follow device via CSS media query
+    updateThemeIcon();
+    mediaDark?.addEventListener?.("change", () => {
+      if (!getStoredTheme()) updateThemeIcon();
+    });
   }
-  function cycleTheme() {
-    let mode = "auto";
-    try { mode = localStorage.getItem(THEME_KEY) || "auto"; } catch {}
-    const next = mode === "auto" ? "dark" : mode === "dark" ? "light" : "auto";
+
+  function toggleTheme() {
+    const effective = getEffectiveTheme();
+    const next = effective === "dark" ? "light" : "dark";
+    setStoredTheme(next);
     applyTheme(next);
   }
-  dom.themeBtn?.addEventListener("click", cycleTheme);
+
+  dom.themeToggleBtn?.addEventListener("click", toggleTheme);
 
   // Always return to a fresh blank program (clears /p/<STATE> and #/p/<STATE>).
   dom.homeLink?.addEventListener("click", (e) => {
