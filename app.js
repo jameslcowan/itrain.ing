@@ -42,14 +42,17 @@
     return DOW.includes(val) ? val : "";
   }
 
-  function isStandardWeek(week) {
+  function usedDows(week) {
     const days = Array.isArray(week?.days) ? week.days : [];
-    const preset = standardDowPreset(days.length);
-    if (preset.length !== days.length) return false;
-    for (let i = 0; i < days.length; i++) {
-      if (dowFromLabel(days[i]?.label) !== preset[i]) return false;
+    return new Set(days.map((d) => dowFromLabel(d?.label)).filter(Boolean));
+  }
+
+  function nextDowForWeek(week) {
+    const used = usedDows(week);
+    for (const d of DOW) {
+      if (!used.has(d)) return d;
     }
-    return true;
+    return "MON";
   }
 
   function defaultWeek() {
@@ -207,7 +210,9 @@
     weekMount: document.getElementById("weekMount"),
     weekHint: document.getElementById("weekHint"),
     status: document.getElementById("status"),
-    weekTabs: document.getElementById("weekTabs"),
+    cycleDd: document.getElementById("cycleDd"),
+    weekDd: document.getElementById("weekDd"),
+    addWeekBtn: document.getElementById("addWeekBtn"),
     copyLinkBtn: document.getElementById("copyLinkBtn"),
     shareDialog: document.getElementById("shareDialog"),
     shareDialogText: document.getElementById("shareDialogText"),
@@ -218,10 +223,8 @@
     themeToggleBtn: document.getElementById("themeToggleBtn"),
     themeIcon: document.getElementById("themeIcon"),
     homeLink: document.getElementById("homeLink"),
-    standardWeekChk: document.getElementById("standardWeekChk"),
-    dayCountSelect: document.getElementById("dayCountSelect"),
-    unitsSelect: document.getElementById("unitsSelect"),
-    cycleSelect: document.getElementById("cycleSelect"),
+    unitsDd: document.getElementById("unitsDd"),
+    addDayBtn: document.getElementById("addDayBtn"),
     addCycleBtn: document.getElementById("addCycleBtn"),
     renameCycleBtn: document.getElementById("renameCycleBtn"),
     deleteWeekBtn: document.getElementById("deleteWeekBtn"),
@@ -232,6 +235,8 @@
     currentWeek: 0,
     urlDebounce: null,
     lastEncoded: null,
+    pendingFocus: null, // { di, ri, focusField }
+    pendingWeekScrollLeft: null,
   };
 
   function getCurrentCycleIndex() {
@@ -303,6 +308,79 @@
     return el("iconify-icon", { icon: name });
   }
 
+  function renderDropdown({ id, label, value, options, onChange }) {
+    const wrap = el("div", { class: "ddWrap", "data-dd": id });
+
+    const btn = el(
+      "button",
+      {
+        type: "button",
+        class: "dd__btn",
+        "aria-haspopup": "listbox",
+        "aria-expanded": "false",
+      },
+      [
+        el("span", { class: "dd__label", text: label(value) }),
+        el("span", { class: "dd__chev" }, [icon("material-symbols-light:expand-more")]),
+      ]
+    );
+
+    const menu = el("div", { class: "dd__menu", role: "listbox", hidden: true }, []);
+
+    function close() {
+      btn.setAttribute("aria-expanded", "false");
+      menu.hidden = true;
+    }
+    function open() {
+      btn.setAttribute("aria-expanded", "true");
+      menu.hidden = false;
+    }
+    function toggle() {
+      if (menu.hidden) open();
+      else close();
+    }
+
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      toggle();
+    });
+
+    menu.addEventListener("click", (e) => {
+      const opt = e.target.closest("[data-value]");
+      if (!opt) return;
+      const v = opt.getAttribute("data-value");
+      close();
+      onChange(v);
+    });
+
+    // Close on outside click
+    window.addEventListener("pointerdown", (e) => {
+      if (!wrap.contains(e.target)) close();
+    });
+
+    // Populate options
+    for (const opt of options) {
+      const selected = String(opt.value) === String(value);
+      menu.appendChild(
+        el(
+          "button",
+          {
+            type: "button",
+            class: "dd__opt",
+            role: "option",
+            "aria-selected": selected ? "true" : "false",
+            "data-value": String(opt.value),
+          },
+          [el("span", { class: "dd__label", text: opt.label })]
+        )
+      );
+    }
+
+    wrap.appendChild(btn);
+    wrap.appendChild(menu);
+    return wrap;
+  }
+
   function sanitizeField(field, raw) {
     const v = String(raw ?? "");
 
@@ -363,70 +441,75 @@
     dom.weekHint.textContent = `${total} week${total === 1 ? "" : "s"} • Link updates as you type`;
 
     const week = app.program.weeks[idx];
-    if (dom.dayCountSelect) dom.dayCountSelect.value = String(week.days.length);
-    if (dom.standardWeekChk) dom.standardWeekChk.checked = isStandardWeek(week);
-    if (dom.unitsSelect) dom.unitsSelect.value = app.program.u === "kg" ? "kg" : "lb";
-
-    const ci = getCurrentCycleIndex();
-    if (dom.cycleSelect) {
-      dom.cycleSelect.innerHTML = "";
-      for (let i = 0; i < (app.program.c?.length || 0); i++) {
-        const opt = el("option", { value: String(i), text: app.program.c[i].n });
-        if (i === ci) opt.selected = true;
-        dom.cycleSelect.appendChild(opt);
-      }
+    if (dom.unitsDd) {
+      dom.unitsDd.classList.add("dd--compact");
+      dom.unitsDd.innerHTML = "";
+      dom.unitsDd.appendChild(
+        renderDropdown({
+          id: "units",
+          value: app.program.u === "kg" ? "kg" : "lb",
+          label: (v) => (v === "kg" ? "kg" : "lb"),
+          options: [
+            { value: "lb", label: "lb" },
+            { value: "kg", label: "kg" },
+          ],
+          onChange: (v) => {
+            app.program.u = v === "kg" ? "kg" : "lb";
+            scheduleUrlUpdate();
+            render();
+          },
+        })
+      );
     }
 
-    if (dom.weekTabs) {
-      dom.weekTabs.innerHTML = "";
-      const inThisCycle = weeksInCycle(ci);
-      for (const i of inThisCycle) {
-        const ord = ordinalInCycle(ci, i);
-        dom.weekTabs.appendChild(
-          el(
-            "button",
-            {
-              type: "button",
-              class: `weekTab${i === idx ? " weekTab--active" : ""}`,
-              role: "tab",
-              "aria-selected": i === idx ? "true" : "false",
-              "data-week": String(i),
-            },
-            [`Week ${ord}`]
-          )
-        );
-      }
-
-      dom.weekTabs.appendChild(
-        el(
-          "button",
-          {
-            type: "button",
-            class: "weekTab weekTab--add",
-            role: "tab",
-            "aria-label": "Add week",
-            "data-action": "add-week",
+    const ci = getCurrentCycleIndex();
+    if (dom.cycleDd) {
+      dom.cycleDd.classList.add("dd--compact");
+      dom.cycleDd.innerHTML = "";
+      dom.cycleDd.appendChild(
+        renderDropdown({
+          id: "cycle",
+          value: String(ci),
+          label: (v) => app.program.c?.[Number(v)]?.n || `Meso ${Number(v) + 1}`,
+          options: (app.program.c || []).map((c, i) => ({ value: String(i), label: c.n })),
+          onChange: (v) => {
+            const nextCi = Number(v);
+            const list = weeksInCycle(nextCi);
+            if (list.length) {
+              app.currentWeek = list[0];
+              render();
+            }
           },
-          [icon("material-symbols-light:add")]
-        )
+        })
+      );
+    }
+
+    if (dom.weekDd) {
+      dom.weekDd.classList.add("dd--compact");
+      dom.weekDd.innerHTML = "";
+      const inThisCycle = weeksInCycle(ci);
+      dom.weekDd.appendChild(
+        renderDropdown({
+          id: "week",
+          value: String(idx),
+          label: (v) => {
+            const wi = Number(v);
+            return `Week ${ordinalInCycle(ci, wi)}`;
+          },
+          options: inThisCycle.map((wi) => ({ value: String(wi), label: `Week ${ordinalInCycle(ci, wi)}` })),
+          onChange: (v) => {
+            const wi = Number(v);
+            if (!Number.isFinite(wi)) return;
+            app.currentWeek = clamp(wi, 0, app.program.weeks.length - 1);
+            render();
+          },
+        })
       );
     }
   }
 
   function renderRow(wi, di, ri, row) {
     const showExamples = wi === 0 && di === 0 && ri === 0;
-
-    const removeBtn = el(
-      "button",
-      {
-        type: "button",
-        class: "iconBtn iconBtn--x",
-        title: "Remove row",
-        "aria-label": "Remove row",
-        "data-action": "remove-row",
-      },
-      [icon("material-symbols-light:close")]
-    );
 
     const grid = el(
       "div",
@@ -471,7 +554,7 @@
       ]),
       el("div", { class: "field field--rm" }, [
         el("label", { text: "" }),
-        removeBtn,
+        el("div", { class: "rowRightBtns" }, []),
       ]),
     ]
     );
@@ -481,10 +564,30 @@
   function renderDay(wi, di, day) {
     const rowsMount = el("div", { class: "rows" }, day.rows.map((r, ri) => renderRow(wi, di, ri, r)));
 
-    const addRowBtn = el(
+    const addExerciseBtn = el(
       "button",
-      { type: "button", class: "btn btn--ghost btn--withIcon", "data-action": "add-row" },
-      [icon("material-symbols-light:add"), el("span", { text: "Add row" })]
+      {
+        type: "button",
+        class: "actionBtn actionBtn--add",
+        title: "Add exercise",
+        "aria-label": "Add exercise",
+        "data-action": "add-row",
+      },
+      [icon("material-symbols-light:add"), el("span", { text: "Add exercise" })]
+    );
+
+    const canDelete = day.rows.length > 1;
+    const deleteExerciseBtn = el(
+      "button",
+      {
+        type: "button",
+        class: "actionBtn actionBtn--delete",
+        title: canDelete ? "Delete last exercise" : "Can’t delete last exercise",
+        "aria-label": "Delete exercise",
+        "data-action": "remove-last-row",
+        disabled: canDelete ? false : true,
+      },
+      [icon("material-symbols-light:delete-outline"), el("span", { text: "Delete exercise" })]
     );
 
     const headerRow = el("div", { class: "colHeader", "aria-hidden": "true" }, [
@@ -538,7 +641,7 @@
     const body = el("div", { class: "day__body" }, [
       headerRow,
       rowsMount,
-      el("div", { class: "dayFooter" }, [addRowBtn]),
+      el("div", { class: "dayFooter dayFooter--actions" }, [addExerciseBtn, deleteExerciseBtn]),
     ]);
 
     const details = el(
@@ -556,6 +659,40 @@
     const week = app.program.weeks[app.currentWeek];
     const weekEl = el("div", { class: "week" }, week.days.map((d, di) => renderDay(app.currentWeek, di, d)));
     dom.weekMount.appendChild(weekEl);
+
+    const weekScroller = dom.weekMount.querySelector(".week");
+    if (weekScroller && typeof app.pendingWeekScrollLeft === "number") {
+      weekScroller.scrollLeft = app.pendingWeekScrollLeft;
+      app.pendingWeekScrollLeft = null;
+    }
+
+    // After mutations, smooth-scroll to the newly created exercise row and focus it.
+    if (app.pendingFocus) {
+      const { di, ri, focusField } = app.pendingFocus;
+      app.pendingFocus = null;
+
+      const dayEl = dom.weekMount.querySelector(`details.day[data-d="${di}"]`);
+      const rowEl = dom.weekMount.querySelector(`.row[data-d="${di}"][data-r="${ri}"]`);
+      const input = rowEl?.querySelector(`[data-field="${focusField}"]`);
+
+      window.requestAnimationFrame(() => {
+        if (dayEl?.scrollIntoView) {
+          try {
+            dayEl.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+          } catch {}
+        }
+        window.requestAnimationFrame(() => {
+          if (input?.scrollIntoView) {
+            try {
+              input.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+            } catch {
+              input.scrollIntoView();
+            }
+          }
+          if (input?.focus) input.focus({ preventScroll: true });
+        });
+      });
+    }
   }
 
   /** -------------------------
@@ -713,6 +850,14 @@
     render();
   }
 
+  function removeLastRow(wi, di) {
+    const rows = app.program.weeks[wi].days[di].rows;
+    if (rows.length <= 1) return;
+    rows.pop();
+    scheduleUrlUpdate();
+    render();
+  }
+
   function removeRow(wi, di, ri) {
     const rows = app.program.weeks[wi].days[di].rows;
     if (rows.length <= 1) return;
@@ -732,18 +877,8 @@
    *  Events
    *  ------------------------- */
 
-  dom.weekTabs?.addEventListener("click", (e) => {
-    const addBtn = e.target.closest('button[data-action="add-week"]');
-    if (addBtn) {
-      addWeek();
-      return;
-    }
-    const tab = e.target.closest("button[data-week]");
-    if (!tab) return;
-    const idx = Number(tab.getAttribute("data-week"));
-    if (!Number.isFinite(idx)) return;
-    app.currentWeek = clamp(idx, 0, app.program.weeks.length - 1);
-    render();
+  dom.addWeekBtn?.addEventListener("click", () => {
+    addWeek();
   });
 
   dom.deleteWeekBtn?.addEventListener("click", () => {
@@ -754,16 +889,6 @@
     const ok = window.confirm("Delete this week? This cannot be undone.");
     if (!ok) return;
     deleteWeek(app.currentWeek);
-  });
-
-  dom.cycleSelect?.addEventListener("change", () => {
-    const ci = Number(dom.cycleSelect.value);
-    if (!Number.isFinite(ci)) return;
-    const list = weeksInCycle(ci);
-    if (list.length) {
-      app.currentWeek = list[0];
-      render();
-    }
   });
 
   dom.addCycleBtn?.addEventListener("click", () => {
@@ -781,29 +906,21 @@
     renderWeekBar();
   });
 
-  dom.standardWeekChk?.addEventListener("change", () => {
-    if (!dom.standardWeekChk.checked) {
-      renderWeekBar();
+  dom.addDayBtn?.addEventListener("click", () => {
+    const wi = app.currentWeek;
+    const week = app.program.weeks[wi];
+    if (!week?.days) return;
+    if (week.days.length >= 7) {
+      window.alert("Max 7 days per week.");
       return;
     }
-    applyStandardWeekLabels(app.currentWeek);
+    const dow = nextDowForWeek(week);
+    week.days.push({ label: labelForDay(week.days.length, dow), rows: [emptyRow()] });
+    renumberDays(wi);
     scheduleUrlUpdate();
     render();
   });
 
-  dom.dayCountSelect?.addEventListener("change", () => {
-    const count = Number(dom.dayCountSelect.value);
-    setDayCount(app.currentWeek, count);
-    scheduleUrlUpdate();
-    render();
-  });
-
-  dom.unitsSelect?.addEventListener("change", () => {
-    const next = dom.unitsSelect.value === "kg" ? "kg" : "lb";
-    app.program.u = next;
-    scheduleUrlUpdate();
-    render();
-  });
 
   dom.copyLinkBtn.addEventListener("click", async () => {
     const link = window.location.href;
@@ -925,6 +1042,12 @@
   });
 
   dom.weekMount.addEventListener("click", (e) => {
+    // Prevent details <summary> toggling when using custom dropdowns inside it.
+    if (e.target.closest(".ddWrap") && e.target.closest("summary")) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
     const btn = e.target.closest("button[data-action]");
     if (!btn) return;
 
@@ -939,19 +1062,22 @@
 
     const rowEl = btn.closest(".row");
     const dayEl = btn.closest("details.day");
+    const weekScroller = dom.weekMount.querySelector(".week");
 
     if (action === "add-row" && dayEl) {
       const wi = Number(dayEl.getAttribute("data-w"));
       const di = Number(dayEl.getAttribute("data-d"));
-      addRow(wi, di);
+      if (weekScroller) app.pendingWeekScrollLeft = weekScroller.scrollLeft;
+      app.pendingFocus = { di, ri: app.program.weeks[wi].days[di].rows.length, focusField: "ex" };
+      addRow(wi, di); // appends; pendingFocus points to new index
       return;
     }
 
-    if (action === "remove-row" && rowEl) {
-      const wi = Number(rowEl.getAttribute("data-w"));
-      const di = Number(rowEl.getAttribute("data-d"));
-      const ri = Number(rowEl.getAttribute("data-r"));
-      removeRow(wi, di, ri);
+    if (action === "remove-last-row" && dayEl) {
+      const wi = Number(dayEl.getAttribute("data-w"));
+      const di = Number(dayEl.getAttribute("data-d"));
+      if (weekScroller) app.pendingWeekScrollLeft = weekScroller.scrollLeft;
+      removeLastRow(wi, di);
       return;
     }
 

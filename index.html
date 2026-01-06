@@ -40,7 +40,7 @@
           <div class="weekTabsWrap">
             <div class="weekbar__row">
               <div class="cyclePick" aria-label="Mesocycle">
-                <select id="cycleSelect" class="select select--compact cycleSelect" aria-label="Mesocycle"></select>
+                <div id="cycleDd" class="dd dd--compact" aria-label="Mesocycle"></div>
                 <button id="renameCycleBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Rename mesocycle">
                   <iconify-icon icon="material-symbols-light:edit"></iconify-icon>
                 </button>
@@ -48,10 +48,15 @@
                   <iconify-icon icon="material-symbols-light:add"></iconify-icon>
                 </button>
               </div>
-              <div id="weekTabs" class="weekTabs" role="tablist" aria-label="Weeks"></div>
-              <button id="deleteWeekBtn" class="iconBtn iconBtn--headerSm iconBtn--dangerSm" type="button" aria-label="Delete current week" title="Delete week">
-                <iconify-icon icon="material-symbols-light:delete"></iconify-icon>
-              </button>
+              <div class="weekPick" aria-label="Week">
+                <div id="weekDd" class="dd dd--compact" aria-label="Week"></div>
+                <button id="addWeekBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Add week" title="Add week">
+                  <iconify-icon icon="material-symbols-light:add"></iconify-icon>
+                </button>
+                <button id="deleteWeekBtn" class="iconBtn iconBtn--headerSm iconBtn--dangerSm" type="button" aria-label="Delete current week" title="Delete week">
+                  <iconify-icon icon="material-symbols-light:delete-outline"></iconify-icon>
+                </button>
+              </div>
             </div>
             <div class="weekbar__hint" id="weekHint"></div>
           </div>
@@ -59,29 +64,14 @@
 
         <div class="weekbar__actions">
           <div class="weekbar__settings" aria-label="Week settings">
-            <label class="control control--checkbox">
-              <input id="standardWeekChk" type="checkbox" />
-              <span>Standard week</span>
-            </label>
             <label class="control">
               <span class="control__label">Units</span>
-              <select id="unitsSelect" class="select select--compact" aria-label="Units">
-                <option value="lb">lb</option>
-                <option value="kg">kg</option>
-              </select>
+              <div id="unitsDd" class="dd dd--compact" aria-label="Units"></div>
             </label>
-            <label class="control">
-              <span class="control__label">Days</span>
-              <select id="dayCountSelect" class="select select--compact" aria-label="Days per week">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-              </select>
-            </label>
+            <button id="addDayBtn" class="btn btn--ghost btn--withIcon" type="button">
+              <iconify-icon icon="material-symbols-light:add"></iconify-icon>
+              <span>Add day</span>
+            </button>
           </div>
         </div>
       </section>
