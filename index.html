@@ -10,12 +10,13 @@
   <body>
     <header class="topbar">
       <div class="topbar__left">
-        <div class="brand">
+        <a class="brand" id="homeLink" href="/" aria-label="powerlift.ing home">
           <div class="brand__title">powerlift.ing</div>
           <div class="brand__subtitle">Program state lives in your link</div>
-        </div>
+        </a>
       </div>
       <div class="topbar__right">
+        <button id="themeBtn" class="btn btn--ghost" type="button">Theme</button>
         <button id="copyLinkBtn" class="btn btn--primary" type="button">Copy link</button>
       </div>
     </header>
@@ -23,16 +24,36 @@
     <main class="app" id="app">
       <section class="weekbar" aria-label="Week navigation">
         <div class="weekbar__nav">
-          <button id="prevWeekBtn" class="btn" type="button" aria-label="Previous week">‹</button>
-          <div class="weekbar__title">
-            <div class="weekbar__label" id="weekLabel">Week</div>
+          <div class="weekTabsWrap">
+            <div id="cycleTabs" class="cycleTabs" role="tablist" aria-label="Mesocycles"></div>
+            <div id="weekTabs" class="weekTabs" role="tablist" aria-label="Weeks"></div>
             <div class="weekbar__hint" id="weekHint"></div>
           </div>
-          <button id="nextWeekBtn" class="btn" type="button" aria-label="Next week">›</button>
         </div>
 
         <div class="weekbar__actions">
-          <button id="addWeekBtn" class="btn btn--ghost" type="button">+ Week</button>
+          <div class="weekbar__settings" aria-label="Week settings">
+            <label class="control">
+              <span class="control__label">Meso</span>
+              <input id="cycleNameInput" class="input input--compact" type="text" placeholder="e.g. Hypertrophy" />
+            </label>
+            <label class="control control--checkbox">
+              <input id="standardWeekChk" type="checkbox" />
+              <span>Standard week</span>
+            </label>
+            <label class="control">
+              <span class="control__label">Days</span>
+              <select id="dayCountSelect" class="select select--compact" aria-label="Days per week">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+              </select>
+            </label>
+          </div>
         </div>
       </section>
 

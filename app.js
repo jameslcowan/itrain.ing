@@ -10,23 +10,51 @@
    *  ------------------------- */
 
   function emptyRow() {
-    return { ex: "", mode: "", sets: "", reps: "", load: "", pct: "", rest: "" };
+    return { ex: "", mode: "", sets: "", reps: "", load: "", pct: "", rpe: "", rest: "" };
   }
 
   function defaultDayLabels() {
-    return [
-      "DAY 1 - MON",
-      "DAY 2 - TUE",
-      "DAY 3 - WED",
-      "DAY 4 - THU",
-      "DAY 5 - FRI",
-      "DAY 6 - SAT",
-      "DAY 7 - SUN",
-    ];
+    // Default start: 3 days (common lifting cadence)
+    return ["DAY 1 - MON", "DAY 2 - WED", "DAY 3 - FRI"];
+  }
+
+  const DOW = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+
+  function standardDowPreset(count) {
+    if (count === 3) return ["MON", "WED", "FRI"];
+    if (count === 4) return ["MON", "TUE", "THU", "FRI"];
+    if (count === 5) return ["MON", "TUE", "WED", "THU", "FRI"];
+    if (count === 6) return ["MON", "TUE", "WED", "THU", "FRI", "SAT"];
+    if (count === 7) return ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+    if (count === 2) return ["MON", "THU"];
+    return ["MON"];
+  }
+
+  function labelForDay(dayIndex, dow) {
+    const safeDow = dow && DOW.includes(dow) ? dow : "DAY";
+    return `DAY ${dayIndex + 1} - ${safeDow}`;
+  }
+
+  function dowFromLabel(label) {
+    if (typeof label !== "string") return "";
+    const m = label.trim().match(/-\s*([A-Z]{3})\s*$/);
+    const val = m ? m[1] : "";
+    return DOW.includes(val) ? val : "";
+  }
+
+  function isStandardWeek(week) {
+    const days = Array.isArray(week?.days) ? week.days : [];
+    const preset = standardDowPreset(days.length);
+    if (preset.length !== days.length) return false;
+    for (let i = 0; i < days.length; i++) {
+      if (dowFromLabel(days[i]?.label) !== preset[i]) return false;
+    }
+    return true;
   }
 
   function defaultWeek() {
     return {
+      c: 0,
       days: defaultDayLabels().map((label) => ({
         label,
         rows: [emptyRow()],
@@ -35,7 +63,7 @@
   }
 
   function defaultProgram() {
-    return { v: 1, weeks: [defaultWeek()] };
+    return { v: 1, c: [{ n: "Meso 1" }], weeks: [defaultWeek()] };
   }
 
   function normalizeProgram(input) {
@@ -43,22 +71,47 @@
     const weeks = Array.isArray(prog.weeks) ? prog.weeks : [];
     if (weeks.length === 0) return defaultProgram();
 
+    const cycles = Array.isArray(prog.c) ? prog.c : [{ n: "Meso 1" }];
+    const safeCycles = cycles.length
+      ? cycles.map((cy, i) => ({
+          n: typeof cy?.n === "string" && cy.n.trim() ? cy.n : `Meso ${i + 1}`,
+        }))
+      : [{ n: "Meso 1" }];
+
     return {
       v: prog.v === 1 ? 1 : 1,
-      weeks: weeks.map((w) => ({
-        days: (Array.isArray(w.days) ? w.days : []).map((d, di) => ({
-          label: typeof d.label === "string" && d.label.trim() ? d.label : defaultDayLabels()[di] || `DAY ${di + 1}`,
-          rows: (Array.isArray(d.rows) && d.rows.length ? d.rows : [emptyRow()]).map((r) => ({
-            ex: typeof r.ex === "string" ? r.ex : "",
-            mode: typeof r.mode === "string" ? r.mode : "",
-            sets: r.sets ?? "",
-            reps: r.reps ?? "",
-            load: r.load ?? "",
-            pct: r.pct ?? "",
-            rest: r.rest ?? "",
-          })),
-        })),
-      })),
+      c: safeCycles,
+      weeks: weeks.map((w) => {
+        const incomingDays = Array.isArray(w.days) ? w.days : [];
+        const count = incomingDays.length || defaultDayLabels().length;
+        const preset = standardDowPreset(count);
+        const cycleIndex = Number.isFinite(w?.c) ? clamp(Number(w.c), 0, safeCycles.length - 1) : 0;
+
+        return {
+          c: cycleIndex,
+          days: (incomingDays.length ? incomingDays : new Array(count).fill(null)).map((d, di) => {
+            const existingLabel = d && typeof d.label === "string" ? d.label : "";
+            const existingDow = dowFromLabel(existingLabel);
+            const label = existingLabel && existingLabel.trim()
+              ? existingLabel
+              : labelForDay(di, preset[di] || "MON");
+
+            return {
+              label,
+              rows: (Array.isArray(d?.rows) && d.rows.length ? d.rows : [emptyRow()]).map((r) => ({
+                ex: typeof r.ex === "string" ? r.ex : "",
+                mode: typeof r.mode === "string" ? r.mode : "",
+                sets: r.sets ?? "",
+                reps: r.reps ?? "",
+                load: r.load ?? "",
+                pct: r.pct ?? "",
+                rpe: r.rpe ?? "",
+                rest: r.rest ?? "",
+              })),
+            };
+          }),
+        };
+      }),
     };
   }
 
@@ -151,13 +204,16 @@
 
   const dom = {
     weekMount: document.getElementById("weekMount"),
-    weekLabel: document.getElementById("weekLabel"),
     weekHint: document.getElementById("weekHint"),
     status: document.getElementById("status"),
-    prevWeekBtn: document.getElementById("prevWeekBtn"),
-    nextWeekBtn: document.getElementById("nextWeekBtn"),
-    addWeekBtn: document.getElementById("addWeekBtn"),
+    weekTabs: document.getElementById("weekTabs"),
+    cycleTabs: document.getElementById("cycleTabs"),
     copyLinkBtn: document.getElementById("copyLinkBtn"),
+    themeBtn: document.getElementById("themeBtn"),
+    homeLink: document.getElementById("homeLink"),
+    standardWeekChk: document.getElementById("standardWeekChk"),
+    dayCountSelect: document.getElementById("dayCountSelect"),
+    cycleNameInput: document.getElementById("cycleNameInput"),
   };
 
   const app = {
@@ -166,6 +222,25 @@
     urlDebounce: null,
     lastEncoded: null,
   };
+
+  function getCurrentCycleIndex() {
+    const w = app.program.weeks[app.currentWeek];
+    return Number.isFinite(w?.c) ? w.c : 0;
+  }
+
+  function weeksInCycle(ci) {
+    const out = [];
+    for (let i = 0; i < app.program.weeks.length; i++) {
+      if ((app.program.weeks[i]?.c ?? 0) === ci) out.push(i);
+    }
+    return out;
+  }
+
+  function ordinalInCycle(ci, wi) {
+    const list = weeksInCycle(ci);
+    const idx = list.indexOf(wi);
+    return idx >= 0 ? idx + 1 : 1;
+  }
 
   function setStatus(msg, kind) {
     dom.status.textContent = msg || "";
@@ -216,10 +291,81 @@
   function renderWeekBar() {
     const total = app.program.weeks.length;
     const idx = app.currentWeek;
-    dom.weekLabel.textContent = `Week ${idx + 1}`;
     dom.weekHint.textContent = `${total} week${total === 1 ? "" : "s"} • Shareable link updates as you type`;
-    dom.prevWeekBtn.disabled = idx <= 0;
-    dom.nextWeekBtn.disabled = idx >= total - 1;
+
+    const week = app.program.weeks[idx];
+    if (dom.dayCountSelect) dom.dayCountSelect.value = String(week.days.length);
+    if (dom.standardWeekChk) dom.standardWeekChk.checked = isStandardWeek(week);
+
+    const ci = getCurrentCycleIndex();
+    if (dom.cycleNameInput) dom.cycleNameInput.value = app.program.c?.[ci]?.n || `Meso ${ci + 1}`;
+
+    if (dom.cycleTabs) {
+      dom.cycleTabs.innerHTML = "";
+      for (let i = 0; i < (app.program.c?.length || 0); i++) {
+        dom.cycleTabs.appendChild(
+          el(
+            "button",
+            {
+              type: "button",
+              class: `cycleTab${i === ci ? " cycleTab--active" : ""}`,
+              role: "tab",
+              "aria-selected": i === ci ? "true" : "false",
+              "data-cycle": String(i),
+            },
+            [app.program.c[i].n]
+          )
+        );
+      }
+      dom.cycleTabs.appendChild(
+        el(
+          "button",
+          {
+            type: "button",
+            class: "cycleTab cycleTab--add",
+            role: "tab",
+            "aria-label": "Add mesocycle",
+            "data-action": "add-cycle",
+          },
+          ["+"]
+        )
+      );
+    }
+
+    if (dom.weekTabs) {
+      dom.weekTabs.innerHTML = "";
+      const inThisCycle = weeksInCycle(ci);
+      for (const i of inThisCycle) {
+        const ord = ordinalInCycle(ci, i);
+        dom.weekTabs.appendChild(
+          el(
+            "button",
+            {
+              type: "button",
+              class: `weekTab${i === idx ? " weekTab--active" : ""}`,
+              role: "tab",
+              "aria-selected": i === idx ? "true" : "false",
+              "data-week": String(i),
+            },
+            [`Week ${ord}`]
+          )
+        );
+      }
+
+      dom.weekTabs.appendChild(
+        el(
+          "button",
+          {
+            type: "button",
+            class: "weekTab weekTab--add",
+            role: "tab",
+            "aria-label": "Add week",
+            "data-action": "add-week",
+          },
+          ["+"]
+        )
+      );
+    }
   }
 
   function renderRow(wi, di, ri, row) {
@@ -229,11 +375,12 @@
       "button",
       {
         type: "button",
-        class: "iconBtn iconBtn--danger",
+        class: "iconBtn iconBtn--x",
         title: "Remove row",
+        "aria-label": "Remove row",
         "data-action": "remove-row",
       },
-      ["Remove"]
+      ["×"]
     );
 
     const grid = el(
@@ -269,6 +416,10 @@
         el("label", { text: "%1RM" }),
         el("input", { class: "input", inputmode: "decimal", placeholder: showExamples ? "e.g. 75" : "", value: row.pct, "data-field": "pct" }),
       ]),
+      el("div", { class: "field field--rpe" }, [
+        el("label", { text: "RPE" }),
+        el("input", { class: "input", inputmode: "decimal", placeholder: showExamples ? "e.g. 7.5" : "", value: row.rpe, "data-field": "rpe" }),
+      ]),
       el("div", { class: "field field--rest" }, [
         el("label", { text: "Rest (mm:ss)" }),
         el("input", { class: "input", placeholder: showExamples ? "e.g. 2:00" : "", value: row.rest, "data-field": "rest" }),
@@ -294,14 +445,30 @@
       el("div", { text: "Reps" }),
       el("div", { text: "Load" }),
       el("div", { text: "%1RM" }),
+      el("div", { text: "RPE" }),
       el("div", { text: "Rest (mm:ss)" }),
       el("div", { class: "hRm", text: "" }),
     ]);
 
     const dayMeta = `${day.rows.length} row${day.rows.length === 1 ? "" : "s"}`;
+
+    const currentDow = dowFromLabel(day.label) || "MON";
+    const dowSelect = el(
+      "select",
+      { class: "select select--compact dayDowSelect", "data-action": "set-dow" },
+      DOW.map((d) => {
+        const opt = el("option", { value: d, text: d });
+        if (d === currentDow) opt.selected = true;
+        return opt;
+      })
+    );
+
     const summary = el("summary", {}, [
-      el("div", { class: "day__label", text: day.label }),
-      el("div", { class: "day__meta", text: dayMeta }),
+      el("div", {}, [
+        el("div", { class: "day__label", text: day.label }),
+        el("div", { class: "day__meta", text: dayMeta }),
+      ]),
+      el("div", { class: "day__headerRight" }, [dowSelect]),
     ]);
 
     const body = el("div", { class: "day__body" }, [
@@ -332,10 +499,96 @@
    *  ------------------------- */
 
   function addWeek() {
-    app.program.weeks.push(defaultWeek());
+    const prev = app.program.weeks[app.currentWeek];
+    const ci = getCurrentCycleIndex();
+    const cloned = {
+      c: ci,
+      days: prev.days.map((d, di) => ({
+        label: typeof d.label === "string" && d.label.trim() ? d.label : labelForDay(di, standardDowPreset(prev.days.length)[di] || "MON"),
+        rows: (Array.isArray(d.rows) && d.rows.length ? d.rows : [emptyRow()]).map((r) => ({
+          ex: typeof r.ex === "string" ? r.ex : "",
+          mode: typeof r.mode === "string" ? r.mode : "",
+          sets: r.sets ?? "",
+          reps: r.reps ?? "",
+          load: "",
+          pct: "",
+          rpe: "",
+          rest: "",
+        })),
+      })),
+    };
+
+    app.program.weeks.push(cloned);
     app.currentWeek = app.program.weeks.length - 1;
     scheduleUrlUpdate();
     render();
+  }
+
+  function addCycle() {
+    const nextIndex = app.program.c.length;
+    app.program.c.push({ n: `Meso ${nextIndex + 1}` });
+
+    const prev = app.program.weeks[app.currentWeek];
+    const starter = {
+      c: nextIndex,
+      days: prev.days.map((d, di) => ({
+        label: typeof d.label === "string" && d.label.trim() ? d.label : labelForDay(di, standardDowPreset(prev.days.length)[di] || "MON"),
+        rows: (Array.isArray(d.rows) && d.rows.length ? d.rows : [emptyRow()]).map((r) => ({
+          ex: typeof r.ex === "string" ? r.ex : "",
+          mode: typeof r.mode === "string" ? r.mode : "",
+          sets: r.sets ?? "",
+          reps: r.reps ?? "",
+          load: "",
+          pct: "",
+          rpe: "",
+          rest: "",
+        })),
+      })),
+    };
+
+    app.program.weeks.push(starter);
+    app.currentWeek = app.program.weeks.length - 1;
+    scheduleUrlUpdate();
+    render();
+  }
+
+  function applyStandardWeekLabels(wi) {
+    const week = app.program.weeks[wi];
+    const preset = standardDowPreset(week.days.length);
+    week.days.forEach((d, di) => {
+      d.label = labelForDay(di, preset[di] || "MON");
+    });
+  }
+
+  function setDayCount(wi, count) {
+    const week = app.program.weeks[wi];
+    const desired = clamp(count, 1, 7);
+
+    if (week.days.length < desired) {
+      const preset = standardDowPreset(desired);
+      for (let di = week.days.length; di < desired; di++) {
+        week.days.push({ label: labelForDay(di, preset[di] || "MON"), rows: [emptyRow()] });
+      }
+    } else if (week.days.length > desired) {
+      week.days = week.days.slice(0, desired);
+    }
+
+    // Keep "DAY 1..N" numbering consistent.
+    week.days.forEach((d, idx) => {
+      const dow = dowFromLabel(d.label) || standardDowPreset(week.days.length)[idx] || "MON";
+      d.label = labelForDay(idx, dow);
+    });
+  }
+
+  function setDayDow(wi, di, dow) {
+    const week = app.program.weeks[wi];
+    if (!week?.days?.[di]) return;
+    week.days[di].label = labelForDay(di, dow);
+    // After changing a specific day, re-number labels to keep DAY 1..N consistent.
+    week.days.forEach((d, idx) => {
+      const currentDow = dowFromLabel(d.label) || "MON";
+      d.label = labelForDay(idx, currentDow);
+    });
   }
 
   function addRow(wi, di) {
@@ -363,15 +616,62 @@
    *  Events
    *  ------------------------- */
 
-  dom.prevWeekBtn.addEventListener("click", () => {
-    app.currentWeek = clamp(app.currentWeek - 1, 0, app.program.weeks.length - 1);
+  dom.weekTabs?.addEventListener("click", (e) => {
+    const addBtn = e.target.closest('button[data-action="add-week"]');
+    if (addBtn) {
+      addWeek();
+      return;
+    }
+    const tab = e.target.closest("button[data-week]");
+    if (!tab) return;
+    const idx = Number(tab.getAttribute("data-week"));
+    if (!Number.isFinite(idx)) return;
+    app.currentWeek = clamp(idx, 0, app.program.weeks.length - 1);
     render();
   });
-  dom.nextWeekBtn.addEventListener("click", () => {
-    app.currentWeek = clamp(app.currentWeek + 1, 0, app.program.weeks.length - 1);
+
+  dom.cycleTabs?.addEventListener("click", (e) => {
+    const addBtn = e.target.closest('button[data-action="add-cycle"]');
+    if (addBtn) {
+      addCycle();
+      return;
+    }
+    const tab = e.target.closest("button[data-cycle]");
+    if (!tab) return;
+    const ci = Number(tab.getAttribute("data-cycle"));
+    if (!Number.isFinite(ci)) return;
+    const list = weeksInCycle(ci);
+    if (list.length) {
+      app.currentWeek = list[0];
+      render();
+    }
+  });
+
+  dom.cycleNameInput?.addEventListener("input", () => {
+    const ci = getCurrentCycleIndex();
+    const val = dom.cycleNameInput.value;
+    if (!app.program.c?.[ci]) return;
+    app.program.c[ci].n = val;
+    scheduleUrlUpdate();
+    renderWeekBar();
+  });
+
+  dom.standardWeekChk?.addEventListener("change", () => {
+    if (!dom.standardWeekChk.checked) {
+      renderWeekBar();
+      return;
+    }
+    applyStandardWeekLabels(app.currentWeek);
+    scheduleUrlUpdate();
     render();
   });
-  dom.addWeekBtn.addEventListener("click", addWeek);
+
+  dom.dayCountSelect?.addEventListener("change", () => {
+    const count = Number(dom.dayCountSelect.value);
+    setDayCount(app.currentWeek, count);
+    scheduleUrlUpdate();
+    render();
+  });
 
   dom.copyLinkBtn.addEventListener("click", async () => {
     const link = window.location.href;
@@ -385,6 +685,35 @@
     } catch {
       window.prompt("Copy this link:", link);
     }
+  });
+
+  // Theme: auto (device) / dark / light (stored locally, not in URL)
+  const THEME_KEY = "pli_theme";
+  function applyTheme(mode) {
+    const html = document.documentElement;
+    if (mode === "dark" || mode === "light") html.setAttribute("data-theme", mode);
+    else html.removeAttribute("data-theme");
+    try { localStorage.setItem(THEME_KEY, mode); } catch {}
+    if (dom.themeBtn) dom.themeBtn.textContent = `Theme: ${mode === "auto" ? "Auto" : mode[0].toUpperCase() + mode.slice(1)}`;
+  }
+  function initTheme() {
+    let mode = "auto";
+    try { mode = localStorage.getItem(THEME_KEY) || "auto"; } catch {}
+    if (!["auto", "dark", "light"].includes(mode)) mode = "auto";
+    applyTheme(mode);
+  }
+  function cycleTheme() {
+    let mode = "auto";
+    try { mode = localStorage.getItem(THEME_KEY) || "auto"; } catch {}
+    const next = mode === "auto" ? "dark" : mode === "dark" ? "light" : "auto";
+    applyTheme(next);
+  }
+  dom.themeBtn?.addEventListener("click", cycleTheme);
+
+  // Always return to a fresh blank program (clears /p/<STATE> and #/p/<STATE>).
+  dom.homeLink?.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location.href = `${window.location.origin}/`;
   });
 
   dom.weekMount.addEventListener("click", (e) => {
@@ -430,17 +759,35 @@
   // Some browsers fire "change" (especially for <select>) more reliably than "input".
   dom.weekMount.addEventListener("change", (e) => {
     const input = e.target.closest("[data-field]");
-    if (!input) return;
-    const rowEl = input.closest(".row");
-    if (!rowEl) return;
-    const field = input.getAttribute("data-field");
-    if (!field) return;
+    if (input) {
+      const rowEl = input.closest(".row");
+      if (!rowEl) return;
+      const field = input.getAttribute("data-field");
+      if (!field) return;
 
-    const wi = Number(rowEl.getAttribute("data-w"));
-    const di = Number(rowEl.getAttribute("data-d"));
-    const ri = Number(rowEl.getAttribute("data-r"));
+      const wi = Number(rowEl.getAttribute("data-w"));
+      const di = Number(rowEl.getAttribute("data-d"));
+      const ri = Number(rowEl.getAttribute("data-r"));
 
-    setField(wi, di, ri, field, input.value);
+      setField(wi, di, ri, field, input.value);
+      return;
+    }
+
+    const dowSel = e.target.closest('select[data-action="set-dow"]');
+    if (!dowSel) return;
+    const dayEl = dowSel.closest("details.day");
+    if (!dayEl) return;
+    const wi = Number(dayEl.getAttribute("data-w"));
+    const di = Number(dayEl.getAttribute("data-d"));
+    setDayDow(wi, di, dowSel.value);
+    scheduleUrlUpdate();
+    render();
+  });
+
+  // Prevent interacting with the DOW dropdown from toggling the <details> open/closed.
+  dom.weekMount.addEventListener("pointerdown", (e) => {
+    const dowSel = e.target.closest('select[data-action="set-dow"]');
+    if (dowSel) e.stopPropagation();
   });
 
   /** -------------------------
@@ -475,6 +822,7 @@
     render();
   }
 
+  initTheme();
   boot();
 })();
 
