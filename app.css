@@ -10,6 +10,7 @@
   --accent:#ff8a00;
   --danger:#d83a3a;
   --shadow:0 10px 30px rgba(2,6,23,.10);
+  --ghost-border: rgba(0,0,0,.22);
   --sb-track: color-mix(in srgb, var(--panel2) 85%, var(--panel));
   --sb-thumb: color-mix(in srgb, var(--muted) 55%, var(--panel));
   --sb-thumb-hover: color-mix(in srgb, var(--muted) 75%, var(--panel));
@@ -36,6 +37,7 @@
     --accent:#ff8a00;
     --danger:#ff6b6b;
     --shadow:0 10px 30px rgba(0,0,0,.35);
+    --ghost-border: rgba(255,255,255,.22);
     --sb-track: color-mix(in srgb, var(--panel2) 70%, var(--panel));
     --sb-thumb: color-mix(in srgb, var(--muted) 40%, var(--panel2));
     --sb-thumb-hover: color-mix(in srgb, var(--muted) 55%, var(--panel2));
@@ -68,6 +70,7 @@ html[data-theme="dark"]{
   --accent:#ff8a00;
   --danger:#ff6b6b;
   --shadow:0 10px 30px rgba(0,0,0,.35);
+  --ghost-border: rgba(255,255,255,.22);
   --sb-track: color-mix(in srgb, var(--panel2) 70%, var(--panel));
   --sb-thumb: color-mix(in srgb, var(--muted) 40%, var(--panel2));
   --sb-thumb-hover: color-mix(in srgb, var(--muted) 55%, var(--panel2));
@@ -320,7 +323,7 @@ input[type="checkbox"]{ accent-color: var(--accent); }
 }
 .btn--primary:hover{ background: color-mix(in srgb, var(--accent) 22%, transparent); }
 .btn--ghost{
-  border-color: rgba(255,255,255,.18);
+  border-color: var(--ghost-border);
   background: transparent;
 }
 .btn--withIcon{ display:inline-flex; align-items:center; gap:8px; }
@@ -342,6 +345,9 @@ input[type="checkbox"]{ accent-color: var(--accent); }
 
 /* Mobile: horizontally scroll day cards with center snap */
 @media (max-width: 720px){
+  /* Prevent iOS Safari focus-zoom by keeping form controls at >= 16px */
+  .input, .select, .dd__btn, .dd__opt{ font-size: 16px; }
+
   .week{
     flex-direction:row;
     gap:12px;
