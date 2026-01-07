@@ -228,6 +228,7 @@
     addDayBtn: document.getElementById("addDayBtn"),
     addCycleBtn: document.getElementById("addCycleBtn"),
     renameCycleBtn: document.getElementById("renameCycleBtn"),
+    deleteCycleBtn: document.getElementById("deleteCycleBtn"),
     deleteWeekBtn: document.getElementById("deleteWeekBtn"),
   };
 
@@ -632,7 +633,7 @@
             title: "Clear exercise",
             "aria-label": "Clear exercise",
           },
-          [icon("material-symbols-light:ink_eraser"), el("span", { text: "Clear exercise" })]
+          [icon("material-symbols-light:ink_eraser"), el("span", { text: "Clear" })]
         ),
         el(
           "button",
@@ -643,7 +644,7 @@
             title: "Delete exercise",
             "aria-label": "Delete exercise",
           },
-          [icon("material-symbols-light:delete-outline"), el("span", { text: "Delete exercise" })]
+          [icon("material-symbols-light:delete-outline"), el("span", { text: "Delete" })]
         ),
       ]),
     ]
@@ -729,8 +730,10 @@
 
     const summary = el("summary", {}, [
       el("div", { class: "day__headerLeft" }, [
-        el("div", { class: "day__label", text: `DAY ${di + 1}` }),
-        dowDd,
+        el("div", { class: "day__titleStack" }, [
+          el("div", { class: "day__label", text: `DAY ${di + 1}` }),
+          dowDd,
+        ]),
         summaryEl,
       ]),
       el("div", { class: "day__headerRight" }, [
@@ -789,7 +792,7 @@
               input.scrollIntoView();
             }
           }
-          if (input?.focus) input.focus({ preventScroll: true });
+          // No auto-focus on newly created exercise (keep scroll only).
         });
       });
     }
@@ -935,6 +938,25 @@
     });
   }
 
+  function deleteCycle(ci) {
+    if (app.program.c.length <= 1) return { ok: false, reason: "last_cycle" };
+    const weeksToKeep = app.program.weeks.filter((w) => (w?.c ?? 0) !== ci);
+    if (weeksToKeep.length < 1) return { ok: false, reason: "last_week" };
+
+    app.program.weeks = weeksToKeep;
+    app.program.c.splice(ci, 1);
+
+    // Reindex week.c values above the removed cycle index
+    app.program.weeks.forEach((w) => {
+      if ((w.c ?? 0) > ci) w.c -= 1;
+    });
+
+    // Ensure currentWeek points at a valid week
+    app.currentWeek = clamp(app.currentWeek, 0, app.program.weeks.length - 1);
+    cleanupEmptyCycles();
+    return { ok: true };
+  }
+
   function deleteWeek(wi) {
     if (app.program.weeks.length <= 1) return;
     app.program.weeks.splice(wi, 1);
@@ -999,6 +1021,23 @@
     app.program.c[ci].n = next.trim() || current;
     scheduleUrlUpdate();
     renderWeekBar();
+  });
+
+  dom.deleteCycleBtn?.addEventListener("click", () => {
+    const ci = getCurrentCycleIndex();
+    if (app.program.c.length <= 1) {
+      window.alert("You can’t delete the last mesocycle.");
+      return;
+    }
+    const ok = window.confirm("Delete this mesocycle and all its weeks? This cannot be undone.");
+    if (!ok) return;
+    const res = deleteCycle(ci);
+    if (!res.ok) {
+      window.alert("You can’t delete the last remaining week.");
+      return;
+    }
+    scheduleUrlUpdate();
+    render();
   });
 
   dom.addDayBtn?.addEventListener("click", () => {
