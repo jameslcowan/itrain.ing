@@ -217,6 +217,7 @@
     shareDialog: document.getElementById("shareDialog"),
     shareDialogText: document.getElementById("shareDialogText"),
     shareDialogCloseBtn: document.getElementById("shareDialogCloseBtn"),
+    shareDialogDontShow: document.getElementById("shareDialogDontShow"),
     menuBtn: document.getElementById("menuBtn"),
     menuOverlay: document.getElementById("menuOverlay"),
     menuCloseBtn: document.getElementById("menuCloseBtn"),
@@ -435,10 +436,79 @@
     return v;
   }
 
+  function toInt(x) {
+    const n = Number(String(x ?? "").replace(/\D/g, ""));
+    return Number.isFinite(n) ? n : 0;
+  }
+
+  function toFloat(x) {
+    const n = Number(String(x ?? "").replace(/[^0-9.]/g, ""));
+    return Number.isFinite(n) ? n : NaN;
+  }
+
+  function formatNumber(n) {
+    try {
+      return new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 }).format(n);
+    } catch {
+      return String(n);
+    }
+  }
+
+  function computeDaySummary(day) {
+    const rows = Array.isArray(day?.rows) ? day.rows : [];
+    const exercises = rows.filter((r) => (r?.ex || "").trim() !== "").length;
+
+    let totalSets = 0;
+    let totalReps = 0;
+    let totalWeight = 0;
+    let rpeWeighted = 0;
+    let rpeWeight = 0;
+
+    for (const r of rows) {
+      const sets = toInt(r?.sets);
+      const reps = toInt(r?.reps);
+      const load = toInt(r?.load);
+      const rpe = toFloat(r?.rpe);
+
+      if (sets > 0) totalSets += sets;
+      if (sets > 0 && reps > 0) totalReps += sets * reps;
+      if (sets > 0 && reps > 0 && load > 0) totalWeight += sets * reps * load;
+      if (Number.isFinite(rpe) && sets > 0) {
+        rpeWeighted += rpe * sets;
+        rpeWeight += sets;
+      }
+    }
+
+    const avgRpe = rpeWeight > 0 ? rpeWeighted / rpeWeight : null;
+    return { exercises, totalSets, totalReps, totalWeight, avgRpe };
+  }
+
+  function updateDaySummaryDom(wi, di) {
+    const dayEl = dom.weekMount.querySelector(`details.day[data-w="${wi}"][data-d="${di}"]`);
+    if (!dayEl) return;
+    const day = app.program.weeks[wi]?.days?.[di];
+    if (!day) return;
+
+    const s = computeDaySummary(day);
+    const units = app.program.u === "kg" ? "kg" : "lb";
+    const vals = {
+      exercises: String(s.exercises),
+      sets: String(s.totalSets),
+      reps: String(s.totalReps),
+      weight: s.totalWeight > 0 ? `${formatNumber(s.totalWeight)} ${units}` : "—",
+      rpe: s.avgRpe != null ? formatNumber(s.avgRpe) : "—",
+    };
+
+    for (const [k, v] of Object.entries(vals)) {
+      const node = dayEl.querySelector(`[data-sum="${k}"]`);
+      if (node) node.textContent = v;
+    }
+  }
+
   function renderWeekBar() {
     const total = app.program.weeks.length;
     const idx = app.currentWeek;
-    dom.weekHint.textContent = `${total} week${total === 1 ? "" : "s"} • Link updates as you type`;
+    dom.weekHint.textContent = "";
 
     const week = app.program.weeks[idx];
     if (dom.unitsDd) {
@@ -552,9 +622,29 @@
         el("label", { text: "Rest (mm:ss)" }),
         el("input", { class: "input", inputmode: "numeric", placeholder: "", value: row.rest, "data-field": "rest" }),
       ]),
-      el("div", { class: "field field--rm" }, [
-        el("label", { text: "" }),
-        el("div", { class: "rowRightBtns" }, []),
+      el("div", { class: "rowActions" }, [
+        el(
+          "button",
+          {
+            type: "button",
+            class: "actionBtn actionBtn--subtle",
+            "data-action": "clear-row",
+            title: "Clear exercise",
+            "aria-label": "Clear exercise",
+          },
+          [icon("material-symbols-light:ink_eraser"), el("span", { text: "Clear exercise" })]
+        ),
+        el(
+          "button",
+          {
+            type: "button",
+            class: "actionBtn actionBtn--delete",
+            "data-action": "remove-row",
+            title: "Delete exercise",
+            "aria-label": "Delete exercise",
+          },
+          [icon("material-symbols-light:delete-outline"), el("span", { text: "Delete exercise" })]
+        ),
       ]),
     ]
     );
@@ -576,19 +666,7 @@
       [icon("material-symbols-light:add"), el("span", { text: "Add exercise" })]
     );
 
-    const canDelete = day.rows.length > 1;
-    const deleteExerciseBtn = el(
-      "button",
-      {
-        type: "button",
-        class: "actionBtn actionBtn--delete",
-        title: canDelete ? "Delete last exercise" : "Can’t delete last exercise",
-        "aria-label": "Delete exercise",
-        "data-action": "remove-last-row",
-        disabled: canDelete ? false : true,
-      },
-      [icon("material-symbols-light:delete-outline"), el("span", { text: "Delete exercise" })]
-    );
+    // Per-exercise delete/clear lives on each row; footer only adds.
 
     const headerRow = el("div", { class: "colHeader", "aria-hidden": "true" }, [
       el("div", { text: "Exercise" }),
@@ -599,19 +677,41 @@
       el("div", { text: "%1RM" }),
       el("div", { text: "RPE" }),
       el("div", { text: "Rest (mm:ss)" }),
-      el("div", { class: "hRm", text: "" }),
     ]);
 
-    const dayMeta = `${day.rows.length} row${day.rows.length === 1 ? "" : "s"}`;
+    const s = computeDaySummary(day);
+    const units = app.program.u === "kg" ? "kg" : "lb";
+    const summaryParts = [
+      { k: "Exercises", key: "exercises", v: String(s.exercises) },
+      { k: "Sets", key: "sets", v: String(s.totalSets) },
+      { k: "Reps", key: "reps", v: String(s.totalReps) },
+      { k: "Weight", key: "weight", v: s.totalWeight > 0 ? `${formatNumber(s.totalWeight)} ${units}` : "—" },
+      { k: "Avg RPE", key: "rpe", v: s.avgRpe != null ? formatNumber(s.avgRpe) : "—" },
+    ];
+    const summaryEl = el(
+      "div",
+      { class: "day__summary" },
+      summaryParts.map((p) =>
+        el("div", { class: "day__summaryItem" }, [
+          el("span", { class: "day__summaryKey", text: p.k }),
+          el("span", { class: "day__summaryVal", "data-sum": p.key, text: p.v }),
+        ])
+      )
+    );
 
     const currentDow = dowFromLabel(day.label) || "MON";
-    const dowSelect = el(
-      "select",
-      { class: "select select--compact dayDowSelect", "data-action": "set-dow" },
-      DOW.map((d) => {
-        const opt = el("option", { value: d, text: d });
-        if (d === currentDow) opt.selected = true;
-        return opt;
+    const dowDd = el("div", { class: "dd dd--compact dayDowDd" }, []);
+    dowDd.appendChild(
+      renderDropdown({
+        id: `dow-${wi}-${di}`,
+        value: currentDow,
+        label: (v) => v,
+        options: DOW.map((d) => ({ value: d, label: d })),
+        onChange: (v) => {
+          setDayDow(wi, di, v);
+          scheduleUrlUpdate();
+          render();
+        },
       })
     );
 
@@ -630,10 +730,10 @@
     const summary = el("summary", {}, [
       el("div", { class: "day__headerLeft" }, [
         el("div", { class: "day__label", text: `DAY ${di + 1}` }),
-        dowSelect,
+        dowDd,
+        summaryEl,
       ]),
       el("div", { class: "day__headerRight" }, [
-        el("div", { class: "day__meta", text: dayMeta }),
         deleteDayBtn,
       ]),
     ]);
@@ -641,7 +741,7 @@
     const body = el("div", { class: "day__body" }, [
       headerRow,
       rowsMount,
-      el("div", { class: "dayFooter dayFooter--actions" }, [addExerciseBtn, deleteExerciseBtn]),
+      el("div", { class: "dayFooter dayFooter--actions" }, [addExerciseBtn]),
     ]);
 
     const details = el(
@@ -850,13 +950,7 @@
     render();
   }
 
-  function removeLastRow(wi, di) {
-    const rows = app.program.weeks[wi].days[di].rows;
-    if (rows.length <= 1) return;
-    rows.pop();
-    scheduleUrlUpdate();
-    render();
-  }
+  // (removeLastRow removed; per-row delete is used instead)
 
   function removeRow(wi, di, ri) {
     const rows = app.program.weeks[wi].days[di].rows;
@@ -870,6 +964,7 @@
     const row = app.program.weeks[wi].days[di].rows[ri];
     if (!row) return;
     row[field] = sanitizeField(field, value);
+    updateDaySummaryDom(wi, di);
     scheduleUrlUpdate();
   }
 
@@ -928,13 +1023,20 @@
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(link);
         if (dom.shareDialogText) dom.shareDialogText.textContent = "Link copied. Anyone with this link can open your program.";
-        if (dom.shareDialog?.showModal) {
+        const hide = (() => {
+          try { return localStorage.getItem("pli_hide_share_dialog") === "1"; } catch { return false; }
+        })();
+        if (!hide && dom.shareDialog?.showModal) {
+          if (dom.shareDialogDontShow) {
+            try { dom.shareDialogDontShow.checked = localStorage.getItem("pli_hide_share_dialog") === "1"; } catch {}
+          }
           dom.shareDialog.showModal();
           window.setTimeout(() => {
             try { dom.shareDialog.close(); } catch {}
           }, 1600);
         } else {
-          window.alert("Link copied. Anyone with this link can open your program.");
+          // No dialog (either unsupported or user disabled it)
+          setStatus("Link copied.");
         }
       } else {
         window.prompt("Copy this link:", link);
@@ -946,6 +1048,12 @@
 
   dom.shareDialogCloseBtn?.addEventListener("click", () => {
     try { dom.shareDialog?.close(); } catch {}
+  });
+
+  dom.shareDialogDontShow?.addEventListener("change", () => {
+    try {
+      localStorage.setItem("pli_hide_share_dialog", dom.shareDialogDontShow.checked ? "1" : "0");
+    } catch {}
   });
 
   function openMenu() {
@@ -1073,13 +1181,39 @@
       return;
     }
 
-    if (action === "remove-last-row" && dayEl) {
-      const wi = Number(dayEl.getAttribute("data-w"));
-      const di = Number(dayEl.getAttribute("data-d"));
+    if (action === "remove-row" && rowEl) {
+      const wi = Number(rowEl.getAttribute("data-w"));
+      const di = Number(rowEl.getAttribute("data-d"));
+      const ri = Number(rowEl.getAttribute("data-r"));
       if (weekScroller) app.pendingWeekScrollLeft = weekScroller.scrollLeft;
-      removeLastRow(wi, di);
+      removeRow(wi, di, ri);
       return;
     }
+
+    if (action === "clear-row" && rowEl) {
+      const wi = Number(rowEl.getAttribute("data-w"));
+      const di = Number(rowEl.getAttribute("data-d"));
+      const ri = Number(rowEl.getAttribute("data-r"));
+      const row = app.program.weeks[wi]?.days?.[di]?.rows?.[ri];
+      if (!row) return;
+      row.ex = "";
+      row.mode = "";
+      row.sets = "";
+      row.reps = "";
+      row.load = "";
+      row.pct = "";
+      row.rpe = "";
+      row.rest = "";
+      updateDaySummaryDom(wi, di);
+      scheduleUrlUpdate();
+      // Update UI without full re-render
+      rowEl.querySelectorAll("[data-field]").forEach((inp) => {
+        inp.value = "";
+      });
+      return;
+    }
+
+    // (remove-last-row removed; per-row delete is used instead)
 
     if (action === "delete-day" && dayEl) {
       const wi = Number(dayEl.getAttribute("data-w"));
@@ -1127,22 +1261,9 @@
       return;
     }
 
-    const dowSel = e.target.closest('select[data-action="set-dow"]');
-    if (!dowSel) return;
-    const dayEl = dowSel.closest("details.day");
-    if (!dayEl) return;
-    const wi = Number(dayEl.getAttribute("data-w"));
-    const di = Number(dayEl.getAttribute("data-d"));
-    setDayDow(wi, di, dowSel.value);
-    scheduleUrlUpdate();
-    render();
+    // (day-of-week is now handled by custom dropdown in renderDay)
   });
 
-  // Prevent interacting with the DOW dropdown from toggling the <details> open/closed.
-  dom.weekMount.addEventListener("pointerdown", (e) => {
-    const dowSel = e.target.closest('select[data-action="set-dow"]');
-    if (dowSel) e.stopPropagation();
-  });
 
   /** -------------------------
    *  Boot

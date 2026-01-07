@@ -15,55 +15,51 @@
   </head>
   <body>
     <header class="topbar">
-      <div class="topbar__left">
-        <a class="brand" id="homeLink" href="/" aria-label="powerlift.ing home">
-          <div class="brand__title">powerlift.ing</div>
-          <div class="brand__subtitle">Program state lives in your link</div>
-        </a>
-      </div>
-      <div class="topbar__right">
-        <button id="menuBtn" class="iconBtn iconBtn--header" type="button" aria-label="Menu">
-          <iconify-icon icon="material-symbols-light:menu"></iconify-icon>
-        </button>
-        <button id="themeToggleBtn" class="iconBtn iconBtn--header" type="button" aria-label="Toggle theme">
-          <iconify-icon id="themeIcon" icon="material-symbols-light:dark-mode"></iconify-icon>
-        </button>
-        <button id="copyLinkBtn" class="iconBtn iconBtn--header iconBtn--primary" type="button" aria-label="Copy link">
-          <iconify-icon icon="material-symbols-light:share"></iconify-icon>
-        </button>
+      <div class="topbar__inner">
+        <div class="topbar__left">
+          <a class="brand" id="homeLink" href="/" aria-label="powerlift.ing home">
+            <div class="brand__title wordmark">powerlift.ing</div>
+          </a>
+        </div>
+        <div class="topbar__right">
+          <button id="menuBtn" class="iconBtn iconBtn--header" type="button" aria-label="Menu">
+            <iconify-icon icon="material-symbols-light:menu"></iconify-icon>
+          </button>
+          <button id="themeToggleBtn" class="iconBtn iconBtn--header" type="button" aria-label="Toggle theme">
+            <iconify-icon id="themeIcon" icon="material-symbols-light:dark-mode"></iconify-icon>
+          </button>
+          <button id="copyLinkBtn" class="iconBtn iconBtn--header iconBtn--primary" type="button" aria-label="Copy link">
+            <iconify-icon icon="material-symbols-light:share"></iconify-icon>
+          </button>
+        </div>
       </div>
     </header>
 
     <main class="app" id="app">
       <section class="weekbar" aria-label="Week navigation">
-        <div class="weekbar__nav">
-          <div class="weekTabsWrap">
-            <div class="weekbar__row">
-              <div class="cyclePick" aria-label="Mesocycle">
-                <div id="cycleDd" class="dd dd--compact" aria-label="Mesocycle"></div>
-                <button id="renameCycleBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Rename mesocycle">
-                  <iconify-icon icon="material-symbols-light:edit"></iconify-icon>
-                </button>
-                <button id="addCycleBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Add mesocycle">
-                  <iconify-icon icon="material-symbols-light:add"></iconify-icon>
-                </button>
-              </div>
-              <div class="weekPick" aria-label="Week">
-                <div id="weekDd" class="dd dd--compact" aria-label="Week"></div>
-                <button id="addWeekBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Add week" title="Add week">
-                  <iconify-icon icon="material-symbols-light:add"></iconify-icon>
-                </button>
-                <button id="deleteWeekBtn" class="iconBtn iconBtn--headerSm iconBtn--dangerSm" type="button" aria-label="Delete current week" title="Delete week">
-                  <iconify-icon icon="material-symbols-light:delete-outline"></iconify-icon>
-                </button>
-              </div>
+        <div class="weekbar__inner">
+          <div class="weekbar__left">
+            <div class="cyclePick" aria-label="Mesocycle">
+              <div id="cycleDd" class="dd dd--compact" aria-label="Mesocycle"></div>
+              <button id="renameCycleBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Rename mesocycle">
+                <iconify-icon icon="material-symbols-light:edit"></iconify-icon>
+              </button>
+              <button id="addCycleBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Add mesocycle">
+                <iconify-icon icon="material-symbols-light:add"></iconify-icon>
+              </button>
             </div>
-            <div class="weekbar__hint" id="weekHint"></div>
+            <div class="weekPick" aria-label="Week">
+              <div id="weekDd" class="dd dd--compact" aria-label="Week"></div>
+              <button id="addWeekBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Add week" title="Add week">
+                <iconify-icon icon="material-symbols-light:add"></iconify-icon>
+              </button>
+              <button id="deleteWeekBtn" class="iconBtn iconBtn--headerSm iconBtn--dangerSm" type="button" aria-label="Delete current week" title="Delete week">
+                <iconify-icon icon="material-symbols-light:delete-outline"></iconify-icon>
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div class="weekbar__actions">
-          <div class="weekbar__settings" aria-label="Week settings">
+          <div class="weekbar__right" aria-label="Week settings">
             <label class="control">
               <span class="control__label">Units</span>
               <div id="unitsDd" class="dd dd--compact" aria-label="Units"></div>
@@ -74,6 +70,7 @@
             </button>
           </div>
         </div>
+        <div class="weekbar__hint" id="weekHint"></div>
       </section>
 
       <div class="container">
@@ -127,6 +124,10 @@
       </div>
       <div class="dialog__body">
         <p id="shareDialogText">Link copied. Anyone with this link can open your program.</p>
+        <label class="control control--checkbox dialog__dontShow">
+          <input id="shareDialogDontShow" type="checkbox" />
+          <span>Don’t show this again</span>
+        </label>
       </div>
     </dialog>
   </body>
