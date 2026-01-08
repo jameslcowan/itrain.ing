@@ -237,8 +237,6 @@
     currentWeek: 0,
     urlDebounce: null,
     lastEncoded: null,
-    pendingFocus: null, // { di, ri, focusField }
-    pendingWeekScrollLeft: null,
   };
 
   function getCurrentCycleIndex() {
@@ -306,9 +304,62 @@
     return node;
   }
 
-  function icon(name) {
-    return el("iconify-icon", { icon: name });
+  // SVG elements must be created in the SVG namespace, otherwise they can fail to render
+  // (notably when created dynamically in Chrome).
+  const SVG_NS = "http://www.w3.org/2000/svg";
+  const XLINK_NS = "http://www.w3.org/1999/xlink";
+  function svgEl(tag, attrs = {}, children = []) {
+    const node = document.createElementNS(SVG_NS, tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === "class") node.setAttribute("class", v);
+      else if (k === "text") node.textContent = v;
+      else if (k === "html") node.innerHTML = v;
+      else if (k.startsWith("data-")) node.setAttribute(k, v);
+      else if (v === true) node.setAttribute(k, "");
+      else if (v !== false && v != null) node.setAttribute(k, String(v));
+    }
+    for (const c of children) {
+      if (c == null) continue;
+      node.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+    }
+    return node;
   }
+
+  const ICON_MAP = {
+    "material-symbols-light:menu": "i-menu",
+    "material-symbols-light:dark-mode": "i-dark-mode",
+    "material-symbols-light:light-mode": "i-light-mode",
+    "material-symbols-light:share": "i-share",
+    "material-symbols-light:edit": "i-edit",
+    "material-symbols-light:add": "i-add",
+    "material-symbols-light:delete-outline": "i-delete-outline",
+    "material-symbols-light:close": "i-close",
+    "material-symbols-light:expand-more": "i-expand-more",
+    // legacy name we used previously; Iconify's actual name is ink-eraser
+    "material-symbols-light:ink_eraser": "i-ink-eraser",
+    "material-symbols-light:ink-eraser": "i-ink-eraser",
+  };
+
+  function icon(name) {
+    const id = ICON_MAP[name] || name;
+    const href = `#${id}`;
+    const use = svgEl("use", { href });
+    // Some browsers still behave better when xlink:href is present too.
+    try {
+      use.setAttributeNS(XLINK_NS, "xlink:href", href);
+    } catch {}
+    return svgEl("svg", { class: "ico", viewBox: "0 0 24 24", "aria-hidden": "true", focusable: "false" }, [use]);
+  }
+
+  // Dropdown: single global outside-click handler (avoid attaching one per dropdown render)
+  let openDropdown = null; // { wrap, btn, menu }
+  window.addEventListener("pointerdown", (e) => {
+    if (!openDropdown) return;
+    if (openDropdown.wrap.contains(e.target)) return;
+    openDropdown.btn.setAttribute("aria-expanded", "false");
+    openDropdown.menu.hidden = true;
+    openDropdown = null;
+  });
 
   function renderDropdown({ id, label, value, options, onChange }) {
     const wrap = el("div", { class: "ddWrap", "data-dd": id });
@@ -332,10 +383,16 @@
     function close() {
       btn.setAttribute("aria-expanded", "false");
       menu.hidden = true;
+      if (openDropdown?.wrap === wrap) openDropdown = null;
     }
     function open() {
+      if (openDropdown && openDropdown.wrap !== wrap) {
+        openDropdown.btn.setAttribute("aria-expanded", "false");
+        openDropdown.menu.hidden = true;
+      }
       btn.setAttribute("aria-expanded", "true");
       menu.hidden = false;
+      openDropdown = { wrap, btn, menu };
     }
     function toggle() {
       if (menu.hidden) open();
@@ -353,11 +410,6 @@
       const v = opt.getAttribute("data-value");
       close();
       onChange(v);
-    });
-
-    // Close on outside click
-    window.addEventListener("pointerdown", (e) => {
-      if (!wrap.contains(e.target)) close();
     });
 
     // Populate options
@@ -633,7 +685,7 @@
             title: "Clear exercise",
             "aria-label": "Clear exercise",
           },
-          [icon("material-symbols-light:ink_eraser"), el("span", { text: "Clear" })]
+          [icon("material-symbols-light:ink-eraser"), el("span", { text: "Clear" })]
         ),
         el(
           "button",
@@ -762,40 +814,6 @@
     const week = app.program.weeks[app.currentWeek];
     const weekEl = el("div", { class: "week" }, week.days.map((d, di) => renderDay(app.currentWeek, di, d)));
     dom.weekMount.appendChild(weekEl);
-
-    const weekScroller = dom.weekMount.querySelector(".week");
-    if (weekScroller && typeof app.pendingWeekScrollLeft === "number") {
-      weekScroller.scrollLeft = app.pendingWeekScrollLeft;
-      app.pendingWeekScrollLeft = null;
-    }
-
-    // After mutations, smooth-scroll to the newly created exercise row and focus it.
-    if (app.pendingFocus) {
-      const { di, ri, focusField } = app.pendingFocus;
-      app.pendingFocus = null;
-
-      const dayEl = dom.weekMount.querySelector(`details.day[data-d="${di}"]`);
-      const rowEl = dom.weekMount.querySelector(`.row[data-d="${di}"][data-r="${ri}"]`);
-      const input = rowEl?.querySelector(`[data-field="${focusField}"]`);
-
-      window.requestAnimationFrame(() => {
-        if (dayEl?.scrollIntoView) {
-          try {
-            dayEl.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-          } catch {}
-        }
-        window.requestAnimationFrame(() => {
-          if (input?.scrollIntoView) {
-            try {
-              input.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
-            } catch {
-              input.scrollIntoView();
-            }
-          }
-          // No auto-focus on newly created exercise (keep scroll only).
-        });
-      });
-    }
   }
 
   /** -------------------------
@@ -968,8 +986,8 @@
 
   function addRow(wi, di) {
     app.program.weeks[wi].days[di].rows.push(emptyRow());
+    updateDaySummaryDom(wi, di);
     scheduleUrlUpdate();
-    render();
   }
 
   // (removeLastRow removed; per-row delete is used instead)
@@ -978,8 +996,8 @@
     const rows = app.program.weeks[wi].days[di].rows;
     if (rows.length <= 1) return;
     rows.splice(ri, 1);
+    updateDaySummaryDom(wi, di);
     scheduleUrlUpdate();
-    render();
   }
 
   function setField(wi, di, ri, field, value) {
@@ -1153,10 +1171,11 @@
   function updateThemeIcon() {
     const effective = getEffectiveTheme();
     if (dom.themeIcon) {
-      dom.themeIcon.setAttribute(
-        "icon",
-        effective === "dark" ? "material-symbols-light:dark-mode" : "material-symbols-light:light-mode"
-      );
+      const href = effective === "dark" ? "#i-dark-mode" : "#i-light-mode";
+      dom.themeIcon.setAttribute("href", href);
+      try {
+        dom.themeIcon.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", href);
+      } catch {}
     }
     if (dom.themeToggleBtn) {
       dom.themeToggleBtn.setAttribute("aria-label", effective === "dark" ? "Switch to light mode" : "Switch to dark mode");
@@ -1168,6 +1187,14 @@
     const stored = getStoredTheme();
     applyTheme(stored); // null -> follow device via CSS media query
     updateThemeIcon();
+    // Ensure inline SVG sprites render consistently (some browsers prefer xlink:href too).
+    try {
+      document.querySelectorAll("use[href]").forEach((u) => {
+        const href = u.getAttribute("href");
+        if (!href) return;
+        u.setAttributeNS(XLINK_NS, "xlink:href", href);
+      });
+    } catch {}
     mediaDark?.addEventListener?.("change", () => {
       if (!getStoredTheme()) updateThemeIcon();
     });
@@ -1209,14 +1236,20 @@
 
     const rowEl = btn.closest(".row");
     const dayEl = btn.closest("details.day");
-    const weekScroller = dom.weekMount.querySelector(".week");
 
     if (action === "add-row" && dayEl) {
       const wi = Number(dayEl.getAttribute("data-w"));
       const di = Number(dayEl.getAttribute("data-d"));
-      if (weekScroller) app.pendingWeekScrollLeft = weekScroller.scrollLeft;
-      app.pendingFocus = { di, ri: app.program.weeks[wi].days[di].rows.length, focusField: "ex" };
-      addRow(wi, di); // appends; pendingFocus points to new index
+      const rowsWrap = dayEl.querySelector(".rows");
+      const ri = app.program.weeks[wi].days[di].rows.length;
+      addRow(wi, di);
+      // Minimal DOM update: append new row (avoids full re-render + snap glitches)
+      if (rowsWrap) {
+        const newRow = renderRow(wi, di, ri, app.program.weeks[wi].days[di].rows[ri]);
+        rowsWrap.appendChild(newRow);
+        // Smooth scroll within the day card only (doesn't fight horizontal snap)
+        try { newRow.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch {}
+      }
       return;
     }
 
@@ -1224,8 +1257,14 @@
       const wi = Number(rowEl.getAttribute("data-w"));
       const di = Number(rowEl.getAttribute("data-d"));
       const ri = Number(rowEl.getAttribute("data-r"));
-      if (weekScroller) app.pendingWeekScrollLeft = weekScroller.scrollLeft;
       removeRow(wi, di, ri);
+      // Minimal DOM update: remove row + renumber data-r
+      rowEl.remove();
+      const rowsWrap = dayEl?.querySelector(".rows");
+      if (rowsWrap) {
+        const all = Array.from(rowsWrap.querySelectorAll(".row"));
+        all.forEach((n, idx) => n.setAttribute("data-r", String(idx)));
+      }
       return;
     }
 
@@ -1266,6 +1305,26 @@
       if (!ok) return;
       deleteDay(wi, di);
     }
+  });
+
+  // Mobile horizontal day scrolling + <details> can cause accidental toggles on swipe end,
+  // which looks like "layout shifting" and makes row content/icons disappear.
+  const mobileDayCarousel = window.matchMedia?.("(max-width: 720px)");
+  dom.weekMount.addEventListener("click", (e) => {
+    const summary = e.target.closest("details.day > summary");
+    if (!summary) return;
+    if (!mobileDayCarousel?.matches) return;
+    // Allow clicks on actual controls inside the summary.
+    if (e.target.closest("button") || e.target.closest(".ddWrap")) return;
+    e.preventDefault();
+  });
+
+  dom.weekMount.addEventListener("toggle", (e) => {
+    const details = e.target.closest?.("details.day");
+    if (!details) return;
+    if (!mobileDayCarousel?.matches) return;
+    // Force open on mobile to avoid accidental collapse while swiping horizontally.
+    if (!details.open) details.open = true;
   });
 
   dom.weekMount.addEventListener("input", (e) => {
