@@ -163,6 +163,11 @@ input[type="checkbox"]{ accent-color: var(--accent); }
 .app{ padding-bottom:28px; }
 .container{ padding: 10px 14px 18px; max-width:1100px; margin:0 auto; }
 
+/* Mobile: full-bleed (no container padding) */
+@media (max-width: 720px){
+  .container{ padding: 0; }
+}
+
 .weekbar{
   border-bottom:1px solid var(--border);
   padding: 10px 0;
@@ -176,6 +181,13 @@ input[type="checkbox"]{ accent-color: var(--accent); }
   align-items:flex-start;
   justify-content:space-between;
   gap:12px;
+}
+
+/* Tablet: add light padding + align header/weekbar gutters */
+@media (min-width: 721px) and (max-width: 899px){
+  .container{ padding: .5rem; }
+  .topbar__inner{ padding: 0 .5rem; }
+  .weekbar__inner{ padding: 0 .5rem; }
 }
 .weekbar__left{ display:flex; align-items:center; gap:10px; min-width:0; flex: 1 1 auto; }
 .weekbar__right{ display:flex; align-items:center; gap:10px; justify-content:flex-end; flex: 0 0 auto; }
@@ -394,9 +406,10 @@ details.day > summary{
 }
 details.day > summary::-webkit-details-marker{ display:none; }
 .day__label{ font-weight:750; letter-spacing:.2px; white-space:nowrap; }
-.day__headerLeft{ display:flex; align-items:center; gap:10px; min-width:0; flex:1 1 auto; }
-.day__titleStack{ display:flex; align-items:center; gap:10px; }
-.day__headerRight{ display:flex; align-items:center; gap:10px; justify-content:flex-end; }
+.day__head{ display:flex; flex-direction:column; gap:10px; min-width:0; width:100%; }
+.day__headTop{ display:flex; align-items:center; justify-content:space-between; gap:10px; min-width:0; width:100%; }
+.day__titleLeft{ display:flex; align-items:center; gap:10px; min-width:0; }
+.day__headActions{ display:flex; align-items:center; justify-content:flex-end; gap:8px; flex:0 0 auto; }
 .dayDowDd{ width: 100px; }
 .dayDowDd .dd__btn{ justify-content:center; }
 .dayDowDd .dd__label{ text-align:center; }
@@ -414,8 +427,9 @@ details.day > summary::-webkit-details-marker{ display:none; }
 .day__summaryVal{ font-size:12px; font-family: var(--mono); min-width:0; }
 
 @media (max-width: 520px){
-  .day__titleStack{ flex-direction:column; align-items:flex-start; gap:8px; }
-  .dayDowDd{ width: 100%; max-width: 220px; }
+  /* Keep DAY + dropdown on one row (don’t stack) */
+  .day__titleLeft{ flex-direction:row; align-items:center; gap:10px; }
+  .dayDowDd{ width: 110px; max-width: none; }
 }
 
 /* Prevent snap-scroll reflow jitter: avoid flex-wrap line breaking on mobile */

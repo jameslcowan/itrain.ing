@@ -878,15 +878,15 @@
     );
 
     const summary = el("summary", {}, [
-      el("div", { class: "day__headerLeft" }, [
-        el("div", { class: "day__titleStack" }, [
-          el("div", { class: "day__label", text: `DAY ${di + 1}` }),
-          dowDd,
+      el("div", { class: "day__head" }, [
+        el("div", { class: "day__headTop" }, [
+          el("div", { class: "day__titleLeft" }, [
+            el("div", { class: "day__label", text: `DAY ${di + 1}` }),
+            dowDd,
+          ]),
+          el("div", { class: "day__headActions" }, [deleteDayBtn]),
         ]),
         summaryEl,
-      ]),
-      el("div", { class: "day__headerRight" }, [
-        deleteDayBtn,
       ]),
     ]);
 
