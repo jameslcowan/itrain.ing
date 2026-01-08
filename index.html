@@ -184,6 +184,33 @@
         </label>
       </div>
     </dialog>
+
+    <!-- Unified app dialog (replaces alert/confirm/prompt) -->
+    <dialog id="appDialog" class="dialog dialog--modal">
+      <form method="dialog" class="dialog__panel">
+        <div class="dialog__top">
+          <div id="appDialogTitle" class="dialog__title">Notice</div>
+          <button id="appDialogCloseBtn" class="iconBtn iconBtn--headerSm" type="submit" value="cancel" aria-label="Close">
+            <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-close"></use></svg>
+          </button>
+        </div>
+        <div class="dialog__body">
+          <p id="appDialogText" class="dialog__text"></p>
+
+          <div id="appDialogInputWrap" class="dialog__inputWrap" hidden>
+            <label class="field">
+              <span id="appDialogInputLabel" class="field__label">Input</span>
+              <input id="appDialogInput" class="input" type="text" />
+            </label>
+            <p id="appDialogHelp" class="dialog__help" hidden></p>
+          </div>
+        </div>
+        <div class="dialog__actions">
+          <button id="appDialogCancelBtn" class="btn btn--ghost" type="submit" value="cancel">Cancel</button>
+          <button id="appDialogOkBtn" class="btn btn--primary" type="submit" value="ok">OK</button>
+        </div>
+      </form>
+    </dialog>
   </body>
 </html>
 

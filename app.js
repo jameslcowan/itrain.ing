@@ -230,6 +230,16 @@
     renameCycleBtn: document.getElementById("renameCycleBtn"),
     deleteCycleBtn: document.getElementById("deleteCycleBtn"),
     deleteWeekBtn: document.getElementById("deleteWeekBtn"),
+    appDialog: document.getElementById("appDialog"),
+    appDialogTitle: document.getElementById("appDialogTitle"),
+    appDialogText: document.getElementById("appDialogText"),
+    appDialogCloseBtn: document.getElementById("appDialogCloseBtn"),
+    appDialogCancelBtn: document.getElementById("appDialogCancelBtn"),
+    appDialogOkBtn: document.getElementById("appDialogOkBtn"),
+    appDialogInputWrap: document.getElementById("appDialogInputWrap"),
+    appDialogInputLabel: document.getElementById("appDialogInputLabel"),
+    appDialogInput: document.getElementById("appDialogInput"),
+    appDialogHelp: document.getElementById("appDialogHelp"),
   };
 
   const app = {
@@ -262,6 +272,93 @@
     dom.status.textContent = msg || "";
     dom.status.classList.toggle("status--error", kind === "error");
   }
+
+  /** -------------------------
+   *  App dialogs (replace alert/confirm/prompt)
+   *  ------------------------- */
+  function dialogSupported() {
+    return !!dom.appDialog?.showModal;
+  }
+
+  function showAppDialog({
+    mode, // "alert" | "confirm" | "prompt"
+    title,
+    text,
+    okText = "OK",
+    cancelText = "Cancel",
+    danger = false,
+    inputLabel = "Input",
+    inputValue = "",
+    inputPlaceholder = "",
+    inputReadOnly = false,
+    helpText = "",
+  }) {
+    if (!dialogSupported()) {
+      if (mode === "confirm") return Promise.resolve(window.confirm(text || ""));
+      if (mode === "prompt") return Promise.resolve(window.prompt(text || "", inputValue) ?? null);
+      window.alert(text || "");
+      return Promise.resolve(true);
+    }
+
+    // Reset styles
+    dom.appDialogOkBtn.classList.remove("btn--danger", "btn--success", "btn--primary");
+    if (danger) dom.appDialogOkBtn.classList.add("btn--danger");
+    else if (mode === "confirm" || mode === "prompt") dom.appDialogOkBtn.classList.add("btn--success");
+    else dom.appDialogOkBtn.classList.add("btn--primary");
+
+    if (dom.appDialogTitle) dom.appDialogTitle.textContent = title || "Notice";
+    if (dom.appDialogText) dom.appDialogText.textContent = text || "";
+
+    // Input mode
+    const wantsInput = mode === "prompt";
+    if (dom.appDialogInputWrap) dom.appDialogInputWrap.hidden = !wantsInput;
+    if (dom.appDialogInputLabel) dom.appDialogInputLabel.textContent = inputLabel || "Input";
+    if (dom.appDialogInput) {
+      dom.appDialogInput.value = inputValue ?? "";
+      dom.appDialogInput.placeholder = inputPlaceholder || "";
+      dom.appDialogInput.readOnly = !!inputReadOnly;
+    }
+    if (dom.appDialogHelp) {
+      dom.appDialogHelp.hidden = !helpText;
+      dom.appDialogHelp.textContent = helpText || "";
+    }
+
+    // Buttons
+    dom.appDialogOkBtn.textContent = okText;
+    dom.appDialogCancelBtn.textContent = cancelText;
+    dom.appDialogCancelBtn.hidden = mode === "alert";
+    dom.appDialogCloseBtn.value = mode === "alert" ? "ok" : "cancel";
+
+    return new Promise((resolve) => {
+      const onClose = () => {
+        dom.appDialog.removeEventListener("close", onClose);
+        const rv = dom.appDialog.returnValue || "cancel";
+        if (mode === "confirm") resolve(rv === "ok");
+        else if (mode === "prompt") resolve(rv === "ok" ? (dom.appDialogInput?.value ?? "") : null);
+        else resolve(true);
+      };
+
+      dom.appDialog.addEventListener("close", onClose);
+      dom.appDialog.showModal();
+
+      if (wantsInput) {
+        window.setTimeout(() => {
+          try {
+            dom.appDialogInput?.focus();
+            dom.appDialogInput?.select?.();
+          } catch {}
+        }, 0);
+      } else {
+        window.setTimeout(() => {
+          try { dom.appDialogOkBtn?.focus(); } catch {}
+        }, 0);
+      }
+    });
+  }
+
+  const appAlert = (text, opts = {}) => showAppDialog({ mode: "alert", text, ...opts });
+  const appConfirm = (text, opts = {}) => showAppDialog({ mode: "confirm", text, ...opts });
+  const appPrompt = (text, opts = {}) => showAppDialog({ mode: "prompt", text, ...opts });
 
   function clamp(n, min, max) {
     return Math.max(min, Math.min(max, n));
@@ -1016,12 +1113,17 @@
     addWeek();
   });
 
-  dom.deleteWeekBtn?.addEventListener("click", () => {
+  dom.deleteWeekBtn?.addEventListener("click", async () => {
     if (app.program.weeks.length <= 1) {
-      window.alert("You can’t delete the last week.");
+      await appAlert("You can’t delete the last week.", { title: "Can’t delete" });
       return;
     }
-    const ok = window.confirm("Delete this week? This cannot be undone.");
+    const ok = await appConfirm("Delete this week? This cannot be undone.", {
+      title: "Delete week",
+      okText: "Delete",
+      cancelText: "Cancel",
+      danger: true,
+    });
     if (!ok) return;
     deleteWeek(app.currentWeek);
   });
@@ -1030,10 +1132,16 @@
     addCycle();
   });
 
-  dom.renameCycleBtn?.addEventListener("click", () => {
+  dom.renameCycleBtn?.addEventListener("click", async () => {
     const ci = getCurrentCycleIndex();
     const current = app.program.c?.[ci]?.n || `Meso ${ci + 1}`;
-    const next = window.prompt("Mesocycle name:", current);
+    const next = await appPrompt("Mesocycle name:", {
+      title: "Rename mesocycle",
+      inputLabel: "Name",
+      inputValue: current,
+      okText: "Save",
+      cancelText: "Cancel",
+    });
     if (next == null) return;
     if (!app.program.c?.[ci]) return;
     app.program.c[ci].n = next.trim() || current;
@@ -1041,29 +1149,34 @@
     renderWeekBar();
   });
 
-  dom.deleteCycleBtn?.addEventListener("click", () => {
+  dom.deleteCycleBtn?.addEventListener("click", async () => {
     const ci = getCurrentCycleIndex();
     if (app.program.c.length <= 1) {
-      window.alert("You can’t delete the last mesocycle.");
+      await appAlert("You can’t delete the last mesocycle.", { title: "Can’t delete" });
       return;
     }
-    const ok = window.confirm("Delete this mesocycle and all its weeks? This cannot be undone.");
+    const ok = await appConfirm("Delete this mesocycle and all its weeks? This cannot be undone.", {
+      title: "Delete mesocycle",
+      okText: "Delete",
+      cancelText: "Cancel",
+      danger: true,
+    });
     if (!ok) return;
     const res = deleteCycle(ci);
     if (!res.ok) {
-      window.alert("You can’t delete the last remaining week.");
+      await appAlert("You can’t delete the last remaining week.", { title: "Can’t delete" });
       return;
     }
     scheduleUrlUpdate();
     render();
   });
 
-  dom.addDayBtn?.addEventListener("click", () => {
+  dom.addDayBtn?.addEventListener("click", async () => {
     const wi = app.currentWeek;
     const week = app.program.weeks[wi];
     if (!week?.days) return;
     if (week.days.length >= 7) {
-      window.alert("Max 7 days per week.");
+      await appAlert("Max 7 days per week.", { title: "Limit reached" });
       return;
     }
     const dow = nextDowForWeek(week);
@@ -1096,10 +1209,26 @@
           setStatus("Link copied.");
         }
       } else {
-        window.prompt("Copy this link:", link);
+        await appPrompt("Copy this link:", {
+          title: "Copy link",
+          inputLabel: "Link",
+          inputValue: link,
+          inputReadOnly: true,
+          okText: "Done",
+          cancelText: "Close",
+          helpText: "Press Ctrl+C (or long-press on mobile) to copy.",
+        });
       }
     } catch {
-      window.prompt("Copy this link:", link);
+      await appPrompt("Copy this link:", {
+        title: "Copy link",
+        inputLabel: "Link",
+        inputValue: link,
+        inputReadOnly: true,
+        okText: "Done",
+        cancelText: "Close",
+        helpText: "Press Ctrl+C (or long-press on mobile) to copy.",
+      });
     }
   });
 
@@ -1215,7 +1344,7 @@
     window.location.href = `${window.location.origin}/`;
   });
 
-  dom.weekMount.addEventListener("click", (e) => {
+  dom.weekMount.addEventListener("click", async (e) => {
     // Prevent details <summary> toggling when using custom dropdowns inside it.
     if (e.target.closest(".ddWrap") && e.target.closest("summary")) {
       e.preventDefault();
@@ -1298,10 +1427,15 @@
       const di = Number(dayEl.getAttribute("data-d"));
       const week = app.program.weeks[wi];
       if (week?.days?.length <= 1) {
-        window.alert("You can’t delete the last day.");
+        await appAlert("You can’t delete the last day.", { title: "Can’t delete" });
         return;
       }
-      const ok = window.confirm("Delete this day? This cannot be undone.");
+      const ok = await appConfirm("Delete this day? This cannot be undone.", {
+        title: "Delete day",
+        okText: "Delete",
+        cancelText: "Cancel",
+        danger: true,
+      });
       if (!ok) return;
       deleteDay(wi, di);
     }
