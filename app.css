@@ -370,6 +370,7 @@ input[type="checkbox"]{ accent-color: var(--accent); }
   .week > details.day{
     flex: 0 0 calc(100% - 28px);
     scroll-snap-align: center;
+    min-width: 0; /* prevent content from widening the flex item */
   }
 }
 
@@ -379,6 +380,7 @@ details.day{
   border-radius:var(--radius);
   box-shadow: var(--shadow);
   overflow:visible; /* allow dropdown menus to escape card clipping */
+  min-width:0; /* critical: allow internal content to shrink/ellipsis instead of widening card */
 }
 details.day > summary{
   cursor:pointer;
@@ -409,7 +411,7 @@ details.day > summary::-webkit-details-marker{ display:none; }
 }
 .day__summaryItem{ display:flex; gap:6px; align-items:baseline; }
 .day__summaryKey{ font-size:11px; color: var(--muted); letter-spacing:.2px; }
-.day__summaryVal{ font-size:12px; font-family: var(--mono); }
+.day__summaryVal{ font-size:12px; font-family: var(--mono); min-width:0; }
 
 @media (max-width: 520px){
   .day__titleStack{ flex-direction:column; align-items:flex-start; gap:8px; }
@@ -420,16 +422,24 @@ details.day > summary::-webkit-details-marker{ display:none; }
 @media (max-width: 720px){
   .day__summary{
     display:grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap:6px 12px;
     width:100%;
     margin-left: 0;
+    min-width:0;
   }
   .day__summaryItem{
     justify-content:space-between;
+    min-width:0;
   }
   .day__summaryKey{ white-space:nowrap; }
-  .day__summaryVal{ white-space:nowrap; justify-self:end; }
+  .day__summaryVal{
+    white-space:nowrap;
+    justify-self:end;
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
 
   /* Iconify icons can flicker/disappear inside scroll-snap containers on iOS;
      use text-only on mobile for exercise action buttons. */
