@@ -5,46 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>powerlift.ing</title>
     <meta name="description" content="Shareable powerlifting program builder. State lives in the URL." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="./app.css" />
   </head>
   <body>
-    <!-- Inline icon sprite (avoids web-component/icon flicker inside scroll containers) -->
+    <!-- Inline icon sprite (Lucide). Kept as a sprite to avoid icon flicker inside scroll containers. -->
     <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden">
-      <symbol id="i-menu" viewBox="0 0 24 24" fill="currentColor">
-        <path fill="currentColor" d="M4 17.27v-1h16v1zm0-4.77v-1h16v1zm0-4.77v-1h16v1z"></path>
+      <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 5h16" />
+        <path d="M4 12h16" />
+        <path d="M4 19h16" />
       </symbol>
-      <symbol id="i-dark-mode" viewBox="0 0 24 24" fill="currentColor">
-        <path fill="currentColor" d="M12.058 20q-3.334 0-5.667-2.333T4.058 12q0-3.039 1.98-5.27t4.904-2.634q.081 0 .159.006t.153.017q-.506.706-.801 1.57T10.158 7.5q0 2.667 1.866 4.533t4.534 1.867q.951 0 1.813-.295t1.548-.801q.012.075.017.153t.006.159q-.384 2.923-2.615 4.903T12.057 20"></path>
+      <symbol id="i-dark-mode" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
       </symbol>
-      <symbol id="i-light-mode" viewBox="0 0 24 24" fill="currentColor">
-        <path fill="currentColor" d="M12 16q-1.671 0-2.835-1.164Q8 13.67 8 12t1.165-2.835T12 8t2.836 1.165T16 12t-1.164 2.836T12 16m-7-3.5H1.5v-1H5zm17.5 0H19v-1h3.5zM11.5 5V1.5h1V5zm0 17.5V19h1v3.5zM6.746 7.404l-2.16-2.098l.695-.745l2.111 2.135zM18.72 19.439l-2.117-2.141l.652-.702l2.16 2.098zM16.596 6.745l2.098-2.16l.745.695l-2.135 2.111zM4.562 18.72l2.14-2.117l.664.652l-2.08 2.179z"></path>
+      <symbol id="i-light-mode" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
       </symbol>
-      <symbol id="i-share" viewBox="0 0 24 24" fill="currentColor">
-        <path fill="currentColor" d="M16.61 21q-.994 0-1.687-.695q-.692-.696-.692-1.69q0-.15.132-.757l-7.197-4.273q-.324.374-.793.587t-1.007.213q-.986 0-1.676-.702T3 12t.69-1.683t1.676-.702q.537 0 1.007.213t.793.588l7.198-4.255q-.07-.194-.101-.385q-.032-.192-.032-.392q0-.993.697-1.689Q15.625 3 16.62 3t1.688.697T19 5.389t-.695 1.688t-1.69.692q-.542 0-1-.222t-.78-.597l-7.199 4.273q.07.194.101.386q.032.191.032.391t-.032.391t-.1.386l7.198 4.273q.323-.375.78-.597q.458-.222 1-.222q.994 0 1.69.696q.695.698.695 1.693t-.697 1.688t-1.692.692"></path>
+      <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2v13" />
+        <path d="m16 6-4-4-4 4" />
+        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
       </symbol>
-      <symbol id="i-edit" viewBox="0 0 24 24" fill="currentColor">
-        <path fill="currentColor" d="M4 20v-2.52L17.18 4.288q.155-.137.34-.212T17.907 4t.39.064q.19.063.35.228l1.067 1.074q.165.159.226.35q.06.19.06.38q0 .204-.068.39q-.069.185-.218.339L6.519 20zM17.504 7.589L19 6.111L17.889 5l-1.477 1.496z"></path>
+      <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+        <path d="m15 5 4 4" />
       </symbol>
-      <symbol id="i-add" viewBox="0 0 24 24" fill="currentColor">
-        <path fill="currentColor" d="M11.5 12.5H6v-1h5.5V6h1v5.5H18v1h-5.5V18h-1z"></path>
+      <symbol id="i-add" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14" />
+        <path d="M12 5v14" />
       </symbol>
-      <symbol id="i-delete-outline" viewBox="0 0 24 24" fill="currentColor">
-        <path fill="currentColor" d="M7.616 20q-.672 0-1.144-.472T6 18.385V6H5V5h4v-.77h6V5h4v1h-1v12.385q0 .69-.462 1.153T16.384 20zM17 6H7v12.385q0 .269.173.442t.443.173h8.769q.23 0 .423-.192t.192-.424zM9.808 17h1V8h-1zm3.384 0h1V8h-1zM7 6v13z"></path>
+      <symbol id="i-delete-outline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 11v6" />
+        <path d="M14 11v6" />
+        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+        <path d="M3 6h18" />
+        <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
       </symbol>
-      <symbol id="i-close" viewBox="0 0 24 24" fill="currentColor">
-        <path fill="currentColor" d="m6.4 18.308l-.708-.708l5.6-5.6l-5.6-5.6l.708-.708l5.6 5.6l5.6-5.6l.708.708l-5.6 5.6l5.6 5.6l-.708.708l-5.6-5.6z"></path>
+      <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
       </symbol>
-      <symbol id="i-expand-more" viewBox="0 0 24 24" fill="currentColor">
-        <path fill="currentColor" d="M12 14.702L6.692 9.394l.708-.707l4.6 4.6l4.6-4.6l.708.707z"></path>
+      <symbol id="i-expand-more" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m6 9 6 6 6-6" />
       </symbol>
-      <symbol id="i-ink-eraser" viewBox="0 0 24 24" fill="currentColor">
-        <path fill="currentColor" d="M16.712 18h4.673v1H15.71zM4.558 19l-1.414-1.413q-.478-.48-.491-1.137t.466-1.161L13.273 4.733q.479-.503 1.134-.494t1.134.489l4.09 4.09q.479.479.488 1.146q.01.668-.469 1.146L11.962 19z"></path>
+      <symbol id="i-ink-eraser" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21" />
+        <path d="m5.082 11.09 8.828 8.828" />
       </symbol>
     </svg>
 
@@ -60,13 +74,13 @@
         </div>
         <div class="topbar__right">
           <button id="menuBtn" class="iconBtn iconBtn--header" type="button" aria-label="Menu">
-            <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-menu"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-menu"></use></svg>
           </button>
           <button id="themeToggleBtn" class="iconBtn iconBtn--header" type="button" aria-label="Toggle theme">
-            <svg class="ico" aria-hidden="true" focusable="false"><use id="themeIcon" href="#i-dark-mode"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use id="themeIcon" href="#i-dark-mode"></use></svg>
           </button>
           <button id="copyLinkBtn" class="iconBtn iconBtn--header iconBtn--primary" type="button" aria-label="Copy link">
-            <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-share"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-share"></use></svg>
           </button>
         </div>
       </div>
@@ -79,22 +93,22 @@
             <div class="cyclePick" aria-label="Mesocycle">
               <div id="cycleDd" class="dd dd--compact" aria-label="Mesocycle"></div>
               <button id="renameCycleBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Rename mesocycle">
-                <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-edit"></use></svg>
+                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-edit"></use></svg>
               </button>
               <button id="addCycleBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Add mesocycle">
-                <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-add"></use></svg>
+                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-add"></use></svg>
               </button>
               <button id="deleteCycleBtn" class="iconBtn iconBtn--headerSm iconBtn--dangerSm" type="button" aria-label="Delete mesocycle" title="Delete mesocycle">
-                <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-delete-outline"></use></svg>
+                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-delete-outline"></use></svg>
               </button>
             </div>
             <div class="weekPick" aria-label="Week">
               <div id="weekDd" class="dd dd--compact" aria-label="Week"></div>
               <button id="addWeekBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Add week" title="Add week">
-                <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-add"></use></svg>
+                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-add"></use></svg>
               </button>
               <button id="deleteWeekBtn" class="iconBtn iconBtn--headerSm iconBtn--dangerSm" type="button" aria-label="Delete current week" title="Delete week">
-                <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-delete-outline"></use></svg>
+                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-delete-outline"></use></svg>
               </button>
             </div>
           </div>
@@ -105,7 +119,7 @@
               <div id="unitsDd" class="dd dd--compact" aria-label="Units"></div>
             </label>
             <button id="addDayBtn" class="btn btn--ghost btn--withIcon" type="button">
-              <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-add"></use></svg>
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-add"></use></svg>
               <span>Add day</span>
             </button>
           </div>
@@ -127,7 +141,7 @@
         <div class="drawer__top">
           <div class="drawer__title">Menu</div>
           <button id="menuCloseBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Close menu">
-            <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-close"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-close"></use></svg>
           </button>
         </div>
 
@@ -173,7 +187,7 @@
       <div class="dialog__top">
         <div class="dialog__title">Ready to share</div>
         <button id="shareDialogCloseBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Close">
-          <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-close"></use></svg>
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-close"></use></svg>
         </button>
       </div>
       <div class="dialog__body">
@@ -191,7 +205,7 @@
         <div class="dialog__top">
           <div id="appDialogTitle" class="dialog__title">Notice</div>
           <button id="appDialogCloseBtn" class="iconBtn iconBtn--headerSm" type="submit" value="cancel" aria-label="Close">
-            <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-close"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-close"></use></svg>
           </button>
         </div>
         <div class="dialog__body">

@@ -422,24 +422,9 @@
     return node;
   }
 
-  const ICON_MAP = {
-    "material-symbols-light:menu": "i-menu",
-    "material-symbols-light:dark-mode": "i-dark-mode",
-    "material-symbols-light:light-mode": "i-light-mode",
-    "material-symbols-light:share": "i-share",
-    "material-symbols-light:edit": "i-edit",
-    "material-symbols-light:add": "i-add",
-    "material-symbols-light:delete-outline": "i-delete-outline",
-    "material-symbols-light:close": "i-close",
-    "material-symbols-light:expand-more": "i-expand-more",
-    // legacy name we used previously; Iconify's actual name is ink-eraser
-    "material-symbols-light:ink_eraser": "i-ink-eraser",
-    "material-symbols-light:ink-eraser": "i-ink-eraser",
-  };
-
-  function icon(name) {
-    const id = ICON_MAP[name] || name;
-    const href = `#${id}`;
+  function icon(id) {
+    const safeId = typeof id === "string" ? id : "";
+    const href = `#${safeId}`;
     const use = svgEl("use", { href });
     // Some browsers still behave better when xlink:href is present too.
     try {
@@ -471,7 +456,7 @@
       },
       [
         el("span", { class: "dd__label", text: label(value) }),
-        el("span", { class: "dd__chev" }, [icon("material-symbols-light:expand-more")]),
+        el("span", { class: "dd__chev" }, [icon("i-expand-more")]),
       ]
     );
 
@@ -782,7 +767,7 @@
             title: "Clear exercise",
             "aria-label": "Clear exercise",
           },
-          [icon("material-symbols-light:ink-eraser"), el("span", { text: "Clear" })]
+          [icon("i-ink-eraser"), el("span", { text: "Clear" })]
         ),
         el(
           "button",
@@ -793,7 +778,7 @@
             title: "Delete exercise",
             "aria-label": "Delete exercise",
           },
-          [icon("material-symbols-light:delete-outline"), el("span", { text: "Delete" })]
+          [icon("i-delete-outline"), el("span", { text: "Delete" })]
         ),
       ]),
     ]
@@ -813,7 +798,7 @@
         "aria-label": "Add exercise",
         "data-action": "add-row",
       },
-      [icon("material-symbols-light:add"), el("span", { text: "Add exercise" })]
+      [icon("i-add"), el("span", { text: "Add exercise" })]
     );
 
     // Per-exercise delete/clear lives on each row; footer only adds.
@@ -874,7 +859,7 @@
         "aria-label": "Delete day",
         "data-action": "delete-day",
       },
-      [icon("material-symbols-light:delete-outline")]
+      [icon("i-delete-outline")]
     );
 
     const summary = el("summary", {}, [
