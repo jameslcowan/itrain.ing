@@ -1,20 +1,42 @@
 :root{
-  /* iOS-ish tokens (system colors + squircle-ish radii) */
-  --bg:#fafafa;
-  --panel:#ffffff;
-  --panel2:#f3f4f6;
-  --text:#0b0b0c;
-  --muted:#5b5b63;
-  --border:rgba(0,0,0,.10);
-  --border2:rgba(0,0,0,.14);
-  --accent:#007aff;   /* iOS system blue (light) */
-  --danger:#ff3b30;   /* iOS system red (light) */
-  --success:#34c759;  /* iOS system green (light) */
-  --shadow:0 12px 30px rgba(2,6,23,.10);
-  --ghost-border: rgba(0,0,0,.22);
-  --sb-track: color-mix(in srgb, var(--panel2) 85%, var(--panel));
-  --sb-thumb: color-mix(in srgb, var(--muted) 55%, var(--panel));
-  --sb-thumb-hover: color-mix(in srgb, var(--muted) 75%, var(--panel));
+  /* iOS System Colors (HIG) — light */
+  --ios-red:#FF3B30;
+  --ios-orange:#FF9500;
+  --ios-yellow:#FFCC00;
+  --ios-green:#34C759;
+  --ios-teal:#5AC8FA;
+  --ios-blue:#007AFF;
+  --ios-indigo:#5856D6;
+  --ios-purple:#AF52DE;
+  --ios-pink:#FF2D55;
+
+  --ios-gray1:#8E8E93;
+  --ios-gray2:#AEAEB2;
+  --ios-gray3:#C7C7CC;
+  --ios-gray4:#D1D1D6;
+  --ios-gray5:#E5E5EA;
+  --ios-gray6:#F2F2F7;
+
+  /* Base neutrals (needed for backgrounds/text) */
+  --ios-white:#FFFFFF;
+  --ios-black:#000000;
+
+  /* App semantic tokens (ONLY derived from iOS tokens above) */
+  --bg: var(--ios-gray6);
+  --panel: var(--ios-white);
+  --panel2: var(--ios-gray6);
+  --text: var(--ios-black);
+  --muted: var(--ios-gray1);
+  --border: var(--ios-gray4);
+  --border2: var(--ios-gray3);
+  --accent: var(--ios-blue);
+  --danger: var(--ios-red);
+  --success: var(--ios-green);
+  --shadow:0 12px 30px rgba(0,0,0,.10);
+  --ghost-border: var(--ios-gray3);
+  --sb-track: var(--ios-gray6);
+  --sb-thumb: var(--ios-gray3);
+  --sb-thumb-hover: var(--ios-gray2);
   --radius:18px;  /* cards */
   --radius2:14px; /* controls */
   --radius-pill:999px;
@@ -32,57 +54,122 @@
 
 @media (prefers-color-scheme: dark){
   :root{
-    /* Dark mode: iOS-ish system colors */
-    --bg:#0b0b0c;
-    --panel:#101012;
-    --panel2:#16161a;
-    --text:#f3f4f6;
-    --muted:#b3b3b8;
-    --border:rgba(255,255,255,.10);
-    --border2:rgba(255,255,255,.14);
-    --accent:#0a84ff;  /* iOS system blue (dark) */
-    --danger:#ff453a;  /* iOS system red (dark) */
-    --success:#30d158; /* iOS system green (dark) */
-    --shadow:0 10px 30px rgba(0,0,0,.35);
-    --ghost-border: rgba(255,255,255,.22);
-    --sb-track: color-mix(in srgb, var(--panel2) 70%, var(--panel));
-    --sb-thumb: color-mix(in srgb, var(--muted) 40%, var(--panel2));
-    --sb-thumb-hover: color-mix(in srgb, var(--muted) 55%, var(--panel2));
+    /* iOS System Colors (HIG) — dark */
+    --ios-red:#FF453A;
+    --ios-orange:#FF9F0A;
+    --ios-yellow:#FFD60A;
+    --ios-green:#30D158;
+    --ios-teal:#64D2FF;
+    --ios-blue:#0A84FF;
+    --ios-indigo:#5E5CE6;
+    --ios-purple:#BF5AF2;
+    --ios-pink:#FF2D55;
+
+    --ios-gray1:#8E8E93;
+    --ios-gray2:#636366;
+    --ios-gray3:#48484A;
+    --ios-gray4:#3A3A3C;
+    --ios-gray5:#2C2C2E;
+    --ios-gray6:#1C1C1E;
+
+    --ios-white:#FFFFFF;
+    --ios-black:#000000;
+
+    /* App semantic tokens (ONLY derived from iOS tokens above) */
+    --bg: var(--ios-black);
+    --panel: var(--ios-gray6);
+    --panel2: var(--ios-gray5);
+    --text: var(--ios-white);
+    --muted: var(--ios-gray1);
+    --border: var(--ios-gray5);
+    --border2: var(--ios-gray4);
+    --accent: var(--ios-blue);
+    --danger: var(--ios-red);
+    --success: var(--ios-green);
+    --shadow:0 10px 30px rgba(0,0,0,.50);
+    --ghost-border: var(--ios-gray3);
+    --sb-track: var(--ios-black);
+    --sb-thumb: var(--ios-gray4);
+    --sb-thumb-hover: var(--ios-gray3);
   }
 }
 
 /* Manual override (persists via localStorage) */
 html[data-theme="light"]{
-  /* Light theme */
-  --bg:#fafafa;
-  --panel:#ffffff;
-  --panel2:#f3f4f6;
-  --text:#0b0b0c;
-  --muted:#5b5b63;
-  --border:rgba(0,0,0,.10);
-  --border2:rgba(0,0,0,.14);
-  --accent:#007aff;
-  --danger:#ff3b30;
-  --success:#34c759;
-  --shadow:0 10px 30px rgba(2,6,23,.10);
+  /* Mirror the light iOS palette */
+  --ios-red:#FF3B30;
+  --ios-orange:#FF9500;
+  --ios-yellow:#FFCC00;
+  --ios-green:#34C759;
+  --ios-teal:#5AC8FA;
+  --ios-blue:#007AFF;
+  --ios-indigo:#5856D6;
+  --ios-purple:#AF52DE;
+  --ios-pink:#FF2D55;
+
+  --ios-gray1:#8E8E93;
+  --ios-gray2:#AEAEB2;
+  --ios-gray3:#C7C7CC;
+  --ios-gray4:#D1D1D6;
+  --ios-gray5:#E5E5EA;
+  --ios-gray6:#F2F2F7;
+
+  --ios-white:#FFFFFF;
+  --ios-black:#000000;
+
+  --bg: var(--ios-gray6);
+  --panel: var(--ios-white);
+  --panel2: var(--ios-gray6);
+  --text: var(--ios-black);
+  --muted: var(--ios-gray1);
+  --border: var(--ios-gray4);
+  --border2: var(--ios-gray3);
+  --accent: var(--ios-blue);
+  --danger: var(--ios-red);
+  --success: var(--ios-green);
+  --shadow:0 12px 30px rgba(0,0,0,.10);
+  --ghost-border: var(--ios-gray3);
+  --sb-track: var(--ios-gray6);
+  --sb-thumb: var(--ios-gray3);
+  --sb-thumb-hover: var(--ios-gray2);
 }
 html[data-theme="dark"]{
-  /* Dark theme */
-  --bg:#0b0b0c;
-  --panel:#101012;
-  --panel2:#16161a;
-  --text:#f3f4f6;
-  --muted:#b3b3b8;
-  --border:rgba(255,255,255,.10);
-  --border2:rgba(255,255,255,.14);
-  --accent:#0a84ff;
-  --danger:#ff453a;
-  --success:#30d158;
-  --shadow:0 10px 30px rgba(0,0,0,.35);
-  --ghost-border: rgba(255,255,255,.22);
-  --sb-track: color-mix(in srgb, var(--panel2) 70%, var(--panel));
-  --sb-thumb: color-mix(in srgb, var(--muted) 40%, var(--panel2));
-  --sb-thumb-hover: color-mix(in srgb, var(--muted) 55%, var(--panel2));
+  /* Mirror the dark iOS palette */
+  --ios-red:#FF453A;
+  --ios-orange:#FF9F0A;
+  --ios-yellow:#FFD60A;
+  --ios-green:#30D158;
+  --ios-teal:#64D2FF;
+  --ios-blue:#0A84FF;
+  --ios-indigo:#5E5CE6;
+  --ios-purple:#BF5AF2;
+  --ios-pink:#FF2D55;
+
+  --ios-gray1:#8E8E93;
+  --ios-gray2:#636366;
+  --ios-gray3:#48484A;
+  --ios-gray4:#3A3A3C;
+  --ios-gray5:#2C2C2E;
+  --ios-gray6:#1C1C1E;
+
+  --ios-white:#FFFFFF;
+  --ios-black:#000000;
+
+  --bg: var(--ios-black);
+  --panel: var(--ios-gray6);
+  --panel2: var(--ios-gray5);
+  --text: var(--ios-white);
+  --muted: var(--ios-gray1);
+  --border: var(--ios-gray5);
+  --border2: var(--ios-gray4);
+  --accent: var(--ios-blue);
+  --danger: var(--ios-red);
+  --success: var(--ios-green);
+  --shadow:0 10px 30px rgba(0,0,0,.50);
+  --ghost-border: var(--ios-gray3);
+  --sb-track: var(--ios-black);
+  --sb-thumb: var(--ios-gray4);
+  --sb-thumb-hover: var(--ios-gray3);
 }
 
 *{ box-sizing:border-box; }
@@ -375,7 +462,7 @@ input[type="checkbox"]{ accent-color: var(--accent); }
   color:var(--muted);
   margin: 2px 0 10px;
 }
-.status--error{ color: #ffb3b3; }
+.status--error{ color: var(--danger); }
 
 .week{
   display:flex;
@@ -531,7 +618,7 @@ details.day > summary::-webkit-details-marker{ display:none; }
   overflow: hidden;
 }
 .dialog::backdrop{
-  background: color-mix(in srgb, #000 55%, transparent);
+  background: color-mix(in srgb, var(--ios-black) 55%, transparent);
   backdrop-filter: blur(8px);
 }
 .dialog__panel{ display:flex; flex-direction:column; }
