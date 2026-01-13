@@ -1230,12 +1230,14 @@
   function openMenu() {
     if (!dom.menuOverlay) return;
     dom.menuOverlay.hidden = false;
+    document.documentElement.classList.add("menuOpen");
     document.body.style.overflow = "hidden";
   }
 
   function closeMenu() {
     if (!dom.menuOverlay) return;
     dom.menuOverlay.hidden = true;
+    document.documentElement.classList.remove("menuOpen");
     document.body.style.overflow = "";
   }
 
