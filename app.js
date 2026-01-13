@@ -483,6 +483,8 @@
 
     btn.addEventListener("click", (e) => {
       e.preventDefault();
+      // When the menu drawer is open, don't allow dropdowns behind it to open.
+      if (document.documentElement.classList.contains("menuOpen")) return;
       toggle();
     });
 
@@ -1229,6 +1231,14 @@
 
   function openMenu() {
     if (!dom.menuOverlay) return;
+    // Ensure any open dropdown menu doesn't float above the drawer overlay.
+    try {
+      if (openDropdown) {
+        openDropdown.btn.setAttribute("aria-expanded", "false");
+        openDropdown.menu.hidden = true;
+        openDropdown = null;
+      }
+    } catch {}
     dom.menuOverlay.hidden = false;
     document.documentElement.classList.add("menuOpen");
     document.body.style.overflow = "hidden";
@@ -1317,6 +1327,14 @@
   }
 
   function toggleTheme() {
+    // If a dropdown is open, close it before toggling theme to avoid z-index/overlay weirdness.
+    try {
+      if (openDropdown) {
+        openDropdown.btn.setAttribute("aria-expanded", "false");
+        openDropdown.menu.hidden = true;
+        openDropdown = null;
+      }
+    } catch {}
     const effective = getEffectiveTheme();
     const next = effective === "dark" ? "light" : "dark";
     setStoredTheme(next);

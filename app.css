@@ -266,16 +266,19 @@ input[type="checkbox"]{ accent-color: var(--accent); }
   min-width: 44px;
   min-height: 44px;
   padding: 0;
+  border: none;
+  background: transparent;
 }
 .brand__logo{
   width:20px;
   height:20px;
   display:block;
-  /* The Lucide dumbbell has a lot of visual whitespace; scale it up without affecting layout. */
-  transform: scale(1.45);
+  /* Make it feel like a purposeful app mark without affecting layout. */
+  transform: scale(1.35);
   transform-origin: center;
   /* Match icon weight to the rest of the UI */
   stroke-width: 2.25px;
+  color: var(--text);
 }
 .brand__logo *{ vector-effect: non-scaling-stroke; }
 .brand:hover{ opacity:.92; }
@@ -847,10 +850,23 @@ html[data-theme="light"]{ color-scheme: light; }
 }
 
 .iconBtn--header{
-  border-radius:var(--radius2);
+  border-radius:var(--radius-pill);
   padding:9px 10px;
   background: color-mix(in srgb, var(--panel) 78%, transparent);
 }
+.iconBtn--bare{
+  border:none;
+  background:transparent;
+  padding:0;
+  min-width:44px;
+  min-height:44px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color: var(--text);
+}
+.iconBtn--bare:hover{ opacity:.85; }
+.iconBtn--bare:active{ transform: translateY(1px); }
 .iconBtn--headerSm{
   border-radius:var(--radius2);
   padding:7px 8px;
