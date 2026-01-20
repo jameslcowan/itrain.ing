@@ -54,6 +54,45 @@ Program state schema (v1)
   ]
 }
 
+Example program JSON (minimal, 3 days/week, 1 week, kg)
+{
+  "v": 1,
+  "u": "kg",
+  "c": [{ "n": "Meso 1" }],
+  "weeks": [
+    {
+      "c": 0,
+      "days": [
+        {
+          "label": "DAY 1 - MON",
+          "rows": [
+            { "ex": "Squat", "mode": "", "sets": "4", "reps": "5", "load": "", "pct": "", "rpe": "7.5", "rest": "03:00" },
+            { "ex": "Bench Press", "mode": "", "sets": "4", "reps": "6", "load": "", "pct": "", "rpe": "7.5", "rest": "02:30" }
+          ]
+        },
+        {
+          "label": "DAY 2 - WED",
+          "rows": [
+            { "ex": "Deadlift", "mode": "", "sets": "3", "reps": "5", "load": "", "pct": "", "rpe": "7.5", "rest": "03:30" },
+            { "ex": "Overhead Press", "mode": "", "sets": "3", "reps": "8", "load": "", "pct": "", "rpe": "8", "rest": "02:00" }
+          ]
+        },
+        {
+          "label": "DAY 3 - FRI",
+          "rows": [
+            { "ex": "Squat", "mode": "Paused (2s)", "sets": "3", "reps": "4", "load": "", "pct": "", "rpe": "8", "rest": "03:00" },
+            { "ex": "Bench Press", "mode": "Paused (1s)", "sets": "3", "reps": "5", "load": "", "pct": "", "rpe": "8", "rest": "02:30" }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+Full example (multi-mesocycle, 4 weeks each, 4 days/week)
+- See: https://powerlift.ing/ai.txt
+- Or use: https://powerlift.ing/ai.html (click “Insert full example JSON” then “Generate link”)
+
 Notes
 - Keys are intentionally short for URL size.
 - Numeric values are stored as strings in the state.
