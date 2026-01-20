@@ -281,6 +281,12 @@ input[type="checkbox"]{ accent-color: var(--accent); }
   color: var(--text);
 }
 .brand__logo *{ vector-effect: non-scaling-stroke; }
+.brand__wordmark{
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: var(--text);
+}
 .brand:hover{ opacity:.92; }
 
 /* Screen-reader only */
