@@ -2,8 +2,12 @@
 (() => {
   "use strict";
 
-  const ROUTE_PREFIX = "/p/";
-  const HASH_PREFIX = "#/p/";
+  // New routing (clean paths)
+  const ROUTE_PREFIX = "/program/";
+  
+  // Legacy routing (for backward compatibility)
+  const LEGACY_ROUTE_PREFIX = "/p/";
+  const LEGACY_HASH_PREFIX = "#/p/";
 
   /** -------------------------
    *  State model + defaults
@@ -150,41 +154,109 @@
     return b64 + pad;
   }
 
+  // V2 Optimized encoding: omits empty fields, uses shorter keys
+  function compactState(state) {
+    return {
+      v: 2, // version marker
+      u: state.u,
+      c: state.c,
+      weeks: state.weeks.map(w => ({
+        c: w.c,
+        days: w.days.map(d => {
+          const day = {
+            d: dowFromLabel(d.label) || "MON", // just DOW, not "DAY 1 - MON"
+            rows: d.rows.map(r => {
+              const row = {};
+              if (r.ex) row.ex = r.ex;
+              if (r.mode) row.m = r.mode;
+              if (r.sets) row.s = r.sets;
+              if (r.reps) row.r = r.reps;
+              if (r.load) row.l = r.load;
+              if (r.pct) row.p = r.pct;
+              if (r.rpe) row.e = r.rpe;
+              if (r.rest) row.t = r.rest;
+              return row;
+            })
+          };
+          return day;
+        })
+      }))
+    };
+  }
+
+  function expandState(compact) {
+    return {
+      v: 1, // convert back to v1 for internal use
+      u: compact.u,
+      c: compact.c,
+      weeks: compact.weeks.map((w, wi) => ({
+        c: w.c,
+        days: w.days.map((d, di) => ({
+          label: labelForDay(di, d.d || "MON"),
+          rows: d.rows.map(r => ({
+            ex: r.ex || "",
+            mode: r.m || "",
+            sets: r.s || "",
+            reps: r.r || "",
+            load: r.l || "",
+            pct: r.p || "",
+            rpe: r.e || "",
+            rest: r.t || "",
+          }))
+        }))
+      }))
+    };
+  }
+
+  // Encode using V2 optimized format
   function encodeState(state) {
-    const json = JSON.stringify(state);
+    const compact = compactState(state);
+    const json = JSON.stringify(compact);
     const bytes = LZString.compressToUint8Array(json);
     return base64urlEncode(bytesToBase64(bytes));
   }
 
+  // Decode with auto-detection (V1 or V2)
   function decodeState(str) {
     const b64 = base64urlDecode(str);
     const bytes = base64ToBytes(b64);
     const json = LZString.decompressFromUint8Array(bytes);
     if (!json) throw new Error("Invalid state");
-    return JSON.parse(json);
+    
+    const parsed = JSON.parse(json);
+    
+    // V2 format has version marker
+    if (parsed.v === 2) {
+      return expandState(parsed);
+    }
+    
+    // V1 format (legacy) - return as-is
+    return parsed;
   }
 
   /** -------------------------
    *  Routing helpers
    *  ------------------------- */
 
-  function getRouteMode() {
-    const path = window.location.pathname || "/";
-    if (path.startsWith(ROUTE_PREFIX)) return "path";
-    return "hash";
-  }
-
   function readStateFromUrl() {
     const path = window.location.pathname || "/";
     const hash = window.location.hash || "";
 
+    // Try new format first: /program/STATE
     if (path.startsWith(ROUTE_PREFIX)) {
       const enc = decodeURIComponent(path.slice(ROUTE_PREFIX.length));
       return enc || null;
     }
 
-    if (hash.startsWith(HASH_PREFIX)) {
-      const enc = decodeURIComponent(hash.slice(HASH_PREFIX.length));
+    // Legacy format: /p/STATE
+    if (path.startsWith(LEGACY_ROUTE_PREFIX)) {
+      const enc = decodeURIComponent(path.slice(LEGACY_ROUTE_PREFIX.length));
+      return enc || null;
+    }
+
+    // Legacy format: /#/p/STATE
+    if (hash.startsWith(LEGACY_HASH_PREFIX)) {
+      const enc = decodeURIComponent(hash.slice(LEGACY_HASH_PREFIX.length));
       return enc || null;
     }
 
@@ -192,13 +264,8 @@
   }
 
   function writeStateToUrl(enc) {
-    const routeMode = getRouteMode();
-    if (routeMode === "path") {
-      const url = `${ROUTE_PREFIX}${encodeURIComponent(enc)}`;
-      history.replaceState(null, "", url);
-      return;
-    }
-    const url = `/${HASH_PREFIX}${encodeURIComponent(enc)}`;
+    // Always write new clean format: /program/STATE
+    const url = `${ROUTE_PREFIX}${encodeURIComponent(enc)}`;
     history.replaceState(null, "", url);
   }
 

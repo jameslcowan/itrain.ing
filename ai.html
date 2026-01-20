@@ -73,7 +73,7 @@
             <div id="msg" class="aiMsg"></div>
 
             <div class="field">
-              <label for="outPath">Pretty path link (may not work on all hosts)</label>
+              <label for="outPath">Clean link (new format - recommended)</label>
               <div class="aiInputRow">
                 <input class="input" id="outPath" type="text" readonly value="" placeholder="https://powerlift.ing/p/..." />
                 <button class="iconBtn iconBtn--bare aiCopyBtn" id="copyPathBtn" type="button" aria-label="Copy pretty link" title="Copy">
@@ -86,7 +86,7 @@
             </div>
 
             <div class="field">
-              <label for="outHash">Hash link (most compatible)</label>
+              <label for="outHash">Legacy link (old format - for reference)</label>
               <div class="aiInputRow">
                 <input class="input" id="outHash" type="text" readonly value="" placeholder="https://powerlift.ing/#/p/..." />
                 <button class="iconBtn iconBtn--bare aiCopyBtn" id="copyHashBtn" type="button" aria-label="Copy hash link" title="Copy">
@@ -149,6 +149,15 @@
       (function () {
         "use strict";
 
+        const DOW = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+
+        function dowFromLabel(label) {
+          if (typeof label !== "string") return "";
+          const m = label.trim().match(/-\s*([A-Z]{3})\s*$/);
+          const val = m ? m[1] : "";
+          return DOW.includes(val) ? val : "";
+        }
+
         function bytesToBase64(bytes) {
           let binary = "";
           const chunk = 0x8000;
@@ -162,12 +171,43 @@
         function base64urlEncode(b64) {
           return b64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
         }
+        // V2 Optimized encoding: omits empty fields, uses shorter keys
+        function compactState(state) {
+          return {
+            v: 2, // version marker
+            u: state.u,
+            c: state.c,
+            weeks: state.weeks.map(w => ({
+              c: w.c,
+              days: w.days.map(d => {
+                const day = {
+                  d: dowFromLabel(d.label) || "MON", // just DOW, not "DAY 1 - MON"
+                  rows: d.rows.map(r => {
+                    const row = {};
+                    if (r.ex) row.ex = r.ex;
+                    if (r.mode) row.m = r.mode;
+                    if (r.sets) row.s = r.sets;
+                    if (r.reps) row.r = r.reps;
+                    if (r.load) row.l = r.load;
+                    if (r.pct) row.p = r.pct;
+                    if (r.rpe) row.e = r.rpe;
+                    if (r.rest) row.t = r.rest;
+                    return row;
+                  })
+                };
+                return day;
+              })
+            }))
+          };
+        }
 
         function encodeState(state) {
-          const json = JSON.stringify(state); // already “minified”
+          const compact = compactState(state);
+          const json = JSON.stringify(compact);
           const bytes = LZString.compressToUint8Array(json);
           return base64urlEncode(bytesToBase64(bytes));
         }
+
 
         function looksLikeProgram(obj) {
           if (!obj || typeof obj !== "object") return false;
@@ -216,10 +256,10 @@
 
           try {
             const enc = encodeState(obj);
-            outPath.value = "https://powerlift.ing/p/" + encodeURIComponent(enc);
+            outPath.value = "https://powerlift.ing/program/" + encodeURIComponent(enc);
             outHash.value = "https://powerlift.ing/#/p/" + encodeURIComponent(enc);
-            setOk("Link generated.");
-            if (openInAppBtn) openInAppBtn.href = outHash.value; // hash is the reliable default
+            setOk("Link generated (using new /program/ format).");
+            if (openInAppBtn) openInAppBtn.href = outPath.value; // use new clean format
           } catch (e) {
             setError("Could not encode program. " + (e && e.message ? e.message : ""));
           }

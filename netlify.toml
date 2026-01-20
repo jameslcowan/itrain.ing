@@ -2,16 +2,30 @@
   publish = "."
 
 [[headers]]
-  for = "/p/*"
+  for = "/program/*"
   [headers.values]
     # Shared-program pages are effectively infinite/user-generated and should not be indexed.
     X-Robots-Tag = "noindex, nofollow, noarchive"
 
+[[headers]]
+  for = "/p/*"
+  [headers.values]
+    # Legacy route - keep noindex
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+
+# New clean routing
+[[redirects]]
+  from = "/program/*"
+  to = "/index.html"
+  status = 200
+
+# Legacy routing (backward compatibility)
 [[redirects]]
   from = "/p/*"
   to = "/index.html"
   status = 200
 
+# Catch-all (must be last)
 [[redirects]]
   from = "/*"
   to = "/index.html"
