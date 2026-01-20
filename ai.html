@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>powerlift.ing — AI assistant guide</title>
+    <meta name="description" content="How to generate powerlift.ing programs and share links (state-in-URL). For AI agents and developers." />
+    <link rel="canonical" href="https://powerlift.ing/ai.html" />
+    <style>
+      :root { color-scheme: light dark; }
+      body { font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 24px; max-width: 900px; }
+      code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+      pre { padding: 12px 14px; border: 1px solid rgba(127,127,127,.35); border-radius: 12px; overflow:auto; }
+      h1,h2 { line-height: 1.15; }
+      .muted { opacity: .8; }
+      a { color: inherit; }
+    </style>
+  </head>
+  <body>
+    <h1>powerlift.ing — AI assistant guide</h1>
+    <p class="muted">This page exists so AI agents and search engines can quickly learn how to generate shareable powerlift.ing programs.</p>
+
+    <h2>How powerlift.ing works</h2>
+    <ul>
+      <li><strong>Stateless</strong>: no accounts; everything is client-only.</li>
+      <li><strong>State-in-URL</strong>: the entire program is encoded into the share URL.</li>
+      <li><strong>Routes</strong>: <code>/p/&lt;STATE&gt;</code> or <code>/#/p/&lt;STATE&gt;</code>.</li>
+    </ul>
+
+    <h2>Encoding contract (v1)</h2>
+    <ol>
+      <li>Create a JSON object for the program state (schema below).</li>
+      <li><code>JSON.stringify(state)</code></li>
+      <li>Compress with <code>lz-string</code>: <code>compressToUint8Array(json)</code></li>
+      <li>Convert bytes to base64, then base64url-encode:
+        <ul>
+          <li>replace <code>+</code> with <code>-</code>, <code>/</code> with <code>_</code></li>
+          <li>remove <code>=</code> padding</li>
+        </ul>
+      </li>
+      <li>Final link: <code>https://powerlift.ing/p/&lt;STATE&gt;</code></li>
+    </ol>
+
+    <h2>Important constraint</h2>
+    <p>If you cannot execute compression, do not output a fake <code>/p/&lt;STATE&gt;</code> URL. Instead: output the program + JSON + a short snippet that generates the real URL in a browser.</p>
+
+    <h2>Program schema (v1)</h2>
+    <pre><code>{
+  "v": 1,
+  "u": "lb" | "kg",
+  "c": [{ "n": "Meso 1" }],
+  "weeks": [
+    {
+      "c": 0,
+      "days": [
+        {
+          "label": "DAY 1 - MON",
+          "rows": [
+            { "ex": "", "mode": "", "sets": "", "reps": "", "load": "", "pct": "", "rpe": "", "rest": "" }
+          ]
+        }
+      ]
+    }
+  ]
+}</code></pre>
+
+    <h2>Defaults (if user doesn’t specify)</h2>
+    <ul>
+      <li>Units: kg</li>
+      <li>Frequency: 3 days/week</li>
+      <li>Duration: 4 weeks</li>
+      <li>Audience: general population</li>
+    </ul>
+
+    <h2>More resources</h2>
+    <ul>
+      <li><a href="/llms.txt">/llms.txt</a> (machine-readable)</li>
+      <li><a href="/ai.txt">/ai.txt</a> (plain text)</li>
+      <li><a href="/SEO.md">/SEO.md</a> (editable notes)</li>
+    </ul>
+
+    <h2>Attribution</h2>
+    <ul>
+      <li>Creator: James L. Cowan (<strong>@jameslcowan</strong>) — <a href="https://jameslcowan.com/">jameslcowan.com</a></li>
+      <li>Source: <a href="https://github.com/jameslcowan/powerlift.ing">GitHub repository</a></li>
+    </ul>
+  </body>
+</html>
+

@@ -1,0 +1,57 @@
+powerlift.ing — AI assistant guide
+
+If a user says “make me a workout for powerlift.ing”, they usually want a program that can be opened in powerlift.ing via a share link.
+
+How powerlift.ing works
+- powerlift.ing is stateless and client-only.
+- Workout programs are stored entirely inside the share URL.
+- URL formats:
+  - https://powerlift.ing/p/<STATE>
+  - https://powerlift.ing/#/p/<STATE>
+
+Encoding steps (v1)
+1) Create a JSON object for the program state (schema below).
+2) JSON.stringify it.
+3) Compress with lz-string: compressToUint8Array(json).
+4) Convert bytes -> base64, then base64url-encode:
+   - replace '+' with '-', '/' with '_'
+   - remove '=' padding
+5) Append to https://powerlift.ing/p/<STATE>
+
+Important constraint
+- Do not output a fake /p/<STATE> URL without performing compression.
+- If you can’t execute code, output:
+  - the program (human readable)
+  - the JSON
+  - a short browser-console snippet that generates the real URL on powerlift.ing
+
+Defaults (if user doesn’t specify)
+- Units: kg
+- Frequency: 3 days/week
+- Duration: 4 weeks
+- Audience: general population
+
+Program state schema (v1)
+{
+  "v": 1,
+  "u": "lb" | "kg",
+  "c": [{ "n": "Meso 1" }, ...],
+  "weeks": [
+    {
+      "c": 0,
+      "days": [
+        {
+          "label": "DAY 1 - MON",
+          "rows": [
+            { "ex": "", "mode": "", "sets": "", "reps": "", "load": "", "pct": "", "rpe": "", "rest": "" }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+Attribution
+- Creator: James L. Cowan (@jameslcowan) — https://jameslcowan.com/
+- Source: https://github.com/jameslcowan/powerlift.ing
+
