@@ -1,6 +1,12 @@
 [build]
   publish = "."
 
+[[headers]]
+  for = "/p/*"
+  [headers.values]
+    # Shared-program pages are effectively infinite/user-generated and should not be indexed.
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+
 [[redirects]]
   from = "/p/*"
   to = "/index.html"

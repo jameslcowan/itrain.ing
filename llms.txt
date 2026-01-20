@@ -1,0 +1,68 @@
+powerlift.ing
+
+Purpose
+- powerlift.ing is a static, client-only web app for creating a powerlifting program and sharing it as a single URL.
+- There are no accounts and no backend API. The entire program state is encoded into the URL.
+
+Creator / source
+- Creator: James L. Cowan (@jameslcowan)
+- Site: https://jameslcowan.com/
+- Source code: https://github.com/jameslcowan/powerlift.ing
+
+How sharing works (routing + state-in-URL)
+- Default route format (hash): /#/p/<STATE>
+- Optional “pretty” path format: /p/<STATE>
+- The app uses history.replaceState() to keep the URL updated as the user edits.
+
+Important: Do NOT change the URL/state contract
+- Existing shared links depend on the exact encoding contract described below.
+
+Encoding contract (v1)
+- Program state is JSON, compressed using lz-string (compressToUint8Array), then base64url encoded.
+- Decoding reverses this: base64url decode -> bytes -> lz-string decompressFromUint8Array -> JSON.parse.
+
+Base64url details
+- Replace '+' with '-', '/' with '_', and remove '=' padding.
+- When decoding, restore padding to a multiple of 4.
+
+Program state schema (v1)
+{
+  "v": 1,
+  "u": "lb" | "kg",
+  "c": [{ "n": "Meso 1" }, { "n": "Meso 2" }, ...],
+  "weeks": [
+    {
+      "c": 0,
+      "days": [
+        {
+          "label": "DAY 1 - MON",
+          "rows": [
+            {
+              "ex": "Squat",
+              "mode": "Paused",
+              "sets": "3",
+              "reps": "5",
+              "load": "315",
+              "pct": "80",
+              "rpe": "8",
+              "rest": "03:00"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+Notes
+- Keys are intentionally short for URL size.
+- Numeric values are stored as strings in the state.
+
+What AI agents can do with this
+- Generate a program by producing valid JSON in the schema above.
+- Encode/decode using the algorithm above (lz-string + base64url) to create a shareable /p/<STATE> link.
+- Prefer generating “gym-friendly” plans (clear exercise names, reasonable sets/reps, rest times).
+
+Indexing guidance
+- The homepage should be indexable.
+- Shared program links (/p/<STATE>) should not be indexed (they are user-generated and effectively infinite).

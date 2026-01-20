@@ -1,0 +1,11 @@
+/* TEAM */
+Creator: James L. Cowan
+Handle: @jameslcowan
+Site: https://jameslcowan.com/
+GitHub: https://github.com/jameslcowan
+Source: https://github.com/jameslcowan/powerlift.ing
+
+/* SITE */
+Site: powerlift.ing
+Stack: Vanilla HTML/CSS/JS (static)
+Routing: /#/p/<STATE> and /p/<STATE> (state-in-URL)
