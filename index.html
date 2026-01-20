@@ -57,6 +57,62 @@
         }
       }
     </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is powerlift.ing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "powerlift.ing is a free tool to create and share powerlifting programs instantly. No signup, no spreadsheets — just share a link. Your entire program is encoded in the URL, so you can send it to coaches, training partners, or teammates with a single link."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I share my powerlifting program?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Click the share icon in the header to copy your program link. Your entire program is automatically saved in the URL as you edit. Send that link to anyone — when they open it, they'll see your exact program with all exercises, sets, reps, RPE, and training details."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is powerlift.ing free to use?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, 100% free. No account required, no premium upsells, no data collection. You can create unlimited programs and share them with anyone."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What can I track in my program?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can track all variables for each exercise: sets, reps, load (weight), percentage of 1RM, RPE (Rate of Perceived Exertion), rest periods, and exercise variations (e.g., 'Paused squat', 'Close grip bench'). You can also organize training into multiple mesocycles (hypertrophy, strength, peaking, etc.)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my data private?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Your program is encoded in the URL you share. Nothing is stored on our servers. However, anyone with your link can see your program, so only share with people you trust (coaches, training partners)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use powerlift.ing offline?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Once the page loads, you can edit your program without an internet connection. All changes are saved to the URL, which updates automatically as you type."
+            }
+          }
+        ]
+      }
+    </script>
     <link rel="stylesheet" href="/app.css" />
   </head>
   <body>
@@ -205,36 +261,52 @@
 
         <div class="drawer__body">
           <details class="drawerSection" open>
-            <summary>What is this?</summary>
+            <summary>What is powerlift.ing?</summary>
             <p>
-              powerlift.ing is a quick way to write a powerlifting plan you can actually use in the gym — and share with a coach or training partner.
+              A free tool to create and share powerlifting programs instantly. No signup, no spreadsheets — just share a link.
             </p>
             <p>
-              The best part: when you tap the Share button, your plan is already saved in the link. No accounts. No spreadsheets.
+              Built for athletes, coaches, and training partners who want a simple way to plan training blocks and share them.
             </p>
           </details>
           <details class="drawerSection">
-            <summary>How to use it (30 seconds)</summary>
+            <summary>Quick Start (30 seconds)</summary>
             <ul>
-              <li><strong>Pick your meso + week</strong> at the top (example: “Hypertrophy”, Week 2).</li>
-              <li><strong>Add days</strong> with “Add day”, then set the day of the week (MON/TUE/etc).</li>
-              <li><strong>Add exercises</strong> inside a day with “Add exercise”. Fill in sets, reps, load, %1RM, RPE, and rest as needed.</li>
-              <li><strong>Clear vs Delete</strong>: “Clear” wipes a row; “Delete” removes it.</li>
-              <li><strong>Share</strong>: tap the Share icon in the header. Send that link — opening it recreates the exact plan.</li>
+              <li><strong>Select your mesocycle and week</strong> at the top (e.g., "Hypertrophy", Week 1).</li>
+              <li><strong>Add training days</strong> with "Add day" and set the day of week.</li>
+              <li><strong>Add exercises</strong> and fill in sets, reps, load, %1RM, RPE, and rest.</li>
+              <li><strong>Share your program</strong>: Click the share icon → copy link → send to anyone.</li>
+            </ul>
+            <p style="margin-top:10px; font-size:13px; color:var(--muted);">
+              <strong>Tip:</strong> Your program auto-saves to the URL as you type. The link <em>is</em> your program.
+            </p>
+          </details>
+          <details class="drawerSection">
+            <summary>Features</summary>
+            <ul>
+              <li><strong>Multiple mesocycles</strong>: Plan your entire training year (hypertrophy → strength → peaking).</li>
+              <li><strong>Track all variables</strong>: Sets, reps, load, %1RM, RPE, rest periods, exercise variations.</li>
+              <li><strong>Share instantly</strong>: One link contains your entire program — no exports, no files.</li>
+              <li><strong>Works offline</strong>: Once loaded, edit without internet. Changes save to URL.</li>
+              <li><strong>100% free</strong>: No account required, no premium upsells, no data collection.</li>
             </ul>
           </details>
           <details class="drawerSection">
-            <summary>Why this helps</summary>
-            <ul>
-              <li><strong>No more “where’s my program?”</strong> — your plan lives in one link.</li>
-              <li><strong>Easy edits</strong> mid-cycle without breaking your structure.</li>
-              <li><strong>Coach-friendly</strong>: paste a link, get feedback, iterate.</li>
-            </ul>
+            <summary>Privacy & Data</summary>
+            <p>
+              Your program is encoded in the URL you share. Nothing is stored on our servers.
+            </p>
+            <p>
+              <strong>Important:</strong> Anyone with your link can see your program. Only share with people you trust (coaches, training partners).
+            </p>
           </details>
           <details class="drawerSection">
-            <summary>Privacy</summary>
+            <summary>About</summary>
             <p>
-              Your plan is stored in the link you share. Anyone with the link can see it — so only share with people you trust.
+              Created by <a href="https://jameslcowan.com/" target="_blank" rel="noopener" style="color:var(--accent);">James L. Cowan</a> as a free tool for the powerlifting community.
+            </p>
+            <p style="font-size:13px; color:var(--muted); margin-top:8px;">
+              Open source on <a href="https://github.com/jameslcowan/powerlift.ing" target="_blank" rel="noopener" style="color:var(--accent);">GitHub</a>.
             </p>
           </details>
         </div>
