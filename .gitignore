@@ -1,0 +1,21 @@
+# Development files
+*.backup
+*-test.html
+test-*.html
+PHASE*.md
+*-UPDATE.md
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Local development
+*.local
+.env.local

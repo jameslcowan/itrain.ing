@@ -25,12 +25,15 @@ Author/creator:
 ## Routing + state-in-URL (public contract)
 
 Supported URL formats:
-- Hash route (default): `/#/p/<STATE>`
-- Pretty path route: `/p/<STATE>` (works on Netlify via redirects)
+- **Current (default)**: `/program/<STATE>` - Clean, descriptive path
+- **Legacy (still works)**: `/#/p/<STATE>` - Old hash format
+- **Legacy (still works)**: `/p/<STATE>` - Old path format
 
-Where `<STATE>` is an encoded program payload.
+Where `<STATE>` is an encoded program payload (V2 format = 30-40% shorter than V1).
 
 **Important:** We intentionally keep the encoded payload as a single URL segment so it can be copied/shared reliably.
+
+All legacy formats continue to work indefinitely for backward compatibility.
 
 ---
 
@@ -196,11 +199,12 @@ If you update wording here, update `llms.txt` to match.
 
 We want:
 - Homepage (`/`) indexable
-- Program links (`/p/<STATE>`) **not indexable** (user-generated, infinite, and not useful as search results)
+- Program links (`/program/<STATE>` and `/p/<STATE>`) **not indexable** (user-generated, infinite, and not useful as search results)
 
 Implementation notes:
-- Netlify sends `X-Robots-Tag: noindex...` on `/p/*`.
+- Netlify sends `X-Robots-Tag: noindex...` on `/program/*` and `/p/*`.
 - `robots.txt` exists and references `sitemap.xml`.
+- All user-generated share links are noindex by default.
 
 ---
 
