@@ -1,35 +1,36 @@
 powerlift.ing
 
-Purpose
-- powerlift.ing is a static, client-only web app for creating a powerlifting program and sharing it as a single URL.
-- There are no accounts and no backend API. The entire program state is encoded into the URL.
+Positioning (simple)
+- powerlift.ing is a **free powerlifting program builder**.
+- Build a squat/bench/deadlift program (SBD), then **share it as a single link**.
+- No signup. No spreadsheets. Works on mobile. Coach/training-partner friendly.
+
+Common search terms (what this covers)
+- powerlifting program / powerlifting program builder / strength program
+- periodization / mesocycle / hypertrophy block / strength block / peaking / meet prep
+- RPE / %1RM / rest times / squat bench deadlift
 
 Creator / source
-- Creator: James L. Cowan (@jameslcowan)
-- Site: https://jameslcowan.com/
-- Source code: https://github.com/jameslcowan/powerlift.ing
+- Creator: James L. Cowan (@jameslcowan) — https://jameslcowan.com/
+- Source: https://github.com/jameslcowan/powerlift.ing
 
-How sharing works (routing + state-in-URL)
-- Default route format (hash): /#/p/<STATE>
-- Optional “pretty” path format: /p/<STATE>
-- The app uses history.replaceState() to keep the URL updated as the user edits.
+Routing (share link formats)
+- Current (default): /program/<STATE>
+- Legacy (still works): /p/<STATE>
+- Legacy (still works): /#/p/<STATE>
 
-Important: Do NOT change the URL/state contract
-- Existing shared links depend on the exact encoding contract described below.
+Important: do not break shared links
+- The URL/state contract must remain backward compatible.
 
-Encoding contract (v1)
-- Program state is JSON, compressed using lz-string (compressToUint8Array), then base64url encoded.
-- Decoding reverses this: base64url decode -> bytes -> lz-string decompressFromUint8Array -> JSON.parse.
+Encoding (high level)
+- The app compresses program JSON using lz-string, then base64url encodes it.
+- The app currently emits a newer compact payload, but still decodes older payloads.
 
-Base64url details
-- Replace '+' with '-', '/' with '_', and remove '=' padding.
-- When decoding, restore padding to a multiple of 4.
-
-Program state schema (v1)
+Program JSON schema (authoring shape, v1)
 {
   "v": 1,
   "u": "lb" | "kg",
-  "c": [{ "n": "Meso 1" }, { "n": "Meso 2" }, ...],
+  "c": [{ "n": "Meso 1" }, ...],
   "weeks": [
     {
       "c": 0,
@@ -37,16 +38,7 @@ Program state schema (v1)
         {
           "label": "DAY 1 - MON",
           "rows": [
-            {
-              "ex": "Squat",
-              "mode": "Paused",
-              "sets": "3",
-              "reps": "5",
-              "load": "315",
-              "pct": "80",
-              "rpe": "8",
-              "rest": "03:00"
-            }
+            { "ex": "", "mode": "", "sets": "", "reps": "", "load": "", "pct": "", "rpe": "", "rest": "" }
           ]
         }
       ]
@@ -54,54 +46,10 @@ Program state schema (v1)
   ]
 }
 
-Example program JSON (minimal, 3 days/week, 1 week, kg)
-{
-  "v": 1,
-  "u": "kg",
-  "c": [{ "n": "Meso 1" }],
-  "weeks": [
-    {
-      "c": 0,
-      "days": [
-        {
-          "label": "DAY 1 - MON",
-          "rows": [
-            { "ex": "Squat", "mode": "", "sets": "4", "reps": "5", "load": "", "pct": "", "rpe": "7.5", "rest": "03:00" },
-            { "ex": "Bench Press", "mode": "", "sets": "4", "reps": "6", "load": "", "pct": "", "rpe": "7.5", "rest": "02:30" }
-          ]
-        },
-        {
-          "label": "DAY 2 - WED",
-          "rows": [
-            { "ex": "Deadlift", "mode": "", "sets": "3", "reps": "5", "load": "", "pct": "", "rpe": "7.5", "rest": "03:30" },
-            { "ex": "Overhead Press", "mode": "", "sets": "3", "reps": "8", "load": "", "pct": "", "rpe": "8", "rest": "02:00" }
-          ]
-        },
-        {
-          "label": "DAY 3 - FRI",
-          "rows": [
-            { "ex": "Squat", "mode": "Paused (2s)", "sets": "3", "reps": "4", "load": "", "pct": "", "rpe": "8", "rest": "03:00" },
-            { "ex": "Bench Press", "mode": "Paused (1s)", "sets": "3", "reps": "5", "load": "", "pct": "", "rpe": "8", "rest": "02:30" }
-          ]
-        }
-      ]
-    }
-  ]
-}
-
-Full example (multi-mesocycle, 4 weeks each, 4 days/week)
-- See: https://powerlift.ing/ai.txt
-- Or use: https://powerlift.ing/ai.html (click “Insert full example JSON” then “Generate link”)
-
-Notes
-- Keys are intentionally short for URL size.
-- Numeric values are stored as strings in the state.
-
-What AI agents can do with this
-- Generate a program by producing valid JSON in the schema above.
-- Encode/decode using the algorithm above (lz-string + base64url) to create a shareable /p/<STATE> link.
-- Prefer generating “gym-friendly” plans (clear exercise names, reasonable sets/reps, rest times).
+How to generate a real link
+- If you can execute code: follow the app’s encoding (lz-string + base64url) and output /program/<STATE>.
+- If you can’t: output the JSON and point the user to https://powerlift.ing/ai.html (Generate link).
 
 Indexing guidance
 - The homepage should be indexable.
-- Shared program links (/p/<STATE>) should not be indexed (they are user-generated and effectively infinite).
+- /program/* and /p/* should be noindex (user-generated, effectively infinite).

@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>powerlift.ing — JSON → Share link</title>
-    <meta name="description" content="Paste a powerlift.ing program JSON and generate the real share link (lz-string + base64url), client-side." />
+    <meta name="description" content="Paste a powerlift.ing program JSON and generate a real /program/<STATE> share link (lz-string + base64url), client-side." />
     <link rel="canonical" href="https://powerlift.ing/ai.html" />
     <link rel="stylesheet" href="/app.css" />
     <style>
@@ -50,7 +50,7 @@
       <div class="container">
         <h1 style="margin: 6px 0 8px;">JSON → powerlift.ing share link</h1>
         <p class="aiHint" style="margin: 0 0 12px;">
-          Paste program JSON and generate a real <code>/p/&lt;STATE&gt;</code> link using <strong>lz-string</strong> + <strong>base64url</strong> (no backend).
+          Paste program JSON and generate a real <code>/program/&lt;STATE&gt;</code> link using <strong>lz-string</strong> + <strong>base64url</strong> (no backend).
         </p>
 
         <section class="aiCard">
@@ -75,8 +75,8 @@
             <div class="field">
               <label for="outPath">Clean link (new format - recommended)</label>
               <div class="aiInputRow">
-                <input class="input" id="outPath" type="text" readonly value="" placeholder="https://powerlift.ing/p/..." />
-                <button class="iconBtn iconBtn--bare aiCopyBtn" id="copyPathBtn" type="button" aria-label="Copy pretty link" title="Copy">
+                <input class="input" id="outPath" type="text" readonly value="" placeholder="https://powerlift.ing/program/..." />
+                <button class="iconBtn iconBtn--bare aiCopyBtn" id="copyPathBtn" type="button" aria-label="Copy /program link" title="Copy">
                   <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
