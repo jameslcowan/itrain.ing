@@ -1232,9 +1232,6 @@
             try { dom.shareDialogDontShow.checked = localStorage.getItem("pli_hide_share_dialog") === "1"; } catch {}
           }
           dom.shareDialog.showModal();
-          window.setTimeout(() => {
-            try { dom.shareDialog.close(); } catch {}
-          }, 1600);
         } else {
           // No dialog (either unsupported or user disabled it)
           setStatus("Link copied.");
