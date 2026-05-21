@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>powerlift.ing — Free Powerlifting Program Builder</title>
+    <meta name="description" content="The best free powerlifting program builder. Plan mesocycles, track sets, reps, RPE, and %1RM — then share your whole squat/bench/deadlift program in one link." />
+    <meta name="keywords" content="powerlifting program, powerlifting program builder, strength program, workout program, periodization, mesocycle, RPE, squat bench deadlift" />
+    <meta name="author" content="James L. Cowan" />
+    <link rel="canonical" href="https://powerlift.ing/" />
+    <link rel="help" href="/ai.html" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM instructions" />
+
+    <meta property="og:site_name" content="powerlift.ing" />
+    <meta property="og:title" content="powerlift.ing — Free Powerlifting Program Builder" />
+    <meta property="og:description" content="Build powerlifting programs and share them in one link. Free, mobile-first, coach-friendly." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://powerlift.ing/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@jameslcowan" />
+    <meta name="theme-color" content="#0b0b0b" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "powerlift.ing",
+        "url": "https://powerlift.ing/",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Any",
+        "description": "Free powerlifting program builder. Share your training block in one link.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is powerlift.ing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A free tool to build and share powerlifting programs. Your program can be shared as a single link — no signup or spreadsheet required."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I share my program?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Open the builder, tap share, and copy your link. The URL encodes your program and updates as you edit."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is it free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. No account is required to start building and sharing programs."
+            }
+          }
+        ]
+      }
+    </script>
+
+    <link rel="stylesheet" href="/app.css" />
+    <link rel="stylesheet" href="/landing.css" />
+  </head>
+  <body class="landingPage">
+    <a class="srOnly" href="#main">Skip to content</a>
+
+    <header class="landingHeader">
+      <div class="landingHeader__inner">
+        <a class="landingBrand" href="/">powerlift.ing</a>
+        <nav class="landingNav" aria-label="Primary">
+          <a href="#how-it-works">How it works</a>
+          <a href="#features">Features</a>
+          <a href="#for-coaches">For coaches</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <div class="landingHeader__actions">
+          <a class="btn btn--primary" href="/app">Start building</a>
+          <button id="landingMenuBtn" class="iconBtn iconBtn--bare landingMenuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="landingSheet">
+            <svg class="ico" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div id="landingSheet" class="landingSheet" hidden>
+      <div class="landingSheet__panel" role="dialog" aria-modal="true" aria-label="Menu">
+        <div class="landingSheet__top">
+          <span class="landingSheet__title">Menu</span>
+          <button id="landingSheetClose" class="iconBtn iconBtn--headerSm" type="button" aria-label="Close menu">✕</button>
+        </div>
+        <nav class="landingSheet__nav" aria-label="Mobile">
+          <a href="#how-it-works">How it works</a>
+          <a href="#features">Features</a>
+          <a href="#for-coaches">For coaches</a>
+          <a href="#sharing">Sharing</a>
+          <a href="#faq">FAQ</a>
+          <a href="https://github.com/jameslcowan/powerlift.ing" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+        <a class="btn btn--primary landingSheet__cta" href="/app">Start building</a>
+      </div>
+    </div>
+
+    <main id="main" class="landingMain">
+      <section class="landingHero landingWrap">
+        <h1 class="landingHero__title">Free powerlifting program builder — share your block in one link</h1>
+        <p class="landingHero__lead">
+          Plan mesocycles, weeks, and SBD days with sets, reps, load, %1RM, RPE, and rest. No signup. No spreadsheet.
+          Send coaches and training partners exactly what you programmed.
+        </p>
+        <div class="landingHero__ctas">
+          <a class="btn btn--primary" href="/app">Start building</a>
+          <a class="btn btn--ghost" href="#how-it-works">How it works</a>
+        </div>
+        <p class="landingHero__note">Mobile-first editor · Programs save in the URL as you type</p>
+      </section>
+
+      <section id="how-it-works" class="landingSection landingWrap">
+        <h2 class="landingSection__title">How it works</h2>
+        <p class="landingSection__lead">Three steps from blank week to shareable program.</p>
+        <ol class="landingSteps">
+          <li class="landingStep">
+            <span class="landingStep__n">1</span>
+            <h3>Build</h3>
+            <p>Add mesocycles, weeks, and days. Log exercises with sets, reps, load, %1RM, RPE, and rest.</p>
+          </li>
+          <li class="landingStep">
+            <span class="landingStep__n">2</span>
+            <h3>Auto-save in the URL</h3>
+            <p>Your program is encoded in the link as you edit — no export button, no file attachments.</p>
+          </li>
+          <li class="landingStep">
+            <span class="landingStep__n">3</span>
+            <h3>Share</h3>
+            <p>Copy the link and send it. Anyone who opens it sees your exact program.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section id="features" class="landingSection landingWrap">
+        <h2 class="landingSection__title">Built for real programming</h2>
+        <p class="landingSection__lead">Everything you expect on a meet prep or hypertrophy block — without leaving the browser.</p>
+        <div class="landingGrid landingGrid--3">
+          <div class="landingCard">
+            <h3>Mesocycles</h3>
+            <p>Hypertrophy, strength, peaking — organize blocks and weeks in one view.</p>
+          </div>
+          <div class="landingCard">
+            <h3>SBD variables</h3>
+            <p>Sets, reps, load (lb/kg), %1RM, RPE, rest, and exercise variations.</p>
+          </div>
+          <div class="landingCard">
+            <h3>Share instantly</h3>
+            <p>One link is the whole program. Perfect for coaches and training partners.</p>
+          </div>
+          <div class="landingCard">
+            <h3>Mobile-first</h3>
+            <p>Edit on the gym floor with a layout made for phones.</p>
+          </div>
+          <div class="landingCard">
+            <h3>Works offline</h3>
+            <p>After the page loads, keep editing; changes stay in the URL.</p>
+          </div>
+          <div class="landingCard">
+            <h3>Free to start</h3>
+            <p>No account required. Open the builder and go.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="for-coaches" class="landingSection landingWrap">
+        <h2 class="landingSection__title">For athletes and coaches</h2>
+        <div class="landingCols">
+          <div>
+            <h3>Athletes</h3>
+            <ul>
+              <li>Write your own training block</li>
+              <li>Track RPE and percentage work</li>
+              <li>Bookmark <a href="/app">/app</a> to jump back into the editor</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Coaches &amp; partners</h3>
+            <ul>
+              <li>Send one link instead of screenshots or PDFs</li>
+              <li>Recipients see the same fields you use</li>
+              <li>No account needed for them to view</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="sharing" class="landingSection landingWrap">
+        <h2 class="landingSection__title">Sharing &amp; bookmarks</h2>
+        <p class="landingSection__lead">Share links are great for sending a program. They update as you edit — copy again when you want a fixed snapshot.</p>
+        <p class="landingCallout">
+          <strong>Coming soon:</strong> save multiple programs under one account and bookmark a single library page.
+          Today, use <a href="/app">/app</a> for the editor and share <code>/program/…</code> links when you send work to someone else.
+        </p>
+      </section>
+
+      <section id="faq" class="landingSection landingWrap landingFaq">
+        <h2 class="landingSection__title">FAQ</h2>
+        <details>
+          <summary>What is powerlift.ing?</summary>
+          <p>A free powerlifting program builder. Build in the browser and share your program as one link.</p>
+        </details>
+        <details>
+          <summary>Do I need an account?</summary>
+          <p>No account is required to build and share. Optional accounts for a saved library are planned.</p>
+        </details>
+        <details>
+          <summary>Is my program private?</summary>
+          <p>Anyone with your link can open that program. Only share with people you trust.</p>
+        </details>
+        <details>
+          <summary>Will old shared links break?</summary>
+          <p>No. Legacy <code>/p/…</code> and <code>#/p/…</code> links keep working.</p>
+        </details>
+        <details>
+          <summary>Can I use it on my phone?</summary>
+          <p>Yes. The editor is designed mobile-first.</p>
+        </details>
+      </section>
+
+      <section class="landingCta landingWrap">
+        <h2>Ready to write your next block?</h2>
+        <p>Open the builder and share your program in minutes.</p>
+        <a class="btn btn--primary" href="/app">Start building</a>
+      </section>
+    </main>
+
+    <footer class="landingFooter">
+      <div class="landingFooter__inner">
+        <span>© powerlift.ing</span>
+        <div class="landingFooter__links">
+          <a href="/app">Builder</a>
+          <a href="/ai.html">JSON tool</a>
+          <a href="https://github.com/jameslcowan/powerlift.ing" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://jameslcowan.com/" target="_blank" rel="noopener noreferrer">James L. Cowan</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="/landing.js" defer></script>
+  </body>
+</html>
