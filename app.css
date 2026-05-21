@@ -74,6 +74,13 @@ input[type="checkbox"]{ accent-color: var(--accent); }
 .topbar__left{ justify-self:start; display:flex; align-items:center; min-width:0; }
 .topbar__center{ justify-self:center; display:flex; align-items:center; }
 .topbar__right{ justify-self:end; display:flex; gap:8px; align-items:center; min-width:0; }
+.topbar__shareBtn{
+  min-height: 40px;
+  padding: 0 14px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
 .brand__title{ font-weight:750; letter-spacing:.2px; }
 .wordmark{ font-weight:850; letter-spacing:-.2px; }
 .badge{
