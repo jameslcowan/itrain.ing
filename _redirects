@@ -1,0 +1,4 @@
+/app      /app.html      200
+/app/     /app.html      200
+/program/*  /app.html    200
+/p/*      /app.html      200

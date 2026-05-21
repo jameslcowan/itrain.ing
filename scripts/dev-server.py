@@ -11,11 +11,20 @@ class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=ROOT, **kwargs)
 
+    def _rewrite_spa_path(self):
+        raw = self.path
+        path = raw.split("?", 1)[0].rstrip("/") or "/"
+        if path == "/app" or path.startswith("/program/") or path.startswith("/p/"):
+            qs = raw.split("?", 1)[1] if "?" in raw else ""
+            self.path = "/app.html" + (f"?{qs}" if qs else "")
+
     def do_GET(self):
-        path = self.path.split("?", 1)[0]
-        if path in ("/app", "/app/") or path.startswith("/program/") or path.startswith("/p/"):
-            self.path = "/app.html"
+        self._rewrite_spa_path()
         super().do_GET()
+
+    def do_HEAD(self):
+        self._rewrite_spa_path()
+        super().do_HEAD()
 
 
 if __name__ == "__main__":
