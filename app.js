@@ -97,6 +97,8 @@
     appDialogInputLabel: document.getElementById("appDialogInputLabel"),
     appDialogInput: document.getElementById("appDialogInput"),
     appDialogHelp: document.getElementById("appDialogHelp"),
+    onboarding: document.getElementById("onboarding"),
+    onboardingDismiss: document.getElementById("onboardingDismiss"),
   };
 
   const app = {
