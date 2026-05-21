@@ -303,15 +303,19 @@
   });
 
   function renderDropdown({ id, label, value, options, onChange }) {
+    const menuId = `dd-menu-${id}`;
+    const btnId = `dd-btn-${id}`;
     const wrap = el("div", { class: "ddWrap", "data-dd": id });
 
     const btn = el(
       "button",
       {
+        id: btnId,
         type: "button",
         class: "dd__btn",
         "aria-haspopup": "listbox",
         "aria-expanded": "false",
+        "aria-controls": menuId,
       },
       [
         el("span", { class: "dd__label", text: label(value) }),
@@ -319,13 +323,39 @@
       ]
     );
 
-    const menu = el("div", { class: "dd__menu", role: "listbox", hidden: true }, []);
+    const menu = el(
+      "div",
+      { id: menuId, class: "dd__menu", role: "listbox", tabindex: "-1", hidden: true },
+      []
+    );
+
+    function optionButtons() {
+      return Array.from(menu.querySelectorAll(".dd__opt"));
+    }
+
+    function focusOptionAt(index) {
+      const opts = optionButtons();
+      if (!opts.length) return;
+      const i = Math.max(0, Math.min(index, opts.length - 1));
+      opts[i].focus();
+    }
+
+    function selectedIndex() {
+      return optionButtons().findIndex((o) => o.getAttribute("aria-selected") === "true");
+    }
+
+    function selectOption(opt) {
+      close();
+      btn.focus();
+      onChange(opt.getAttribute("data-value"));
+    }
 
     function close() {
       btn.setAttribute("aria-expanded", "false");
       menu.hidden = true;
       if (openDropdown?.wrap === wrap) openDropdown = null;
     }
+
     function open() {
       if (openDropdown && openDropdown.wrap !== wrap) {
         openDropdown.btn.setAttribute("aria-expanded", "false");
@@ -334,28 +364,66 @@
       btn.setAttribute("aria-expanded", "true");
       menu.hidden = false;
       openDropdown = { wrap, btn, menu };
+      const idx = selectedIndex();
+      window.setTimeout(() => focusOptionAt(idx >= 0 ? idx : 0), 0);
     }
+
     function toggle() {
       if (menu.hidden) open();
       else close();
     }
 
+    function handleListboxKeydown(e) {
+      const opts = optionButtons();
+      if (!opts.length) return;
+      const idx = opts.indexOf(document.activeElement);
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        focusOptionAt(idx < 0 ? 0 : idx + 1);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        focusOptionAt(idx < 0 ? opts.length - 1 : idx - 1);
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        focusOptionAt(0);
+      } else if (e.key === "End") {
+        e.preventDefault();
+        focusOptionAt(opts.length - 1);
+      } else if (e.key === "Enter" || e.key === " ") {
+        const active = document.activeElement;
+        if (active?.classList?.contains("dd__opt")) {
+          e.preventDefault();
+          selectOption(active);
+        }
+      }
+    }
+
     btn.addEventListener("click", (e) => {
       e.preventDefault();
-      // When the menu drawer is open, don't allow dropdowns behind it to open.
       if (document.documentElement.classList.contains("menuOpen")) return;
       toggle();
     });
 
+    btn.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        if (menu.hidden) open();
+        else handleListboxKeydown(e);
+      } else if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        if (menu.hidden) open();
+        else handleListboxKeydown(e);
+      }
+    });
+
+    menu.addEventListener("keydown", handleListboxKeydown);
+
     menu.addEventListener("click", (e) => {
       const opt = e.target.closest("[data-value]");
       if (!opt) return;
-      const v = opt.getAttribute("data-value");
-      close();
-      onChange(v);
+      selectOption(opt);
     });
 
-    // Populate options
     for (const opt of options) {
       const selected = String(opt.value) === String(value);
       menu.appendChild(
@@ -1064,14 +1132,7 @@
 
   function openMenu() {
     if (!dom.menuOverlay) return;
-    // Ensure any open dropdown menu doesn't float above the drawer overlay.
-    try {
-      if (openDropdown) {
-        openDropdown.btn.setAttribute("aria-expanded", "false");
-        openDropdown.menu.hidden = true;
-        openDropdown = null;
-      }
-    } catch {}
+    closeOpenDropdown();
     dom.menuOverlay.hidden = false;
     document.documentElement.classList.add("menuOpen");
     document.body.style.overflow = "hidden";
@@ -1089,11 +1150,16 @@
   dom.menuOverlay?.addEventListener("click", (e) => {
     if (e.target === dom.menuOverlay) closeMenu();
   });
+
   function closeOpenDropdown() {
     if (!openDropdown) return false;
+    const btn = openDropdown.btn;
     openDropdown.btn.setAttribute("aria-expanded", "false");
     openDropdown.menu.hidden = true;
     openDropdown = null;
+    try {
+      btn.focus();
+    } catch {}
     return true;
   }
 
@@ -1186,7 +1252,6 @@
 
   dom.themeToggleBtn?.addEventListener("click", toggleTheme);
 
-  // Always return to a fresh blank program (clears /p/<STATE> and #/p/<STATE>).
   dom.homeLink?.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = `${window.location.origin}/`;
