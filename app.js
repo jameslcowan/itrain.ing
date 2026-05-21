@@ -1272,60 +1272,17 @@
     if (dom.appMenu && !dom.appMenu.hidden) closeMenu();
   });
 
-  // Theme: follow device by default; user can toggle light/dark (stored locally, not in URL)
-  const THEME_KEY = "pli_theme";
-  const mediaDark = window.matchMedia?.("(prefers-color-scheme: dark)");
-
-  function getStoredTheme() {
-    try {
-      const v = localStorage.getItem(THEME_KEY);
-      if (v === "dark" || v === "light") return v;
-      return null;
-    } catch {
-      return null;
-    }
-  }
-
-  function setStoredTheme(v) {
-    try {
-      if (v === "dark" || v === "light") localStorage.setItem(THEME_KEY, v);
-      else localStorage.removeItem(THEME_KEY);
-    } catch {}
-  }
-
-  function getEffectiveTheme() {
-    const stored = getStoredTheme();
-    if (stored) return stored;
-    return mediaDark && mediaDark.matches ? "dark" : "light";
-  }
-
-  function applyTheme(themeOrNull) {
-    const html = document.documentElement;
-    if (themeOrNull === "dark" || themeOrNull === "light") html.setAttribute("data-theme", themeOrNull);
-    else html.removeAttribute("data-theme");
-    updateThemeIcon();
-  }
-
-  function updateThemeIcon() {
-    const effective = getEffectiveTheme();
-    if (dom.themeIcon) {
-      const href = effective === "dark" ? "#i-dark-mode" : "#i-light-mode";
-      dom.themeIcon.setAttribute("href", href);
-      try {
-        dom.themeIcon.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", href);
-      } catch {}
-    }
-    if (dom.themeToggleBtn) {
-      dom.themeToggleBtn.setAttribute("aria-label", effective === "dark" ? "Switch to light mode" : "Switch to dark mode");
-      dom.themeToggleBtn.title = effective === "dark" ? "Light mode" : "Dark mode";
-    }
-  }
-
   function initTheme() {
-    const stored = getStoredTheme();
-    applyTheme(stored); // null -> follow device via CSS media query
-    updateThemeIcon();
-    // Ensure inline SVG sprites render consistently (some browsers prefer xlink:href too).
+    dom.themeToggleBtn?.addEventListener("click", () => {
+      try {
+        if (openDropdown) {
+          openDropdown.btn.setAttribute("aria-expanded", "false");
+          openDropdown.menu.hidden = true;
+          openDropdown = null;
+        }
+      } catch {}
+    });
+    window.PowerliftTheme?.bindToggle(dom.themeToggleBtn, dom.themeIcon);
     try {
       document.querySelectorAll("use[href]").forEach((u) => {
         const href = u.getAttribute("href");
@@ -1333,27 +1290,7 @@
         u.setAttributeNS(XLINK_NS, "xlink:href", href);
       });
     } catch {}
-    mediaDark?.addEventListener?.("change", () => {
-      if (!getStoredTheme()) updateThemeIcon();
-    });
   }
-
-  function toggleTheme() {
-    // If a dropdown is open, close it before toggling theme to avoid z-index/overlay weirdness.
-    try {
-      if (openDropdown) {
-        openDropdown.btn.setAttribute("aria-expanded", "false");
-        openDropdown.menu.hidden = true;
-        openDropdown = null;
-      }
-    } catch {}
-    const effective = getEffectiveTheme();
-    const next = effective === "dark" ? "light" : "dark";
-    setStoredTheme(next);
-    applyTheme(next);
-  }
-
-  dom.themeToggleBtn?.addEventListener("click", toggleTheme);
 
   dom.homeLink?.addEventListener("click", async (e) => {
     e.preventDefault();
