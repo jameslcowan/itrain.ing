@@ -1,0 +1,1174 @@
+{
+  "v": 1,
+  "u": "kg",
+  "c": [
+    {
+      "n": "Hypertrophy"
+    },
+    {
+      "n": "Strength"
+    }
+  ],
+  "weeks": [
+    {
+      "c": 0,
+      "days": [
+        {
+          "label": "DAY 1 - MON",
+          "rows": [
+            {
+              "ex": "Squat",
+              "mode": "High bar",
+              "sets": "4",
+              "reps": "8",
+              "load": "100",
+              "pct": "",
+              "rpe": "7.5",
+              "rest": "03:00"
+            },
+            {
+              "ex": "Bench Press",
+              "mode": "",
+              "sets": "4",
+              "reps": "8",
+              "load": "70",
+              "pct": "",
+              "rpe": "7.5",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Lat Pulldown",
+              "mode": "",
+              "sets": "3",
+              "reps": "12",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 2 - TUE",
+          "rows": [
+            {
+              "ex": "Deadlift",
+              "mode": "",
+              "sets": "3",
+              "reps": "6",
+              "load": "140",
+              "pct": "",
+              "rpe": "7.5",
+              "rest": "03:30"
+            },
+            {
+              "ex": "Overhead Press",
+              "mode": "",
+              "sets": "3",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            },
+            {
+              "ex": "Split Squat",
+              "mode": "",
+              "sets": "3",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 3 - THU",
+          "rows": [
+            {
+              "ex": "Bench Press",
+              "mode": "Paused (1s)",
+              "sets": "4",
+              "reps": "6",
+              "load": "",
+              "pct": "75",
+              "rpe": "8",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Squat",
+              "mode": "Tempo",
+              "sets": "3",
+              "reps": "6",
+              "load": "",
+              "pct": "70",
+              "rpe": "8",
+              "rest": "03:00"
+            },
+            {
+              "ex": "Row",
+              "mode": "Chest-supported",
+              "sets": "3",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 4 - FRI",
+          "rows": [
+            {
+              "ex": "Deadlift",
+              "mode": "Paused (1s)",
+              "sets": "3",
+              "reps": "5",
+              "load": "",
+              "pct": "75",
+              "rpe": "8",
+              "rest": "03:30"
+            },
+            {
+              "ex": "Bench Press",
+              "mode": "Close grip",
+              "sets": "3",
+              "reps": "8",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Hamstring Curl",
+              "mode": "",
+              "sets": "3",
+              "reps": "12",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "01:30"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "c": 0,
+      "days": [
+        {
+          "label": "DAY 1 - MON",
+          "rows": [
+            {
+              "ex": "Squat",
+              "mode": "High bar",
+              "sets": "4",
+              "reps": "8",
+              "load": "102",
+              "pct": "",
+              "rpe": "8",
+              "rest": "03:00"
+            },
+            {
+              "ex": "Bench Press",
+              "mode": "",
+              "sets": "4",
+              "reps": "8",
+              "load": "72",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Lat Pulldown",
+              "mode": "",
+              "sets": "3",
+              "reps": "12",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 2 - TUE",
+          "rows": [
+            {
+              "ex": "Deadlift",
+              "mode": "",
+              "sets": "3",
+              "reps": "6",
+              "load": "145",
+              "pct": "",
+              "rpe": "8",
+              "rest": "03:30"
+            },
+            {
+              "ex": "Overhead Press",
+              "mode": "",
+              "sets": "3",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            },
+            {
+              "ex": "Split Squat",
+              "mode": "",
+              "sets": "3",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 3 - THU",
+          "rows": [
+            {
+              "ex": "Bench Press",
+              "mode": "Paused (1s)",
+              "sets": "4",
+              "reps": "6",
+              "load": "",
+              "pct": "77",
+              "rpe": "8.5",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Squat",
+              "mode": "Tempo",
+              "sets": "3",
+              "reps": "6",
+              "load": "",
+              "pct": "72",
+              "rpe": "8.5",
+              "rest": "03:00"
+            },
+            {
+              "ex": "Row",
+              "mode": "Chest-supported",
+              "sets": "3",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 4 - FRI",
+          "rows": [
+            {
+              "ex": "Deadlift",
+              "mode": "Paused (1s)",
+              "sets": "3",
+              "reps": "5",
+              "load": "",
+              "pct": "77",
+              "rpe": "8.5",
+              "rest": "03:30"
+            },
+            {
+              "ex": "Bench Press",
+              "mode": "Close grip",
+              "sets": "3",
+              "reps": "8",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Hamstring Curl",
+              "mode": "",
+              "sets": "3",
+              "reps": "12",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "01:30"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "c": 0,
+      "days": [
+        {
+          "label": "DAY 1 - MON",
+          "rows": [
+            {
+              "ex": "Squat",
+              "mode": "High bar",
+              "sets": "4",
+              "reps": "6",
+              "load": "105",
+              "pct": "",
+              "rpe": "8.5",
+              "rest": "03:00"
+            },
+            {
+              "ex": "Bench Press",
+              "mode": "",
+              "sets": "4",
+              "reps": "6",
+              "load": "75",
+              "pct": "",
+              "rpe": "8.5",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Lat Pulldown",
+              "mode": "",
+              "sets": "3",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 2 - TUE",
+          "rows": [
+            {
+              "ex": "Deadlift",
+              "mode": "",
+              "sets": "3",
+              "reps": "5",
+              "load": "150",
+              "pct": "",
+              "rpe": "8.5",
+              "rest": "03:30"
+            },
+            {
+              "ex": "Overhead Press",
+              "mode": "",
+              "sets": "3",
+              "reps": "8",
+              "load": "",
+              "pct": "",
+              "rpe": "8.5",
+              "rest": "02:00"
+            },
+            {
+              "ex": "Split Squat",
+              "mode": "",
+              "sets": "3",
+              "reps": "8",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 3 - THU",
+          "rows": [
+            {
+              "ex": "Bench Press",
+              "mode": "Paused (1s)",
+              "sets": "4",
+              "reps": "5",
+              "load": "",
+              "pct": "80",
+              "rpe": "8.5",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Squat",
+              "mode": "Tempo",
+              "sets": "3",
+              "reps": "5",
+              "load": "",
+              "pct": "75",
+              "rpe": "8.5",
+              "rest": "03:00"
+            },
+            {
+              "ex": "Row",
+              "mode": "Chest-supported",
+              "sets": "3",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 4 - FRI",
+          "rows": [
+            {
+              "ex": "Deadlift",
+              "mode": "Paused (1s)",
+              "sets": "3",
+              "reps": "4",
+              "load": "",
+              "pct": "80",
+              "rpe": "8.5",
+              "rest": "03:30"
+            },
+            {
+              "ex": "Bench Press",
+              "mode": "Close grip",
+              "sets": "3",
+              "reps": "6",
+              "load": "",
+              "pct": "",
+              "rpe": "8.5",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Hamstring Curl",
+              "mode": "",
+              "sets": "3",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "01:30"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "c": 0,
+      "days": [
+        {
+          "label": "DAY 1 - MON",
+          "rows": [
+            {
+              "ex": "Squat",
+              "mode": "High bar",
+              "sets": "3",
+              "reps": "6",
+              "load": "107",
+              "pct": "",
+              "rpe": "9",
+              "rest": "03:00"
+            },
+            {
+              "ex": "Bench Press",
+              "mode": "",
+              "sets": "3",
+              "reps": "6",
+              "load": "77",
+              "pct": "",
+              "rpe": "9",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Lat Pulldown",
+              "mode": "",
+              "sets": "2",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 2 - TUE",
+          "rows": [
+            {
+              "ex": "Deadlift",
+              "mode": "",
+              "sets": "2",
+              "reps": "5",
+              "load": "155",
+              "pct": "",
+              "rpe": "9",
+              "rest": "03:30"
+            },
+            {
+              "ex": "Overhead Press",
+              "mode": "",
+              "sets": "2",
+              "reps": "8",
+              "load": "",
+              "pct": "",
+              "rpe": "8.5",
+              "rest": "02:00"
+            },
+            {
+              "ex": "Split Squat",
+              "mode": "",
+              "sets": "2",
+              "reps": "8",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 3 - THU",
+          "rows": [
+            {
+              "ex": "Bench Press",
+              "mode": "Paused (1s)",
+              "sets": "3",
+              "reps": "5",
+              "load": "",
+              "pct": "82",
+              "rpe": "9",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Squat",
+              "mode": "Tempo",
+              "sets": "2",
+              "reps": "5",
+              "load": "",
+              "pct": "77",
+              "rpe": "8.5",
+              "rest": "03:00"
+            },
+            {
+              "ex": "Row",
+              "mode": "Chest-supported",
+              "sets": "2",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 4 - FRI",
+          "rows": [
+            {
+              "ex": "Deadlift",
+              "mode": "Paused (1s)",
+              "sets": "2",
+              "reps": "4",
+              "load": "",
+              "pct": "82",
+              "rpe": "9",
+              "rest": "03:30"
+            },
+            {
+              "ex": "Bench Press",
+              "mode": "Close grip",
+              "sets": "2",
+              "reps": "6",
+              "load": "",
+              "pct": "",
+              "rpe": "8.5",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Hamstring Curl",
+              "mode": "",
+              "sets": "2",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "01:30"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "c": 1,
+      "days": [
+        {
+          "label": "DAY 1 - MON",
+          "rows": [
+            {
+              "ex": "Squat",
+              "mode": "",
+              "sets": "4",
+              "reps": "5",
+              "load": "",
+              "pct": "80",
+              "rpe": "7.5",
+              "rest": "03:30"
+            },
+            {
+              "ex": "Bench Press",
+              "mode": "",
+              "sets": "4",
+              "reps": "5",
+              "load": "",
+              "pct": "80",
+              "rpe": "7.5",
+              "rest": "03:00"
+            },
+            {
+              "ex": "Row",
+              "mode": "",
+              "sets": "3",
+              "reps": "8",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 2 - TUE",
+          "rows": [
+            {
+              "ex": "Deadlift",
+              "mode": "",
+              "sets": "3",
+              "reps": "4",
+              "load": "",
+              "pct": "80",
+              "rpe": "7.5",
+              "rest": "04:00"
+            },
+            {
+              "ex": "Overhead Press",
+              "mode": "",
+              "sets": "3",
+              "reps": "6",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Hamstring Curl",
+              "mode": "",
+              "sets": "3",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "01:30"
+            }
+          ]
+        },
+        {
+          "label": "DAY 3 - THU",
+          "rows": [
+            {
+              "ex": "Bench Press",
+              "mode": "Paused (1s)",
+              "sets": "3",
+              "reps": "4",
+              "load": "",
+              "pct": "82",
+              "rpe": "8",
+              "rest": "03:00"
+            },
+            {
+              "ex": "Squat",
+              "mode": "Paused (2s)",
+              "sets": "3",
+              "reps": "3",
+              "load": "",
+              "pct": "78",
+              "rpe": "8",
+              "rest": "03:30"
+            },
+            {
+              "ex": "Lat Pulldown",
+              "mode": "",
+              "sets": "3",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 4 - FRI",
+          "rows": [
+            {
+              "ex": "Deadlift",
+              "mode": "Paused (1s)",
+              "sets": "2",
+              "reps": "3",
+              "load": "",
+              "pct": "82",
+              "rpe": "8",
+              "rest": "04:00"
+            },
+            {
+              "ex": "Bench Press",
+              "mode": "Close grip",
+              "sets": "3",
+              "reps": "6",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Split Squat",
+              "mode": "",
+              "sets": "3",
+              "reps": "8",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "c": 1,
+      "days": [
+        {
+          "label": "DAY 1 - MON",
+          "rows": [
+            {
+              "ex": "Squat",
+              "mode": "",
+              "sets": "4",
+              "reps": "4",
+              "load": "",
+              "pct": "83",
+              "rpe": "8",
+              "rest": "03:30"
+            },
+            {
+              "ex": "Bench Press",
+              "mode": "",
+              "sets": "4",
+              "reps": "4",
+              "load": "",
+              "pct": "83",
+              "rpe": "8",
+              "rest": "03:00"
+            },
+            {
+              "ex": "Row",
+              "mode": "",
+              "sets": "3",
+              "reps": "8",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 2 - TUE",
+          "rows": [
+            {
+              "ex": "Deadlift",
+              "mode": "",
+              "sets": "3",
+              "reps": "3",
+              "load": "",
+              "pct": "83",
+              "rpe": "8",
+              "rest": "04:00"
+            },
+            {
+              "ex": "Overhead Press",
+              "mode": "",
+              "sets": "3",
+              "reps": "6",
+              "load": "",
+              "pct": "",
+              "rpe": "8.5",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Hamstring Curl",
+              "mode": "",
+              "sets": "3",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "01:30"
+            }
+          ]
+        },
+        {
+          "label": "DAY 3 - THU",
+          "rows": [
+            {
+              "ex": "Bench Press",
+              "mode": "Paused (1s)",
+              "sets": "3",
+              "reps": "3",
+              "load": "",
+              "pct": "85",
+              "rpe": "8.5",
+              "rest": "03:00"
+            },
+            {
+              "ex": "Squat",
+              "mode": "Paused (2s)",
+              "sets": "3",
+              "reps": "3",
+              "load": "",
+              "pct": "80",
+              "rpe": "8.5",
+              "rest": "03:30"
+            },
+            {
+              "ex": "Lat Pulldown",
+              "mode": "",
+              "sets": "3",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 4 - FRI",
+          "rows": [
+            {
+              "ex": "Deadlift",
+              "mode": "Paused (1s)",
+              "sets": "2",
+              "reps": "3",
+              "load": "",
+              "pct": "85",
+              "rpe": "8.5",
+              "rest": "04:00"
+            },
+            {
+              "ex": "Bench Press",
+              "mode": "Close grip",
+              "sets": "3",
+              "reps": "6",
+              "load": "",
+              "pct": "",
+              "rpe": "8.5",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Split Squat",
+              "mode": "",
+              "sets": "3",
+              "reps": "8",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "c": 1,
+      "days": [
+        {
+          "label": "DAY 1 - MON",
+          "rows": [
+            {
+              "ex": "Squat",
+              "mode": "",
+              "sets": "4",
+              "reps": "3",
+              "load": "",
+              "pct": "86",
+              "rpe": "8.5",
+              "rest": "03:30"
+            },
+            {
+              "ex": "Bench Press",
+              "mode": "",
+              "sets": "4",
+              "reps": "3",
+              "load": "",
+              "pct": "86",
+              "rpe": "8.5",
+              "rest": "03:00"
+            },
+            {
+              "ex": "Row",
+              "mode": "",
+              "sets": "3",
+              "reps": "8",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 2 - TUE",
+          "rows": [
+            {
+              "ex": "Deadlift",
+              "mode": "",
+              "sets": "3",
+              "reps": "2",
+              "load": "",
+              "pct": "86",
+              "rpe": "8.5",
+              "rest": "04:00"
+            },
+            {
+              "ex": "Overhead Press",
+              "mode": "",
+              "sets": "3",
+              "reps": "5",
+              "load": "",
+              "pct": "",
+              "rpe": "8.5",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Hamstring Curl",
+              "mode": "",
+              "sets": "3",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "01:30"
+            }
+          ]
+        },
+        {
+          "label": "DAY 3 - THU",
+          "rows": [
+            {
+              "ex": "Bench Press",
+              "mode": "Paused (1s)",
+              "sets": "3",
+              "reps": "2",
+              "load": "",
+              "pct": "88",
+              "rpe": "9",
+              "rest": "03:00"
+            },
+            {
+              "ex": "Squat",
+              "mode": "Paused (2s)",
+              "sets": "3",
+              "reps": "2",
+              "load": "",
+              "pct": "83",
+              "rpe": "9",
+              "rest": "03:30"
+            },
+            {
+              "ex": "Lat Pulldown",
+              "mode": "",
+              "sets": "3",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 4 - FRI",
+          "rows": [
+            {
+              "ex": "Deadlift",
+              "mode": "Paused (1s)",
+              "sets": "2",
+              "reps": "2",
+              "load": "",
+              "pct": "88",
+              "rpe": "9",
+              "rest": "04:00"
+            },
+            {
+              "ex": "Bench Press",
+              "mode": "Close grip",
+              "sets": "2",
+              "reps": "6",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Split Squat",
+              "mode": "",
+              "sets": "2",
+              "reps": "8",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "c": 1,
+      "days": [
+        {
+          "label": "DAY 1 - MON",
+          "rows": [
+            {
+              "ex": "Squat",
+              "mode": "",
+              "sets": "3",
+              "reps": "2",
+              "load": "",
+              "pct": "90",
+              "rpe": "9",
+              "rest": "03:30"
+            },
+            {
+              "ex": "Bench Press",
+              "mode": "",
+              "sets": "3",
+              "reps": "2",
+              "load": "",
+              "pct": "90",
+              "rpe": "9",
+              "rest": "03:00"
+            },
+            {
+              "ex": "Row",
+              "mode": "",
+              "sets": "2",
+              "reps": "8",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 2 - TUE",
+          "rows": [
+            {
+              "ex": "Deadlift",
+              "mode": "",
+              "sets": "2",
+              "reps": "2",
+              "load": "",
+              "pct": "90",
+              "rpe": "9",
+              "rest": "04:00"
+            },
+            {
+              "ex": "Overhead Press",
+              "mode": "",
+              "sets": "2",
+              "reps": "5",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Hamstring Curl",
+              "mode": "",
+              "sets": "2",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "01:30"
+            }
+          ]
+        },
+        {
+          "label": "DAY 3 - THU",
+          "rows": [
+            {
+              "ex": "Bench Press",
+              "mode": "Paused (1s)",
+              "sets": "2",
+              "reps": "2",
+              "load": "",
+              "pct": "92",
+              "rpe": "9",
+              "rest": "03:00"
+            },
+            {
+              "ex": "Squat",
+              "mode": "Paused (2s)",
+              "sets": "2",
+              "reps": "2",
+              "load": "",
+              "pct": "87",
+              "rpe": "9",
+              "rest": "03:30"
+            },
+            {
+              "ex": "Lat Pulldown",
+              "mode": "",
+              "sets": "2",
+              "reps": "10",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        },
+        {
+          "label": "DAY 4 - FRI",
+          "rows": [
+            {
+              "ex": "Deadlift",
+              "mode": "Paused (1s)",
+              "sets": "2",
+              "reps": "2",
+              "load": "",
+              "pct": "92",
+              "rpe": "9",
+              "rest": "04:00"
+            },
+            {
+              "ex": "Bench Press",
+              "mode": "Close grip",
+              "sets": "2",
+              "reps": "6",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:30"
+            },
+            {
+              "ex": "Split Squat",
+              "mode": "",
+              "sets": "2",
+              "reps": "8",
+              "load": "",
+              "pct": "",
+              "rpe": "8",
+              "rest": "02:00"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

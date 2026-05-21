@@ -2,115 +2,117 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>powerlift.ing — JSON → Share link</title>
-    <meta name="description" content="Paste a powerlift.ing program JSON and generate a real /program/<STATE> share link (lz-string + base64url), client-side." />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>powerlift.ing — JSON → share link</title>
+    <meta name="description" content="Paste a powerlift.ing program JSON and generate a /program/ share link (lz-string + base64url). Runs in your browser — no server." />
     <link rel="canonical" href="https://powerlift.ing/ai.html" />
-    <link rel="stylesheet" href="/app.css" />
-    <style>
-      /* Minimal page-specific styles; visual system comes from app.css tokens */
-      .aiPage .aiCard{
-        background: var(--panel);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        padding: var(--space-3);
-      }
-      .aiPage .aiActions{
-        display:flex;
-        flex-wrap:wrap;
-        gap: var(--space-2);
-        align-items:center;
-      }
-      .aiPage .aiHint{ color: var(--muted); font-size: 13px; }
-      .aiPage .aiOut{ display:grid; gap: var(--space-2); }
-      .aiPage .aiOut a{ word-break: break-all; }
-      .aiPage textarea.input{
-        min-height: 260px;
-        font-family: var(--mono);
-        resize: vertical;
-      }
-      .aiPage .aiMsg{ font-size: 13px; }
-      .aiPage .aiErr{ color: var(--danger); white-space: pre-wrap; }
-      .aiPage .aiOk{ color: var(--success); }
-      .aiPage .aiInputRow{
-        display:flex;
-        align-items:center;
-        gap: var(--space-2);
-      }
-      .aiPage .aiInputRow .input{ flex: 1; min-width: 0; }
-      .aiPage .aiCopyBtn{ flex: 0 0 auto; }
-      @media (max-width: 520px){
-        .aiPage .aiActions .btn{ width: 100%; justify-content: center; }
-      }
-    </style>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=JetBrains+Mono:wght@500;600&display=swap"
+    />
+    <link rel="stylesheet" href="/fonts.css" />
+    <link rel="stylesheet" href="/design-tokens.css" />
+    <link rel="stylesheet" href="/ai.css" />
   </head>
   <body class="aiPage">
-    <main class="app">
-      <div class="container">
-        <h1 style="margin: 6px 0 8px;">JSON → powerlift.ing share link</h1>
-        <p class="aiHint" style="margin: 0 0 12px;">
-          Paste program JSON and generate a real <code>/program/&lt;STATE&gt;</code> link using <strong>lz-string</strong> + <strong>base64url</strong> (no backend).
+    <header class="ai-header">
+      <div class="ai-header__row">
+        <a class="ai-brand ai-display" href="/">powerlift<span class="ai-brand__dot">.</span>ing</a>
+        <nav class="ai-header__links" aria-label="Site">
+          <a href="/">Home</a>
+          <a href="/app">Builder</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="ai-main">
+      <header class="ai-hero">
+        <h1 class="ai-hero__title ai-display">JSON → share link</h1>
+        <p class="ai-hero__lead">
+          Paste program JSON from an LLM, spreadsheet export, or script. This page compresses it the same way the app does and gives you a
+          <code>/program/…</code> URL you can open or send to someone.
         </p>
+      </header>
 
-        <section class="aiCard">
-          <div class="aiActions">
-            <button class="btn btn--primary" id="encodeBtn" type="button">Generate link</button>
-            <button class="btn btn--ghost" id="exampleBtn" type="button">Insert small example JSON</button>
-            <button class="btn btn--ghost" id="fullExampleBtn" type="button">Insert full example JSON</button>
-            <button class="btn btn--ghost" id="prettifyBtn" type="button">Prettify JSON</button>
-            <button class="btn btn--danger" id="clearBtn" type="button">Clear</button>
+      <section class="ai-guide" aria-labelledby="ai-guide-title">
+        <h2 id="ai-guide-title" class="ai-guide__title">How to use</h2>
+        <ol>
+          <li><strong>Paste JSON</strong> in the box below (or click <strong>Insert example</strong> to try a sample program).</li>
+          <li>Click <strong>Generate link</strong>. Fix any errors shown in red if the JSON is invalid or missing required fields.</li>
+          <li><strong>Copy the “Clean link”</strong> (<code>/program/…</code>) and share it. Recipients open it in the builder with your exact program.</li>
+        </ol>
+        <p class="ai-guide__note">
+          Tip: <kbd>Ctrl</kbd>+<kbd>Enter</kbd> (or <kbd>⌘</kbd>+<kbd>Enter</kbd>) runs Generate link. Everything runs locally in your browser — nothing is uploaded.
+          Legacy <code>/#/p/…</code> links are listed for reference only.
+        </p>
+      </section>
+
+      <section class="ai-tool" aria-labelledby="ai-tool-title">
+        <h2 id="ai-tool-title" class="srOnly">Link generator</h2>
+
+        <div class="ai-actions">
+          <button class="ai-btn ai-btn--primary" id="encodeBtn" type="button">Generate link</button>
+          <button class="ai-btn ai-btn--ghost" id="exampleBtn" type="button">Insert example</button>
+          <button class="ai-btn ai-btn--ghost" id="fullExampleBtn" type="button">Load full example</button>
+          <button class="ai-btn ai-btn--ghost" id="prettifyBtn" type="button">Prettify JSON</button>
+          <button class="ai-btn ai-btn--danger" id="clearBtn" type="button">Clear</button>
+        </div>
+
+        <div class="ai-field">
+          <label for="jsonIn">Program JSON</label>
+          <textarea
+            class="ai-textarea"
+            id="jsonIn"
+            spellcheck="false"
+            placeholder='Must include v:1, u:"kg"|"lb", c:[mesocycles], weeks:[…] — see Schema below'
+          ></textarea>
+        </div>
+
+        <p id="status" class="ai-status" role="status" aria-live="polite"></p>
+
+        <div id="outBlock" class="ai-out" hidden>
+          <div class="ai-field">
+            <label for="outPath">Clean link (recommended)</label>
+            <div class="ai-copyRow">
+              <input class="ai-input" id="outPath" type="text" readonly placeholder="https://powerlift.ing/program/…" />
+              <button class="ai-iconBtn" id="copyPathBtn" type="button" aria-label="Copy program link" title="Copy">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+            </div>
           </div>
 
-          <div style="height:10px"></div>
-          <div class="field">
-            <label for="jsonIn">Program JSON</label>
-            <textarea class="input" id="jsonIn" spellcheck="false" placeholder='{"v":1,"u":"kg","c":[{"n":"Meso 1"}],"weeks":[{"c":0,"days":[{"label":"DAY 1 - MON","rows":[{"ex":"Squat","mode":"","sets":"3","reps":"5","load":"100","pct":"","rpe":"7.5","rest":"03:00"}]}]}]}'></textarea>
+          <div class="ai-field">
+            <label for="outHash">Legacy link (reference)</label>
+            <div class="ai-copyRow">
+              <input class="ai-input" id="outHash" type="text" readonly placeholder="https://powerlift.ing/#/p/…" />
+              <button class="ai-iconBtn" id="copyHashBtn" type="button" aria-label="Copy legacy link" title="Copy">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+            </div>
           </div>
 
-          <div style="height:10px"></div>
-          <div class="aiOut">
-            <div id="msg" class="aiMsg"></div>
-
-            <div class="field">
-              <label for="outPath">Clean link (new format - recommended)</label>
-              <div class="aiInputRow">
-                <input class="input" id="outPath" type="text" readonly value="" placeholder="https://powerlift.ing/program/..." />
-                <button class="iconBtn iconBtn--bare aiCopyBtn" id="copyPathBtn" type="button" aria-label="Copy /program link" title="Copy">
-                  <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="outHash">Legacy link (old format - for reference)</label>
-              <div class="aiInputRow">
-                <input class="input" id="outHash" type="text" readonly value="" placeholder="https://powerlift.ing/#/p/..." />
-                <button class="iconBtn iconBtn--bare aiCopyBtn" id="copyHashBtn" type="button" aria-label="Copy hash link" title="Copy">
-                  <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <div class="aiActions">
-              <a class="btn btn--success" id="openInAppBtn" href="#" target="_blank" rel="noopener noreferrer">Open in app</a>
-              <a class="btn btn--ghost" href="/" target="_blank" rel="noopener noreferrer">Open blank app</a>
-            </div>
-
-            <div id="err" class="aiErr aiMsg"></div>
+          <div class="ai-actions">
+            <a class="ai-btn ai-btn--success" id="openInAppBtn" href="#" aria-disabled="true">Open in builder</a>
+            <a class="ai-btn ai-btn--ghost" href="/app">Blank builder</a>
           </div>
-        </section>
+        </div>
+      </section>
 
-    <h2>Schema reminder (v1)</h2>
-    <p class="aiHint">This must match the app’s URL/state contract (existing shared links depend on it).</p>
-
-    <pre><code>{
+      <div class="ai-more">
+        <details class="ai-details">
+          <summary>Program JSON schema (v1)</summary>
+          <div class="ai-details__body">
+            <p>Must match what the app encodes in URLs. Shared links depend on this shape.</p>
+            <pre><code>{
   "v": 1,
   "u": "lb" | "kg",
   "c": [{ "n": "Meso 1" }],
@@ -128,368 +130,28 @@
     }
   ]
 }</code></pre>
+          </div>
+        </details>
 
-    <h2>More resources</h2>
-    <ul>
-      <li><a href="/llms.txt" target="_blank" rel="noopener noreferrer">/llms.txt</a> (machine-readable)</li>
-      <li><a href="/ai.txt" target="_blank" rel="noopener noreferrer">/ai.txt</a> (plain text)</li>
-      <li><a href="/SEO.md" target="_blank" rel="noopener noreferrer">/SEO.md</a> (editable notes)</li>
-    </ul>
-
-    <h2>Attribution</h2>
-    <ul>
-      <li>Creator: James L. Cowan (<strong>@jameslcowan</strong>) — <a href="https://jameslcowan.com/" target="_blank" rel="noopener noreferrer">jameslcowan.com</a></li>
-      <li>Source: <a href="https://github.com/jameslcowan/powerlift.ing" target="_blank" rel="noopener noreferrer">GitHub repository</a></li>
-    </ul>
+        <details class="ai-details">
+          <summary>For LLMs &amp; automation</summary>
+          <div class="ai-details__body">
+            <ul>
+              <li><a href="/llms.txt">/llms.txt</a> — machine-readable site guide</li>
+              <li><a href="/ai.txt">/ai.txt</a> — plain-text instructions</li>
+              <li><a href="https://github.com/jameslcowan/powerlift.ing" target="_blank" rel="noopener noreferrer">GitHub</a> — source + codec tests</li>
+            </ul>
+          </div>
+        </details>
       </div>
+
+      <footer class="ai-footer">
+        <p>Client-side only · lz-string + base64url · © powerlift.ing</p>
+      </footer>
     </main>
 
     <script src="/vendor/lz-string.min.js"></script>
     <script src="/state-codec.js"></script>
-    <script>
-      (function () {
-        "use strict";
-
-        const { encodeState, looksLikeProgramV1 } = PowerliftCodec;
-
-        const $ = (id) => document.getElementById(id);
-        const jsonIn = $("jsonIn");
-        const outPath = $("outPath");
-        const outHash = $("outHash");
-        const err = $("err");
-        const msg = $("msg");
-        const openInAppBtn = $("openInAppBtn");
-
-        function setError(text) {
-          err.textContent = text || "";
-          msg.textContent = "";
-          msg.className = "aiMsg";
-        }
-        function setOk(text) {
-          err.textContent = "";
-          msg.textContent = text || "";
-          msg.className = "aiMsg aiOk";
-        }
-
-        function generate() {
-          setError("");
-          outPath.value = "";
-          outHash.value = "";
-          if (openInAppBtn) openInAppBtn.href = "#";
-
-          let obj;
-          try {
-            obj = JSON.parse(jsonIn.value);
-          } catch (e) {
-            setError("Invalid JSON. Fix syntax and try again.");
-            return;
-          }
-          if (!looksLikeProgramV1(obj)) {
-            setError("JSON doesn’t look like a powerlift.ing program (expected v:1, u:'kg'|'lb', c:[], weeks:[]).");
-            return;
-          }
-
-          try {
-            const enc = encodeState(obj);
-            outPath.value = "https://powerlift.ing/program/" + encodeURIComponent(enc);
-            outHash.value = "https://powerlift.ing/#/p/" + encodeURIComponent(enc);
-            setOk("Link generated (using new /program/ format).");
-            if (openInAppBtn) openInAppBtn.href = outPath.value; // use new clean format
-          } catch (e) {
-            setError("Could not encode program. " + (e && e.message ? e.message : ""));
-          }
-        }
-
-        function prettify() {
-          setError("");
-          try {
-            const obj = JSON.parse(jsonIn.value);
-            jsonIn.value = JSON.stringify(obj, null, 2);
-          } catch {
-            setError("Invalid JSON — can’t prettify.");
-          }
-        }
-
-        async function copyFrom(input) {
-          const v = input.value || "";
-          if (!v) return;
-          try {
-            await navigator.clipboard.writeText(v);
-            setOk("Copied.");
-          } catch {
-            input.focus();
-            input.select();
-            setOk("Select + copy manually (Ctrl+C).");
-          }
-        }
-
-        $("encodeBtn").addEventListener("click", generate);
-        $("exampleBtn").addEventListener("click", () => {
-          const example = {
-            v: 1,
-            u: "kg",
-            c: [{ n: "Meso 1" }],
-            weeks: [
-              {
-                c: 0,
-                days: [
-                  {
-                    label: "DAY 1 - MON",
-                    rows: [
-                      { ex: "Squat", mode: "", sets: "4", reps: "5", load: "", pct: "", rpe: "7.5", rest: "03:00" },
-                      { ex: "Bench Press", mode: "", sets: "4", reps: "6", load: "", pct: "", rpe: "7.5", rest: "02:30" },
-                      { ex: "Row", mode: "", sets: "3", reps: "10", load: "", pct: "", rpe: "8", rest: "02:00" }
-                    ]
-                  },
-                  {
-                    label: "DAY 2 - WED",
-                    rows: [
-                      { ex: "Deadlift", mode: "", sets: "3", reps: "5", load: "", pct: "", rpe: "7.5", rest: "03:30" },
-                      { ex: "Overhead Press", mode: "", sets: "3", reps: "8", load: "", pct: "", rpe: "8", rest: "02:00" },
-                      { ex: "Lat Pulldown", mode: "", sets: "3", reps: "10", load: "", pct: "", rpe: "8", rest: "02:00" }
-                    ]
-                  },
-                  {
-                    label: "DAY 3 - FRI",
-                    rows: [
-                      { ex: "Squat", mode: "Paused (2s)", sets: "3", reps: "4", load: "", pct: "", rpe: "8", rest: "03:00" },
-                      { ex: "Bench Press", mode: "Paused (1s)", sets: "3", reps: "5", load: "", pct: "", rpe: "8", rest: "02:30" },
-                      { ex: "Romanian Deadlift", mode: "", sets: "3", reps: "8", load: "", pct: "", rpe: "8", rest: "02:30" }
-                    ]
-                  }
-                ]
-              }
-            ]
-          };
-          jsonIn.value = JSON.stringify(example, null, 2);
-          setOk("Small example inserted. Click “Generate link”.");
-        });
-        $("fullExampleBtn").addEventListener("click", () => {
-          const full = {
-            v: 1,
-            u: "kg",
-            c: [{ n: "Hypertrophy" }, { n: "Strength" }],
-            weeks: [
-              // Hypertrophy — 4 weeks (4 days/week: MON, TUE, THU, FRI)
-              {
-                c: 0,
-                days: [
-                  { label: "DAY 1 - MON", rows: [
-                    { ex: "Squat", mode: "High bar", sets: "4", reps: "8", load: "100", pct: "", rpe: "7.5", rest: "03:00" },
-                    { ex: "Bench Press", mode: "", sets: "4", reps: "8", load: "70", pct: "", rpe: "7.5", rest: "02:30" },
-                    { ex: "Lat Pulldown", mode: "", sets: "3", reps: "12", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 2 - TUE", rows: [
-                    { ex: "Deadlift", mode: "", sets: "3", reps: "6", load: "140", pct: "", rpe: "7.5", rest: "03:30" },
-                    { ex: "Overhead Press", mode: "", sets: "3", reps: "10", load: "", pct: "", rpe: "8", rest: "02:00" },
-                    { ex: "Split Squat", mode: "", sets: "3", reps: "10", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 3 - THU", rows: [
-                    { ex: "Bench Press", mode: "Paused (1s)", sets: "4", reps: "6", load: "", pct: "75", rpe: "8", rest: "02:30" },
-                    { ex: "Squat", mode: "Tempo", sets: "3", reps: "6", load: "", pct: "70", rpe: "8", rest: "03:00" },
-                    { ex: "Row", mode: "Chest-supported", sets: "3", reps: "10", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 4 - FRI", rows: [
-                    { ex: "Deadlift", mode: "Paused (1s)", sets: "3", reps: "5", load: "", pct: "75", rpe: "8", rest: "03:30" },
-                    { ex: "Bench Press", mode: "Close grip", sets: "3", reps: "8", load: "", pct: "", rpe: "8", rest: "02:30" },
-                    { ex: "Hamstring Curl", mode: "", sets: "3", reps: "12", load: "", pct: "", rpe: "8", rest: "01:30" }
-                  ]}
-                ]
-              },
-              {
-                c: 0,
-                days: [
-                  { label: "DAY 1 - MON", rows: [
-                    { ex: "Squat", mode: "High bar", sets: "4", reps: "8", load: "102", pct: "", rpe: "8", rest: "03:00" },
-                    { ex: "Bench Press", mode: "", sets: "4", reps: "8", load: "72", pct: "", rpe: "8", rest: "02:30" },
-                    { ex: "Lat Pulldown", mode: "", sets: "3", reps: "12", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 2 - TUE", rows: [
-                    { ex: "Deadlift", mode: "", sets: "3", reps: "6", load: "145", pct: "", rpe: "8", rest: "03:30" },
-                    { ex: "Overhead Press", mode: "", sets: "3", reps: "10", load: "", pct: "", rpe: "8", rest: "02:00" },
-                    { ex: "Split Squat", mode: "", sets: "3", reps: "10", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 3 - THU", rows: [
-                    { ex: "Bench Press", mode: "Paused (1s)", sets: "4", reps: "6", load: "", pct: "77", rpe: "8.5", rest: "02:30" },
-                    { ex: "Squat", mode: "Tempo", sets: "3", reps: "6", load: "", pct: "72", rpe: "8.5", rest: "03:00" },
-                    { ex: "Row", mode: "Chest-supported", sets: "3", reps: "10", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 4 - FRI", rows: [
-                    { ex: "Deadlift", mode: "Paused (1s)", sets: "3", reps: "5", load: "", pct: "77", rpe: "8.5", rest: "03:30" },
-                    { ex: "Bench Press", mode: "Close grip", sets: "3", reps: "8", load: "", pct: "", rpe: "8", rest: "02:30" },
-                    { ex: "Hamstring Curl", mode: "", sets: "3", reps: "12", load: "", pct: "", rpe: "8", rest: "01:30" }
-                  ]}
-                ]
-              },
-              {
-                c: 0,
-                days: [
-                  { label: "DAY 1 - MON", rows: [
-                    { ex: "Squat", mode: "High bar", sets: "4", reps: "6", load: "105", pct: "", rpe: "8.5", rest: "03:00" },
-                    { ex: "Bench Press", mode: "", sets: "4", reps: "6", load: "75", pct: "", rpe: "8.5", rest: "02:30" },
-                    { ex: "Lat Pulldown", mode: "", sets: "3", reps: "10", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 2 - TUE", rows: [
-                    { ex: "Deadlift", mode: "", sets: "3", reps: "5", load: "150", pct: "", rpe: "8.5", rest: "03:30" },
-                    { ex: "Overhead Press", mode: "", sets: "3", reps: "8", load: "", pct: "", rpe: "8.5", rest: "02:00" },
-                    { ex: "Split Squat", mode: "", sets: "3", reps: "8", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 3 - THU", rows: [
-                    { ex: "Bench Press", mode: "Paused (1s)", sets: "4", reps: "5", load: "", pct: "80", rpe: "8.5", rest: "02:30" },
-                    { ex: "Squat", mode: "Tempo", sets: "3", reps: "5", load: "", pct: "75", rpe: "8.5", rest: "03:00" },
-                    { ex: "Row", mode: "Chest-supported", sets: "3", reps: "10", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 4 - FRI", rows: [
-                    { ex: "Deadlift", mode: "Paused (1s)", sets: "3", reps: "4", load: "", pct: "80", rpe: "8.5", rest: "03:30" },
-                    { ex: "Bench Press", mode: "Close grip", sets: "3", reps: "6", load: "", pct: "", rpe: "8.5", rest: "02:30" },
-                    { ex: "Hamstring Curl", mode: "", sets: "3", reps: "10", load: "", pct: "", rpe: "8", rest: "01:30" }
-                  ]}
-                ]
-              },
-              {
-                c: 0,
-                days: [
-                  { label: "DAY 1 - MON", rows: [
-                    { ex: "Squat", mode: "High bar", sets: "3", reps: "6", load: "107", pct: "", rpe: "9", rest: "03:00" },
-                    { ex: "Bench Press", mode: "", sets: "3", reps: "6", load: "77", pct: "", rpe: "9", rest: "02:30" },
-                    { ex: "Lat Pulldown", mode: "", sets: "2", reps: "10", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 2 - TUE", rows: [
-                    { ex: "Deadlift", mode: "", sets: "2", reps: "5", load: "155", pct: "", rpe: "9", rest: "03:30" },
-                    { ex: "Overhead Press", mode: "", sets: "2", reps: "8", load: "", pct: "", rpe: "8.5", rest: "02:00" },
-                    { ex: "Split Squat", mode: "", sets: "2", reps: "8", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 3 - THU", rows: [
-                    { ex: "Bench Press", mode: "Paused (1s)", sets: "3", reps: "5", load: "", pct: "82", rpe: "9", rest: "02:30" },
-                    { ex: "Squat", mode: "Tempo", sets: "2", reps: "5", load: "", pct: "77", rpe: "8.5", rest: "03:00" },
-                    { ex: "Row", mode: "Chest-supported", sets: "2", reps: "10", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 4 - FRI", rows: [
-                    { ex: "Deadlift", mode: "Paused (1s)", sets: "2", reps: "4", load: "", pct: "82", rpe: "9", rest: "03:30" },
-                    { ex: "Bench Press", mode: "Close grip", sets: "2", reps: "6", load: "", pct: "", rpe: "8.5", rest: "02:30" },
-                    { ex: "Hamstring Curl", mode: "", sets: "2", reps: "10", load: "", pct: "", rpe: "8", rest: "01:30" }
-                  ]}
-                ]
-              },
-
-              // Strength — 4 weeks (4 days/week: MON, TUE, THU, FRI)
-              {
-                c: 1,
-                days: [
-                  { label: "DAY 1 - MON", rows: [
-                    { ex: "Squat", mode: "", sets: "4", reps: "5", load: "", pct: "80", rpe: "7.5", rest: "03:30" },
-                    { ex: "Bench Press", mode: "", sets: "4", reps: "5", load: "", pct: "80", rpe: "7.5", rest: "03:00" },
-                    { ex: "Row", mode: "", sets: "3", reps: "8", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 2 - TUE", rows: [
-                    { ex: "Deadlift", mode: "", sets: "3", reps: "4", load: "", pct: "80", rpe: "7.5", rest: "04:00" },
-                    { ex: "Overhead Press", mode: "", sets: "3", reps: "6", load: "", pct: "", rpe: "8", rest: "02:30" },
-                    { ex: "Hamstring Curl", mode: "", sets: "3", reps: "10", load: "", pct: "", rpe: "8", rest: "01:30" }
-                  ]},
-                  { label: "DAY 3 - THU", rows: [
-                    { ex: "Bench Press", mode: "Paused (1s)", sets: "3", reps: "4", load: "", pct: "82", rpe: "8", rest: "03:00" },
-                    { ex: "Squat", mode: "Paused (2s)", sets: "3", reps: "3", load: "", pct: "78", rpe: "8", rest: "03:30" },
-                    { ex: "Lat Pulldown", mode: "", sets: "3", reps: "10", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 4 - FRI", rows: [
-                    { ex: "Deadlift", mode: "Paused (1s)", sets: "2", reps: "3", load: "", pct: "82", rpe: "8", rest: "04:00" },
-                    { ex: "Bench Press", mode: "Close grip", sets: "3", reps: "6", load: "", pct: "", rpe: "8", rest: "02:30" },
-                    { ex: "Split Squat", mode: "", sets: "3", reps: "8", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]}
-                ]
-              },
-              {
-                c: 1,
-                days: [
-                  { label: "DAY 1 - MON", rows: [
-                    { ex: "Squat", mode: "", sets: "4", reps: "4", load: "", pct: "83", rpe: "8", rest: "03:30" },
-                    { ex: "Bench Press", mode: "", sets: "4", reps: "4", load: "", pct: "83", rpe: "8", rest: "03:00" },
-                    { ex: "Row", mode: "", sets: "3", reps: "8", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 2 - TUE", rows: [
-                    { ex: "Deadlift", mode: "", sets: "3", reps: "3", load: "", pct: "83", rpe: "8", rest: "04:00" },
-                    { ex: "Overhead Press", mode: "", sets: "3", reps: "6", load: "", pct: "", rpe: "8.5", rest: "02:30" },
-                    { ex: "Hamstring Curl", mode: "", sets: "3", reps: "10", load: "", pct: "", rpe: "8", rest: "01:30" }
-                  ]},
-                  { label: "DAY 3 - THU", rows: [
-                    { ex: "Bench Press", mode: "Paused (1s)", sets: "3", reps: "3", load: "", pct: "85", rpe: "8.5", rest: "03:00" },
-                    { ex: "Squat", mode: "Paused (2s)", sets: "3", reps: "3", load: "", pct: "80", rpe: "8.5", rest: "03:30" },
-                    { ex: "Lat Pulldown", mode: "", sets: "3", reps: "10", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 4 - FRI", rows: [
-                    { ex: "Deadlift", mode: "Paused (1s)", sets: "2", reps: "3", load: "", pct: "85", rpe: "8.5", rest: "04:00" },
-                    { ex: "Bench Press", mode: "Close grip", sets: "3", reps: "6", load: "", pct: "", rpe: "8.5", rest: "02:30" },
-                    { ex: "Split Squat", mode: "", sets: "3", reps: "8", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]}
-                ]
-              },
-              {
-                c: 1,
-                days: [
-                  { label: "DAY 1 - MON", rows: [
-                    { ex: "Squat", mode: "", sets: "4", reps: "3", load: "", pct: "86", rpe: "8.5", rest: "03:30" },
-                    { ex: "Bench Press", mode: "", sets: "4", reps: "3", load: "", pct: "86", rpe: "8.5", rest: "03:00" },
-                    { ex: "Row", mode: "", sets: "3", reps: "8", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 2 - TUE", rows: [
-                    { ex: "Deadlift", mode: "", sets: "3", reps: "2", load: "", pct: "86", rpe: "8.5", rest: "04:00" },
-                    { ex: "Overhead Press", mode: "", sets: "3", reps: "5", load: "", pct: "", rpe: "8.5", rest: "02:30" },
-                    { ex: "Hamstring Curl", mode: "", sets: "3", reps: "10", load: "", pct: "", rpe: "8", rest: "01:30" }
-                  ]},
-                  { label: "DAY 3 - THU", rows: [
-                    { ex: "Bench Press", mode: "Paused (1s)", sets: "3", reps: "2", load: "", pct: "88", rpe: "9", rest: "03:00" },
-                    { ex: "Squat", mode: "Paused (2s)", sets: "3", reps: "2", load: "", pct: "83", rpe: "9", rest: "03:30" },
-                    { ex: "Lat Pulldown", mode: "", sets: "3", reps: "10", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 4 - FRI", rows: [
-                    { ex: "Deadlift", mode: "Paused (1s)", sets: "2", reps: "2", load: "", pct: "88", rpe: "9", rest: "04:00" },
-                    { ex: "Bench Press", mode: "Close grip", sets: "2", reps: "6", load: "", pct: "", rpe: "8", rest: "02:30" },
-                    { ex: "Split Squat", mode: "", sets: "2", reps: "8", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]}
-                ]
-              },
-              {
-                c: 1,
-                days: [
-                  { label: "DAY 1 - MON", rows: [
-                    { ex: "Squat", mode: "", sets: "3", reps: "2", load: "", pct: "90", rpe: "9", rest: "03:30" },
-                    { ex: "Bench Press", mode: "", sets: "3", reps: "2", load: "", pct: "90", rpe: "9", rest: "03:00" },
-                    { ex: "Row", mode: "", sets: "2", reps: "8", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 2 - TUE", rows: [
-                    { ex: "Deadlift", mode: "", sets: "2", reps: "2", load: "", pct: "90", rpe: "9", rest: "04:00" },
-                    { ex: "Overhead Press", mode: "", sets: "2", reps: "5", load: "", pct: "", rpe: "8", rest: "02:30" },
-                    { ex: "Hamstring Curl", mode: "", sets: "2", reps: "10", load: "", pct: "", rpe: "8", rest: "01:30" }
-                  ]},
-                  { label: "DAY 3 - THU", rows: [
-                    { ex: "Bench Press", mode: "Paused (1s)", sets: "2", reps: "2", load: "", pct: "92", rpe: "9", rest: "03:00" },
-                    { ex: "Squat", mode: "Paused (2s)", sets: "2", reps: "2", load: "", pct: "87", rpe: "9", rest: "03:30" },
-                    { ex: "Lat Pulldown", mode: "", sets: "2", reps: "10", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]},
-                  { label: "DAY 4 - FRI", rows: [
-                    { ex: "Deadlift", mode: "Paused (1s)", sets: "2", reps: "2", load: "", pct: "92", rpe: "9", rest: "04:00" },
-                    { ex: "Bench Press", mode: "Close grip", sets: "2", reps: "6", load: "", pct: "", rpe: "8", rest: "02:30" },
-                    { ex: "Split Squat", mode: "", sets: "2", reps: "8", load: "", pct: "", rpe: "8", rest: "02:00" }
-                  ]}
-                ]
-              }
-            ]
-          };
-          jsonIn.value = JSON.stringify(full, null, 2);
-          setOk("Full example inserted. Click “Generate link”.");
-        });
-        $("prettifyBtn").addEventListener("click", prettify);
-        $("clearBtn").addEventListener("click", () => {
-          jsonIn.value = "";
-          setError("");
-          outPath.value = "";
-          outHash.value = "";
-          if (openInAppBtn) openInAppBtn.href = "#";
-        });
-        $("copyPathBtn").addEventListener("click", () => copyFrom(outPath));
-        $("copyHashBtn").addEventListener("click", () => copyFrom(outHash));
-      })();
-    </script>
+    <script src="/ai.js" defer></script>
   </body>
 </html>
-
