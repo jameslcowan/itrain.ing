@@ -1130,12 +1130,22 @@
     } catch {}
   });
 
+  let menuReturnFocus = null;
+
   function openMenu() {
     if (!dom.menuOverlay) return;
     closeOpenDropdown();
+    menuReturnFocus = document.activeElement;
     dom.menuOverlay.hidden = false;
     document.documentElement.classList.add("menuOpen");
     document.body.style.overflow = "hidden";
+    const main = document.getElementById("app");
+    if (main) main.setAttribute("aria-hidden", "true");
+    window.setTimeout(() => {
+      try {
+        dom.menuCloseBtn?.focus();
+      } catch {}
+    }, 0);
   }
 
   function closeMenu() {
@@ -1143,12 +1153,41 @@
     dom.menuOverlay.hidden = true;
     document.documentElement.classList.remove("menuOpen");
     document.body.style.overflow = "";
+    const main = document.getElementById("app");
+    if (main) main.removeAttribute("aria-hidden");
+    if (menuReturnFocus?.focus) {
+      try {
+        menuReturnFocus.focus();
+      } catch {}
+    }
+    menuReturnFocus = null;
   }
 
   dom.menuBtn?.addEventListener("click", openMenu);
   dom.menuCloseBtn?.addEventListener("click", closeMenu);
   dom.menuOverlay?.addEventListener("click", (e) => {
     if (e.target === dom.menuOverlay) closeMenu();
+  });
+
+  dom.menuOverlay?.addEventListener("keydown", (e) => {
+    if (e.key !== "Tab" || dom.menuOverlay.hidden) return;
+    const drawer = dom.menuOverlay.querySelector(".drawer");
+    if (!drawer) return;
+    const list = Array.from(
+      drawer.querySelectorAll(
+        'button, [href], input:not([type="hidden"]), select, textarea, [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter((el) => !el.disabled && el.offsetParent !== null);
+    if (!list.length) return;
+    const first = list[0];
+    const last = list[list.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   });
 
   function closeOpenDropdown() {
