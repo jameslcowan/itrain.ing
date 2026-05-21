@@ -679,6 +679,23 @@ html.fonts-loaded .lp-step__num {
   margin-inline: auto;
 }
 
+.lp-footer__credit {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.lp-footer__credit a {
+  color: var(--muted);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.lp-footer__credit a:hover {
+  color: var(--accent);
+}
+
 .lp-footer__links {
   display: flex;
   flex-direction: column;

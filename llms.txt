@@ -10,9 +10,8 @@ Common search terms (what this covers)
 - periodization / mesocycle / hypertrophy block / strength block / peaking / meet prep
 - RPE / %1RM / rest times / squat bench deadlift
 
-Creator / source
-- Creator: James L. Cowan (@jameslcowan) — https://jameslcowan.com/
-- Source: https://github.com/jameslcowan/powerlift.ing
+Creator
+- James L. Cowan (@jameslcowan) — https://x.com/jameslcowan
 
 Routing (share link formats)
 - Current (default): /program/<STATE>

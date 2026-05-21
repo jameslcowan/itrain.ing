@@ -1,9 +1,7 @@
 /* TEAM */
 Creator: James L. Cowan
 Handle: @jameslcowan
-Site: https://jameslcowan.com/
-GitHub: https://github.com/jameslcowan
-Source: https://github.com/jameslcowan/powerlift.ing
+X: https://x.com/jameslcowan
 
 /* SITE */
 Site: powerlift.ing

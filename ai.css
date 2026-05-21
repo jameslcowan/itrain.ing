@@ -411,6 +411,16 @@ html.fonts-loaded .ai-display {
   color: var(--muted);
 }
 
+.ai-footer a {
+  color: var(--muted);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ai-footer a:hover {
+  color: var(--accent);
+}
+
 .aiPage .srOnly {
   position: absolute;
   width: 1px;

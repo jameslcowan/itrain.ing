@@ -570,6 +570,18 @@ details.day > summary::-webkit-details-marker{ display:none; }
   color: var(--muted);
   line-height: 1.45;
 }
+.drawerNav__credit{
+  margin-top: 10px;
+  font-size: 12px;
+}
+.drawerNav__credit a{
+  color: var(--muted);
+  font-weight: 600;
+  text-decoration: none;
+}
+.drawerNav__credit a:hover{
+  color: var(--accent);
+}
 .drawerSection{
   border: 1px solid var(--border);
   border-radius: 12px;

@@ -16,8 +16,7 @@ Use common powerlifting terms naturally (don’t spam):
 - RPE, %1RM, squat bench deadlift
 
 Creator/credit:
-- James L. Cowan (@jameslcowan) — https://jameslcowan.com/
-- Source: https://github.com/jameslcowan/powerlift.ing
+- James L. Cowan (@jameslcowan) — https://x.com/jameslcowan
 
 ## Routing + state-in-URL (public contract)
 - Current (default): `/program/<STATE>`
