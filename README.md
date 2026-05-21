@@ -5,6 +5,7 @@ Static, zero-build program builder where **the entire program lives in the URL**
 ## What this is
 - Marketing landing at `/` (`index.html`, `landing.css`, `landing.js`)
 - Program builder at `/app` (`app.html`, `app.css`, `app.js`, `state-codec.js`)
+- JSON → link tool at `/ai.html` (`ai.css`, `ai.js`, `ai-example.json`)
 - Client-only (no accounts, no backend yet)
 - Sharing = copy the URL
 
