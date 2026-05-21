@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="lp-boot">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>powerlift.ing — Free Powerlifting Program Builder</title>
     <meta name="description" content="The best free powerlifting program builder. Plan mesocycles, track sets, reps, RPE, and %1RM — then share your whole squat/bench/deadlift program in one link." />
     <meta name="keywords" content="powerlifting program, powerlifting program builder, strength program, workout program, periodization, mesocycle, RPE, squat bench deadlift" />
@@ -69,122 +69,147 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&display=swap"
+    />
+    <link rel="stylesheet" href="/fonts.css" />
     <link rel="stylesheet" href="/design-tokens.css" />
-    <link rel="stylesheet" href="/app.css" />
     <link rel="stylesheet" href="/landing.css" />
+    <script src="/landing-boot.js"></script>
   </head>
   <body class="landingPage">
     <a class="srOnly" href="#main">Skip to content</a>
 
-    <header class="landingHeader">
-      <div class="landingHeader__inner">
-        <a class="landingBrand" href="/">powerlift<span class="landingBrand__dot">.</span>ing</a>
-        <nav class="landingNav" aria-label="Primary">
+    <header class="lp-header">
+      <div class="lp-header__row">
+        <a class="lp-brand" href="/">powerlift<span class="lp-brand__dot">.</span>ing</a>
+        <nav class="lp-nav" aria-label="Primary">
           <a href="#how-it-works">How it works</a>
           <a href="#features">Features</a>
           <a href="#for-coaches">For coaches</a>
           <a href="#faq">FAQ</a>
         </nav>
-        <div class="landingHeader__actions">
-          <a class="btn btn--primary landingHeader__cta" href="/app">Start building</a>
-          <button id="landingMenuBtn" class="iconBtn iconBtn--bare landingMenuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="landingSheet">
-            <svg class="ico" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+        <div class="lp-header__actions">
+          <a class="lp-btn lp-btn--primary lp-header__cta" href="/app">Start building</a>
+          <button id="landingMenuBtn" class="lp-iconBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="landingMenu">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
           </button>
         </div>
       </div>
     </header>
 
-    <div id="landingSheet" class="landingSheet" hidden>
-      <div class="landingSheet__panel" role="dialog" aria-modal="true" aria-label="Menu">
-        <div class="landingSheet__top">
-          <span class="landingSheet__title">Menu</span>
-          <button id="landingSheetClose" class="iconBtn iconBtn--headerSm" type="button" aria-label="Close menu">✕</button>
-        </div>
-        <nav class="landingSheet__nav" aria-label="Mobile">
-          <a href="#how-it-works">How it works</a>
-          <a href="#features">Features</a>
-          <a href="#for-coaches">For coaches</a>
-          <a href="#sharing">Sharing</a>
-          <a href="#faq">FAQ</a>
-          <a href="https://github.com/jameslcowan/powerlift.ing" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <div id="landingMenu" class="lp-menu" hidden>
+      <button id="landingMenuClose" class="lp-iconBtn lp-menu__close" type="button" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="lp-menu__inner" role="dialog" aria-modal="true" aria-label="Navigation">
+        <a class="lp-menu__brand lp-display" href="/">powerlift<span class="lp-brand__dot">.</span>ing</a>
+        <nav class="lp-menu__nav" aria-label="Mobile">
+          <a class="lp-menu__link lp-display" href="#how-it-works" style="--lp-menu-delay: 60ms">How it works</a>
+          <a class="lp-menu__link lp-display" href="#features" style="--lp-menu-delay: 100ms">Features</a>
+          <a class="lp-menu__link lp-display" href="#for-coaches" style="--lp-menu-delay: 140ms">For coaches</a>
+          <a class="lp-menu__link lp-display" href="#sharing" style="--lp-menu-delay: 180ms">Sharing</a>
+          <a class="lp-menu__link lp-display" href="#faq" style="--lp-menu-delay: 220ms">FAQ</a>
+          <a class="lp-menu__link lp-display" href="https://github.com/jameslcowan/powerlift.ing" target="_blank" rel="noopener noreferrer" style="--lp-menu-delay: 260ms">GitHub</a>
         </nav>
-        <a class="btn btn--primary landingSheet__cta" href="/app">Start building</a>
+        <div class="lp-menu__foot">
+          <a class="lp-btn lp-btn--primary lp-btn--block" href="/app">Start building</a>
+        </div>
       </div>
     </div>
 
-    <main id="main" class="landingMain">
-      <section class="landingHero landingWrap">
-        <h1 class="landingHero__title">
-          <span class="landingHero__line">Free powerlifting program builder</span>
-          <span class="landingHero__line landingHero__line--sub">Share your block in one link</span>
-        </h1>
-        <p class="landingHero__lead">
-          Plan mesocycles, weeks, and SBD days — sets, reps, load, %1RM, RPE, and rest. No signup. No spreadsheet.
-        </p>
-        <div class="landingHero__ctas">
-          <a class="btn btn--primary" href="/app">Start building</a>
-          <a class="btn btn--ghost" href="#how-it-works">How it works</a>
+    <main id="main" class="lp-main">
+      <section class="lp-hero lp-wrap">
+        <div class="lp-intro">
+          <p class="lp-badge lp-intro__item">Free · No signup</p>
+          <h1 class="lp-hero__title lp-display lp-intro__item">
+            Powerlifting program builder
+            <em>Share your block in one link</em>
+          </h1>
+          <p class="lp-hero__lead lp-intro__item">
+            Plan mesocycles, weeks, and SBD days — sets, reps, load, %1RM, RPE, and rest. Built for the gym floor on your phone.
+          </p>
+          <div class="lp-hero__actions lp-intro__item">
+            <a class="lp-btn lp-btn--primary lp-btn--block" href="/app">Start building</a>
+            <a class="lp-btn lp-btn--ghost lp-btn--block" href="#how-it-works">See how it works</a>
+          </div>
+          <ul class="lp-hero__meta lp-intro__item">
+            <li>Auto-saves in the URL</li>
+            <li>Works offline after load</li>
+          </ul>
         </div>
-        <p class="landingHero__note">Mobile-first editor · Programs save in the URL as you type</p>
       </section>
 
-      <section id="how-it-works" class="landingSection landingWrap">
-        <h2 class="landingSection__title">How it works</h2>
-        <p class="landingSection__lead">Three steps from blank week to shareable program.</p>
-        <ol class="landingSteps">
-          <li class="landingStep">
-            <span class="landingStep__n">1</span>
-            <h3>Build</h3>
-            <p>Add mesocycles, weeks, and days. Log exercises with sets, reps, load, %1RM, RPE, and rest.</p>
+      <section id="how-it-works" class="lp-section lp-wrap">
+        <header class="lp-section__head lp-reveal">
+          <h2 class="lp-section__title lp-display">How it works</h2>
+          <p class="lp-section__lead">Three steps from blank week to shareable program.</p>
+        </header>
+        <ol class="lp-steps">
+          <li class="lp-step lp-reveal" style="--lp-reveal-delay: 80ms">
+            <span class="lp-step__num" aria-hidden="true">1</span>
+            <div class="lp-step__body">
+              <h3>Build</h3>
+              <p>Add mesocycles, weeks, and days. Log exercises with sets, reps, load, %1RM, RPE, and rest.</p>
+            </div>
           </li>
-          <li class="landingStep">
-            <span class="landingStep__n">2</span>
-            <h3>Auto-save in the URL</h3>
-            <p>Your program is encoded in the link as you edit — no export button, no file attachments.</p>
+          <li class="lp-step lp-reveal" style="--lp-reveal-delay: 140ms">
+            <span class="lp-step__num" aria-hidden="true">2</span>
+            <div class="lp-step__body">
+              <h3>Auto-save in the URL</h3>
+              <p>Your program is encoded in the link as you edit — no export button, no file attachments.</p>
+            </div>
           </li>
-          <li class="landingStep">
-            <span class="landingStep__n">3</span>
-            <h3>Share</h3>
-            <p>Copy the link and send it. Anyone who opens it sees your exact program.</p>
+          <li class="lp-step lp-reveal" style="--lp-reveal-delay: 200ms">
+            <span class="lp-step__num" aria-hidden="true">3</span>
+            <div class="lp-step__body">
+              <h3>Share</h3>
+              <p>Copy the link and send it. Anyone who opens it sees your exact program.</p>
+            </div>
           </li>
         </ol>
       </section>
 
-      <section id="features" class="landingSection landingWrap">
-        <h2 class="landingSection__title">Built for real programming</h2>
-        <p class="landingSection__lead">Everything you expect on a meet prep or hypertrophy block — without leaving the browser.</p>
-        <div class="landingGrid landingGrid--3">
-          <div class="landingCard">
+      <section id="features" class="lp-section lp-wrap">
+        <header class="lp-section__head lp-reveal">
+          <h2 class="lp-section__title lp-display">Built for real programming</h2>
+          <p class="lp-section__lead">Meet prep, hypertrophy, or peaking — without leaving the browser.</p>
+        </header>
+        <div class="lp-grid lp-grid--features">
+          <article class="lp-card lp-reveal">
             <h3>Mesocycles</h3>
             <p>Hypertrophy, strength, peaking — organize blocks and weeks in one view.</p>
-          </div>
-          <div class="landingCard">
+          </article>
+          <article class="lp-card lp-reveal" style="--lp-reveal-delay: 60ms">
             <h3>SBD variables</h3>
             <p>Sets, reps, load (lb/kg), %1RM, RPE, rest, and exercise variations.</p>
-          </div>
-          <div class="landingCard">
+          </article>
+          <article class="lp-card lp-reveal" style="--lp-reveal-delay: 120ms">
             <h3>Share instantly</h3>
             <p>One link is the whole program. Perfect for coaches and training partners.</p>
-          </div>
-          <div class="landingCard">
+          </article>
+          <article class="lp-card lp-reveal" style="--lp-reveal-delay: 60ms">
             <h3>Mobile-first</h3>
             <p>Edit on the gym floor with a layout made for phones.</p>
-          </div>
-          <div class="landingCard">
+          </article>
+          <article class="lp-card lp-reveal" style="--lp-reveal-delay: 120ms">
             <h3>Works offline</h3>
             <p>After the page loads, keep editing; changes stay in the URL.</p>
-          </div>
-          <div class="landingCard">
+          </article>
+          <article class="lp-card lp-reveal" style="--lp-reveal-delay: 180ms">
             <h3>Free to start</h3>
             <p>No account required. Open the builder and go.</p>
-          </div>
+          </article>
         </div>
       </section>
 
-      <section id="for-coaches" class="landingSection landingWrap">
-        <h2 class="landingSection__title">For athletes and coaches</h2>
-        <div class="landingCols">
-          <div>
+      <section id="for-coaches" class="lp-section lp-wrap">
+        <header class="lp-section__head lp-reveal">
+          <h2 class="lp-section__title lp-display">For athletes and coaches</h2>
+        </header>
+        <div class="lp-panels">
+          <div class="lp-panel lp-reveal">
             <h3>Athletes</h3>
             <ul>
               <li>Write your own training block</li>
@@ -192,7 +217,7 @@
               <li>Bookmark <a href="/app">/app</a> to jump back into the editor</li>
             </ul>
           </div>
-          <div>
+          <div class="lp-panel lp-reveal" style="--lp-reveal-delay: 100ms">
             <h3>Coaches &amp; partners</h3>
             <ul>
               <li>Send one link instead of screenshots or PDFs</li>
@@ -203,52 +228,60 @@
         </div>
       </section>
 
-      <section id="sharing" class="landingSection landingWrap">
-        <h2 class="landingSection__title">Sharing &amp; bookmarks</h2>
-        <p class="landingSection__lead">Share links are great for sending a program. They update as you edit — copy again when you want a fixed snapshot.</p>
-        <p class="landingCallout">
+      <section id="sharing" class="lp-section lp-wrap">
+        <header class="lp-section__head lp-reveal">
+          <h2 class="lp-section__title lp-display">Sharing &amp; bookmarks</h2>
+          <p class="lp-section__lead">Share links update as you edit — copy again when you want a fixed snapshot.</p>
+        </header>
+        <p class="lp-callout lp-reveal" style="--lp-reveal-delay: 80ms">
           <strong>Coming soon:</strong> save multiple programs under one account and bookmark a single library page.
           Today, use <a href="/app">/app</a> for the editor and share <code>/program/…</code> links when you send work to someone else.
         </p>
       </section>
 
-      <section id="faq" class="landingSection landingWrap landingFaq">
-        <h2 class="landingSection__title">FAQ</h2>
-        <details>
-          <summary>What is powerlift.ing?</summary>
-          <p>A free powerlifting program builder. Build in the browser and share your program as one link.</p>
-        </details>
-        <details>
-          <summary>Do I need an account?</summary>
-          <p>No account is required to build and share. Optional accounts for a saved library are planned.</p>
-        </details>
-        <details>
-          <summary>Is my program private?</summary>
-          <p>Anyone with your link can open that program. Only share with people you trust.</p>
-        </details>
-        <details>
-          <summary>Will old shared links break?</summary>
-          <p>No. Legacy <code>/p/…</code> and <code>#/p/…</code> links keep working.</p>
-        </details>
-        <details>
-          <summary>Can I use it on my phone?</summary>
-          <p>Yes. The editor is designed mobile-first.</p>
-        </details>
+      <section id="faq" class="lp-section lp-wrap">
+        <header class="lp-section__head lp-reveal">
+          <h2 class="lp-section__title lp-display">FAQ</h2>
+        </header>
+        <div class="lp-faq">
+          <details class="lp-reveal">
+            <summary>What is powerlift.ing?</summary>
+            <p>A free powerlifting program builder. Build in the browser and share your program as one link.</p>
+          </details>
+          <details class="lp-reveal" style="--lp-reveal-delay: 50ms">
+            <summary>Do I need an account?</summary>
+            <p>No account is required to build and share. Optional accounts for a saved library are planned.</p>
+          </details>
+          <details class="lp-reveal" style="--lp-reveal-delay: 100ms">
+            <summary>Is my program private?</summary>
+            <p>Anyone with your link can open that program. Only share with people you trust.</p>
+          </details>
+          <details class="lp-reveal" style="--lp-reveal-delay: 150ms">
+            <summary>Will old shared links break?</summary>
+            <p>No. Legacy <code>/p/…</code> and <code>#/p/…</code> links keep working.</p>
+          </details>
+          <details class="lp-reveal" style="--lp-reveal-delay: 200ms">
+            <summary>Can I use it on my phone?</summary>
+            <p>Yes. The editor is designed mobile-first.</p>
+          </details>
+        </div>
       </section>
 
-      <section class="landingCta landingWrap">
-        <h2>Ready to write your next block?</h2>
-        <p>Open the builder and share your program in minutes.</p>
-        <div class="landingCta__actions">
-          <a class="btn btn--primary" href="/app">Start building</a>
+      <section class="lp-cta lp-wrap">
+        <div class="lp-cta__box lp-reveal">
+          <h2 class="lp-display">Ready for your next block?</h2>
+          <p>Open the builder and share your program in minutes.</p>
+          <div class="lp-cta__actions">
+            <a class="lp-btn lp-btn--primary lp-btn--block" href="/app">Start building</a>
+          </div>
         </div>
       </section>
     </main>
 
-    <footer class="landingFooter">
-      <div class="landingFooter__inner">
+    <footer class="lp-footer">
+      <div class="lp-footer__inner">
         <span>© powerlift.ing</span>
-        <div class="landingFooter__links">
+        <div class="lp-footer__links">
           <a href="/app">Builder</a>
           <a href="/ai.html">JSON tool</a>
           <a href="https://github.com/jameslcowan/powerlift.ing" target="_blank" rel="noopener noreferrer">GitHub</a>
@@ -256,6 +289,12 @@
         </div>
       </div>
     </footer>
+
+    <div class="lp-dock" aria-label="Quick action">
+      <div class="lp-dock__inner">
+        <a class="lp-btn lp-btn--primary" href="/app">Start building — free</a>
+      </div>
+    </div>
 
     <script src="/landing.js" defer></script>
   </body>
