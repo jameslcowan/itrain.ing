@@ -17,7 +17,7 @@
       menu.classList.add("is-open");
     });
     menuBtn?.setAttribute("aria-expanded", "true");
-    root.classList.add("lp-menu-open");
+    root.classList.add("site-menu-open");
     root.style.overflow = "hidden";
     window.setTimeout(() => menuClose?.focus(), 50);
   }
@@ -26,7 +26,7 @@
     if (!menu) return;
     menu.classList.remove("is-open");
     menuBtn?.setAttribute("aria-expanded", "false");
-    root.classList.remove("lp-menu-open");
+    root.classList.remove("site-menu-open");
     root.style.overflow = "";
 
     const finish = () => {

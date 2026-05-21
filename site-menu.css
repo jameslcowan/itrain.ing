@@ -1,0 +1,192 @@
+/**
+ * Full-screen site menu — shared by landing and app builder
+ */
+
+.site-menu[hidden] {
+  display: none;
+}
+
+.site-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.site-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.site-menu__close {
+  position: absolute;
+  top: calc(12px + var(--safe-top));
+  right: max(24px, env(safe-area-inset-right, 0px));
+  z-index: 2;
+}
+
+.site-menu__inner {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  padding: calc(56px + var(--safe-top)) max(24px, env(safe-area-inset-right, 0px))
+    calc(28px + var(--safe-bottom)) max(24px, env(safe-area-inset-left, 0px));
+  text-align: center;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.site-menu__brand {
+  font-family: var(--font-display-fallback, "Arial Narrow", system-ui, sans-serif);
+  font-size: clamp(2rem, 10vw, 2.75rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.05;
+  text-decoration: none;
+  color: var(--text-strong);
+}
+
+html.fonts-loaded .site-menu__brand {
+  font-family: var(--font-display);
+}
+
+.site-menu__dot {
+  color: var(--accent);
+}
+
+.site-menu__nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 20rem;
+}
+
+.site-menu__link {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  font-family: var(--font-display-fallback, "Arial Narrow", system-ui, sans-serif);
+  font-size: clamp(1.75rem, 8vw, 2.25rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.05;
+  text-decoration: none;
+  color: var(--text-strong);
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.15s ease;
+  transition-delay: var(--site-menu-delay, 0ms);
+}
+
+html.fonts-loaded .site-menu__link {
+  font-family: var(--font-display);
+}
+
+.site-menu.is-open .site-menu__link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.site-menu__link:active,
+.site-menu__link:hover {
+  color: var(--accent);
+}
+
+.site-menu__note {
+  margin: 0;
+  max-width: 18rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--muted);
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 240ms;
+}
+
+.site-menu.is-open .site-menu__note {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.site-menu__foot {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 20rem;
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 280ms;
+}
+
+.site-menu.is-open .site-menu__foot {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.site-menu__foot .btn {
+  width: 100%;
+  min-height: 48px;
+  justify-content: center;
+}
+
+.site-menu__credit {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity 0.35s ease 320ms;
+}
+
+.site-menu.is-open .site-menu__credit {
+  opacity: 1;
+}
+
+.site-menu__credit a {
+  color: var(--muted);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.site-menu__credit a:hover {
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-menu,
+  .site-menu__link,
+  .site-menu__note,
+  .site-menu__foot,
+  .site-menu__credit {
+    transition: none;
+  }
+
+  .site-menu__link,
+  .site-menu__note,
+  .site-menu__foot {
+    opacity: 1;
+    transform: none;
+  }
+}

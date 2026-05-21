@@ -76,8 +76,9 @@
     shareDialogCloseBtn: document.getElementById("shareDialogCloseBtn"),
     shareDialogDontShow: document.getElementById("shareDialogDontShow"),
     menuBtn: document.getElementById("menuBtn"),
-    menuOverlay: document.getElementById("menuOverlay"),
+    appMenu: document.getElementById("appMenu"),
     menuCloseBtn: document.getElementById("menuCloseBtn"),
+    menuCopyLinkBtn: document.getElementById("menuCopyLinkBtn"),
     themeToggleBtn: document.getElementById("themeToggleBtn"),
     themeIcon: document.getElementById("themeIcon"),
     homeLink: document.getElementById("homeLink"),
@@ -1135,13 +1136,19 @@
   });
 
   let menuReturnFocus = null;
+  const prefersReducedMotionMenu = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function openMenu() {
-    if (!dom.menuOverlay) return;
+    if (!dom.appMenu) return;
     closeOpenDropdown();
     menuReturnFocus = document.activeElement;
-    dom.menuOverlay.hidden = false;
+    dom.appMenu.hidden = false;
+    requestAnimationFrame(() => {
+      dom.appMenu.classList.add("is-open");
+    });
+    dom.menuBtn?.setAttribute("aria-expanded", "true");
     document.documentElement.classList.add("menuOpen");
+    document.body.classList.add("site-menu-open");
     document.body.style.overflow = "hidden";
     const main = document.getElementById("app");
     if (main) main.setAttribute("aria-hidden", "true");
@@ -1149,36 +1156,61 @@
       try {
         dom.menuCloseBtn?.focus();
       } catch {}
-    }, 0);
+    }, 50);
   }
 
   function closeMenu() {
-    if (!dom.menuOverlay) return;
-    dom.menuOverlay.hidden = true;
+    if (!dom.appMenu || dom.appMenu.hidden) return;
+    dom.appMenu.classList.remove("is-open");
+    dom.menuBtn?.setAttribute("aria-expanded", "false");
     document.documentElement.classList.remove("menuOpen");
+    document.body.classList.remove("site-menu-open");
     document.body.style.overflow = "";
     const main = document.getElementById("app");
     if (main) main.removeAttribute("aria-hidden");
-    if (menuReturnFocus?.focus) {
-      try {
-        menuReturnFocus.focus();
-      } catch {}
+
+    const finish = () => {
+      dom.appMenu.hidden = true;
+      if (menuReturnFocus?.focus) {
+        try {
+          menuReturnFocus.focus();
+        } catch {}
+      }
+      menuReturnFocus = null;
+    };
+
+    if (prefersReducedMotionMenu) {
+      finish();
+      return;
     }
-    menuReturnFocus = null;
+
+    const onEnd = (e) => {
+      if (e.target !== dom.appMenu) return;
+      dom.appMenu.removeEventListener("transitionend", onEnd);
+      finish();
+    };
+    dom.appMenu.addEventListener("transitionend", onEnd);
+    window.setTimeout(finish, 350);
   }
 
   dom.menuBtn?.addEventListener("click", openMenu);
   dom.menuCloseBtn?.addEventListener("click", closeMenu);
-  dom.menuOverlay?.addEventListener("click", (e) => {
-    if (e.target === dom.menuOverlay) closeMenu();
+
+  dom.appMenu?.querySelectorAll("a[href]").forEach((a) => {
+    a.addEventListener("click", () => closeMenu());
   });
 
-  dom.menuOverlay?.addEventListener("keydown", (e) => {
-    if (e.key !== "Tab" || dom.menuOverlay.hidden) return;
-    const drawer = dom.menuOverlay.querySelector(".drawer");
-    if (!drawer) return;
+  dom.menuCopyLinkBtn?.addEventListener("click", () => {
+    closeMenu();
+    dom.copyLinkBtn?.click();
+  });
+
+  dom.appMenu?.addEventListener("keydown", (e) => {
+    if (e.key !== "Tab" || dom.appMenu.hidden) return;
+    const panel = dom.appMenu.querySelector(".site-menu__inner");
+    if (!panel) return;
     const list = Array.from(
-      drawer.querySelectorAll(
+      panel.querySelectorAll(
         'button, [href], input:not([type="hidden"]), select, textarea, [tabindex]:not([tabindex="-1"])'
       )
     ).filter((el) => !el.disabled && el.offsetParent !== null);
@@ -1237,7 +1269,7 @@
   window.addEventListener("keydown", (e) => {
     if (e.key !== "Escape") return;
     if (closeOpenDropdown()) return;
-    closeMenu();
+    if (dom.appMenu && !dom.appMenu.hidden) closeMenu();
   });
 
   // Theme: follow device by default; user can toggle light/dark (stored locally, not in URL)
