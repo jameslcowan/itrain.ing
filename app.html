@@ -28,8 +28,8 @@
     <meta name="twitter:description" content="Create and share powerlifting programs instantly. No signup, no spreadsheets — just share a link." />
 
     <!-- Theme color (helps iOS/Safari UI) -->
-    <meta name="theme-color" content="#0b0b0b" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0d0d0f" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f5f3ef" media="(prefers-color-scheme: light)" />
 
     <!-- Structured data -->
     <script type="application/ld+json">
@@ -58,9 +58,12 @@
       }
     </script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="/design-tokens.css" />
     <link rel="stylesheet" href="/app.css" />
   </head>
-  <body>
+  <body class="builderPage">
     <a class="srOnly" href="#app">Skip to program</a>
     <!-- Inline icon sprite (Lucide). Kept as a sprite to avoid icon flicker inside scroll containers. -->
     <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden">
@@ -125,7 +128,7 @@
         </div>
         <div class="topbar__center">
           <a class="brand brand--center brand--text" id="homeLink" href="/" aria-label="powerlift.ing home">
-            <span class="brand__wordmark">powerlift.ing</span>
+            <span class="brand__wordmark">powerlift<span class="brand__dot">.</span>ing</span>
           </a>
         </div>
         <div class="topbar__right">
