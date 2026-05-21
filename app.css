@@ -173,6 +173,14 @@ html[data-theme="dark"]{
 }
 
 *{ box-sizing:border-box; }
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
 html,body{ height:100%; }
 html{
   /* Prevent layout shift when the page scrollbar appears (Chrome/Windows). */
