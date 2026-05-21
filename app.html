@@ -57,6 +57,7 @@
         }
       }
     </script>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/app.css" />
   </head>
   <body>
@@ -195,56 +196,14 @@
           </button>
         </div>
 
-        <div class="drawer__body">
-          <details class="drawerSection" open>
-            <summary>What is powerlift.ing?</summary>
-            <p>
-              A free tool to create and share powerlifting programs instantly. No signup, no spreadsheets — just share a link.
-            </p>
-            <p>
-              Built for athletes, coaches, and training partners who want a simple way to plan training blocks and share them.
-            </p>
-          </details>
-          <details class="drawerSection">
-            <summary>Quick Start (30 seconds)</summary>
-            <ul>
-              <li><strong>Select your mesocycle and week</strong> at the top (e.g., "Hypertrophy", Week 1).</li>
-              <li><strong>Add training days</strong> with "Add day" and set the day of week.</li>
-              <li><strong>Add exercises</strong> and fill in sets, reps, load, %1RM, RPE, and rest.</li>
-              <li><strong>Share your program</strong>: Click the share icon → copy link → send to anyone.</li>
-            </ul>
-            <p style="margin-top:10px; font-size:13px; color:var(--muted);">
-              <strong>Tip:</strong> Your program auto-saves to the URL as you type. The link <em>is</em> your program.
-            </p>
-          </details>
-          <details class="drawerSection">
-            <summary>Features</summary>
-            <ul>
-              <li><strong>Multiple mesocycles</strong>: Plan your entire training year (hypertrophy → strength → peaking).</li>
-              <li><strong>Track all variables</strong>: Sets, reps, load, %1RM, RPE, rest periods, exercise variations.</li>
-              <li><strong>Share instantly</strong>: One link contains your entire program — no exports, no files.</li>
-              <li><strong>Works offline</strong>: Once loaded, edit without internet. Changes save to URL.</li>
-              <li><strong>100% free</strong>: No account required, no premium upsells, no data collection.</li>
-            </ul>
-          </details>
-          <details class="drawerSection">
-            <summary>Privacy & Data</summary>
-            <p>
-              Your program is encoded in the URL you share. Nothing is stored on our servers.
-            </p>
-            <p>
-              <strong>Important:</strong> Anyone with your link can see your program. Only share with people you trust (coaches, training partners).
-            </p>
-          </details>
-          <details class="drawerSection">
-            <summary>About</summary>
-            <p>
-              Created by <a href="https://jameslcowan.com/" target="_blank" rel="noopener" style="color:var(--accent);">James L. Cowan</a> as a free tool for the powerlifting community.
-            </p>
-            <p style="font-size:13px; color:var(--muted); margin-top:8px;">
-              Open source on <a href="https://github.com/jameslcowan/powerlift.ing" target="_blank" rel="noopener" style="color:var(--accent);">GitHub</a>.
-            </p>
-          </details>
+        <div class="drawer__body drawer__body--nav">
+          <nav class="drawerNav" aria-label="App menu">
+            <a class="drawerNav__link" href="/">Home</a>
+            <a class="drawerNav__link" href="/app">Builder</a>
+            <a class="drawerNav__link" href="/#faq">Help &amp; FAQ</a>
+            <a class="drawerNav__link" href="https://github.com/jameslcowan/powerlift.ing" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </nav>
+          <p class="drawerNav__hint">Programs save in the URL as you type. Tap share to copy your link.</p>
         </div>
         <div class="drawer__bottom">
           <button id="themeToggleBtn" class="btn btn--ghost btn--withIcon drawerActions__btn" type="button">

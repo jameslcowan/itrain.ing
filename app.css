@@ -699,6 +699,28 @@ details.day > summary::-webkit-details-marker{ display:none; }
 }
 .drawer__body p{ color:var(--muted); line-height:1.45; margin: 8px 0 0; }
 .drawer__body ul{ margin: 8px 0 0; padding-left: 18px; color:var(--muted); }
+.drawerNav{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.drawerNav__link{
+  display: block;
+  padding: 10px 10px;
+  border-radius: var(--radius2);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 700;
+}
+.drawerNav__link:hover{
+  background: color-mix(in srgb, var(--panel2) 70%, transparent);
+}
+.drawerNav__hint{
+  margin: 14px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.45;
+}
 .drawerSection{
   border: 1px solid var(--border);
   border-radius: 12px;
