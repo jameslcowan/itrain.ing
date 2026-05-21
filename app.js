@@ -663,35 +663,35 @@
       [
       el("div", { class: "field field--ex" }, [
         el("label", { for: rowFieldId(wi, di, ri, "ex"), text: "Exercise" }),
-        el("input", { id: rowFieldId(wi, di, ri, "ex"), class: "input", placeholder: showExamples ? "e.g. Squat" : "", value: row.ex, "data-field": "ex" }),
+        el("input", { id: rowFieldId(wi, di, ri, "ex"), class: "input", "aria-label": "Exercise", placeholder: showExamples ? "e.g. Squat" : "", value: row.ex, "data-field": "ex" }),
       ]),
       el("div", { class: "field field--mode" }, [
         el("label", { for: rowFieldId(wi, di, ri, "mode"), text: "Variation" }),
-        el("input", { id: rowFieldId(wi, di, ri, "mode"), class: "input", placeholder: "", value: row.mode, "data-field": "mode" }),
+        el("input", { id: rowFieldId(wi, di, ri, "mode"), class: "input", "aria-label": "Variation", placeholder: "", value: row.mode, "data-field": "mode" }),
       ]),
       el("div", { class: "field field--sets" }, [
         el("label", { for: rowFieldId(wi, di, ri, "sets"), text: "Sets" }),
-        el("input", { id: rowFieldId(wi, di, ri, "sets"), class: "input", inputmode: "numeric", pattern: "\\d*", maxlength: "3", placeholder: "", value: row.sets, "data-field": "sets" }),
+        el("input", { id: rowFieldId(wi, di, ri, "sets"), class: "input", "aria-label": "Sets", inputmode: "numeric", pattern: "\\d*", maxlength: "3", placeholder: "", value: row.sets, "data-field": "sets" }),
       ]),
       el("div", { class: "field field--reps" }, [
         el("label", { for: rowFieldId(wi, di, ri, "reps"), text: "Reps" }),
-        el("input", { id: rowFieldId(wi, di, ri, "reps"), class: "input", inputmode: "numeric", pattern: "\\d*", maxlength: "3", placeholder: "", value: row.reps, "data-field": "reps" }),
+        el("input", { id: rowFieldId(wi, di, ri, "reps"), class: "input", "aria-label": "Reps", inputmode: "numeric", pattern: "\\d*", maxlength: "3", placeholder: "", value: row.reps, "data-field": "reps" }),
       ]),
       el("div", { class: "field field--load" }, [
         el("label", { for: rowFieldId(wi, di, ri, "load"), text: `Load (${units})` }),
-        el("input", { id: rowFieldId(wi, di, ri, "load"), class: "input", inputmode: "numeric", pattern: "\\d*", maxlength: "4", placeholder: "", value: row.load, "data-field": "load" }),
+        el("input", { id: rowFieldId(wi, di, ri, "load"), class: "input", "aria-label": `Load (${units})`, inputmode: "numeric", pattern: "\\d*", maxlength: "4", placeholder: "", value: row.load, "data-field": "load" }),
       ]),
       el("div", { class: "field field--pct" }, [
         el("label", { for: rowFieldId(wi, di, ri, "pct"), text: "%1RM" }),
-        el("input", { id: rowFieldId(wi, di, ri, "pct"), class: "input", inputmode: "numeric", pattern: "\\d*", maxlength: "3", placeholder: "", value: row.pct, "data-field": "pct" }),
+        el("input", { id: rowFieldId(wi, di, ri, "pct"), class: "input", "aria-label": "%1RM", inputmode: "numeric", pattern: "\\d*", maxlength: "3", placeholder: "", value: row.pct, "data-field": "pct" }),
       ]),
       el("div", { class: "field field--rpe" }, [
         el("label", { for: rowFieldId(wi, di, ri, "rpe"), text: "RPE" }),
-        el("input", { id: rowFieldId(wi, di, ri, "rpe"), class: "input", inputmode: "decimal", placeholder: "", value: row.rpe, "data-field": "rpe" }),
+        el("input", { id: rowFieldId(wi, di, ri, "rpe"), class: "input", "aria-label": "RPE", inputmode: "decimal", placeholder: "", value: row.rpe, "data-field": "rpe" }),
       ]),
       el("div", { class: "field field--rest" }, [
         el("label", { for: rowFieldId(wi, di, ri, "rest"), text: "Rest (mm:ss)" }),
-        el("input", { id: rowFieldId(wi, di, ri, "rest"), class: "input", inputmode: "numeric", placeholder: "", value: row.rest, "data-field": "rest" }),
+        el("input", { id: rowFieldId(wi, di, ri, "rest"), class: "input", "aria-label": "Rest (mm:ss)", inputmode: "numeric", placeholder: "", value: row.rest, "data-field": "rest" }),
       ]),
       el("div", { class: "rowActions" }, [
         el(
@@ -1520,7 +1520,24 @@
     render();
   }
 
+  const ONBOARDING_KEY = "pli_hide_onboarding";
+
+  function initOnboarding() {
+    if (!dom.onboarding) return;
+    try {
+      if (localStorage.getItem(ONBOARDING_KEY) === "1") return;
+    } catch {}
+    dom.onboarding.hidden = false;
+    dom.onboardingDismiss?.addEventListener("click", () => {
+      dom.onboarding.hidden = true;
+      try {
+        localStorage.setItem(ONBOARDING_KEY, "1");
+      } catch {}
+    });
+  }
+
   initTheme();
+  initOnboarding();
   boot();
 })();
 
