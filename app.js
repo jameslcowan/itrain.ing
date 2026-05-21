@@ -1544,11 +1544,6 @@
     try {
       if (localStorage.getItem(ONBOARDING_KEY) === "1") return;
     } catch {}
-    if (dom.onboardingDialogDontShow) {
-      try {
-        dom.onboardingDialogDontShow.checked = localStorage.getItem(ONBOARDING_KEY) === "1";
-      } catch {}
-    }
     dom.onboardingDialog.showModal();
     window.setTimeout(() => {
       try {
