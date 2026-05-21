@@ -536,6 +536,7 @@ input[type="checkbox"]{ accent-color: var(--accent); }
   margin: 2px 0 10px;
 }
 .status--error{ color: var(--danger); }
+.status--warn{ color: var(--ios-orange, #ff9500); }
 
 .week{
   display:flex;
