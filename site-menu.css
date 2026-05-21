@@ -32,6 +32,38 @@ html.fonts-loaded .site-menu {
   visibility: visible;
 }
 
+/* Hamburger trigger — match landing header (right side); ignore host .iconBtn rules */
+.site-menu__trigger {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.site-menu__trigger:hover {
+  background: color-mix(in srgb, var(--panel2) 80%, transparent);
+}
+
+.site-menu__trigger svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
 /* Close — same control on every page (ignore .iconBtn / .lp-iconBtn from host CSS) */
 .site-menu__close {
   position: absolute;

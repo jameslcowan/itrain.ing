@@ -11,7 +11,6 @@
     <meta name="publisher" content="powerlift.ing" />
     <link rel="canonical" href="https://powerlift.ing/app" />
     <link rel="me" href="https://x.com/jameslcowan" />
-    <link rel="help" href="/ai.html" />
     <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM instructions" />
     <link rel="alternate" type="text/plain" href="/ai.txt" title="AI assistant guide" />
 
@@ -61,6 +60,7 @@
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@500;600&display=swap"
     />
     <link rel="stylesheet" href="/fonts.css" />
+    <script src="/theme.js"></script>
     <link rel="stylesheet" href="/design-tokens.css" />
     <link rel="stylesheet" href="/site-menu.css" />
     <link rel="stylesheet" href="/app.css" />
@@ -125,17 +125,15 @@
     <header class="topbar">
       <div class="topbar__inner">
         <div class="topbar__left">
-          <button id="menuBtn" class="iconBtn iconBtn--bare" type="button" aria-label="Menu" aria-expanded="false" aria-controls="appMenu" aria-haspopup="dialog">
-            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-menu"></use></svg>
-          </button>
-        </div>
-        <div class="topbar__center">
-          <a class="brand brand--center brand--text" id="homeLink" href="/" aria-label="powerlift.ing home">
+          <a class="brand brand--text" id="homeLink" href="/" aria-label="powerlift.ing home">
             <span class="brand__wordmark">powerlift<span class="brand__dot">.</span>ing</span>
           </a>
         </div>
         <div class="topbar__right">
-          <button id="copyLinkBtn" class="btn btn--ghost topbar__shareBtn" type="button">Share</button>
+          <button id="copyLinkBtn" class="btn btn--primary topbar__shareBtn" type="button">Share</button>
+          <button id="menuBtn" class="site-menu__trigger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="appMenu" aria-haspopup="dialog">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+          </button>
         </div>
       </div>
     </header>
@@ -149,7 +147,6 @@
         <nav class="site-menu__nav" aria-label="App menu">
           <a class="site-menu__link" href="/" style="--site-menu-delay: 60ms">Home</a>
           <a class="site-menu__link" href="/#faq" style="--site-menu-delay: 100ms">Help &amp; FAQ</a>
-          <a class="site-menu__link" href="/ai.html" style="--site-menu-delay: 140ms">JSON tool</a>
         </nav>
         <p class="site-menu__note">Your program saves in the URL as you type.</p>
         <div class="site-menu__foot">
