@@ -47,7 +47,7 @@ Program JSON schema (authoring shape, v1)
 
 How to generate a real link
 - If you can execute code: follow the app’s encoding (lz-string + base64url) and output /program/<STATE>.
-- If you can’t: output the JSON and point the user to https://powerlift.ing/ai.html (Generate link).
+- If you can’t: output the program JSON and tell the user to paste it into https://powerlift.ing/app (the editor encodes the URL as they work).
 
 Indexing guidance
 - The homepage should be indexable.

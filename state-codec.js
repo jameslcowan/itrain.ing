@@ -1,6 +1,6 @@
 /* global LZString */
 /**
- * Program state codec (encode/decode/normalize). Shared by app.js and ai.html.
+ * Program state codec (encode/decode/normalize). Shared by app.js.
  * Requires LZString (vendor/lz-string.min.js) loaded first in the browser.
  */
 (() => {

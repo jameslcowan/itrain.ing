@@ -24,7 +24,7 @@ If you can’t execute code
 - Instead output:
   - the program (human readable)
   - the program JSON (v1 schema below)
-  - and tell the user to paste it into: https://powerlift.ing/ai.html (Generate link)
+  - and tell the user to open https://powerlift.ing/app and build the program there (the URL updates as they edit)
 
 Program JSON schema (authoring shape, v1)
 {
@@ -70,6 +70,5 @@ Minimal example JSON (1 week, 3 days)
   ]
 }
 
-Where to get full examples + real link generation
-- https://powerlift.ing/ai.html (includes a full multi-mesocycle example + link generator)
-- https://powerlift.ing/llms.txt (machine-readable contract)
+Where to get the machine-readable contract
+- https://powerlift.ing/llms.txt

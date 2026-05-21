@@ -47,9 +47,6 @@ The app updates the URL as you edit (`history.replaceState`). Existing shared li
 }
 ```
 
-Full examples + link generator:
-- `/ai.html`
-
 ## Indexing guidance
 - Index `/`
 - Noindex `/program/*` and `/p/*` (user-generated, effectively infinite)

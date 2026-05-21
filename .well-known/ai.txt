@@ -4,6 +4,6 @@ This is a convenience mirror of /ai.txt for agents that probe /.well-known/.
 
 See:
 - /ai.txt
-- /ai.html
 - /llms.txt
+- /app
 
