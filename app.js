@@ -78,7 +78,6 @@
     menuBtn: document.getElementById("menuBtn"),
     appMenu: document.getElementById("appMenu"),
     menuCloseBtn: document.getElementById("menuCloseBtn"),
-    menuCopyLinkBtn: document.getElementById("menuCopyLinkBtn"),
     themeToggleBtn: document.getElementById("themeToggleBtn"),
     themeIcon: document.getElementById("themeIcon"),
     homeLink: document.getElementById("homeLink"),
@@ -1198,11 +1197,6 @@
 
   dom.appMenu?.querySelectorAll("a[href]").forEach((a) => {
     a.addEventListener("click", () => closeMenu());
-  });
-
-  dom.menuCopyLinkBtn?.addEventListener("click", () => {
-    closeMenu();
-    dom.copyLinkBtn?.click();
   });
 
   dom.appMenu?.addEventListener("keydown", (e) => {
