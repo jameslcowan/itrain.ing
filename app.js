@@ -1030,34 +1030,6 @@
     render();
   }
 
-  function applyStandardWeekLabels(wi) {
-    const week = app.program.weeks[wi];
-    const preset = standardDowPreset(week.days.length);
-    week.days.forEach((d, di) => {
-      d.label = labelForDay(di, preset[di] || "MON");
-    });
-  }
-
-  function setDayCount(wi, count) {
-    const week = app.program.weeks[wi];
-    const desired = clamp(count, 1, 7);
-
-    if (week.days.length < desired) {
-      const preset = standardDowPreset(desired);
-      for (let di = week.days.length; di < desired; di++) {
-        week.days.push({ label: labelForDay(di, preset[di] || "MON"), rows: [emptyRow()] });
-      }
-    } else if (week.days.length > desired) {
-      week.days = week.days.slice(0, desired);
-    }
-
-    // Keep "DAY 1..N" numbering consistent.
-    week.days.forEach((d, idx) => {
-      const dow = dowFromLabel(d.label) || standardDowPreset(week.days.length)[idx] || "MON";
-      d.label = labelForDay(idx, dow);
-    });
-  }
-
   function setDayDow(wi, di, dow) {
     const week = app.program.weeks[wi];
     if (!week?.days?.[di]) return;
