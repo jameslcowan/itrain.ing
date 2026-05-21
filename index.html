@@ -8,7 +8,6 @@
     <meta name="keywords" content="powerlifting program, powerlifting program builder, strength program, workout program, periodization, mesocycle, RPE, squat bench deadlift" />
     <meta name="author" content="James L. Cowan" />
     <link rel="canonical" href="https://powerlift.ing/" />
-    <link rel="help" href="/ai.html" />
     <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM instructions" />
 
     <meta property="og:site_name" content="powerlift.ing" />
@@ -51,7 +50,7 @@
             "name": "How do I share my program?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Open the builder, tap share, and copy your link. The URL encodes your program and updates as you edit."
+              "text": "Open the app, tap Share, and copy your link. The URL encodes your program and updates as you edit."
             }
           },
           {
@@ -73,6 +72,7 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&display=swap"
     />
+    <script src="/theme.js"></script>
     <link rel="stylesheet" href="/fonts.css" />
     <link rel="stylesheet" href="/design-tokens.css" />
     <link rel="stylesheet" href="/site-menu.css" />
@@ -93,8 +93,8 @@
           <a href="#faq">FAQ</a>
         </nav>
         <div class="lp-header__actions">
-          <a class="lp-btn lp-btn--primary lp-header__cta" href="/app">Start building</a>
-          <button id="landingMenuBtn" class="lp-iconBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="landingMenu" aria-haspopup="dialog">
+          <a class="lp-btn lp-btn--primary lp-header__cta" href="/app">Open app</a>
+          <button id="landingMenuBtn" class="site-menu__trigger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="landingMenu" aria-haspopup="dialog">
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
           </button>
         </div>
@@ -115,7 +115,7 @@
           <a class="site-menu__link" href="#faq" style="--site-menu-delay: 220ms">FAQ</a>
         </nav>
         <div class="site-menu__foot">
-          <a class="site-menu__btn site-menu__btn--primary" href="/app">Open the builder</a>
+          <a class="site-menu__btn site-menu__btn--primary" href="/app">Open app</a>
         </div>
       </div>
     </div>
@@ -132,7 +132,7 @@
             Plan mesocycles, weeks, and SBD days — sets, reps, load, %1RM, RPE, and rest. Built for the gym floor on your phone.
           </p>
           <div class="lp-hero__actions lp-intro__item">
-            <a class="lp-btn lp-btn--primary lp-btn--block" href="/app">Start building</a>
+            <a class="lp-btn lp-btn--primary lp-btn--block" href="/app">Open app</a>
             <a class="lp-btn lp-btn--ghost lp-btn--block" href="#how-it-works">See how it works</a>
           </div>
           <ul class="lp-hero__meta lp-intro__item">
@@ -200,7 +200,7 @@
           </article>
           <article class="lp-card lp-reveal" style="--lp-reveal-delay: 180ms">
             <h3>Free to start</h3>
-            <p>No account required. Open the builder and go.</p>
+            <p>No account required. Open the app and go.</p>
           </article>
         </div>
       </section>
@@ -271,9 +271,9 @@
       <section class="lp-cta lp-wrap">
         <div class="lp-cta__box lp-reveal">
           <h2 class="lp-display">Ready for your next block?</h2>
-          <p>Open the builder and share your program in minutes.</p>
+          <p>Open the app and share your program in minutes.</p>
           <div class="lp-cta__actions">
-            <a class="lp-btn lp-btn--primary lp-btn--block" href="/app">Start building</a>
+            <a class="lp-btn lp-btn--primary lp-btn--block" href="/app">Open app</a>
           </div>
         </div>
       </section>
@@ -286,15 +286,14 @@
           <a href="https://x.com/jameslcowan" target="_blank" rel="noopener noreferrer">James L. Cowan</a>
         </p>
         <div class="lp-footer__links">
-          <a href="/app">Builder</a>
-          <a href="/ai.html">JSON tool</a>
+          <a href="/app">Open app</a>
         </div>
       </div>
     </footer>
 
     <div class="lp-dock" aria-label="Quick action">
       <div class="lp-dock__inner">
-        <a class="lp-btn lp-btn--primary" href="/app">Start building — free</a>
+        <a class="lp-btn lp-btn--primary" href="/app">Open app</a>
       </div>
     </div>
 
