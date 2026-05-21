@@ -330,21 +330,14 @@ input[type="checkbox"]{ accent-color: var(--accent); }
   font-weight:650;
 }
 
-.onboarding{
-  margin: 10px calc(14px + var(--safe-right)) 0 calc(14px + var(--safe-left));
-  padding: 12px 14px;
-  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
-  border-radius: var(--radius2);
-  background: color-mix(in srgb, var(--accent) 10%, var(--panel));
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
+.dialog__list{
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: var(--text);
+  line-height: 1.5;
 }
-.onboarding[hidden]{ display:none; }
-.onboarding__text{ margin:0; font-size:13px; line-height:1.45; color:var(--text); flex:1 1 220px; }
-.onboarding__dismiss{ flex:0 0 auto; }
+.dialog__list li{ margin: 6px 0; }
+.dialog__text--muted{ font-size: 13px; color: var(--muted); }
 
 .app{ padding-bottom: calc(28px + var(--safe-bottom)); }
 .container{ padding: 10px 14px 18px; max-width:1100px; margin:0 auto; }

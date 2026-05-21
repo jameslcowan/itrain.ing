@@ -97,8 +97,10 @@
     appDialogInputLabel: document.getElementById("appDialogInputLabel"),
     appDialogInput: document.getElementById("appDialogInput"),
     appDialogHelp: document.getElementById("appDialogHelp"),
-    onboarding: document.getElementById("onboarding"),
-    onboardingDismiss: document.getElementById("onboardingDismiss"),
+    onboardingDialog: document.getElementById("onboardingDialog"),
+    onboardingDialogCloseBtn: document.getElementById("onboardingDialogCloseBtn"),
+    onboardingDialogOkBtn: document.getElementById("onboardingDialogOkBtn"),
+    onboardingDialogDontShow: document.getElementById("onboardingDialogDontShow"),
   };
 
   const app = {
@@ -1522,19 +1524,46 @@
 
   const ONBOARDING_KEY = "pli_hide_onboarding";
 
+  function persistOnboardingDismiss() {
+    try {
+      if (dom.onboardingDialogDontShow?.checked) {
+        localStorage.setItem(ONBOARDING_KEY, "1");
+      }
+    } catch {}
+  }
+
+  function closeOnboardingDialog() {
+    persistOnboardingDismiss();
+    try {
+      dom.onboardingDialog?.close();
+    } catch {}
+  }
+
   function initOnboarding() {
-    if (!dom.onboarding) return;
+    if (!dom.onboardingDialog?.showModal) return;
     try {
       if (localStorage.getItem(ONBOARDING_KEY) === "1") return;
     } catch {}
-    dom.onboarding.hidden = false;
-    dom.onboardingDismiss?.addEventListener("click", () => {
-      dom.onboarding.hidden = true;
+    if (dom.onboardingDialogDontShow) {
       try {
-        localStorage.setItem(ONBOARDING_KEY, "1");
+        dom.onboardingDialogDontShow.checked = localStorage.getItem(ONBOARDING_KEY) === "1";
       } catch {}
-    });
+    }
+    dom.onboardingDialog.showModal();
+    window.setTimeout(() => {
+      try {
+        dom.onboardingDialogOkBtn?.focus();
+      } catch {}
+    }, 0);
   }
+
+  dom.onboardingDialogCloseBtn?.addEventListener("click", closeOnboardingDialog);
+  dom.onboardingDialogOkBtn?.addEventListener("click", closeOnboardingDialog);
+  dom.onboardingDialogDontShow?.addEventListener("change", () => {
+    try {
+      localStorage.setItem(ONBOARDING_KEY, dom.onboardingDialogDontShow.checked ? "1" : "0");
+    } catch {}
+  });
 
   initTheme();
   initOnboarding();
