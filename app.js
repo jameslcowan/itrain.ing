@@ -1,238 +1,28 @@
-/* global LZString */
+/* global PowerliftCodec */
 (() => {
   "use strict";
 
+  const {
+    DOW,
+    emptyRow,
+    defaultDayLabels,
+    standardDowPreset,
+    labelForDay,
+    dowFromLabel,
+    nextDowForWeek,
+    defaultProgram,
+    normalizeProgram,
+    encodeState,
+    decodeState,
+    urlStateLengthHint,
+  } = PowerliftCodec;
+
   // New routing (clean paths)
   const ROUTE_PREFIX = "/program/";
-  
+
   // Legacy routing (for backward compatibility)
   const LEGACY_ROUTE_PREFIX = "/p/";
   const LEGACY_HASH_PREFIX = "#/p/";
-
-  /** -------------------------
-   *  State model + defaults
-   *  ------------------------- */
-
-  function emptyRow() {
-    return { ex: "", mode: "", sets: "", reps: "", load: "", pct: "", rpe: "", rest: "" };
-  }
-
-  function defaultDayLabels() {
-    // Default start: 3 days (common lifting cadence)
-    return ["DAY 1 - MON", "DAY 2 - WED", "DAY 3 - FRI"];
-  }
-
-  const DOW = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-
-  function standardDowPreset(count) {
-    if (count === 3) return ["MON", "WED", "FRI"];
-    if (count === 4) return ["MON", "TUE", "THU", "FRI"];
-    if (count === 5) return ["MON", "TUE", "WED", "THU", "FRI"];
-    if (count === 6) return ["MON", "TUE", "WED", "THU", "FRI", "SAT"];
-    if (count === 7) return ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-    if (count === 2) return ["MON", "THU"];
-    return ["MON"];
-  }
-
-  function labelForDay(dayIndex, dow) {
-    const safeDow = dow && DOW.includes(dow) ? dow : "DAY";
-    return `DAY ${dayIndex + 1} - ${safeDow}`;
-  }
-
-  function dowFromLabel(label) {
-    if (typeof label !== "string") return "";
-    const m = label.trim().match(/-\s*([A-Z]{3})\s*$/);
-    const val = m ? m[1] : "";
-    return DOW.includes(val) ? val : "";
-  }
-
-  function usedDows(week) {
-    const days = Array.isArray(week?.days) ? week.days : [];
-    return new Set(days.map((d) => dowFromLabel(d?.label)).filter(Boolean));
-  }
-
-  function nextDowForWeek(week) {
-    const used = usedDows(week);
-    for (const d of DOW) {
-      if (!used.has(d)) return d;
-    }
-    return "MON";
-  }
-
-  function defaultWeek() {
-    return {
-      c: 0,
-      days: defaultDayLabels().map((label) => ({
-        label,
-        rows: [emptyRow()],
-      })),
-    };
-  }
-
-  function defaultProgram() {
-    return { v: 1, u: "lb", c: [{ n: "Meso 1" }], weeks: [defaultWeek()] };
-  }
-
-  function normalizeProgram(input) {
-    const prog = input && typeof input === "object" ? input : defaultProgram();
-    const weeks = Array.isArray(prog.weeks) ? prog.weeks : [];
-    if (weeks.length === 0) return defaultProgram();
-
-    const cycles = Array.isArray(prog.c) ? prog.c : [{ n: "Meso 1" }];
-    const safeCycles = cycles.length
-      ? cycles.map((cy, i) => ({
-          n: typeof cy?.n === "string" && cy.n.trim() ? cy.n : `Meso ${i + 1}`,
-        }))
-      : [{ n: "Meso 1" }];
-
-    return {
-      v: prog.v === 1 ? 1 : 1,
-      u: prog.u === "kg" ? "kg" : "lb",
-      c: safeCycles,
-      weeks: weeks.map((w) => {
-        const incomingDays = Array.isArray(w.days) ? w.days : [];
-        const count = incomingDays.length || defaultDayLabels().length;
-        const preset = standardDowPreset(count);
-        const cycleIndex = Number.isFinite(w?.c) ? clamp(Number(w.c), 0, safeCycles.length - 1) : 0;
-
-        return {
-          c: cycleIndex,
-          days: (incomingDays.length ? incomingDays : new Array(count).fill(null)).map((d, di) => {
-            const existingLabel = d && typeof d.label === "string" ? d.label : "";
-            const existingDow = dowFromLabel(existingLabel);
-            const label = existingLabel && existingLabel.trim()
-              ? existingLabel
-              : labelForDay(di, preset[di] || "MON");
-
-            return {
-              label,
-              rows: (Array.isArray(d?.rows) && d.rows.length ? d.rows : [emptyRow()]).map((r) => ({
-                ex: typeof r.ex === "string" ? r.ex : "",
-                mode: typeof r.mode === "string" ? r.mode : "",
-                sets: r.sets ?? "",
-                reps: r.reps ?? "",
-                load: r.load ?? "",
-                pct: r.pct ?? "",
-                rpe: r.rpe ?? "",
-                rest: r.rest ?? "",
-              })),
-            };
-          }),
-        };
-      }),
-    };
-  }
-
-  /** -------------------------
-   *  Encoding (lz-string + base64url)
-   *  ------------------------- */
-
-  function bytesToBase64(bytes) {
-    let binary = "";
-    const chunk = 0x8000;
-    for (let i = 0; i < bytes.length; i += chunk) {
-      const sub = bytes.subarray(i, i + chunk);
-      binary += String.fromCharCode.apply(null, sub);
-    }
-    return btoa(binary);
-  }
-
-  function base64ToBytes(b64) {
-    const binary = atob(b64);
-    const bytes = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-    return bytes;
-  }
-
-  function base64urlEncode(b64) {
-    return b64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
-  }
-
-  function base64urlDecode(b64url) {
-    const b64 = b64url.replace(/-/g, "+").replace(/_/g, "/");
-    const pad = b64.length % 4 ? "=".repeat(4 - (b64.length % 4)) : "";
-    return b64 + pad;
-  }
-
-  // V2 Optimized encoding: omits empty fields, uses shorter keys
-  function compactState(state) {
-    return {
-      v: 2, // version marker
-      u: state.u,
-      c: state.c,
-      weeks: state.weeks.map(w => ({
-        c: w.c,
-        days: w.days.map(d => {
-          const day = {
-            d: dowFromLabel(d.label) || "MON", // just DOW, not "DAY 1 - MON"
-            rows: d.rows.map(r => {
-              const row = {};
-              if (r.ex) row.ex = r.ex;
-              if (r.mode) row.m = r.mode;
-              if (r.sets) row.s = r.sets;
-              if (r.reps) row.r = r.reps;
-              if (r.load) row.l = r.load;
-              if (r.pct) row.p = r.pct;
-              if (r.rpe) row.e = r.rpe;
-              if (r.rest) row.t = r.rest;
-              return row;
-            })
-          };
-          return day;
-        })
-      }))
-    };
-  }
-
-  function expandState(compact) {
-    return {
-      v: 1, // convert back to v1 for internal use
-      u: compact.u,
-      c: compact.c,
-      weeks: compact.weeks.map((w, wi) => ({
-        c: w.c,
-        days: w.days.map((d, di) => ({
-          label: labelForDay(di, d.d || "MON"),
-          rows: d.rows.map(r => ({
-            ex: r.ex || "",
-            mode: r.m || "",
-            sets: r.s || "",
-            reps: r.r || "",
-            load: r.l || "",
-            pct: r.p || "",
-            rpe: r.e || "",
-            rest: r.t || "",
-          }))
-        }))
-      }))
-    };
-  }
-
-  // Encode using V2 optimized format
-  function encodeState(state) {
-    const compact = compactState(state);
-    const json = JSON.stringify(compact);
-    const bytes = LZString.compressToUint8Array(json);
-    return base64urlEncode(bytesToBase64(bytes));
-  }
-
-  // Decode with auto-detection (V1 or V2)
-  function decodeState(str) {
-    const b64 = base64urlDecode(str);
-    const bytes = base64ToBytes(b64);
-    const json = LZString.decompressFromUint8Array(bytes);
-    if (!json) throw new Error("Invalid state");
-    
-    const parsed = JSON.parse(json);
-    
-    // V2 format has version marker
-    if (parsed.v === 2) {
-      return expandState(parsed);
-    }
-    
-    // V1 format (legacy) - return as-is
-    return parsed;
-  }
 
   /** -------------------------
    *  Routing helpers
@@ -338,6 +128,7 @@
   function setStatus(msg, kind) {
     dom.status.textContent = msg || "";
     dom.status.classList.toggle("status--error", kind === "error");
+    dom.status.classList.toggle("status--warn", kind === "warn");
   }
 
   /** -------------------------
@@ -440,7 +231,8 @@
           app.lastEncoded = enc;
           writeStateToUrl(enc);
         }
-        setStatus("");
+        const hint = urlStateLengthHint(enc.length);
+        setStatus(hint ? hint.message : "", hint?.level === "error" ? "error" : hint ? "warn" : "");
       } catch (e) {
         setStatus("Could not update link (encoding error).", "error");
       }

@@ -145,77 +145,12 @@
     </main>
 
     <script src="/vendor/lz-string.min.js"></script>
+    <script src="/state-codec.js"></script>
     <script>
       (function () {
         "use strict";
 
-        const DOW = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-
-        function dowFromLabel(label) {
-          if (typeof label !== "string") return "";
-          const m = label.trim().match(/-\s*([A-Z]{3})\s*$/);
-          const val = m ? m[1] : "";
-          return DOW.includes(val) ? val : "";
-        }
-
-        function bytesToBase64(bytes) {
-          let binary = "";
-          const chunk = 0x8000;
-          for (let i = 0; i < bytes.length; i += chunk) {
-            const sub = bytes.subarray(i, i + chunk);
-            binary += String.fromCharCode.apply(null, sub);
-          }
-          return btoa(binary);
-        }
-
-        function base64urlEncode(b64) {
-          return b64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
-        }
-        // V2 Optimized encoding: omits empty fields, uses shorter keys
-        function compactState(state) {
-          return {
-            v: 2, // version marker
-            u: state.u,
-            c: state.c,
-            weeks: state.weeks.map(w => ({
-              c: w.c,
-              days: w.days.map(d => {
-                const day = {
-                  d: dowFromLabel(d.label) || "MON", // just DOW, not "DAY 1 - MON"
-                  rows: d.rows.map(r => {
-                    const row = {};
-                    if (r.ex) row.ex = r.ex;
-                    if (r.mode) row.m = r.mode;
-                    if (r.sets) row.s = r.sets;
-                    if (r.reps) row.r = r.reps;
-                    if (r.load) row.l = r.load;
-                    if (r.pct) row.p = r.pct;
-                    if (r.rpe) row.e = r.rpe;
-                    if (r.rest) row.t = r.rest;
-                    return row;
-                  })
-                };
-                return day;
-              })
-            }))
-          };
-        }
-
-        function encodeState(state) {
-          const compact = compactState(state);
-          const json = JSON.stringify(compact);
-          const bytes = LZString.compressToUint8Array(json);
-          return base64urlEncode(bytesToBase64(bytes));
-        }
-
-
-        function looksLikeProgram(obj) {
-          if (!obj || typeof obj !== "object") return false;
-          if (obj.v !== 1) return false;
-          if (obj.u !== "kg" && obj.u !== "lb") return false;
-          if (!Array.isArray(obj.c) || !Array.isArray(obj.weeks)) return false;
-          return true;
-        }
+        const { encodeState, looksLikeProgramV1 } = PowerliftCodec;
 
         const $ = (id) => document.getElementById(id);
         const jsonIn = $("jsonIn");
@@ -249,7 +184,7 @@
             setError("Invalid JSON. Fix syntax and try again.");
             return;
           }
-          if (!looksLikeProgram(obj)) {
+          if (!looksLikeProgramV1(obj)) {
             setError("JSON doesn’t look like a powerlift.ing program (expected v:1, u:'kg'|'lb', c:[], weeks:[]).");
             return;
           }
