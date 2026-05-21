@@ -46,6 +46,11 @@ This is the JSON shape the UI works with (keys are short to keep links small):
 }
 ```
 
+## Tests
+```bash
+node --test tests/codec.test.mjs
+```
+
 ## Local usage
 No build step. Run any static server:
 
