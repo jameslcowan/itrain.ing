@@ -1328,8 +1328,18 @@
   dom.menuOverlay?.addEventListener("click", (e) => {
     if (e.target === dom.menuOverlay) closeMenu();
   });
+  function closeOpenDropdown() {
+    if (!openDropdown) return false;
+    openDropdown.btn.setAttribute("aria-expanded", "false");
+    openDropdown.menu.hidden = true;
+    openDropdown = null;
+    return true;
+  }
+
   window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeMenu();
+    if (e.key !== "Escape") return;
+    if (closeOpenDropdown()) return;
+    closeMenu();
   });
 
   // Theme: follow device by default; user can toggle light/dark (stored locally, not in URL)
