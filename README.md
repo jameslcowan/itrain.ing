@@ -3,16 +3,18 @@
 Static, zero-build program builder where **the entire program lives in the URL** (shareable links).
 
 ## What this is
-- Vanilla `index.html` + `app.css` + `app.js` (no framework, no build step)
-- Client-only (no accounts, no backend)
+- Marketing landing at `/` (`index.html`, `landing.css`, `landing.js`)
+- Program builder at `/app` (`app.html`, `app.css`, `app.js`, `state-codec.js`)
+- Client-only (no accounts, no backend yet)
 - Sharing = copy the URL
 
 ## Routing (public contract)
-- **Default (current)**: `/program/<STATE>`
-- **Legacy (still works)**: `/p/<STATE>`
-- **Legacy (still works)**: `/#/p/<STATE>`
+- **Landing (indexed)**: `/`
+- **Builder**: `/app` → `app.html`
+- **Shared program (noindex)**: `/program/<STATE>`
+- **Legacy (still works)**: `/p/<STATE>`, `/#/p/<STATE>`
 
-The app updates the URL as you edit via `history.replaceState()` (no page reload).
+The builder updates the URL as you edit via `history.replaceState()` (no page reload).
 
 ## Encoding (public contract)
 `<STATE>` is compressed JSON:
@@ -52,13 +54,15 @@ node --test tests/codec.test.mjs
 ```
 
 ## Local usage
-No build step. Run any static server:
+No build step. Use the dev server so `/app` and `/program/*` match production:
 
-```powershell
-python -m http.server 8080
+```bash
+python scripts/dev-server.py
 ```
 
+Plain `python -m http.server` only serves `/`; shared `/program/…` links will 404 locally.
+
 ## Deployment (Netlify)
-Publishes from repo root (`.`). `netlify.toml` routes `/program/*` and `/p/*` to `index.html`.
+Publishes from repo root (`.`). `netlify.toml` routes `/app`, `/program/*`, and `/p/*` to `app.html`. `/` serves `index.html`.
 
 
