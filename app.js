@@ -1202,6 +1202,34 @@
     return true;
   }
 
+  function programHasContent(prog) {
+    if (!prog) return false;
+    if ((prog.c?.length ?? 0) > 1) return true;
+    if (prog.c?.[0]?.n && prog.c[0].n !== "Meso 1") return true;
+    if ((prog.weeks?.length ?? 0) > 1) return true;
+    const firstWeek = prog.weeks?.[0];
+    if ((firstWeek?.days?.length ?? 0) > 3) return true;
+    for (const w of prog.weeks || []) {
+      for (const d of w.days || []) {
+        for (const r of d.rows || []) {
+          if (
+            (r.ex || "").trim() ||
+            (r.mode || "").trim() ||
+            String(r.sets ?? "").trim() ||
+            String(r.reps ?? "").trim() ||
+            String(r.load ?? "").trim() ||
+            String(r.pct ?? "").trim() ||
+            String(r.rpe ?? "").trim() ||
+            String(r.rest ?? "").trim()
+          ) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
   window.addEventListener("keydown", (e) => {
     if (e.key !== "Escape") return;
     if (closeOpenDropdown()) return;
@@ -1291,8 +1319,17 @@
 
   dom.themeToggleBtn?.addEventListener("click", toggleTheme);
 
-  dom.homeLink?.addEventListener("click", (e) => {
+  dom.homeLink?.addEventListener("click", async (e) => {
     e.preventDefault();
+    if (programHasContent(app.program)) {
+      const ok = await appConfirm("Start a new blank program? Your current work is only saved in this page’s link.", {
+        title: "New program",
+        okText: "Start new",
+        cancelText: "Keep editing",
+        danger: true,
+      });
+      if (!ok) return;
+    }
     window.location.href = `${window.location.origin}/`;
   });
 
