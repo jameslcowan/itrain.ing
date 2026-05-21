@@ -28,7 +28,7 @@
         "url": "https://powerlift.ing/",
         "applicationCategory": "HealthApplication",
         "operatingSystem": "Any",
-        "description": "Free powerlifting program builder. Share your training block in one link.",
+        "description": "Free powerlifting program builder. Share your workout in one link.",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
       }
     </script>
@@ -82,6 +82,22 @@
   </head>
   <body class="landingPage">
     <a class="srOnly" href="#main">Skip to content</a>
+    <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+      <symbol id="i-dark-mode" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+      </symbol>
+      <symbol id="i-light-mode" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+    </svg>
 
     <header class="lp-header">
       <div class="lp-header__row">
@@ -116,7 +132,12 @@
         </nav>
         <div class="site-menu__foot">
           <a class="site-menu__btn site-menu__btn--primary" href="/app">Launch App</a>
+          <button id="landingThemeToggleBtn" class="site-menu__btn site-menu__btn--ghost" type="button">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use id="landingThemeIcon" href="#i-dark-mode"></use></svg>
+            <span>Theme</span>
+          </button>
         </div>
+        <p class="site-menu__credit">Made by <a href="https://x.com/jameslcowan" target="_blank" rel="noopener noreferrer">@jameslcowan</a></p>
       </div>
     </div>
 
@@ -126,7 +147,7 @@
           <p class="lp-badge lp-intro__item">Free · No signup</p>
           <h1 class="lp-hero__title lp-display lp-intro__item">
             Powerlifting program builder
-            <em>Share your block in one link</em>
+            <em>Share your workout in one link</em>
           </h1>
           <p class="lp-hero__lead lp-intro__item">
             Plan mesocycles, weeks, and SBD days — sets, reps, load, %1RM, RPE, and rest. Built for the gym floor on your phone.

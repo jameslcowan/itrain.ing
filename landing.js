@@ -63,6 +63,10 @@
     a.addEventListener("click", () => closeMenu());
   });
 
+  const landingThemeToggleBtn = document.getElementById("landingThemeToggleBtn");
+  const landingThemeIcon = document.getElementById("landingThemeIcon");
+  window.PowerliftTheme?.bindToggle(landingThemeToggleBtn, landingThemeIcon);
+
   function scrollToSection(id) {
     const el = document.querySelector(id);
     if (!el) return;
