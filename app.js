@@ -782,8 +782,13 @@
     }
   }
 
+  function rowFieldId(wi, di, ri, field) {
+    return `f-${wi}-${di}-${ri}-${field}`;
+  }
+
   function renderRow(wi, di, ri, row) {
     const showExamples = wi === 0 && di === 0 && ri === 0;
+    const units = app.program.u === "kg" ? "kg" : "lb";
 
     const grid = el(
       "div",
@@ -795,36 +800,36 @@
       },
       [
       el("div", { class: "field field--ex" }, [
-        el("label", { text: "Exercise" }),
-        el("input", { class: "input", placeholder: showExamples ? "e.g. Squat" : "", value: row.ex, "data-field": "ex" }),
+        el("label", { for: rowFieldId(wi, di, ri, "ex"), text: "Exercise" }),
+        el("input", { id: rowFieldId(wi, di, ri, "ex"), class: "input", placeholder: showExamples ? "e.g. Squat" : "", value: row.ex, "data-field": "ex" }),
       ]),
       el("div", { class: "field field--mode" }, [
-        el("label", { text: "Variation" }),
-        el("input", { class: "input", placeholder: "", value: row.mode, "data-field": "mode" }),
+        el("label", { for: rowFieldId(wi, di, ri, "mode"), text: "Variation" }),
+        el("input", { id: rowFieldId(wi, di, ri, "mode"), class: "input", placeholder: "", value: row.mode, "data-field": "mode" }),
       ]),
       el("div", { class: "field field--sets" }, [
-        el("label", { text: "Sets" }),
-        el("input", { class: "input", inputmode: "numeric", pattern: "\\d*", maxlength: "3", placeholder: "", value: row.sets, "data-field": "sets" }),
+        el("label", { for: rowFieldId(wi, di, ri, "sets"), text: "Sets" }),
+        el("input", { id: rowFieldId(wi, di, ri, "sets"), class: "input", inputmode: "numeric", pattern: "\\d*", maxlength: "3", placeholder: "", value: row.sets, "data-field": "sets" }),
       ]),
       el("div", { class: "field field--reps" }, [
-        el("label", { text: "Reps" }),
-        el("input", { class: "input", inputmode: "numeric", pattern: "\\d*", maxlength: "3", placeholder: "", value: row.reps, "data-field": "reps" }),
+        el("label", { for: rowFieldId(wi, di, ri, "reps"), text: "Reps" }),
+        el("input", { id: rowFieldId(wi, di, ri, "reps"), class: "input", inputmode: "numeric", pattern: "\\d*", maxlength: "3", placeholder: "", value: row.reps, "data-field": "reps" }),
       ]),
       el("div", { class: "field field--load" }, [
-        el("label", { text: `Load (${app.program.u === "kg" ? "kg" : "lb"})` }),
-        el("input", { class: "input", inputmode: "numeric", pattern: "\\d*", maxlength: "4", placeholder: "", value: row.load, "data-field": "load" }),
+        el("label", { for: rowFieldId(wi, di, ri, "load"), text: `Load (${units})` }),
+        el("input", { id: rowFieldId(wi, di, ri, "load"), class: "input", inputmode: "numeric", pattern: "\\d*", maxlength: "4", placeholder: "", value: row.load, "data-field": "load" }),
       ]),
       el("div", { class: "field field--pct" }, [
-        el("label", { text: "%1RM" }),
-        el("input", { class: "input", inputmode: "numeric", pattern: "\\d*", maxlength: "3", placeholder: "", value: row.pct, "data-field": "pct" }),
+        el("label", { for: rowFieldId(wi, di, ri, "pct"), text: "%1RM" }),
+        el("input", { id: rowFieldId(wi, di, ri, "pct"), class: "input", inputmode: "numeric", pattern: "\\d*", maxlength: "3", placeholder: "", value: row.pct, "data-field": "pct" }),
       ]),
       el("div", { class: "field field--rpe" }, [
-        el("label", { text: "RPE" }),
-        el("input", { class: "input", inputmode: "decimal", placeholder: "", value: row.rpe, "data-field": "rpe" }),
+        el("label", { for: rowFieldId(wi, di, ri, "rpe"), text: "RPE" }),
+        el("input", { id: rowFieldId(wi, di, ri, "rpe"), class: "input", inputmode: "decimal", placeholder: "", value: row.rpe, "data-field": "rpe" }),
       ]),
       el("div", { class: "field field--rest" }, [
-        el("label", { text: "Rest (mm:ss)" }),
-        el("input", { class: "input", inputmode: "numeric", placeholder: "", value: row.rest, "data-field": "rest" }),
+        el("label", { for: rowFieldId(wi, di, ri, "rest"), text: "Rest (mm:ss)" }),
+        el("input", { id: rowFieldId(wi, di, ri, "rest"), class: "input", inputmode: "numeric", placeholder: "", value: row.rest, "data-field": "rest" }),
       ]),
       el("div", { class: "rowActions" }, [
         el(
