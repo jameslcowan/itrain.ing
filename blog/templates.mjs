@@ -45,15 +45,19 @@ function siteMenu(navActive) {
 export function renderShell({
   title,
   description,
-  canonicalPath,
+  canonicalPath = "/",
   ogType = "website",
   ogImage,
   mainHtml,
   jsonLd = [],
   extraStylesheets = [],
   extraScripts = [],
+  bodyClass: bodyClassOverride,
+  noindex = false,
+  omitCanonical = false,
 }) {
   const canonical = `${SITE_URL}${canonicalPath}`;
+  const ogUrl = omitCanonical ? SITE_URL : canonical;
   const pageTitle = title.includes("powerlift") ? title : `${title} · ${BLOG_META.titleSuffix}`;
   const image = ogImage || BLOG_META.defaultImage;
   const ld = jsonLd.map(jsonLdScript).join("\n");
@@ -73,11 +77,12 @@ export function renderShell({
     .map((href) => `    <link rel="stylesheet" href="${escapeHtml(href)}" />`)
     .join("\n");
   const bodyClass =
-    canonicalPath === "/faq/"
+    bodyClassOverride ??
+    (canonicalPath === "/faq/"
       ? "landingPage blogPage faqPage"
       : canonicalPath === "/programs/"
         ? "landingPage blogPage programsPage"
-        : "landingPage blogPage";
+        : "landingPage blogPage");
   const extraJs = extraScripts
     .map((src) => `    <script src="${escapeHtml(src)}" defer></script>`)
     .join("\n");
@@ -90,13 +95,13 @@ export function renderShell({
     <title>${escapeHtml(pageTitle)}</title>
     <meta name="description" content="${escapeHtml(description)}" />
     <meta name="author" content="${escapeHtml(BLOG_META.author)}" />
-    <link rel="canonical" href="${escapeHtml(canonical)}" />
+${noindex ? '    <meta name="robots" content="noindex, follow" />\n' : ""}${omitCanonical ? "" : `    <link rel="canonical" href="${escapeHtml(canonical)}" />\n`}
     <link rel="alternate" type="application/atom+xml" title="${escapeHtml(BLOG_META.feedTitle)}" href="/feed.xml" />
     <meta property="og:site_name" content="${escapeHtml(BLOG_META.siteName)}" />
     <meta property="og:title" content="${escapeHtml(title)}" />
     <meta property="og:description" content="${escapeHtml(description)}" />
     <meta property="og:type" content="${ogType}" />
-    <meta property="og:url" content="${escapeHtml(canonical)}" />
+    <meta property="og:url" content="${escapeHtml(ogUrl)}" />
     <meta property="og:image" content="${escapeHtml(image)}" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:creator" content="${escapeHtml(BLOG_META.twitter)}" />
