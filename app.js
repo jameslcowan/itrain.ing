@@ -93,11 +93,7 @@
     maxesDialogAddLiftBtn: document.getElementById("maxesDialogAddLiftBtn"),
     maxesDialogCloseBtn: document.getElementById("maxesDialogCloseBtn"),
     maxesDialogUnitsLabel: document.getElementById("maxesDialogUnitsLabel"),
-    onboardingDialogTitle: document.getElementById("onboardingDialogTitle"),
-    onboardingMaxesPrimary: document.getElementById("onboardingMaxesPrimary"),
-    onboardingBackBtn: document.getElementById("onboardingBackBtn"),
-    onboardingNextBtn: document.getElementById("onboardingNextBtn"),
-    onboardingSkipMaxesBtn: document.getElementById("onboardingSkipMaxesBtn"),
+    onboardingSkipBtn: document.getElementById("onboardingSkipBtn"),
     shareDialog: document.getElementById("shareDialog"),
     shareDialogText: document.getElementById("shareDialogText"),
     shareDialogCloseBtn: document.getElementById("shareDialogCloseBtn"),
@@ -1754,7 +1750,6 @@
   }
 
   const ONBOARDING_KEY = "pli_hide_onboarding";
-  let onboardingStep = 0;
 
   function persistOnboardingDismiss() {
     try {
@@ -1764,36 +1759,11 @@
     } catch {}
   }
 
-  function setOnboardingStep(step) {
-    onboardingStep = step;
-    const titles = ["Welcome to powerlift.ing", "Your maxes (1RM)", "Build your program"];
-    if (dom.onboardingDialogTitle) dom.onboardingDialogTitle.textContent = titles[step] || titles[0];
-    dom.onboardingDialog?.querySelectorAll("[data-onboarding-step]").forEach((panel) => {
-      const n = Number(panel.getAttribute("data-onboarding-step"));
-      panel.hidden = n !== step;
-    });
-    if (dom.onboardingBackBtn) dom.onboardingBackBtn.hidden = step === 0;
-    if (dom.onboardingNextBtn) dom.onboardingNextBtn.hidden = step === 2;
-    if (dom.onboardingDialogOkBtn) dom.onboardingDialogOkBtn.hidden = step !== 2;
-    if (step === 1) {
-      const merged = PowerliftMaxes.mergeCacheWithProgram(app.program.m, app.program.u);
-      renderMaxesPrimary(dom.onboardingMaxesPrimary, merged);
-    }
-  }
-
-  function saveOnboardingMaxes() {
-    if (!dom.onboardingMaxesPrimary) return;
-    const map = readMaxesFromDialogContainers(dom.onboardingMaxesPrimary, null);
-    persistMaxes(map);
-  }
-
   function closeOnboardingDialog() {
-    if (onboardingStep === 1) saveOnboardingMaxes();
     persistOnboardingDismiss();
     try {
       dom.onboardingDialog?.close();
     } catch {}
-    setOnboardingStep(0);
   }
 
   function initOnboarding() {
@@ -1801,26 +1771,20 @@
     try {
       if (localStorage.getItem(ONBOARDING_KEY) === "1") return;
     } catch {}
-    setOnboardingStep(0);
     dom.onboardingDialog.showModal();
     window.setTimeout(() => {
       try {
-        dom.onboardingNextBtn?.focus();
+        dom.onboardingDialogOkBtn?.focus();
       } catch {}
     }, 0);
   }
 
   dom.onboardingDialogCloseBtn?.addEventListener("click", closeOnboardingDialog);
   dom.onboardingDialogOkBtn?.addEventListener("click", closeOnboardingDialog);
-  dom.onboardingNextBtn?.addEventListener("click", () => {
-    if (onboardingStep === 1) saveOnboardingMaxes();
-    if (onboardingStep < 2) setOnboardingStep(onboardingStep + 1);
-  });
-  dom.onboardingBackBtn?.addEventListener("click", () => {
-    if (onboardingStep > 0) setOnboardingStep(onboardingStep - 1);
-  });
-  dom.onboardingSkipMaxesBtn?.addEventListener("click", () => {
-    setOnboardingStep(2);
+  dom.onboardingSkipBtn?.addEventListener("click", () => {
+    try {
+      dom.onboardingDialog?.close();
+    } catch {}
   });
   dom.onboardingDialogDontShow?.addEventListener("change", () => {
     try {

@@ -597,12 +597,10 @@ details.day > summary::-webkit-details-marker{ display:none; }
   color:var(--muted);
 }
 
-.onboarding__step[hidden]{ display:none !important; }
 .onboarding__actions{
-  justify-content:space-between;
+  justify-content:flex-end;
+  gap:12px;
 }
-.onboarding__actions .btn--primary{ margin-left:auto; }
-.onboarding__skip{ margin-top:4px; }
 
 @media (max-width: 520px){
   .maxesDialog__primary{ grid-template-columns: 1fr; }
