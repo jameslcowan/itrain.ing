@@ -1,0 +1,49 @@
+---
+description: Require micro-commits after each logical change; never leave work uncommitted
+alwaysApply: true
+---
+
+# Micro-commits (required)
+
+After **every** completed logical change in this repo, create a **separate git commit** before continuing or ending the session. Do not accumulate multi-topic diffs across a conversation.
+
+## When to commit
+
+Commit immediately after each focused unit, for example:
+
+- One feature or fix (even small)
+- Build output regeneration (`programs/index.html`, FAQ/legal patches) **with** the source that produced it
+- CSS-only vs JS-only vs data/build-only changes → **separate commits** when they are independent steps
+
+## When the session ends
+
+1. Run `git status`.
+2. If anything is modified or staged, commit it in logical chunks **or** tell the user explicitly what remains uncommitted and why.
+3. Never imply work is "done" while `programs.css`, `build.mjs`, generated HTML, etc. are still dirty.
+
+## Commit style
+
+- Follow the repo's existing message style (short subject, complete sentence, focus on **why**).
+- Use HEREDOC for commit messages.
+- Do **not** commit secrets, `.env`, or `*.code-workspace` unless the user asks.
+- Do **not** push unless asked.
+- Obey git safety rules (no `--no-verify`, no amend unless allowed, no force-push to main).
+
+## Splitting guidance
+
+| Change type | Typical commit |
+|-------------|----------------|
+| `content/*.js` + `*/build.mjs` + generated HTML | Data/markup + rebuild |
+| `*.css` only | Styles |
+| `*.js` behavior only | Script behavior |
+| README / docs only | Docs |
+
+If the user asks "micro committed?" or similar, check `git status` first; if dirty, commit now in logical slices.
+
+## Example flow
+
+1. Edit `programs/build.mjs` → run build → commit build + `programs/index.html`.
+2. Edit `programs.css` → commit styles.
+3. Edit `programs.js` → commit behavior.
+
+Three commits, not one lump at the end.
