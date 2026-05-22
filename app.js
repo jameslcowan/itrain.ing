@@ -92,7 +92,8 @@
     maxesDialogCustomList: document.getElementById("maxesDialogCustomList"),
     maxesDialogAddLiftBtn: document.getElementById("maxesDialogAddLiftBtn"),
     maxesDialogCloseBtn: document.getElementById("maxesDialogCloseBtn"),
-    maxesDialogUnitsLabel: document.getElementById("maxesDialogUnitsLabel"),
+    maxesDialogUnitLb: document.getElementById("maxesDialogUnitLb"),
+    maxesDialogUnitKg: document.getElementById("maxesDialogUnitKg"),
     onboardingSkipBtn: document.getElementById("onboardingSkipBtn"),
     shareDialog: document.getElementById("shareDialog"),
     shareDialogText: document.getElementById("shareDialogText"),
@@ -594,6 +595,39 @@
   }
 
   let syncingLoadPct = false;
+  let maxesDialogEditUnit = "lb";
+
+  function syncMaxesDialogUnitToggle() {
+    const u = maxesDialogEditUnit === "kg" ? "kg" : "lb";
+    dom.maxesDialogUnitLb?.classList.toggle("is-active", u === "lb");
+    dom.maxesDialogUnitKg?.classList.toggle("is-active", u === "kg");
+    dom.maxesDialogUnitLb?.setAttribute("aria-pressed", u === "lb" ? "true" : "false");
+    dom.maxesDialogUnitKg?.setAttribute("aria-pressed", u === "kg" ? "true" : "false");
+  }
+
+  function setMaxesDialogUnit(nextU) {
+    const target = nextU === "kg" ? "kg" : "lb";
+    const prev = maxesDialogEditUnit === "kg" ? "kg" : "lb";
+    if (target === prev) return;
+    const map = readMaxesFromDialogContainers(dom.maxesDialogPrimary, dom.maxesDialogCustomList);
+    const converted = PowerliftMaxes.convertMaxesMap(map, prev, target);
+    maxesDialogEditUnit = target;
+    syncMaxesDialogUnitToggle();
+    renderMaxesPrimary(dom.maxesDialogPrimary, converted);
+    renderMaxesCustomList(converted);
+  }
+
+  function applyMaxesDialogUnitToProgram(map) {
+    const newU = maxesDialogEditUnit === "kg" ? "kg" : "lb";
+    const oldU = app.program.u === "kg" ? "kg" : "lb";
+    if (newU !== oldU) {
+      convertAllProgramLoads(oldU, newU);
+      ensureProgramMaxes();
+      app.program.m = PowerliftMaxes.convertMaxesMap(app.program.m, oldU, newU);
+      app.program.u = newU;
+    }
+    persistMaxes(map);
+  }
 
   function updateRowLoadPctDom(wi, di, ri, row) {
     const rowEl = dom.weekMount.querySelector(
@@ -732,9 +766,9 @@
   function openMaxesDialog() {
     if (!dom.maxesDialog?.showModal) return;
     ensureProgramMaxes();
-    const unitLabel = loadUnitLabel(app.program.u);
-    if (dom.maxesDialogUnitsLabel) dom.maxesDialogUnitsLabel.textContent = unitLabel;
-    const merged = PowerliftMaxes.mergeCacheWithProgram(app.program.m, app.program.u);
+    maxesDialogEditUnit = app.program.u === "kg" ? "kg" : "lb";
+    syncMaxesDialogUnitToggle();
+    const merged = PowerliftMaxes.mergeCacheWithProgram(app.program.m, maxesDialogEditUnit);
     renderMaxesPrimary(dom.maxesDialogPrimary, merged);
     renderMaxesCustomList(merged);
     dom.maxesDialog.showModal();
@@ -1799,6 +1833,9 @@
 
   dom.configBtn?.addEventListener("click", () => openMaxesDialog());
 
+  dom.maxesDialogUnitLb?.addEventListener("click", () => setMaxesDialogUnit("lb"));
+  dom.maxesDialogUnitKg?.addEventListener("click", () => setMaxesDialogUnit("kg"));
+
   dom.maxesDialogCloseBtn?.addEventListener("click", () => {
     try {
       dom.maxesDialog?.close("cancel");
@@ -1809,14 +1846,9 @@
     const rv = dom.maxesDialog.returnValue || "cancel";
     if (rv !== "ok") return;
     const map = readMaxesFromDialogContainers(dom.maxesDialogPrimary, dom.maxesDialogCustomList);
-    persistMaxes(map);
-    const hadPct = app.program.weeks.some((w) =>
-      w.days?.some((d) => d.rows?.some((r) => toInt(r.pct) > 0))
-    );
-    if (hadPct) {
-      recalcRowsFromPct();
-      render();
-    }
+    applyMaxesDialogUnitToProgram(map);
+    recalcRowsFromPct();
+    render();
   });
 
   dom.maxesDialogAddLiftBtn?.addEventListener("click", async () => {
@@ -1831,7 +1863,7 @@
     if (!key) return;
     const val = await appPrompt("1RM for this lift:", {
       title: "Add lift",
-      inputLabel: loadUnitLabel(app.program.u),
+      inputLabel: loadUnitLabel(maxesDialogEditUnit),
       inputValue: "",
       okText: "Add",
     });
