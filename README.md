@@ -62,7 +62,7 @@ node --test tests/codec.test.mjs
 Use the dev server so `/app`, `/app/*`, and legacy `/program/*` match production:
 
 ```bash
-npm install && npm run build   # regenerate /blog, /faq, /programs, legal pages, and footers
+npm install && npm run build   # regenerate /blog, /faq, /programs, legal pages, 404.html, and footers
 python scripts/dev-server.py
 ```
 
