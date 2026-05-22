@@ -488,7 +488,34 @@ details.day > summary::-webkit-details-marker{ display:none; }
   background: color-mix(in srgb, var(--pl-iron) 55%, transparent);
   backdrop-filter: blur(8px);
 }
+.dialog--modal{
+  display:flex;
+  flex-direction:column;
+  max-height:min(92dvh, calc(100dvh - var(--space-5)));
+  margin:auto;
+}
+.dialog--modal > .dialog__panel,
+.dialog--modal > form.dialog__panel{
+  display:flex;
+  flex-direction:column;
+  flex:1 1 auto;
+  min-height:0;
+  max-height:100%;
+  overflow:hidden;
+}
 .dialog__panel{ display:flex; flex-direction:column; }
+.dialog--modal .dialog__top,
+.dialog--modal .dialog__actions{
+  flex-shrink:0;
+}
+.dialog--modal .dialog__body{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-gutter:stable;
+}
 .dialog__top{
   display:flex;
   align-items:center;
@@ -717,8 +744,6 @@ details.day > summary::-webkit-details-marker{ display:none; }
   display:flex;
   flex-direction:column;
   gap:8px;
-  max-height: min(240px, 40vh);
-  overflow-y:auto;
 }
 .maxesDialog__customRow{
   display:grid;
@@ -756,6 +781,9 @@ details.day > summary::-webkit-details-marker{ display:none; }
 /* Make dialogs feel less cramped on small screens */
 @media (max-width: 520px){
   .dialog{ width: calc(100vw - 22px); border-radius: 14px; }
+  .dialog--modal{
+    max-height:min(94dvh, calc(100dvh - var(--space-4)));
+  }
   .dialog__top, .dialog__body, .dialog__actions{ padding-left: 14px; padding-right: 14px; }
   .dialog__actions{ flex-direction:column-reverse; }
   .dialog__actions .btn{ width:100%; }
