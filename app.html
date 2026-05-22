@@ -134,6 +134,7 @@
         </nav>
         <div class="site-header__actions">
           <button id="copyLinkBtn" class="site-header__btn site-header__btn--primary site-header__btn--share" type="button">Share</button>
+          <button id="configBtn" class="site-header__btn site-header__btn--ghost site-header__btn--config" type="button">Config</button>
           <button id="menuBtn" class="site-menu__trigger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="appMenu" aria-haspopup="dialog">
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
           </button>
@@ -214,34 +215,81 @@
 
     <script src="/vendor/lz-string.min.js"></script>
     <script src="/state-codec.js"></script>
+    <script src="/maxes.js"></script>
     <script src="/app.js" defer></script>
 
-    <dialog id="onboardingDialog" class="dialog">
-      <div class="dialog__top">
-        <div class="dialog__title">Welcome to powerlift.ing</div>
-        <button id="onboardingDialogCloseBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Close">
-          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-close"></use></svg>
-        </button>
-      </div>
-      <div class="dialog__body">
-        <p class="dialog__text">
-          Build a powerlifting program in your browser and share it as one link — no account, no spreadsheet.
-        </p>
-        <ul class="dialog__list">
-          <li>Choose your <strong>mesocycle</strong> and <strong>week</strong> at the top.</li>
-          <li>Use <strong>Add day</strong>, then add exercises with sets, reps, load, %1RM, RPE, and rest.</li>
-          <li>Tap <strong>share</strong> to copy your link. The program saves in the URL as you type.</li>
-        </ul>
-        <p class="dialog__text dialog__text--muted">
-          Anyone with your link can view that program. Share only with people you trust.
-        </p>
-        <label class="control control--checkbox dialog__dontShow">
-          <input id="onboardingDialogDontShow" type="checkbox" />
-          <span>Don’t show this again</span>
-        </label>
-      </div>
-      <div class="dialog__actions">
-        <button id="onboardingDialogOkBtn" class="btn btn--primary" type="button">Get started</button>
+    <dialog id="maxesDialog" class="dialog dialog--modal maxesDialog">
+      <form method="dialog" class="dialog__panel maxesDialog__panel">
+        <div class="dialog__top">
+          <div class="dialog__title">Your maxes (1RM)</div>
+          <button id="maxesDialogCloseBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Close">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-close"></use></svg>
+          </button>
+        </div>
+        <div class="dialog__body maxesDialog__body">
+          <p class="dialog__text">
+            Enter best singles in <strong id="maxesDialogUnitsLabel">lb</strong>. On matching exercises, <strong>%1RM</strong> and
+            <strong>load</strong> stay in sync when you edit either.
+          </p>
+          <div class="maxesDialog__primary" id="maxesDialogPrimary"></div>
+          <div class="maxesDialog__customHead">
+            <span class="maxesDialog__customTitle">Other lifts</span>
+            <button id="maxesDialogAddLiftBtn" class="btn btn--ghost btn--sm" type="button">Add lift</button>
+          </div>
+          <div id="maxesDialogCustomList" class="maxesDialog__customList"></div>
+          <p class="dialog__text dialog__text--muted maxesDialog__note">
+            Saved in your program link when you share. Also remembered on this device for new programs.
+          </p>
+        </div>
+        <div class="dialog__actions">
+          <button class="btn btn--ghost" type="submit" value="cancel">Cancel</button>
+          <button id="maxesDialogSaveBtn" class="btn btn--primary" type="submit" value="ok">Save</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="onboardingDialog" class="dialog dialog--modal onboardingDialog">
+      <div class="dialog__panel">
+        <div class="dialog__top">
+          <div class="dialog__title" id="onboardingDialogTitle">Welcome to powerlift.ing</div>
+          <button id="onboardingDialogCloseBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Close">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-close"></use></svg>
+          </button>
+        </div>
+        <div class="dialog__body">
+          <div class="onboarding__step" data-onboarding-step="0">
+            <p class="dialog__text">
+              Build a powerlifting program in your browser and share it as one link — no account, no spreadsheet.
+            </p>
+          </div>
+          <div class="onboarding__step" data-onboarding-step="1" hidden>
+            <p class="dialog__text">
+              Add your best squat, bench, and deadlift (optional). You can add more lifts anytime from
+              <strong>Config</strong> next to Share.
+            </p>
+            <div class="maxesDialog__primary" id="onboardingMaxesPrimary"></div>
+            <button id="onboardingSkipMaxesBtn" class="btn btn--ghost btn--sm onboarding__skip" type="button">Skip for now</button>
+          </div>
+          <div class="onboarding__step" data-onboarding-step="2" hidden>
+            <ul class="dialog__list">
+              <li>Choose your <strong>mesocycle</strong> and <strong>week</strong> at the top.</li>
+              <li>Use <strong>Add day</strong>, then add exercises with sets, reps, load, %1RM, RPE, and rest.</li>
+              <li>Tap <strong>Share</strong> to copy your link. The program saves in the URL as you type.</li>
+            </ul>
+            <p class="dialog__text dialog__text--muted">
+              Anyone with your link can view that program. Share only with people you trust.
+            </p>
+            <label class="control control--checkbox dialog__dontShow">
+              <input id="onboardingDialogDontShow" type="checkbox" />
+              <span>Don’t show this again</span>
+            </label>
+          </div>
+        </div>
+        <div class="dialog__actions onboarding__actions">
+          <button id="onboardingBackBtn" class="btn btn--ghost" type="button" hidden>Back</button>
+          <button id="onboardingNextBtn" class="btn btn--primary" type="button">Next</button>
+          <button id="onboardingDialogOkBtn" class="btn btn--primary" type="button" hidden>Get started</button>
+        </div>
       </div>
     </dialog>
 
