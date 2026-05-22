@@ -90,6 +90,17 @@
         <path d="m6.34 17.66-1.41 1.41" />
         <path d="m19.07 4.93-1.41 1.41" />
       </symbol>
+      <symbol id="i-sliders" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="21" y1="4" x2="14" y2="4" />
+        <line x1="10" y1="4" x2="3" y2="4" />
+        <line x1="21" y1="12" x2="12" y2="12" />
+        <line x1="8" y1="12" x2="3" y2="12" />
+        <line x1="21" y1="20" x2="16" y2="20" />
+        <line x1="12" y1="20" x2="3" y2="20" />
+        <line x1="14" y1="2" x2="14" y2="6" />
+        <line x1="8" y1="10" x2="8" y2="14" />
+        <line x1="16" y1="18" x2="16" y2="22" />
+      </symbol>
       <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 2v13" />
         <path d="m16 6-4-4-4 4" />
@@ -133,8 +144,10 @@
           <a href="/#faq">FAQ</a>
         </nav>
         <div class="site-header__actions">
+          <button id="configBtn" class="iconBtn iconBtn--headerSm site-header__iconBtn" type="button" aria-label="Your maxes (1RM)" title="Config">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-sliders"></use></svg>
+          </button>
           <button id="copyLinkBtn" class="site-header__btn site-header__btn--primary site-header__btn--share" type="button">Share</button>
-          <button id="configBtn" class="site-header__btn site-header__btn--ghost site-header__btn--config" type="button">Config</button>
           <button id="menuBtn" class="site-menu__trigger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="appMenu" aria-haspopup="dialog">
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
           </button>

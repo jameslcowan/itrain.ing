@@ -137,12 +137,20 @@ html.fonts-loaded .site-header__brand {
     color: var(--text-strong);
   }
 
-  .site-header__btn--share,
-  .site-header__btn--config {
+  .site-header__btn--share {
     min-height: 42px;
     padding-inline: 20px;
     font-size: 0.9375rem;
   }
+}
+
+.site-header__iconBtn {
+  flex-shrink: 0;
+}
+
+.site-header__iconBtn .ico {
+  width: 20px;
+  height: 20px;
 }
 
 /* Share visible at all breakpoints on the app */
