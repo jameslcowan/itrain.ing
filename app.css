@@ -547,8 +547,48 @@ details.day > summary::-webkit-details-marker{ display:none; }
 .rowGrid .field--sets input,
 .rowGrid .field--reps input,
 .rowGrid .field--pct input,
-.rowGrid .field--rpe input{
+.rowGrid .field--rpe input,
+.rowGrid .field--load .loadInput__value{
   text-align:center;
+}
+.loadInputWrap{
+  display:flex;
+  align-items:stretch;
+  width:100%;
+  border-radius:10px;
+  border:1px solid var(--border2);
+  background: color-mix(in srgb, var(--panel2) 78%, transparent);
+  overflow:hidden;
+}
+.loadInputWrap:focus-within{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+.loadInputWrap .loadInput__value{
+  flex:1 1 auto;
+  min-width:0;
+  border:none;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+}
+.loadInputWrap .loadInput__value:focus{
+  border:none;
+  box-shadow:none;
+  outline:none;
+}
+.loadInput__unit{
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  padding:0 10px;
+  font-family: var(--mono);
+  font-size:0.9375rem;
+  font-weight:500;
+  color:var(--muted);
+  user-select:none;
+  pointer-events:none;
+  border-left:1px solid var(--border2);
 }
 .field{ display:flex; flex-direction:column; gap:6px; }
 .field{ min-width:0; }

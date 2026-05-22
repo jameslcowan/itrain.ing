@@ -544,6 +544,34 @@
     }
   }
 
+  const LB_PER_KG = 2.204622621848775;
+
+  function loadUnitLabel(u) {
+    return u === "kg" ? "kg" : "lbs";
+  }
+
+  function convertLoadValue(value, fromU, toU) {
+    const from = fromU === "kg" ? "kg" : "lb";
+    const to = toU === "kg" ? "kg" : "lb";
+    if (from === to) return value;
+    const n = toInt(value);
+    if (n <= 0) return "";
+    if (from === "lb" && to === "kg") return String(Math.round(n / LB_PER_KG));
+    if (from === "kg" && to === "lb") return String(Math.round(n * LB_PER_KG));
+    return value;
+  }
+
+  function convertAllProgramLoads(fromU, toU) {
+    for (const week of app.program.weeks) {
+      for (const day of week.days || []) {
+        for (const row of day.rows || []) {
+          if (!row?.load) continue;
+          row.load = convertLoadValue(row.load, fromU, toU);
+        }
+      }
+    }
+  }
+
   function computeDaySummary(day) {
     const rows = Array.isArray(day?.rows) ? day.rows : [];
     const exercises = rows.filter((r) => (r?.ex || "").trim() !== "").length;
@@ -580,7 +608,7 @@
     if (!day) return;
 
     const s = computeDaySummary(day);
-    const units = app.program.u === "kg" ? "kg" : "lb";
+    const units = loadUnitLabel(app.program.u);
     const vals = {
       exercises: String(s.exercises),
       sets: String(s.totalSets),
@@ -608,15 +636,20 @@
         renderDropdown({
           id: "units",
           value: app.program.u === "kg" ? "kg" : "lb",
-          label: (v) => (v === "kg" ? "kg" : "lb"),
+          label: (v) => loadUnitLabel(v),
           options: [
-            { value: "lb", label: "lb" },
+            { value: "lb", label: "lbs" },
             { value: "kg", label: "kg" },
           ],
           onChange: (v) => {
-            app.program.u = v === "kg" ? "kg" : "lb";
-            scheduleUrlUpdate();
-            render();
+            const nextU = v === "kg" ? "kg" : "lb";
+            const prevU = app.program.u === "kg" ? "kg" : "lb";
+            if (nextU !== prevU) {
+              convertAllProgramLoads(prevU, nextU);
+              app.program.u = nextU;
+              scheduleUrlUpdate();
+              render();
+            }
           },
         })
       );
@@ -674,7 +707,7 @@
 
   function renderRow(wi, di, ri, row) {
     const showExamples = wi === 0 && di === 0 && ri === 0;
-    const units = app.program.u === "kg" ? "kg" : "lb";
+    const unitLabel = loadUnitLabel(app.program.u);
 
     const grid = el(
       "div",
@@ -702,8 +735,21 @@
         el("input", { id: rowFieldId(wi, di, ri, "reps"), class: "input", "aria-label": "Reps", inputmode: "numeric", pattern: "\\d*", maxlength: "3", placeholder: "", value: row.reps, "data-field": "reps" }),
       ]),
       el("div", { class: "field field--load" }, [
-        el("label", { for: rowFieldId(wi, di, ri, "load"), text: `Load (${units})` }),
-        el("input", { id: rowFieldId(wi, di, ri, "load"), class: "input", "aria-label": `Load (${units})`, inputmode: "numeric", pattern: "\\d*", maxlength: "4", placeholder: "", value: row.load, "data-field": "load" }),
+        el("label", { for: rowFieldId(wi, di, ri, "load"), text: `Load (${unitLabel})` }),
+        el("div", { class: "loadInputWrap" }, [
+          el("input", {
+            id: rowFieldId(wi, di, ri, "load"),
+            class: "input loadInput__value",
+            "aria-label": `Load (${unitLabel})`,
+            inputmode: "numeric",
+            pattern: "\\d*",
+            maxlength: "4",
+            placeholder: "",
+            value: row.load,
+            "data-field": "load",
+          }),
+          el("span", { class: "loadInput__unit", text: unitLabel, "aria-hidden": "true" }),
+        ]),
       ]),
       el("div", { class: "field field--pct" }, [
         el("label", { for: rowFieldId(wi, di, ri, "pct"), text: "%1RM" }),
@@ -775,7 +821,7 @@
     ]);
 
     const s = computeDaySummary(day);
-    const units = app.program.u === "kg" ? "kg" : "lb";
+    const units = loadUnitLabel(app.program.u);
     const summaryParts = [
       { k: "Exercises", key: "exercises", v: String(s.exercises) },
       { k: "Sets", key: "sets", v: String(s.totalSets) },
