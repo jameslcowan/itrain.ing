@@ -1,0 +1,17 @@
+{
+  "name": "powerlift.ing",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "build:blog": "node blog/build.mjs",
+    "build": "node blog/build.mjs"
+  },
+  "dependencies": {
+    "highlight.js": "^11.11.1",
+    "marked": "^11.1.1",
+    "marked-highlight": "^2.2.3"
+  }
+}
