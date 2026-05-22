@@ -1,0 +1,210 @@
+/**
+ * /programs/ — template library (grid + cards; tokens from landing.css / blog.css)
+ */
+
+.programsPage .blog-main {
+  max-width: var(--lp-max, 1040px);
+}
+
+.programs-page__head {
+  max-width: var(--lp-measure, 38rem);
+  margin-bottom: var(--lp-space-6, 40px);
+}
+
+.programs-page__title {
+  margin: 0 0 var(--lp-space-3, 16px);
+  font-size: var(--lp-display, 2.25rem);
+  color: var(--text-strong);
+}
+
+.programs-page__lead {
+  margin: 0 0 var(--lp-space-4, 20px);
+  font-size: var(--lp-lead, 1.125rem);
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.programs-page__actions {
+  margin: 0;
+}
+
+/* Grid (same rhythm as landing .lp-grid at tablet+) */
+.programs-grid__inner {
+  display: grid;
+  gap: var(--lp-space-4, 20px);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 600px) {
+  .programs-grid__inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .programs-grid__inner {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+}
+
+/* Card stack — surfaces match .blog-card */
+.prog-card-stack {
+  position: relative;
+  min-height: 200px;
+}
+
+.prog-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lp-space-3, 16px);
+  height: 100%;
+  min-height: 200px;
+  padding: var(--lp-space-4, 20px);
+  border: 1px solid var(--border2);
+  border-radius: var(--lp-radius, 14px);
+  background: color-mix(in srgb, var(--panel) 88%, transparent);
+  box-sizing: border-box;
+}
+
+.prog-card--overlay {
+  position: absolute;
+  inset: 0;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--panel2) 92%, var(--bg));
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border2));
+  transition: opacity 0.12s ease-in-out;
+}
+
+.prog-card-stack:hover .prog-card--overlay,
+.prog-card-stack:focus-within .prog-card--overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.prog-card-stack:hover .prog-card--base,
+.prog-card-stack:focus-within .prog-card--base {
+  opacity: 0.4;
+}
+
+.prog-card__meta .lp-badge,
+.prog-card__foot .lp-badge {
+  margin-bottom: 0;
+}
+
+.prog-card__meta,
+.prog-card__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lp-space-2, 12px);
+  min-height: 1.25rem;
+}
+
+.prog-card__foot {
+  margin-top: auto;
+}
+
+/* Muted badge variant (accent badge is .lp-badge from landing.css) */
+.lp-badge--muted {
+  border-color: var(--border2);
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+  color: var(--muted);
+}
+
+.prog-card__header {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--lp-space-2, 12px);
+  text-align: center;
+}
+
+.prog-card__title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: var(--leading-tight, 1.35);
+  color: var(--text-strong);
+}
+
+.prog-card__subtitle {
+  margin: 0;
+  font-size: var(--lp-text-sm, 0.9375rem);
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.prog-card__action {
+  margin-top: var(--lp-space-2, 12px);
+}
+
+@media (hover: none) {
+  .prog-card--overlay {
+    display: none;
+  }
+
+  .prog-card-stack:hover .prog-card--base,
+  .prog-card-stack:focus-within .prog-card--base {
+    opacity: 1;
+  }
+
+  .prog-card--base {
+    cursor: pointer;
+  }
+
+  .prog-card--base:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prog-card--overlay {
+    transition: none;
+  }
+}
+
+/* Dialog — aligned with app .dialog panel tokens */
+.prog-dialog {
+  width: min(calc(100% - 2 * var(--lp-pad-x, 24px)), 32rem);
+  max-height: min(90dvh, 520px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--border2);
+  border-radius: var(--lp-radius-lg, 18px);
+  background: var(--panel);
+  color: var(--text);
+}
+
+.prog-dialog::backdrop {
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  backdrop-filter: blur(4px);
+}
+
+.prog-dialog__content {
+  padding: var(--lp-space-5, 28px);
+}
+
+.prog-dialog__title {
+  margin: 0 0 var(--lp-space-3, 16px);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.prog-dialog__text {
+  margin: 0 0 var(--lp-space-5, 28px);
+  font-size: var(--lp-text, 1.0625rem);
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.prog-dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lp-space-3, 16px);
+}
