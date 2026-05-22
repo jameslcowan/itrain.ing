@@ -48,6 +48,6 @@ The app updates the URL as you edit (`history.replaceState`). Existing shared li
 ```
 
 ## Indexing guidance
-- Index `/`
+- Index `/`, `/blog/`, `/blog/*`
 - Noindex `/app/*`, `/program/*`, and `/p/*` (user-generated, effectively infinite)
 

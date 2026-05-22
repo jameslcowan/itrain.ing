@@ -4,6 +4,7 @@ Static, zero-build program builder where **the entire program lives in the URL**
 
 ## What this is
 - Marketing landing at `/` (`index.html`, `landing.css`, `landing.js`)
+- Blog at `/blog/` (Markdown in `content/articles/`, built by `blog/build.mjs`; see [docs/BLOG.md](docs/BLOG.md))
 - Program builder at `/app` (`app.html`, `app.css`, `app.js`, `state-codec.js`, `theme.js`)
 - Client-only (no accounts, no backend yet)
 - Sharing = copy the URL
@@ -54,9 +55,10 @@ node --test tests/codec.test.mjs
 ```
 
 ## Local usage
-No build step. Use the dev server so `/app`, `/app/*`, and legacy `/program/*` match production:
+Use the dev server so `/app`, `/app/*`, and legacy `/program/*` match production:
 
 ```bash
+npm install && npm run build:blog   # regenerate /blog from Markdown
 python scripts/dev-server.py
 ```
 
