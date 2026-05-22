@@ -1,5 +1,5 @@
 /**
- * /programs/ — card dialogs on touch devices; desktop uses hover overlay links.
+ * /programs/ — dialogs (grid.bz-style: open trigger + full-screen on mobile).
  */
 (() => {
   "use strict";
@@ -7,6 +7,12 @@
   document.addEventListener("click", (event) => {
     const target = event.target;
     if (!(target instanceof Element)) return;
+
+    const openTrigger = target.closest("[data-dialog-open]");
+    if (openTrigger) {
+      openTrigger.closest(".prog-card-stack")?.querySelector("dialog.prog-dialog")?.showModal();
+      return;
+    }
 
     const closeBtn = target.closest("[data-dialog-close]");
     if (closeBtn) {
@@ -20,13 +26,14 @@
       return;
     }
 
+    /* Touch: tap card body opens dialog (grid.bz relies on overlay button; we allow whole card) */
     if (window.matchMedia("(hover: hover)").matches) return;
+
+    if (target.closest(".prog-dialog__open, [data-dialog-open], [data-dialog-close]")) return;
 
     const baseCard = target.closest(".prog-card--base");
     if (!baseCard) return;
 
-    const stack = baseCard.closest(".prog-card-stack");
-    const modal = stack?.querySelector("dialog.prog-dialog");
-    modal?.showModal();
+    baseCard.closest(".prog-card-stack")?.querySelector("dialog.prog-dialog")?.showModal();
   });
 })();
