@@ -75,6 +75,7 @@
     <script src="/theme.js"></script>
     <link rel="stylesheet" href="/fonts.css" />
     <link rel="stylesheet" href="/design-tokens.css" />
+    <link rel="stylesheet" href="/site-header.css" />
     <link rel="stylesheet" href="/site-menu.css" />
     <link rel="stylesheet" href="/landing.css" />
     <script src="/fonts-boot.js"></script>
@@ -99,17 +100,17 @@
       </symbol>
     </svg>
 
-    <header class="lp-header">
-      <div class="lp-header__row">
-        <a class="lp-brand" href="/">powerlift<span class="lp-brand__dot">.</span>ing</a>
-        <nav class="lp-nav" aria-label="Primary">
+    <header class="site-header">
+      <div class="site-header__row">
+        <a class="site-header__brand" href="/">powerlift<span class="site-header__dot">.</span>ing</a>
+        <nav class="site-header__nav" aria-label="Primary">
           <a href="#how-it-works">How it works</a>
           <a href="#features">Features</a>
           <a href="#for-coaches">For coaches</a>
           <a href="#faq">FAQ</a>
         </nav>
-        <div class="lp-header__actions">
-          <a class="lp-btn lp-btn--primary lp-header__cta" href="/app">Launch App</a>
+        <div class="site-header__actions">
+          <a class="site-header__btn site-header__btn--primary site-header__cta--launch" href="/app">Launch App</a>
           <button id="landingMenuBtn" class="site-menu__trigger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="landingMenu" aria-haspopup="dialog">
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
           </button>
@@ -257,7 +258,7 @@
         </header>
         <p class="lp-callout lp-reveal" style="--lp-reveal-delay: 80ms">
           <strong>Coming soon:</strong> save multiple programs under one account and bookmark a single library page.
-          Today, use <a href="/app">/app</a> for the editor and share <code>/program/…</code> links when you send work to someone else.
+          Today, use <a href="/app">/app</a> for a blank editor; shared programs live at <code>/app/…</code> (older <code>/program/…</code> links still open).
         </p>
       </section>
 

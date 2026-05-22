@@ -44,53 +44,6 @@ body{
 /* Form controls */
 input[type="checkbox"]{ accent-color: var(--accent); }
 
-.topbar{
-  position:sticky;
-  top:0;
-  z-index:20;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding: calc(10px + var(--safe-top)) 0 10px;
-  border-bottom:1px solid var(--border);
-  background: color-mix(in srgb, var(--panel) 88%, transparent);
-  backdrop-filter: blur(12px) saturate(1.2);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  box-shadow: 0 1px 0 color-mix(in srgb, var(--border) 80%, transparent);
-}
-
-.topbar__inner{
-  width:100%;
-  max-width:1100px;
-  margin:0 auto;
-  padding-left: calc(14px + var(--safe-left));
-  padding-right: calc(14px + var(--safe-right));
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-}
-.topbar__left{ display:flex; align-items:center; min-width:0; flex: 1 1 auto; }
-.topbar__right{ display:flex; gap:4px; align-items:center; flex-shrink: 0; }
-.topbar__shareBtn{
-  min-height: 40px;
-  padding: 0 16px;
-  font-size: 0.875rem;
-  font-weight: 700;
-  white-space: nowrap;
-}
-.brand--text .brand__wordmark{
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--text-strong);
-  text-decoration: none;
-}
-.brand__dot{ color: var(--accent); }
-.brand__title{ font-weight:750; letter-spacing:.2px; }
-.wordmark{ font-weight:850; letter-spacing:-.2px; }
 .badge{
   display:inline-flex;
   align-items:center;
@@ -216,7 +169,6 @@ input[type="checkbox"]{ accent-color: var(--accent); }
 /* Tablet: add light padding + align header/weekbar gutters */
 @media (min-width: 721px) and (max-width: 899px){
   .container{ padding: .5rem; }
-  .topbar__inner{ padding: 0 .5rem; }
   .weekbar__inner{ padding: 0 .5rem; }
 }
 .weekbar__left{ display:flex; align-items:center; gap:10px; min-width:0; flex: 1 1 auto; }
@@ -244,13 +196,6 @@ input[type="checkbox"]{ accent-color: var(--accent); }
 
 /* Small mobile (down to 320px): tighter spacing + stack controls to avoid overflow */
 @media (max-width: 360px){
-  .topbar{ padding: calc(10px + var(--safe-top)) 0 10px; }
-  .topbar__inner{
-    padding-left: calc(10px + var(--safe-left));
-    padding-right: calc(10px + var(--safe-right));
-    gap:10px;
-  }
-  .topbar__right{ gap:6px; }
   .badge{ margin-left:6px; padding:2px 7px; }
   .ico{ width:18px; height:18px; }
   .iconBtn--header{ padding:8px 9px; }

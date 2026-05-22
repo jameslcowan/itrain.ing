@@ -1,0 +1,140 @@
+/**
+ * Shared sticky header — landing and app (app adds Share in actions)
+ */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  padding-left: max(24px, env(safe-area-inset-left, 0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
+}
+
+.site-header__row {
+  width: 100%;
+  max-width: 1040px;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 56px;
+  padding: calc(16px + env(safe-area-inset-top, 0px)) 0 16px;
+}
+
+.site-header__brand {
+  font-family: var(--font-display-fallback, "Arial Narrow", system-ui, sans-serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.05;
+  text-decoration: none;
+  color: var(--text-strong);
+  min-width: 0;
+}
+
+html.fonts-loaded .site-header__brand {
+  font-family: var(--font-display);
+}
+
+.site-header__dot {
+  color: var(--accent);
+}
+
+.site-header__nav {
+  display: none;
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.site-header__btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 10px;
+  border: 1px solid var(--border2);
+  background: var(--panel);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.site-header__btn--primary {
+  background: var(--accent);
+  border-color: var(--pl-plate-dim);
+  color: #fff;
+}
+
+.site-header__btn--primary:hover {
+  background: var(--pl-plate-dim);
+  border-color: var(--pl-plate-dim);
+}
+
+.site-header__btn:active {
+  transform: translateY(1px);
+}
+
+/* Launch App — desktop only on landing (in menu on mobile) */
+.site-header__cta--launch {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .site-header__cta--launch {
+    display: inline-flex;
+    min-height: 42px;
+    padding-inline: 20px;
+    font-size: 0.9375rem;
+  }
+
+  .site-header__nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    margin-right: auto;
+    margin-left: 20px;
+  }
+
+  .site-header__nav a {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  .site-header__nav a:hover {
+    color: var(--text-strong);
+  }
+
+  .site-header__btn--share {
+    min-height: 42px;
+    padding-inline: 20px;
+    font-size: 0.9375rem;
+  }
+}
+
+/* Share visible at all breakpoints on the app */
+.site-header__btn--share {
+  display: inline-flex;
+}

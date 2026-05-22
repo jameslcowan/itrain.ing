@@ -231,67 +231,6 @@ html.lp-intro-ready .lp-intro > .lp-intro__item:nth-child(6) { transition-delay:
   height: 24px;
 }
 
-/* —— Header —— */
-.lp-header {
-  position: sticky;
-  top: 0;
-  z-index: 40;
-  flex-shrink: 0;
-  border-bottom: 1px solid var(--border);
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(14px) saturate(1.1);
-  -webkit-backdrop-filter: blur(14px) saturate(1.1);
-  padding-left: max(var(--lp-pad-x), env(safe-area-inset-left, 0px));
-  padding-right: max(var(--lp-pad-x), env(safe-area-inset-right, 0px));
-}
-
-.lp-header__row {
-  width: 100%;
-  max-width: var(--lp-max);
-  margin-inline: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--lp-space-3);
-  min-height: var(--lp-header-h);
-  padding: calc(var(--lp-space-3) + var(--safe-top)) 0 var(--lp-space-3);
-}
-
-.lp-brand {
-  font-family: var(--font-display-fallback);
-  font-size: 1.5rem;
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  line-height: 1.05;
-  text-decoration: none;
-  color: var(--text-strong);
-  min-width: 0;
-}
-
-html.fonts-loaded .lp-brand {
-  font-family: var(--font-display);
-}
-
-.lp-brand__dot {
-  color: var(--accent);
-}
-
-.lp-nav {
-  display: none;
-}
-
-.lp-header__actions {
-  display: flex;
-  align-items: center;
-  gap: var(--lp-space-1);
-  flex-shrink: 0;
-}
-
-.lp-header__cta {
-  display: none;
-}
-
 /* —— Main layout —— */
 .lp-main {
   flex: 1 1 auto;
@@ -830,32 +769,6 @@ html.fonts-loaded .lp-step__num {
     --lp-pad-bottom: 0;
     --lp-display: 3rem;
     --lp-display-lg: 3.75rem;
-  }
-
-  .lp-header__cta {
-    display: inline-flex;
-    min-height: 42px;
-    padding-inline: 20px;
-    font-size: 0.9375rem;
-  }
-
-  .lp-nav {
-    display: flex;
-    align-items: center;
-    gap: var(--lp-space-5);
-    margin-right: auto;
-    margin-left: var(--lp-space-5);
-  }
-
-  .lp-nav a {
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: var(--muted);
-    text-decoration: none;
-  }
-
-  .lp-nav a:hover {
-    color: var(--text-strong);
   }
 
   .lp-hero {

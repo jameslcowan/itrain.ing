@@ -62,6 +62,7 @@
     <link rel="stylesheet" href="/fonts.css" />
     <script src="/theme.js"></script>
     <link rel="stylesheet" href="/design-tokens.css" />
+    <link rel="stylesheet" href="/site-header.css" />
     <link rel="stylesheet" href="/site-menu.css" />
     <link rel="stylesheet" href="/app.css" />
     <script src="/fonts-boot.js"></script>
@@ -122,15 +123,17 @@
       </symbol>
     </svg>
 
-    <header class="topbar">
-      <div class="topbar__inner">
-        <div class="topbar__left">
-          <a class="brand brand--text" id="homeLink" href="/" aria-label="powerlift.ing home">
-            <span class="brand__wordmark">powerlift<span class="brand__dot">.</span>ing</span>
-          </a>
-        </div>
-        <div class="topbar__right">
-          <button id="copyLinkBtn" class="btn btn--primary topbar__shareBtn" type="button">Share</button>
+    <header class="site-header">
+      <div class="site-header__row">
+        <a class="site-header__brand" id="homeLink" href="/" aria-label="powerlift.ing home">powerlift<span class="site-header__dot">.</span>ing</a>
+        <nav class="site-header__nav" aria-label="Primary">
+          <a href="/#how-it-works">How it works</a>
+          <a href="/#features">Features</a>
+          <a href="/#for-coaches">For coaches</a>
+          <a href="/#faq">FAQ</a>
+        </nav>
+        <div class="site-header__actions">
+          <button id="copyLinkBtn" class="site-header__btn site-header__btn--primary site-header__btn--share" type="button">Share</button>
           <button id="menuBtn" class="site-menu__trigger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="appMenu" aria-haspopup="dialog">
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
           </button>
