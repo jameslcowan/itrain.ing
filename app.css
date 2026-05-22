@@ -629,9 +629,6 @@ details.day > summary::-webkit-details-marker{ display:none; }
   gap:var(--prose-gap-lg);
   padding:var(--space-5) var(--space-4);
 }
-.onboardingDialog__intro{
-  margin:0;
-}
 .onboardingDialog__dontShow{
   padding-top:var(--space-4);
 }
