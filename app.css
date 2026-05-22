@@ -845,7 +845,7 @@ html[data-theme="light"]{ color-scheme: light; }
       72px                     /* Sets */
       72px                     /* Reps */
       112px                    /* Load (+ unit suffix) */
-      72px                     /* %1RM */
+      88px                     /* %1RM (+ % suffix) */
       72px                     /* RPE */
       96px;                    /* Rest */
     gap:10px;
@@ -877,7 +877,7 @@ html[data-theme="light"]{ color-scheme: light; }
       72px
       72px
       112px
-      72px
+      88px
       72px
       96px;
     gap:10px;
