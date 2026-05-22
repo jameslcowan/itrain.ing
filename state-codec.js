@@ -69,8 +69,22 @@
     };
   }
 
+  function normalizeMaxesMap(input) {
+    const out = {};
+    if (!input || typeof input !== "object") return out;
+    for (const [k, v] of Object.entries(input)) {
+      const key = String(k ?? "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, " ");
+      const digits = String(v ?? "").replace(/\D/g, "").slice(0, 4);
+      if (key && digits && Number(digits) > 0) out[key] = digits;
+    }
+    return out;
+  }
+
   function defaultProgram() {
-    return { v: 1, u: "lb", c: [{ n: "Meso 1" }], weeks: [defaultWeek()] };
+    return { v: 1, u: "lb", m: {}, c: [{ n: "Meso 1" }], weeks: [defaultWeek()] };
   }
 
   function normalizeProgram(input) {
@@ -88,6 +102,7 @@
     return {
       v: 1,
       u: prog.u === "kg" ? "kg" : "lb",
+      m: normalizeMaxesMap(prog.m),
       c: safeCycles,
       weeks: weeks.map((w) => {
         const incomingDays = Array.isArray(w.days) ? w.days : [];
@@ -151,7 +166,8 @@
   }
 
   function compactState(state) {
-    return {
+    const m = normalizeMaxesMap(state.m);
+    const compact = {
       v: 2,
       u: state.u,
       c: state.c,
@@ -174,12 +190,15 @@
         })),
       })),
     };
+    if (Object.keys(m).length) compact.m = m;
+    return compact;
   }
 
   function expandState(compact) {
     return {
       v: 1,
       u: compact.u,
+      m: normalizeMaxesMap(compact.m),
       c: compact.c,
       weeks: compact.weeks.map((w) => ({
         c: w.c,
@@ -257,6 +276,7 @@
     defaultWeek,
     defaultProgram,
     normalizeProgram,
+    normalizeMaxesMap,
     encodeState,
     decodeState,
     looksLikeProgramV1,

@@ -93,3 +93,14 @@ test("looksLikeProgramV1 validation", () => {
   assert.equal(codec.looksLikeProgramV1({ v: 2 }), false);
   assert.equal(codec.looksLikeProgramV1(null), false);
 });
+
+test("encodeState round-trip preserves maxes (m)", () => {
+  const withMaxes = {
+    ...sampleV1,
+    m: { squat: "140", "bench press": "100", "leg press": "200" },
+  };
+  const decoded = codec.normalizeProgram(codec.decodeState(codec.encodeState(withMaxes)));
+  assert.equal(decoded.m.squat, "140");
+  assert.equal(decoded.m["bench press"], "100");
+  assert.equal(decoded.m["leg press"], "200");
+});
