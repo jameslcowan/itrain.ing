@@ -624,6 +624,18 @@ details.day > summary::-webkit-details-marker{ display:none; }
   grid-template-columns: 1fr 1fr;
   gap:10px 12px;
 }
+.maxesDialog__sbdTotal{
+  margin:0;
+  padding:12px 14px;
+  border:1px solid var(--border2);
+  border-radius:10px;
+  background:color-mix(in srgb, var(--panel2) 65%, transparent);
+  font-size:1rem;
+  font-weight:750;
+  line-height:1.45;
+  color:var(--text-strong);
+  text-align:center;
+}
 .maxesDialog__field{
   display:flex;
   flex-direction:column;

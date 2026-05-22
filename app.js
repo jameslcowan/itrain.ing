@@ -94,6 +94,7 @@
     maxesDialogCloseBtn: document.getElementById("maxesDialogCloseBtn"),
     maxesDialogUnitLb: document.getElementById("maxesDialogUnitLb"),
     maxesDialogUnitKg: document.getElementById("maxesDialogUnitKg"),
+    maxesDialogSbdTotal: document.getElementById("maxesDialogSbdTotal"),
     onboardingSkipBtn: document.getElementById("onboardingSkipBtn"),
     shareDialog: document.getElementById("shareDialog"),
     shareDialogText: document.getElementById("shareDialogText"),
@@ -720,12 +721,52 @@
     ]);
   }
 
+  function updateMaxesSbdTotal() {
+    const outEl = dom.maxesDialogSbdTotal;
+    if (!outEl) return;
+    const map = {};
+    dom.maxesDialogPrimary?.querySelectorAll("[data-maxes-key]").forEach((inp) => {
+      const key = inp.getAttribute("data-maxes-key");
+      const val = PowerliftMaxes.sanitizeMaxValue(inp.value);
+      if (key && val) map[key] = val;
+    });
+    let sum = 0;
+    let filled = 0;
+    for (const lift of PowerliftMaxes.PRIMARY_LIFTS) {
+      const n = toInt(map[lift.key]);
+      if (n > 0) {
+        sum += n;
+        filled += 1;
+      }
+    }
+    const unit = loadUnitLabel(maxesDialogEditUnit);
+    if (filled === 0) {
+      outEl.textContent = "SBD Total: —";
+      outEl.setAttribute(
+        "aria-label",
+        "SBD total: enter squat, bench press, and deadlift to calculate"
+      );
+      return;
+    }
+    if (filled < 3) {
+      outEl.textContent = `SBD Total: ${formatNumber(sum)} ${unit} (${filled} of 3 lifts)`;
+      outEl.setAttribute(
+        "aria-label",
+        `SBD total so far ${formatNumber(sum)} ${unit} from ${filled} of 3 lifts`
+      );
+      return;
+    }
+    outEl.textContent = `SBD Total: ${formatNumber(sum)} ${unit}`;
+    outEl.setAttribute("aria-label", `SBD total ${formatNumber(sum)} ${unit}`);
+  }
+
   function renderMaxesPrimary(container, merged) {
     if (!container) return;
     container.innerHTML = "";
     for (const lift of PowerliftMaxes.PRIMARY_LIFTS) {
       container.appendChild(renderMaxesField(lift.label, lift.key, merged[lift.key] || ""));
     }
+    updateMaxesSbdTotal();
   }
 
   function renderMaxesCustomList(merged) {
@@ -1021,11 +1062,11 @@
       {
         type: "button",
         class: "actionBtn actionBtn--add",
-        title: "Add exercise",
-        "aria-label": "Add exercise",
+        title: "Add Exercise",
+        "aria-label": "Add Exercise",
         "data-action": "add-row",
       },
-      [icon("i-add"), el("span", { text: "Add exercise" })]
+      [icon("i-add"), el("span", { text: "Add Exercise" })]
     );
 
     // Per-exercise delete/clear lives on each row; footer only adds.
@@ -1587,8 +1628,8 @@
     if (programHasContent(app.program)) {
       const ok = await appConfirm("Start a new blank program? Your current work is only saved in this page’s link.", {
         title: "New program",
-        okText: "Start new",
-        cancelText: "Keep editing",
+        okText: "Start New",
+        cancelText: "Keep Editing",
         danger: true,
       });
       if (!ok) return;
@@ -1836,6 +1877,10 @@
   dom.maxesDialogUnitLb?.addEventListener("click", () => setMaxesDialogUnit("lb"));
   dom.maxesDialogUnitKg?.addEventListener("click", () => setMaxesDialogUnit("kg"));
 
+  dom.maxesDialog?.addEventListener("input", (e) => {
+    if (e.target.closest("#maxesDialogPrimary")) updateMaxesSbdTotal();
+  });
+
   dom.maxesDialogCloseBtn?.addEventListener("click", () => {
     try {
       dom.maxesDialog?.close("cancel");
@@ -1853,7 +1898,7 @@
 
   dom.maxesDialogAddLiftBtn?.addEventListener("click", async () => {
     const name = await appPrompt("Lift name (e.g. Romanian deadlift):", {
-      title: "Add lift",
+      title: "Add Lift",
       inputLabel: "Exercise",
       okText: "Add",
       cancelText: "Cancel",
@@ -1862,7 +1907,7 @@
     const key = PowerliftMaxes.normalizeExerciseKey(name);
     if (!key) return;
     const val = await appPrompt("1RM for this lift:", {
-      title: "Add lift",
+      title: "Add Lift",
       inputLabel: loadUnitLabel(maxesDialogEditUnit),
       inputValue: "",
       okText: "Add",

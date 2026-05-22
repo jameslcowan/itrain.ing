@@ -213,7 +213,7 @@
             </label>
             <button id="addDayBtn" class="btn btn--ghost btn--withIcon" type="button">
               <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-add"></use></svg>
-              <span>Add day</span>
+              <span>Add Day</span>
             </button>
           </div>
         </div>
@@ -268,13 +268,16 @@
           </p>
           <ul class="dialog__list">
             <li>Fill in squat, bench, and deadlift below — or leave blank and add them later.</li>
-            <li>Use <strong>Add lift</strong> for anything else (for example, Romanian deadlift).</li>
+            <li>Use <strong>Add Lift</strong> for anything else (for example, Romanian deadlift).</li>
             <li>On a training row, typing <strong>%1RM</strong> fills <strong>load</strong>, and typing load fills %1RM.</li>
           </ul>
           <div class="maxesDialog__primary" id="maxesDialogPrimary"></div>
+          <p id="maxesDialogSbdTotal" class="maxesDialog__sbdTotal" role="status" aria-live="polite">
+            SBD Total: —
+          </p>
           <div class="maxesDialog__customHead">
             <span class="maxesDialog__customTitle">Other lifts</span>
-            <button id="maxesDialogAddLiftBtn" class="btn btn--ghost btn--sm" type="button">Add lift</button>
+            <button id="maxesDialogAddLiftBtn" class="btn btn--ghost btn--sm" type="button">Add Lift</button>
           </div>
           <div id="maxesDialogCustomList" class="maxesDialog__customList"></div>
           <p class="dialog__text dialog__text--muted maxesDialog__note">
@@ -291,7 +294,7 @@
     <dialog id="onboardingDialog" class="dialog dialog--modal onboardingDialog">
       <div class="dialog__panel">
         <div class="dialog__top">
-          <div class="dialog__title">Get started</div>
+          <div class="dialog__title">Get Started</div>
           <button id="onboardingDialogCloseBtn" class="iconBtn iconBtn--headerSm" type="button" aria-label="Close">
             <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-close"></use></svg>
           </button>
@@ -306,7 +309,7 @@
             <li>Tap <strong>Share</strong> when you want to send the program to someone else.</li>
           </ul>
           <p class="dialog__text">
-            <strong>Get started</strong> opens a short setup for your one-rep maxes (1RM). We use those numbers to keep
+            <strong>Get Started</strong> opens a short setup for your one-rep maxes (1RM). We use those numbers to keep
             %1RM and load in sync on matching lifts. You can update them anytime from <strong>Config</strong> (sliders icon,
             left of Share).
           </p>
@@ -320,7 +323,7 @@
         </div>
         <div class="dialog__actions onboarding__actions">
           <button id="onboardingSkipBtn" class="btn btn--ghost" type="button">Skip</button>
-          <button id="onboardingDialogOkBtn" class="btn btn--primary" type="button">Get started</button>
+          <button id="onboardingDialogOkBtn" class="btn btn--primary" type="button">Get Started</button>
         </div>
       </div>
     </dialog>
