@@ -2,6 +2,11 @@
   publish = "."
 
 [[headers]]
+  for = "/app/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+
+[[headers]]
   for = "/program/*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow, noarchive"
@@ -13,6 +18,11 @@
 
 [[redirects]]
   from = "/app"
+  to = "/app.html"
+  status = 200
+
+[[redirects]]
+  from = "/app/*"
   to = "/app.html"
   status = 200
 

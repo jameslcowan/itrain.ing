@@ -17,10 +17,11 @@
     urlStateLengthHint,
   } = PowerliftCodec;
 
-  // New routing (clean paths)
-  const ROUTE_PREFIX = "/program/";
+  // Shared program in URL path (editor entry is bare /app)
+  const ROUTE_PREFIX = "/app/";
 
-  // Legacy routing (for backward compatibility)
+  // Legacy share paths (still read; migrated to /app/ on load)
+  const LEGACY_PROGRAM_PREFIX = "/program/";
   const LEGACY_ROUTE_PREFIX = "/p/";
   const LEGACY_HASH_PREFIX = "#/p/";
 
@@ -32,19 +33,21 @@
     const path = window.location.pathname || "/";
     const hash = window.location.hash || "";
 
-    // Try new format first: /program/STATE
-    if (path.startsWith(ROUTE_PREFIX)) {
+    if (path.startsWith(ROUTE_PREFIX) && path.length > ROUTE_PREFIX.length) {
       const enc = decodeURIComponent(path.slice(ROUTE_PREFIX.length));
       return enc || null;
     }
 
-    // Legacy format: /p/STATE
+    if (path.startsWith(LEGACY_PROGRAM_PREFIX)) {
+      const enc = decodeURIComponent(path.slice(LEGACY_PROGRAM_PREFIX.length));
+      return enc || null;
+    }
+
     if (path.startsWith(LEGACY_ROUTE_PREFIX)) {
       const enc = decodeURIComponent(path.slice(LEGACY_ROUTE_PREFIX.length));
       return enc || null;
     }
 
-    // Legacy format: /#/p/STATE
     if (hash.startsWith(LEGACY_HASH_PREFIX)) {
       const enc = decodeURIComponent(hash.slice(LEGACY_HASH_PREFIX.length));
       return enc || null;
@@ -54,9 +57,21 @@
   }
 
   function writeStateToUrl(enc) {
-    // Always write new clean format: /program/STATE
     const url = `${ROUTE_PREFIX}${encodeURIComponent(enc)}`;
     history.replaceState(null, "", url);
+  }
+
+  function migrateLegacySharePath() {
+    const path = window.location.pathname || "/";
+    if (
+      !app.lastEncoded ||
+      (!path.startsWith(LEGACY_PROGRAM_PREFIX) && !path.startsWith(LEGACY_ROUTE_PREFIX))
+    ) {
+      return;
+    }
+    try {
+      writeStateToUrl(app.lastEncoded);
+    } catch {}
   }
 
   /** -------------------------
@@ -1466,6 +1481,7 @@
         app.currentWeek = 0;
         app.lastEncoded = enc; // prevent immediate re-write thrash
         setStatus("");
+        migrateLegacySharePath();
       } catch (e) {
         app.program = defaultProgram();
         app.currentWeek = 0;

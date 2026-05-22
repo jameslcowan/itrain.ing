@@ -8,7 +8,7 @@ What powerlift.ing is
 - The entire program is stored in the URL.
 
 Routing (share link formats)
-- Current (default): https://powerlift.ing/program/<STATE>
+- Current (default): https://powerlift.ing/app/<STATE>
 - Legacy (still works): https://powerlift.ing/p/<STATE>
 - Legacy (still works): https://powerlift.ing/#/p/<STATE>
 

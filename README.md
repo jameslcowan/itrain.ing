@@ -11,7 +11,7 @@ Static, zero-build program builder where **the entire program lives in the URL**
 ## Routing (public contract)
 - **Landing (indexed)**: `/`
 - **Builder**: `/app` → `app.html`
-- **Shared program (noindex)**: `/program/<STATE>`
+- **Shared program (noindex)**: `/app/<STATE>` (legacy `/program/<STATE>` and `/p/<STATE>` still work)
 - **Legacy (still works)**: `/p/<STATE>`, `/#/p/<STATE>`
 
 The builder updates the URL as you edit via `history.replaceState()` (no page reload).
@@ -54,15 +54,15 @@ node --test tests/codec.test.mjs
 ```
 
 ## Local usage
-No build step. Use the dev server so `/app` and `/program/*` match production:
+No build step. Use the dev server so `/app`, `/app/*`, and legacy `/program/*` match production:
 
 ```bash
 python scripts/dev-server.py
 ```
 
-Plain `python -m http.server` only serves `/`; shared `/program/…` links will 404 locally.
+Plain `python -m http.server` only serves `/`; shared `/app/…` links will 404 locally.
 
 ## Deployment (Netlify)
-Publishes from repo root (`.`). `netlify.toml` routes `/app`, `/program/*`, and `/p/*` to `app.html`. `/` serves `index.html`.
+Publishes from repo root (`.`). `netlify.toml` routes `/app`, `/app/*`, legacy `/program/*`, and `/p/*` to `app.html`. `/` serves `index.html`.
 
 

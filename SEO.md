@@ -19,7 +19,7 @@ Creator/credit:
 - James L. Cowan (@jameslcowan) — https://x.com/jameslcowan
 
 ## Routing + state-in-URL (public contract)
-- Current (default): `/program/<STATE>`
+- Current (default): `/app/<STATE>`
 - Legacy (still works): `/p/<STATE>`
 - Legacy (still works): `/#/p/<STATE>`
 
@@ -49,5 +49,5 @@ The app updates the URL as you edit (`history.replaceState`). Existing shared li
 
 ## Indexing guidance
 - Index `/`
-- Noindex `/program/*` and `/p/*` (user-generated, effectively infinite)
+- Noindex `/app/*`, `/program/*`, and `/p/*` (user-generated, effectively infinite)
 

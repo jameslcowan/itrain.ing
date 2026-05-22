@@ -8,7 +8,7 @@
 
   const DOW = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 
-  /** Soft/hard limits for /program/<STATE> path segment (chars in encoded payload). */
+  /** Soft/hard limits for /app/<STATE> path segment (chars in encoded payload). */
   const URL_STATE_SOFT = 1800;
   const URL_STATE_HARD = 6000;
 

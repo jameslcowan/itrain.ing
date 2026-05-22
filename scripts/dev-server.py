@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static dev server with Netlify-like SPA routes for /app and /program/."""
+"""Static dev server with Netlify-like SPA routes for /app and legacy /program/."""
 
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 import os
@@ -14,7 +14,12 @@ class Handler(SimpleHTTPRequestHandler):
     def _rewrite_spa_path(self):
         raw = self.path
         path = raw.split("?", 1)[0].rstrip("/") or "/"
-        if path == "/app" or path.startswith("/program/") or path.startswith("/p/"):
+        if (
+            path == "/app"
+            or path.startswith("/app/")
+            or path.startswith("/program/")
+            or path.startswith("/p/")
+        ):
             qs = raw.split("?", 1)[1] if "?" in raw else ""
             self.path = "/app.html" + (f"?{qs}" if qs else "")
 
@@ -31,5 +36,5 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", "8080"))
     server = ThreadingHTTPServer(("", port), Handler)
     print(f"Serving {ROOT} at http://127.0.0.1:{port}/")
-    print("Routes: / → landing, /app and /program/* → app.html")
+    print("Routes: / → landing, /app and /app/* (and legacy /program/*) → app.html")
     server.serve_forever()
