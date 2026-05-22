@@ -10,7 +10,8 @@
     "build:faq": "node faq/build.mjs",
     "build:legal": "node legal/build.mjs",
     "build:programs": "node programs/build.mjs",
-    "build": "node blog/build.mjs && node faq/build.mjs && node legal/build.mjs && node programs/build.mjs",
+    "build:404": "node site/build-404.mjs",
+    "build": "node blog/build.mjs && node faq/build.mjs && node legal/build.mjs && node programs/build.mjs && node site/build-404.mjs",
     "rollup:trigger": "node scripts/manual-rollup.mjs"
   },
   "dependencies": {
