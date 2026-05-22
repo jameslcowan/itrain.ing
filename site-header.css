@@ -144,13 +144,34 @@ html.fonts-loaded .site-header__brand {
   }
 }
 
-.site-header__iconBtn {
+.site-header__iconBtn.iconBtn {
+  box-sizing: border-box;
   flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 0;
+  border-radius: 10px;
 }
 
 .site-header__iconBtn .ico {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
+}
+
+@media (min-width: 900px) {
+  .site-header__iconBtn.iconBtn {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+  }
+
+  .site-header__iconBtn .ico {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 /* Share visible at all breakpoints on the app */
