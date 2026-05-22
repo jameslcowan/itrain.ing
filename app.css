@@ -489,27 +489,37 @@ details.day > summary::-webkit-details-marker{ display:none; }
   backdrop-filter: blur(8px);
 }
 .dialog--modal{
-  display:flex;
-  flex-direction:column;
-  max-height:min(92dvh, calc(100dvh - var(--space-5)));
   margin:auto;
 }
 .dialog--modal > .dialog__panel,
 .dialog--modal > form.dialog__panel{
   display:flex;
   flex-direction:column;
-  flex:1 1 auto;
+  max-height:min(92dvh, calc(100dvh - var(--space-5)));
   min-height:0;
-  max-height:100%;
   overflow:hidden;
+  isolation:isolate;
 }
 .dialog__panel{ display:flex; flex-direction:column; }
-.dialog--modal .dialog__top,
+.dialog--modal .dialog__top{
+  position:relative;
+  z-index:2;
+  flex:0 0 auto;
+  flex-shrink:0;
+}
+.dialog--modal .dialog__top .iconBtn{
+  position:relative;
+  z-index:1;
+  flex-shrink:0;
+}
 .dialog--modal .dialog__actions{
+  position:relative;
+  z-index:2;
+  flex:0 0 auto;
   flex-shrink:0;
 }
 .dialog--modal .dialog__body{
-  flex:1 1 auto;
+  flex:1 1 0%;
   min-height:0;
   overflow-y:auto;
   overscroll-behavior:contain;
@@ -527,7 +537,10 @@ details.day > summary::-webkit-details-marker{ display:none; }
   gap:10px;
   padding: 16px 16px;
   border-bottom: 1px solid var(--border);
-  background: color-mix(in srgb, var(--panel2) 65%, transparent);
+  background:var(--panel);
+}
+.dialog--modal .dialog__top{
+  background:color-mix(in srgb, var(--panel2) 92%, var(--panel));
 }
 .dialog__title{
   font-size:var(--text-lg);
@@ -773,6 +786,16 @@ details.day > summary::-webkit-details-marker{ display:none; }
   color:var(--muted);
 }
 
+.dialog--modal .dialog__actions{
+  flex-direction:row;
+  justify-content:stretch;
+  gap:12px;
+}
+.dialog--modal .dialog__actions .btn{
+  flex:1 1 0;
+  min-width:0;
+  width:auto;
+}
 .onboarding__actions{
   justify-content:flex-end;
   gap:12px;
@@ -789,8 +812,12 @@ details.day > summary::-webkit-details-marker{ display:none; }
     max-height:min(94dvh, calc(100dvh - var(--space-4)));
   }
   .dialog__top, .dialog__body, .dialog__actions{ padding-left: 14px; padding-right: 14px; }
-  .dialog__actions{ flex-direction:column-reverse; }
-  .dialog__actions .btn{ width:100%; }
+  .dialog:not(.dialog--modal) .dialog__actions{
+    flex-direction:column-reverse;
+  }
+  .dialog:not(.dialog--modal) .dialog__actions .btn{
+    width:100%;
+  }
 }
 
 .btn--danger{

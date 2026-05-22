@@ -1863,7 +1863,11 @@
     }, 0);
   }
 
-  dom.onboardingDialogCloseBtn?.addEventListener("click", skipOnboardingToApp);
+  dom.onboardingDialogCloseBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    skipOnboardingToApp();
+  });
   dom.onboardingDialogOkBtn?.addEventListener("click", finishOnboardingWithMaxes);
   dom.onboardingSkipBtn?.addEventListener("click", skipOnboardingToApp);
   dom.onboardingDialogDontShow?.addEventListener("change", () => {
@@ -1881,7 +1885,9 @@
     if (e.target.closest("#maxesDialogPrimary")) updateMaxesSbdTotal();
   });
 
-  dom.maxesDialogCloseBtn?.addEventListener("click", () => {
+  dom.maxesDialogCloseBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     try {
       dom.maxesDialog?.close("cancel");
     } catch {}
