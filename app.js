@@ -157,6 +157,13 @@
     return !!dom.appDialog?.showModal;
   }
 
+  dom.appDialogCloseBtn?.addEventListener("click", () => {
+    dom.appDialog?.close(dom.appDialogCloseBtn.value || "cancel");
+  });
+  dom.appDialogCancelBtn?.addEventListener("click", () => {
+    dom.appDialog?.close("cancel");
+  });
+
   function showAppDialog({
     mode, // "alert" | "confirm" | "prompt"
     title,
