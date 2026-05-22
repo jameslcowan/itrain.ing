@@ -20,6 +20,7 @@ export function renderSiteFooter() {
     <nav class="site-footer__col" aria-label="Resources">
       <h2 class="site-footer__heading">Resources</h2>
       <ul class="site-footer__list">
+        <li><a href="/programs/">Programs</a></li>
         <li><a href="/blog/">Blog</a></li>
       </ul>
     </nav>

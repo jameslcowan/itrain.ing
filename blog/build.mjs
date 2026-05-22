@@ -127,6 +127,7 @@ function writeSitemap(articles) {
   const urls = [
     `  <url><loc>${SITE_URL}/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>`,
     `  <url><loc>${SITE_URL}/blog/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>`,
+    `  <url><loc>${SITE_URL}/programs/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>`,
     `  <url><loc>${SITE_URL}/faq/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>`,
     `  <url><loc>${SITE_URL}/terms/</loc><lastmod>${today}</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>`,
     `  <url><loc>${SITE_URL}/privacy/</loc><lastmod>${today}</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>`,

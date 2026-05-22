@@ -16,6 +16,7 @@ function jsonLdScript(obj) {
 function siteMenu(navActive) {
   const blogCurrent = navActive === "blog" ? ' aria-current="page"' : "";
   const faqCurrent = navActive === "faq" ? ' aria-current="page"' : "";
+  const programsCurrent = navActive === "programs" ? ' aria-current="page"' : "";
   return `
     <div id="landingMenu" class="site-menu" hidden>
       <button id="landingMenuClose" class="site-menu__close" type="button" aria-label="Close menu">
@@ -25,6 +26,7 @@ function siteMenu(navActive) {
         <a class="site-menu__brand" href="/">powerlift<span class="site-menu__dot">.</span>ing</a>
         <nav class="site-menu__nav" aria-label="Mobile">
           <a class="site-menu__link" href="/#how-it-works">How it works</a>
+          <a class="site-menu__link" href="/programs/"${programsCurrent}>Programs</a>
           <a class="site-menu__link" href="/blog/"${blogCurrent}>Blog</a>
           <a class="site-menu__link" href="/faq/"${faqCurrent}>FAQ</a>
         </nav>
@@ -49,6 +51,7 @@ export function renderShell({
   mainHtml,
   jsonLd = [],
   extraStylesheets = [],
+  extraScripts = [],
 }) {
   const canonical = `${SITE_URL}${canonicalPath}`;
   const pageTitle = title.includes("powerlift") ? title : `${title} · ${BLOG_META.titleSuffix}`;
@@ -57,11 +60,27 @@ export function renderShell({
 
   const blogNavCurrent = canonicalPath.startsWith("/blog") ? ' aria-current="page"' : "";
   const faqNavCurrent = canonicalPath === "/faq/" ? ' aria-current="page"' : "";
+  const programsNavCurrent = canonicalPath === "/programs/" ? ' aria-current="page"' : "";
+  const navActive =
+    canonicalPath === "/faq/"
+      ? "faq"
+      : canonicalPath === "/programs/"
+        ? "programs"
+        : canonicalPath.startsWith("/blog")
+          ? "blog"
+          : "";
   const extraCss = extraStylesheets
     .map((href) => `    <link rel="stylesheet" href="${escapeHtml(href)}" />`)
     .join("\n");
   const bodyClass =
-    canonicalPath === "/faq/" ? "landingPage blogPage faqPage" : "landingPage blogPage";
+    canonicalPath === "/faq/"
+      ? "landingPage blogPage faqPage"
+      : canonicalPath === "/programs/"
+        ? "landingPage blogPage programsPage"
+        : "landingPage blogPage";
+  const extraJs = extraScripts
+    .map((src) => `    <script src="${escapeHtml(src)}" defer></script>`)
+    .join("\n");
 
   return `<!doctype html>
 <html lang="en" class="lp-boot">
@@ -117,6 +136,7 @@ ${ld}
         <a class="site-header__brand" href="/">powerlift<span class="site-header__dot">.</span>ing</a>
         <nav class="site-header__nav" aria-label="Primary">
           <a href="/#how-it-works">How it works</a>
+          <a href="/programs/"${programsNavCurrent}>Programs</a>
           <a href="/blog/"${blogNavCurrent}>Blog</a>
           <a href="/faq/"${faqNavCurrent}>FAQ</a>
         </nav>
@@ -128,10 +148,11 @@ ${ld}
         </div>
       </div>
     </header>
-${siteMenu(canonicalPath === "/faq/" ? "faq" : canonicalPath.startsWith("/blog") ? "blog" : "")}
+${siteMenu(navActive)}
     ${mainHtml}
     ${renderSiteFooter()}
     <script src="/landing.js" defer></script>
+${extraJs ? `${extraJs}\n` : ""}
   </body>
 </html>`;
 }
