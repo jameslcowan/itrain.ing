@@ -528,6 +528,86 @@ details.day > summary::-webkit-details-marker{ display:none; }
 }
 .dialog__actions .btn{ min-width: 92px; }
 
+.btn--sm{
+  min-height: 36px;
+  padding: 0 14px;
+  font-size: 0.875rem;
+}
+
+.maxesDialog__body{ display:flex; flex-direction:column; gap:14px; }
+.maxesDialog__primary{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:10px 12px;
+}
+.maxesDialog__field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  min-width:0;
+}
+.maxesDialog__field label{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.2px;
+  color:var(--muted);
+}
+.maxesDialog__field .input{ width:100%; }
+.maxesDialog__customHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.maxesDialog__customTitle{
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.2px;
+  color:var(--muted);
+  text-transform:uppercase;
+}
+.maxesDialog__customList{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  max-height: min(240px, 40vh);
+  overflow-y:auto;
+}
+.maxesDialog__customRow{
+  display:grid;
+  grid-template-columns: minmax(0, 1fr) 96px auto;
+  gap:8px;
+  align-items:center;
+}
+.maxesDialog__customLabel{
+  font-size:12px;
+  font-weight:600;
+  color:var(--text-strong);
+  min-width:0;
+}
+.maxesDialog__customRow .input{ width:100%; }
+.maxesDialog__removeLift{
+  min-height:44px;
+  padding:0 10px;
+}
+.maxesDialog__note{ margin:0; }
+.maxesDialog__empty{
+  margin:0;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.onboarding__step[hidden]{ display:none !important; }
+.onboarding__actions{
+  justify-content:space-between;
+}
+.onboarding__actions .btn--primary{ margin-left:auto; }
+.onboarding__skip{ margin-top:4px; }
+
+@media (max-width: 520px){
+  .maxesDialog__primary{ grid-template-columns: 1fr; }
+}
+
 /* Make dialogs feel less cramped on small screens */
 @media (max-width: 520px){
   .dialog{ width: calc(100vw - 22px); border-radius: 14px; }

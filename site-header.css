@@ -91,6 +91,16 @@ html.fonts-loaded .site-header__brand {
   border-color: var(--pl-plate-dim);
 }
 
+.site-header__btn--ghost {
+  background: color-mix(in srgb, var(--panel) 55%, transparent);
+  border-color: var(--border2);
+  color: var(--text-strong);
+}
+
+.site-header__btn--ghost:hover {
+  background: color-mix(in srgb, var(--panel2) 80%, transparent);
+}
+
 .site-header__btn:active {
   transform: translateY(1px);
 }
@@ -127,7 +137,8 @@ html.fonts-loaded .site-header__brand {
     color: var(--text-strong);
   }
 
-  .site-header__btn--share {
+  .site-header__btn--share,
+  .site-header__btn--config {
     min-height: 42px;
     padding-inline: 20px;
     font-size: 0.9375rem;
