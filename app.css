@@ -626,10 +626,10 @@ details.day > summary::-webkit-details-marker{ display:none; }
   max-width:2.75rem;
 }
 .pctInput__suffix{
-  flex:0 0 1.75rem;
-  width:1.75rem;
-  min-width:1.75rem;
-  max-width:1.75rem;
+  flex:0 0 2.75rem;
+  width:2.75rem;
+  min-width:2.75rem;
+  max-width:2.75rem;
 }
 .field{ display:flex; flex-direction:column; gap:6px; }
 .field{ min-width:0; }
