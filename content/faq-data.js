@@ -139,8 +139,8 @@ export const FAQ_SECTIONS = [
     title: "Coming soon",
     items: [
       {
-        q: "Will powerlift.ing have free program templates?",
-        a: "<p>Yes — classics like 5/3/1 and starter blocks are planned at <strong>/programs/</strong> on powerlift.ing. They will open in the same editor.</p>",
+        q: "Does powerlift.ing have free program templates?",
+        a: "<p>Yes. Browse <a href=\"/programs/\">free templates</a> on powerlift.ing — 3-day SBD, 5/3/1, bench focus, meet prep, and more. Each opens in the same editor so you can edit and share your version.</p>",
       },
       {
         q: "Will powerlift.ing let me save programs to an account?",
