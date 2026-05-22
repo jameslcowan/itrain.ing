@@ -239,11 +239,16 @@
             <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-close"></use></svg>
           </button>
         </div>
-        <div class="dialog__body maxesDialog__body">
-          <p class="dialog__text">
-            Enter best singles in <strong id="maxesDialogUnitsLabel">lb</strong>. On matching exercises, <strong>%1RM</strong> and
-            <strong>load</strong> stay in sync when you edit either.
+        <div class="dialog__body dialog__body--prose maxesDialog__body">
+          <p class="dialog__lead">
+            Enter your best single-rep max for each lift you program. Use the same units as your program
+            (<strong id="maxesDialogUnitsLabel">lb</strong>).
           </p>
+          <ul class="dialog__list">
+            <li>Fill in squat, bench, and deadlift below — or leave blank and add them later.</li>
+            <li>Use <strong>Add lift</strong> for anything else (for example, Romanian deadlift).</li>
+            <li>On a training row, typing <strong>%1RM</strong> fills <strong>load</strong>, and typing load fills %1RM.</li>
+          </ul>
           <div class="maxesDialog__primary" id="maxesDialogPrimary"></div>
           <div class="maxesDialog__customHead">
             <span class="maxesDialog__customTitle">Other lifts</span>
@@ -251,7 +256,7 @@
           </div>
           <div id="maxesDialogCustomList" class="maxesDialog__customList"></div>
           <p class="dialog__text dialog__text--muted maxesDialog__note">
-            Saved in your program link when you share. Also remembered on this device for new programs.
+            Maxes are saved in your program link when you share, and remembered on this device for new programs.
           </p>
         </div>
         <div class="dialog__actions">
@@ -269,17 +274,22 @@
             <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-close"></use></svg>
           </button>
         </div>
-        <div class="dialog__body">
-          <p class="dialog__text">
-            Build powerlifting programs in your browser and share them as one link — no account, no spreadsheet.
-            Pick a mesocycle and week, add days and exercises, then tap <strong>Share</strong> when you are ready.
+        <div class="dialog__body dialog__body--prose onboardingDialog__body">
+          <p class="dialog__lead">
+            powerlift.ing helps you plan training and share your program in one link. No account. No spreadsheet.
           </p>
+          <ul class="dialog__list">
+            <li>Choose a <strong>mesocycle</strong> and <strong>week</strong>, then add training days and exercises.</li>
+            <li>Log sets, reps, <strong>%1RM</strong>, load, RPE, and rest — the program saves in the URL as you type.</li>
+            <li>Tap <strong>Share</strong> when you want to send the program to someone else.</li>
+          </ul>
           <p class="dialog__text">
-            Open <strong>Config</strong> (sliders icon, left of Share) to save your 1RM maxes. On matching lifts,
-            <strong>%1RM</strong> and <strong>load</strong> stay in sync when you edit either.
+            <strong>Get started</strong> opens a short setup for your one-rep maxes (1RM). We use those numbers to keep
+            %1RM and load in sync on matching lifts. You can update them anytime from <strong>Config</strong> (sliders icon,
+            left of Share).
           </p>
           <p class="dialog__text dialog__text--muted">
-            Your program saves in the URL as you type. Anyone with the link can view it — share only with people you trust.
+            <strong>Skip</strong> goes straight to the editor. Shared links can be opened by anyone who has them.
           </p>
           <label class="control control--checkbox dialog__dontShow">
             <input id="onboardingDialogDontShow" type="checkbox" />
