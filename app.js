@@ -1766,6 +1766,15 @@
     } catch {}
   }
 
+  function skipOnboardingToApp() {
+    closeOnboardingDialog();
+  }
+
+  function finishOnboardingWithMaxes() {
+    closeOnboardingDialog();
+    window.setTimeout(() => openMaxesDialog(), 0);
+  }
+
   function initOnboarding() {
     if (!dom.onboardingDialog?.showModal) return;
     try {
@@ -1779,13 +1788,9 @@
     }, 0);
   }
 
-  dom.onboardingDialogCloseBtn?.addEventListener("click", closeOnboardingDialog);
-  dom.onboardingDialogOkBtn?.addEventListener("click", closeOnboardingDialog);
-  dom.onboardingSkipBtn?.addEventListener("click", () => {
-    try {
-      dom.onboardingDialog?.close();
-    } catch {}
-  });
+  dom.onboardingDialogCloseBtn?.addEventListener("click", skipOnboardingToApp);
+  dom.onboardingDialogOkBtn?.addEventListener("click", finishOnboardingWithMaxes);
+  dom.onboardingSkipBtn?.addEventListener("click", skipOnboardingToApp);
   dom.onboardingDialogDontShow?.addEventListener("change", () => {
     try {
       localStorage.setItem(ONBOARDING_KEY, dom.onboardingDialogDontShow.checked ? "1" : "0");
