@@ -263,7 +263,7 @@
               </button>
             </div>
           </div>
-          <p class="dialog__lead">
+          <p class="dialog__lead dialog__lead--plain">
             Enter your best single-rep max for each lift you program. Values use the units you pick above.
           </p>
           <ul class="dialog__list">
@@ -300,23 +300,32 @@
           </button>
         </div>
         <div class="dialog__body dialog__body--prose onboardingDialog__body">
-          <p class="dialog__lead">
-            powerlift.ing helps you plan training and share your program in one link. No account. No spreadsheet.
-          </p>
-          <ul class="dialog__list">
-            <li>Choose a <strong>mesocycle</strong> and <strong>week</strong>, then add training days and exercises.</li>
-            <li>Log sets, reps, <strong>%1RM</strong>, load, RPE, and rest — the program saves in the URL as you type.</li>
-            <li>Tap <strong>Share</strong> when you want to send the program to someone else.</li>
-          </ul>
-          <p class="dialog__text">
-            <strong>Get Started</strong> opens a short setup for your one-rep maxes (1RM). We use those numbers to keep
-            %1RM and load in sync on matching lifts. You can update them anytime from <strong>Config</strong> (sliders icon,
-            left of Share).
-          </p>
-          <p class="dialog__text dialog__text--muted">
-            <strong>Skip</strong> goes straight to the editor. Shared links can be opened by anyone who has them.
-          </p>
-          <label class="control control--checkbox dialog__dontShow">
+          <header class="onboardingDialog__intro">
+            <p class="dialog__lead">
+              <span class="dialog__leadBrand">Welcome to powerlift.ing</span>
+              <span class="dialog__leadBody"
+                >Plan training and share your program in one link. No account. No spreadsheet.</span
+              >
+            </p>
+          </header>
+          <section class="dialog__proseSection" aria-label="Basics">
+            <ul class="dialog__list">
+              <li>Choose a <strong>mesocycle</strong> and <strong>week</strong>, then add training days and exercises.</li>
+              <li>Log sets, reps, <strong>%1RM</strong>, load, RPE, and rest — the program saves in the URL as you type.</li>
+              <li>Tap <strong>Share</strong> when you want to send the program to someone else.</li>
+            </ul>
+          </section>
+          <section class="dialog__proseSection dialog__proseSection--stack">
+            <p class="dialog__text">
+              <strong>Get Started</strong> opens a short setup for your one-rep maxes (1RM). We use those numbers to keep
+              %1RM and load in sync on matching lifts. You can update them anytime from <strong>Config</strong> (sliders
+              icon, left of Share).
+            </p>
+            <p class="dialog__text dialog__text--muted">
+              <strong>Skip</strong> goes straight to the editor. Shared links can be opened by anyone who has them.
+            </p>
+          </section>
+          <label class="control control--checkbox dialog__dontShow onboardingDialog__dontShow">
             <input id="onboardingDialogDontShow" type="checkbox" />
             <span>Don’t show this again</span>
           </label>

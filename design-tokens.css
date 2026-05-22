@@ -44,6 +44,19 @@
   --space-3: 14px;
   --space-4: 20px;
   --space-5: 28px;
+  --space-6: 36px;
+
+  /* Type scale (UI copy) */
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --leading-tight: 1.35;
+  --leading-body: 1.65;
+  --leading-relaxed: 1.75;
+  --prose-gap: var(--space-4);
+  --prose-gap-lg: var(--space-5);
 
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-right: env(safe-area-inset-right, 0px);
