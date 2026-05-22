@@ -568,12 +568,13 @@ details.day > summary::-webkit-details-marker{ display:none; }
 /* Short numeric fields shouldn't feel "huge" on mobile */
 .rowGrid .field--sets input,
 .rowGrid .field--reps input,
-.rowGrid .field--pct input,
 .rowGrid .field--rpe input,
-.rowGrid .field--load .loadInput__value{
+.rowGrid .field--load .loadInput__value,
+.rowGrid .field--pct .pctInput__value{
   text-align:center;
 }
-.loadInputWrap{
+.loadInputWrap,
+.pctInputWrap{
   display:flex;
   align-items:stretch;
   width:100%;
@@ -582,11 +583,13 @@ details.day > summary::-webkit-details-marker{ display:none; }
   background: color-mix(in srgb, var(--panel2) 78%, transparent);
   overflow:hidden;
 }
-.loadInputWrap:focus-within{
+.loadInputWrap:focus-within,
+.pctInputWrap:focus-within{
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--focus-ring);
 }
-.loadInputWrap .loadInput__value{
+.loadInputWrap .loadInput__value,
+.pctInputWrap .pctInput__value{
   flex:1 1 auto;
   min-width:0;
   border:none;
@@ -594,16 +597,14 @@ details.day > summary::-webkit-details-marker{ display:none; }
   background:transparent;
   box-shadow:none;
 }
-.loadInputWrap .loadInput__value:focus{
+.loadInputWrap .loadInput__value:focus,
+.pctInputWrap .pctInput__value:focus{
   border:none;
   box-shadow:none;
   outline:none;
 }
-.loadInput__unit{
-  flex:0 0 2.75rem;
-  width:2.75rem;
-  min-width:2.75rem;
-  max-width:2.75rem;
+.loadInput__unit,
+.pctInput__suffix{
   box-sizing:border-box;
   display:flex;
   align-items:center;
@@ -617,6 +618,18 @@ details.day > summary::-webkit-details-marker{ display:none; }
   user-select:none;
   pointer-events:none;
   border-left:1px solid var(--border2);
+}
+.loadInput__unit{
+  flex:0 0 2.75rem;
+  width:2.75rem;
+  min-width:2.75rem;
+  max-width:2.75rem;
+}
+.pctInput__suffix{
+  flex:0 0 1.75rem;
+  width:1.75rem;
+  min-width:1.75rem;
+  max-width:1.75rem;
 }
 .field{ display:flex; flex-direction:column; gap:6px; }
 .field{ min-width:0; }
@@ -866,7 +879,8 @@ html[data-theme="light"]{ color-scheme: light; }
   }
   .colHeader div{ padding: 0 2px; }
 
-  .rowGrid .field--load .loadInput__unit{
+  .rowGrid .field--load .loadInput__unit,
+  .rowGrid .field--pct .pctInput__suffix{
     font-size:0.8125rem;
   }
 

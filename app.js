@@ -753,7 +753,20 @@
       ]),
       el("div", { class: "field field--pct" }, [
         el("label", { for: rowFieldId(wi, di, ri, "pct"), text: "%1RM" }),
-        el("input", { id: rowFieldId(wi, di, ri, "pct"), class: "input", "aria-label": "%1RM", inputmode: "numeric", pattern: "\\d*", maxlength: "3", placeholder: "", value: row.pct, "data-field": "pct" }),
+        el("div", { class: "pctInputWrap" }, [
+          el("input", {
+            id: rowFieldId(wi, di, ri, "pct"),
+            class: "input pctInput__value",
+            "aria-label": "%1RM",
+            inputmode: "numeric",
+            pattern: "\\d*",
+            maxlength: "3",
+            placeholder: "",
+            value: row.pct,
+            "data-field": "pct",
+          }),
+          el("span", { class: "pctInput__suffix", text: "%", "aria-hidden": "true" }),
+        ]),
       ]),
       el("div", { class: "field field--rpe" }, [
         el("label", { for: rowFieldId(wi, di, ri, "rpe"), text: "RPE" }),
