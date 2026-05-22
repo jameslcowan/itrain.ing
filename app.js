@@ -1,4 +1,4 @@
-/* global PowerliftCodec */
+/* global PowerliftCodec, PowerliftMaxes */
 (() => {
   "use strict";
 
@@ -86,6 +86,18 @@
     weekDd: document.getElementById("weekDd"),
     addWeekBtn: document.getElementById("addWeekBtn"),
     copyLinkBtn: document.getElementById("copyLinkBtn"),
+    configBtn: document.getElementById("configBtn"),
+    maxesDialog: document.getElementById("maxesDialog"),
+    maxesDialogPrimary: document.getElementById("maxesDialogPrimary"),
+    maxesDialogCustomList: document.getElementById("maxesDialogCustomList"),
+    maxesDialogAddLiftBtn: document.getElementById("maxesDialogAddLiftBtn"),
+    maxesDialogCloseBtn: document.getElementById("maxesDialogCloseBtn"),
+    maxesDialogUnitsLabel: document.getElementById("maxesDialogUnitsLabel"),
+    onboardingDialogTitle: document.getElementById("onboardingDialogTitle"),
+    onboardingMaxesPrimary: document.getElementById("onboardingMaxesPrimary"),
+    onboardingBackBtn: document.getElementById("onboardingBackBtn"),
+    onboardingNextBtn: document.getElementById("onboardingNextBtn"),
+    onboardingSkipMaxesBtn: document.getElementById("onboardingSkipMaxesBtn"),
     shareDialog: document.getElementById("shareDialog"),
     shareDialogText: document.getElementById("shareDialogText"),
     shareDialogCloseBtn: document.getElementById("shareDialogCloseBtn"),
@@ -572,6 +584,171 @@
     }
   }
 
+  function ensureProgramMaxes() {
+    if (!app.program.m || typeof app.program.m !== "object") {
+      app.program.m = {};
+    }
+    app.program.m = PowerliftMaxes.normalizeMaxesMap(app.program.m);
+  }
+
+  function convertProgramMaxes(fromU, toU) {
+    ensureProgramMaxes();
+    app.program.m = PowerliftMaxes.convertMaxesMap(app.program.m, fromU, toU);
+    PowerliftMaxes.writeCache(app.program.u, PowerliftMaxes.mergeCacheWithProgram(app.program.m, app.program.u));
+  }
+
+  let syncingLoadPct = false;
+
+  function updateRowLoadPctDom(wi, di, ri, row) {
+    const rowEl = dom.weekMount.querySelector(
+      `.row[data-w="${wi}"][data-d="${di}"][data-r="${ri}"]`
+    );
+    if (!rowEl) return;
+    const loadIn = rowEl.querySelector('[data-field="load"]');
+    const pctIn = rowEl.querySelector('[data-field="pct"]');
+    if (loadIn && loadIn.value !== row.load) loadIn.value = row.load;
+    if (pctIn && pctIn.value !== row.pct) pctIn.value = row.pct;
+  }
+
+  function syncLoadPctForRow(row, driver) {
+    const max = PowerliftMaxes.resolveMaxForExercise(row.ex, app.program.m, app.program.u);
+    if (!max) return;
+    if (driver === "pct") {
+      const pct = toInt(row.pct);
+      if (pct <= 0) return;
+      row.load = PowerliftMaxes.loadFromPct(max, row.pct);
+    } else if (driver === "load") {
+      const load = toInt(row.load);
+      if (load <= 0) return;
+      row.pct = PowerliftMaxes.pctFromLoad(max, row.load);
+    }
+  }
+
+  function recalcRowsFromPct() {
+    for (const week of app.program.weeks) {
+      for (const day of week.days || []) {
+        for (const row of day.rows || []) {
+          if (!toInt(row.pct)) continue;
+          syncLoadPctForRow(row, "pct");
+        }
+      }
+    }
+  }
+
+  function maxesDialogCustomKeys(merged) {
+    const keys = new Set(PowerliftMaxes.customLiftKeys(merged));
+    const primary = new Set(PowerliftMaxes.PRIMARY_LIFTS.map((p) => p.key));
+    for (const name of PowerliftMaxes.collectExerciseNamesFromProgram(app.program)) {
+      const k = PowerliftMaxes.normalizeExerciseKey(name);
+      if (k && !primary.has(k)) keys.add(k);
+    }
+    return [...keys].sort();
+  }
+
+  function renderMaxesField(labelText, key, value) {
+    return el("div", { class: "maxesDialog__field" }, [
+      el("label", { text: labelText, for: `maxes-${key}` }),
+      el("input", {
+        id: `maxes-${key}`,
+        class: "input",
+        type: "text",
+        inputmode: "numeric",
+        pattern: "\\d*",
+        maxlength: "4",
+        "data-maxes-key": key,
+        value: value || "",
+        "aria-label": `${labelText} 1RM`,
+      }),
+    ]);
+  }
+
+  function renderMaxesCustomRow(key, value) {
+    const labelText = key.replace(/\b\w/g, (c) => c.toUpperCase());
+    return el("div", { class: "maxesDialog__customRow", "data-maxes-row": key }, [
+      el("label", { class: "maxesDialog__customLabel", text: labelText, for: `maxes-${key}` }),
+      el("input", {
+        id: `maxes-${key}`,
+        class: "input",
+        type: "text",
+        inputmode: "numeric",
+        pattern: "\\d*",
+        maxlength: "4",
+        "data-maxes-key": key,
+        value: value || "",
+        "aria-label": `${labelText} 1RM`,
+      }),
+      el(
+        "button",
+        {
+          type: "button",
+          class: "btn btn--ghost maxesDialog__removeLift",
+          "data-maxes-remove": key,
+          "aria-label": `Remove ${labelText}`,
+        },
+        ["Remove"]
+      ),
+    ]);
+  }
+
+  function renderMaxesPrimary(container, merged) {
+    if (!container) return;
+    container.innerHTML = "";
+    for (const lift of PowerliftMaxes.PRIMARY_LIFTS) {
+      container.appendChild(renderMaxesField(lift.label, lift.key, merged[lift.key] || ""));
+    }
+  }
+
+  function renderMaxesCustomList(merged) {
+    if (!dom.maxesDialogCustomList) return;
+    dom.maxesDialogCustomList.innerHTML = "";
+    const keys = maxesDialogCustomKeys(merged);
+    if (!keys.length) {
+      dom.maxesDialogCustomList.appendChild(
+        el("p", { class: "maxesDialog__empty", text: "No other lifts yet. Add one or type a new exercise in your program." })
+      );
+      return;
+    }
+    for (const key of keys) {
+      dom.maxesDialogCustomList.appendChild(renderMaxesCustomRow(key, merged[key] || ""));
+    }
+  }
+
+  function readMaxesFromDialogContainers(primaryEl, customListEl) {
+    const out = {};
+    const root = primaryEl?.closest("dialog") || dom.maxesDialog;
+    if (!root) return out;
+    root.querySelectorAll("[data-maxes-key]").forEach((inp) => {
+      const key = inp.getAttribute("data-maxes-key");
+      const val = PowerliftMaxes.sanitizeMaxValue(inp.value);
+      if (key && val) out[key] = val;
+    });
+    return PowerliftMaxes.normalizeMaxesMap(out);
+  }
+
+  function persistMaxes(map) {
+    ensureProgramMaxes();
+    app.program.m = PowerliftMaxes.normalizeMaxesMap(map);
+    const merged = { ...PowerliftMaxes.readCache(app.program.u), ...app.program.m };
+    PowerliftMaxes.writeCache(app.program.u, merged);
+    scheduleUrlUpdate();
+  }
+
+  function openMaxesDialog() {
+    if (!dom.maxesDialog?.showModal) return;
+    ensureProgramMaxes();
+    const unitLabel = loadUnitLabel(app.program.u);
+    if (dom.maxesDialogUnitsLabel) dom.maxesDialogUnitsLabel.textContent = unitLabel;
+    const merged = PowerliftMaxes.mergeCacheWithProgram(app.program.m, app.program.u);
+    renderMaxesPrimary(dom.maxesDialogPrimary, merged);
+    renderMaxesCustomList(merged);
+    dom.maxesDialog.showModal();
+    window.setTimeout(() => {
+      try {
+        dom.maxesDialogPrimary?.querySelector("input")?.focus();
+      } catch {}
+    }, 0);
+  }
+
   function computeDaySummary(day) {
     const rows = Array.isArray(day?.rows) ? day.rows : [];
     const exercises = rows.filter((r) => (r?.ex || "").trim() !== "").length;
@@ -646,6 +823,7 @@
             const prevU = app.program.u === "kg" ? "kg" : "lb";
             if (nextU !== prevU) {
               convertAllProgramLoads(prevU, nextU);
+              convertProgramMaxes(prevU, nextU);
               app.program.u = nextU;
               scheduleUrlUpdate();
               render();
@@ -1073,10 +1251,19 @@
     scheduleUrlUpdate();
   }
 
-  function setField(wi, di, ri, field, value) {
+  function setField(wi, di, ri, field, value, driverHint) {
     const row = app.program.weeks[wi].days[di].rows[ri];
     if (!row) return;
     row[field] = sanitizeField(field, value);
+    if (!syncingLoadPct && (field === "load" || field === "pct")) {
+      syncingLoadPct = true;
+      try {
+        syncLoadPctForRow(row, driverHint || field);
+        updateRowLoadPctDom(wi, di, ri, row);
+      } finally {
+        syncingLoadPct = false;
+      }
+    }
     updateDaySummaryDom(wi, di);
     scheduleUrlUpdate();
   }
@@ -1508,7 +1695,7 @@
     const di = Number(rowEl.getAttribute("data-d"));
     const ri = Number(rowEl.getAttribute("data-r"));
 
-    setField(wi, di, ri, field, input.value);
+    setField(wi, di, ri, field, input.value, field);
   });
 
   // Some browsers fire "change" (especially for <select>) more reliably than "input".
@@ -1524,7 +1711,7 @@
       const di = Number(rowEl.getAttribute("data-d"));
       const ri = Number(rowEl.getAttribute("data-r"));
 
-      setField(wi, di, ri, field, input.value);
+      setField(wi, di, ri, field, input.value, field);
       return;
     }
 
@@ -1562,10 +1749,12 @@
       }
       setStatus("");
     }
+    ensureProgramMaxes();
     render();
   }
 
   const ONBOARDING_KEY = "pli_hide_onboarding";
+  let onboardingStep = 0;
 
   function persistOnboardingDismiss() {
     try {
@@ -1575,11 +1764,36 @@
     } catch {}
   }
 
+  function setOnboardingStep(step) {
+    onboardingStep = step;
+    const titles = ["Welcome to powerlift.ing", "Your maxes (1RM)", "Build your program"];
+    if (dom.onboardingDialogTitle) dom.onboardingDialogTitle.textContent = titles[step] || titles[0];
+    dom.onboardingDialog?.querySelectorAll("[data-onboarding-step]").forEach((panel) => {
+      const n = Number(panel.getAttribute("data-onboarding-step"));
+      panel.hidden = n !== step;
+    });
+    if (dom.onboardingBackBtn) dom.onboardingBackBtn.hidden = step === 0;
+    if (dom.onboardingNextBtn) dom.onboardingNextBtn.hidden = step === 2;
+    if (dom.onboardingDialogOkBtn) dom.onboardingDialogOkBtn.hidden = step !== 2;
+    if (step === 1) {
+      const merged = PowerliftMaxes.mergeCacheWithProgram(app.program.m, app.program.u);
+      renderMaxesPrimary(dom.onboardingMaxesPrimary, merged);
+    }
+  }
+
+  function saveOnboardingMaxes() {
+    if (!dom.onboardingMaxesPrimary) return;
+    const map = readMaxesFromDialogContainers(dom.onboardingMaxesPrimary, null);
+    persistMaxes(map);
+  }
+
   function closeOnboardingDialog() {
+    if (onboardingStep === 1) saveOnboardingMaxes();
     persistOnboardingDismiss();
     try {
       dom.onboardingDialog?.close();
     } catch {}
+    setOnboardingStep(0);
   }
 
   function initOnboarding() {
@@ -1587,20 +1801,89 @@
     try {
       if (localStorage.getItem(ONBOARDING_KEY) === "1") return;
     } catch {}
+    setOnboardingStep(0);
     dom.onboardingDialog.showModal();
     window.setTimeout(() => {
       try {
-        dom.onboardingDialogOkBtn?.focus();
+        dom.onboardingNextBtn?.focus();
       } catch {}
     }, 0);
   }
 
   dom.onboardingDialogCloseBtn?.addEventListener("click", closeOnboardingDialog);
   dom.onboardingDialogOkBtn?.addEventListener("click", closeOnboardingDialog);
+  dom.onboardingNextBtn?.addEventListener("click", () => {
+    if (onboardingStep === 1) saveOnboardingMaxes();
+    if (onboardingStep < 2) setOnboardingStep(onboardingStep + 1);
+  });
+  dom.onboardingBackBtn?.addEventListener("click", () => {
+    if (onboardingStep > 0) setOnboardingStep(onboardingStep - 1);
+  });
+  dom.onboardingSkipMaxesBtn?.addEventListener("click", () => {
+    setOnboardingStep(2);
+  });
   dom.onboardingDialogDontShow?.addEventListener("change", () => {
     try {
       localStorage.setItem(ONBOARDING_KEY, dom.onboardingDialogDontShow.checked ? "1" : "0");
     } catch {}
+  });
+
+  dom.configBtn?.addEventListener("click", () => openMaxesDialog());
+
+  dom.maxesDialogCloseBtn?.addEventListener("click", () => {
+    try {
+      dom.maxesDialog?.close("cancel");
+    } catch {}
+  });
+
+  dom.maxesDialog?.addEventListener("close", () => {
+    const rv = dom.maxesDialog.returnValue || "cancel";
+    if (rv !== "ok") return;
+    const map = readMaxesFromDialogContainers(dom.maxesDialogPrimary, dom.maxesDialogCustomList);
+    persistMaxes(map);
+    const hadPct = app.program.weeks.some((w) =>
+      w.days?.some((d) => d.rows?.some((r) => toInt(r.pct) > 0))
+    );
+    if (hadPct) {
+      recalcRowsFromPct();
+      render();
+    }
+  });
+
+  dom.maxesDialogAddLiftBtn?.addEventListener("click", async () => {
+    const name = await appPrompt("Lift name (e.g. Romanian deadlift):", {
+      title: "Add lift",
+      inputLabel: "Exercise",
+      okText: "Add",
+      cancelText: "Cancel",
+    });
+    if (name == null) return;
+    const key = PowerliftMaxes.normalizeExerciseKey(name);
+    if (!key) return;
+    const val = await appPrompt("1RM for this lift:", {
+      title: "Add lift",
+      inputLabel: loadUnitLabel(app.program.u),
+      inputValue: "",
+      okText: "Add",
+    });
+    if (val == null) return;
+    const merged = readMaxesFromDialogContainers(dom.maxesDialogPrimary, dom.maxesDialogCustomList);
+    const sanitized = PowerliftMaxes.sanitizeMaxValue(val);
+    if (sanitized) merged[key] = sanitized;
+    renderMaxesCustomList(merged);
+    const inp = dom.maxesDialogCustomList?.querySelector(`[data-maxes-key="${key}"]`);
+    inp?.focus();
+  });
+
+  dom.maxesDialogCustomList?.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-maxes-remove]");
+    if (!btn) return;
+    const key = btn.getAttribute("data-maxes-remove");
+    const row = btn.closest("[data-maxes-row]");
+    row?.remove();
+    if (!dom.maxesDialogCustomList.querySelector("[data-maxes-row]")) {
+      renderMaxesCustomList(readMaxesFromDialogContainers(dom.maxesDialogPrimary, dom.maxesDialogCustomList));
+    }
   });
 
   initTheme();
