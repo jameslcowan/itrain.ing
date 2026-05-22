@@ -2,6 +2,7 @@
   "use strict";
 
   const root = document.body;
+  const docEl = document.documentElement;
   const menu = document.getElementById("landingMenu");
   const menuBtn = document.getElementById("landingMenuBtn");
   const menuClose = document.getElementById("landingMenuClose");
@@ -17,8 +18,8 @@
       menu.classList.add("is-open");
     });
     menuBtn?.setAttribute("aria-expanded", "true");
+    docEl.classList.add("site-menu-open");
     root.classList.add("site-menu-open");
-    root.style.overflow = "hidden";
     window.setTimeout(() => menuClose?.focus(), 50);
   }
 
@@ -26,8 +27,8 @@
     if (!menu) return;
     menu.classList.remove("is-open");
     menuBtn?.setAttribute("aria-expanded", "false");
+    docEl.classList.remove("site-menu-open");
     root.classList.remove("site-menu-open");
-    root.style.overflow = "";
 
     const finish = () => {
       menu.hidden = true;

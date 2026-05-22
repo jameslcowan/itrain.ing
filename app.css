@@ -9,15 +9,10 @@
 }
 html,body{ height:100%; }
 html{
-  /* Prevent layout shift when the page scrollbar appears (Chrome/Windows). */
-  scrollbar-gutter: stable;
   /* Firefox scrollbar colors */
   scrollbar-color: var(--sb-thumb) var(--sb-track);
   scrollbar-width: thin;
 }
-
-/* When the menu is open, drop the reserved gutter so we don't get a weird edge strip. */
-html.menuOpen{ scrollbar-gutter: auto; }
 
 /* Chrome/Edge (WebKit) scrollbar theming */
 *::-webkit-scrollbar{ width: 10px; height: 10px; }

@@ -419,7 +419,7 @@
 
     btn.addEventListener("click", (e) => {
       e.preventDefault();
-      if (document.documentElement.classList.contains("menuOpen")) return;
+      if (document.documentElement.classList.contains("site-menu-open")) return;
       toggle();
     });
 
@@ -1161,9 +1161,8 @@
       dom.appMenu.classList.add("is-open");
     });
     dom.menuBtn?.setAttribute("aria-expanded", "true");
-    document.documentElement.classList.add("menuOpen");
+    document.documentElement.classList.add("site-menu-open");
     document.body.classList.add("site-menu-open");
-    document.body.style.overflow = "hidden";
     const main = document.getElementById("app");
     if (main) main.setAttribute("aria-hidden", "true");
     window.setTimeout(() => {
@@ -1177,9 +1176,8 @@
     if (!dom.appMenu || dom.appMenu.hidden) return;
     dom.appMenu.classList.remove("is-open");
     dom.menuBtn?.setAttribute("aria-expanded", "false");
-    document.documentElement.classList.remove("menuOpen");
+    document.documentElement.classList.remove("site-menu-open");
     document.body.classList.remove("site-menu-open");
-    document.body.style.overflow = "";
     const main = document.getElementById("app");
     if (main) main.removeAttribute("aria-hidden");
 

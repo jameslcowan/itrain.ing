@@ -2,6 +2,11 @@
  * Full-screen site menu — identical on landing and app (no page-specific button classes)
  */
 
+/* Lock scroll on <html> so scrollbar-gutter: stable keeps layout from shifting */
+html.site-menu-open {
+  overflow: hidden;
+}
+
 .site-menu[hidden] {
   display: none;
 }

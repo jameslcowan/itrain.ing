@@ -121,3 +121,7 @@ html[data-theme="light"],
 html[data-theme="dark"] {
   /* manual theme wins over prefers-color-scheme */
 }
+
+html {
+  scrollbar-gutter: stable;
+}
