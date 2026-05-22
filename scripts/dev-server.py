@@ -23,6 +23,23 @@ class Handler(SimpleHTTPRequestHandler):
             qs = raw.split("?", 1)[1] if "?" in raw else ""
             self.path = "/app.html" + (f"?{qs}" if qs else "")
 
+    def send_error(self, code, message=None, explain=None):
+        if code == 404:
+            path = os.path.join(ROOT, "404.html")
+            if os.path.isfile(path):
+                try:
+                    with open(path, "rb") as f:
+                        body = f.read()
+                    self.send_response(404)
+                    self.send_header("Content-Type", "text/html; charset=utf-8")
+                    self.send_header("Content-Length", str(len(body)))
+                    self.end_headers()
+                    self.wfile.write(body)
+                    return
+                except OSError:
+                    pass
+        super().send_error(code, message, explain)
+
     def do_GET(self):
         self._rewrite_spa_path()
         super().do_GET()
