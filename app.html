@@ -240,9 +240,31 @@
           </button>
         </div>
         <div class="dialog__body dialog__body--prose maxesDialog__body">
+          <div class="maxesDialog__units">
+            <span class="maxesDialog__unitsLabel" id="maxesDialogUnitsHeading">Units</span>
+            <div class="unitToggle" role="group" aria-labelledby="maxesDialogUnitsHeading">
+              <button
+                id="maxesDialogUnitLb"
+                class="unitToggle__btn is-active"
+                type="button"
+                data-maxes-unit="lb"
+                aria-pressed="true"
+              >
+                lbs
+              </button>
+              <button
+                id="maxesDialogUnitKg"
+                class="unitToggle__btn"
+                type="button"
+                data-maxes-unit="kg"
+                aria-pressed="false"
+              >
+                kg
+              </button>
+            </div>
+          </div>
           <p class="dialog__lead">
-            Enter your best single-rep max for each lift you program. Use the same units as your program
-            (<strong id="maxesDialogUnitsLabel">lb</strong>).
+            Enter your best single-rep max for each lift you program. Values use the units you pick above.
           </p>
           <ul class="dialog__list">
             <li>Fill in squat, bench, and deadlift below — or leave blank and add them later.</li>
