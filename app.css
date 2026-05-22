@@ -263,6 +263,14 @@ input[type="checkbox"]{ accent-color: var(--accent); }
   text-align: center;
 }
 
+@media (max-width: 720px){
+  .dd--units{
+    width: 6rem;
+    min-width: 6rem;
+    max-width: 6rem;
+  }
+}
+
 .dd__label{
   min-width:0;
   overflow:hidden;
