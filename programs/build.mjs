@@ -13,42 +13,65 @@ function appHref(program) {
   return `/app/${encodeURIComponent(encodeProgram(program))}`;
 }
 
+function cardLabel(text) {
+  if (!text) return "";
+  return `<span class="prog-card__label">${escapeHtml(text)}</span>`;
+}
+
+function weekCountLabel(program) {
+  const n = program?.weeks?.length;
+  if (!n) return "";
+  return n === 1 ? "1 week" : `${n} weeks`;
+}
+
+function cardCorner(content, corner) {
+  return `<div class="prog-card__corner prog-card__corner--${corner}">${content}</div>`;
+}
+
+/** Top/bottom rows: dedicated TL / TR (or BL / BR) corners — no stacking */
+function cardMetaRow(left, right, rowClass) {
+  if (!left && !right) return "";
+  const top = rowClass.includes("top");
+  return `<div class="${rowClass}">
+  ${cardCorner(left, top ? "tl" : "bl")}
+  ${cardCorner(right, top ? "tr" : "br")}
+</div>`;
+}
+
 function renderProgramCard(card) {
   const href = appHref(card.program);
   const id = escapeHtml(card.id);
   const title = escapeHtml(card.title);
   const subtitle = card.subtitle ? `<p class="prog-card__subtitle">${escapeHtml(card.subtitle)}</p>` : "";
-  const labelTop = card.label ? `<span class="lp-badge">${escapeHtml(card.label)}</span>` : "";
-  const badgeTop = card.badge
-    ? `<span class="lp-badge lp-badge--muted">${escapeHtml(card.badge)}</span>`
-    : "";
-  const category = card.category
-    ? `<span class="lp-badge lp-badge--muted">${escapeHtml(card.category)}</span>`
-    : "";
   const description = escapeHtml(card.description);
+
+  const topLeft = cardLabel(card.label);
+  const topRight = cardLabel(weekCountLabel(card.program));
+  const bottomLeft = cardLabel(card.category);
+  const bottomRight = cardLabel(card.badge);
 
   return `<article class="prog-card-stack" data-program-id="${id}">
   <div class="prog-card prog-card--base">
-    <div class="prog-card__meta">${labelTop}${badgeTop ? ` ${badgeTop}` : ""}</div>
+    ${cardMetaRow(topLeft, topRight, "prog-card__content-top")}
     <div class="prog-card__header">
       <h2 class="prog-card__title">${title}</h2>
       ${subtitle}
     </div>
-    <div class="prog-card__foot">${category}</div>
+    ${cardMetaRow(bottomLeft, bottomRight, "prog-card__content-bottom")}
   </div>
   <div class="prog-card prog-card--overlay" aria-hidden="true">
     <div class="prog-card__header">
       <h2 class="prog-card__title">${title}</h2>
       <p class="prog-card__subtitle">Open in the powerlift.ing editor</p>
     </div>
-    <a class="lp-btn lp-btn--primary prog-card__action" href="${escapeHtml(href)}">Open program</a>
+    <button class="lp-btn lp-btn--primary prog-card__action" type="button" data-dialog-open>Open program</button>
   </div>
   <dialog class="prog-dialog" aria-labelledby="prog-dialog-title-${id}">
     <div class="prog-dialog__content">
       <h2 id="prog-dialog-title-${id}" class="prog-dialog__title">${title}</h2>
       <p class="prog-dialog__text">${description}</p>
       <div class="prog-dialog__actions">
-        <a class="lp-btn lp-btn--primary" href="${escapeHtml(href)}">Open in builder</a>
+        <a class="lp-btn lp-btn--primary prog-dialog__open" href="${escapeHtml(href)}">Open in builder</a>
         <button class="lp-btn lp-btn--ghost" type="button" data-dialog-close>Close</button>
       </div>
     </div>
@@ -58,17 +81,16 @@ function renderProgramCard(card) {
 
 function renderProgramsBody(cards) {
   const grid = cards.map(renderProgramCard).join("\n");
-  return `<main id="main" class="blog-main programs-main">
+  return `<main id="main" class="programs-main">
   <header class="programs-page__head">
     <h1 class="programs-page__title lp-display">Programs</h1>
-    <p class="programs-page__lead">Free powerlifting templates from powerlift.ing. Pick a card, open it in the builder, edit anything, and share your version as one link.</p>
-    <p class="programs-page__actions">
-      <a class="lp-btn lp-btn--ghost" href="/app">Start blank</a>
-    </p>
+    <p class="programs-page__lead">Free powerlifting templates from powerlift.ing. Pick a card, open it in the builder, edit anything, and share your version as one link. Use the <strong>Blank program</strong> card to start from scratch.</p>
   </header>
   <section class="programs-grid" aria-label="Program templates">
-    <div class="programs-grid__inner">
+    <div class="programs-grid__container">
+      <div class="programs-grid__inner">
 ${grid}
+      </div>
     </div>
   </section>
 </main>`;
