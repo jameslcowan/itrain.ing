@@ -137,11 +137,6 @@ html.fonts-loaded .site-header__brand {
     color: var(--text-strong);
   }
 
-  .site-header__btn--share {
-    min-height: 42px;
-    padding-inline: 20px;
-    font-size: 0.9375rem;
-  }
 }
 
 .site-header__iconBtn.iconBtn {
@@ -174,7 +169,23 @@ html.fonts-loaded .site-header__brand {
   }
 }
 
-/* Share visible at all breakpoints on the app */
-.site-header__btn--share {
+/* Share icon visible at all breakpoints on the app */
+.site-header__shareBtn {
   display: inline-flex;
+}
+
+.site-header__iconBtn.iconBtn--primary {
+  background: var(--accent);
+  border-color: var(--pl-plate-dim);
+  color: #fff;
+}
+
+.site-header__iconBtn.iconBtn--primary:hover {
+  background: var(--pl-plate-dim);
+  border-color: var(--pl-plate-dim);
+  color: #fff;
+}
+
+.site-header__iconBtn.iconBtn--primary .ico {
+  stroke: currentColor;
 }
