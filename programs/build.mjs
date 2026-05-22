@@ -83,7 +83,7 @@ function renderProgramsBody(cards) {
   const grid = cards.map(renderProgramCard).join("\n");
   return `<main id="main" class="programs-main">
   <header class="programs-page__head">
-    <h1 class="programs-page__title lp-display">Programs</h1>
+    <h1 class="programs-page__title lp-display">Free programs</h1>
     <p class="programs-page__lead">Free powerlifting templates from powerlift.ing. Pick a card, open it in the builder, edit anything, and share your version as one link. Use the <strong>Blank program</strong> card to start from scratch.</p>
   </header>
   <section class="programs-grid" aria-label="Program templates">
@@ -101,7 +101,7 @@ function build() {
   mkdirSync(dir, { recursive: true });
 
   const html = renderShell({
-    title: "Programs",
+    title: "Free programs",
     description:
       "Free powerlifting program templates on powerlift.ing: 3-day SBD, 5/3/1, bench focus, meet prep, and more. Open in the builder and share one link.",
     canonicalPath: "/programs/",
