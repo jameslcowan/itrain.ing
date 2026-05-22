@@ -128,13 +128,14 @@ input[type="checkbox"]{ accent-color: var(--accent); }
 }
 
 .dialog__list{
-  margin: 12px 0 0;
-  padding-left: 18px;
-  color: var(--text);
-  line-height: 1.5;
+  margin:0;
+  padding-left:1.25rem;
+  color:var(--text);
+  font-size:0.9375rem;
+  line-height:1.65;
 }
-.dialog__list li{ margin: 6px 0; }
-.dialog__text--muted{ font-size: 13px; color: var(--muted); }
+.dialog__list li + li{ margin-top:10px; }
+.dialog__list strong{ color:var(--text-strong); font-weight:600; }
 
 .app{ padding-bottom: calc(28px + var(--safe-bottom)); }
 .container{ padding: 10px 14px 18px; max-width:1100px; margin:0 auto; }
@@ -507,11 +508,40 @@ details.day > summary::-webkit-details-marker{ display:none; }
 }
 .dialog__title{ font-weight:850; letter-spacing:.2px; }
 .dialog__body{
-  padding: 16px 16px 16px;
+  padding: 20px 20px;
 }
-.dialog__text{ margin: 0; color: var(--muted); line-height: 1.5; }
-.dialog__dontShow{ margin-top: 14px; padding-bottom: 16px; }
-.dialog__inputWrap{ margin-top: 14px; }
+.dialog__body--prose{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.dialog__lead{
+  margin:0;
+  font-size:1rem;
+  line-height:1.65;
+  color:var(--text-strong);
+}
+.dialog__text{
+  margin:0;
+  color:var(--muted);
+  font-size:0.9375rem;
+  line-height:1.65;
+}
+.dialog__text--muted{
+  font-size:0.875rem;
+  color:var(--muted);
+}
+.dialog__dontShow{
+  margin:0;
+  padding:0;
+  align-self:flex-start;
+  gap:10px;
+}
+.dialog__dontShow span{
+  line-height:1.45;
+  color:var(--text);
+}
+.dialog__inputWrap{ margin-top: 4px; }
 .dialog__help{
   margin: 10px 0 0;
   font-size: 12px;
@@ -534,7 +564,11 @@ details.day > summary::-webkit-details-marker{ display:none; }
   font-size: 0.875rem;
 }
 
-.maxesDialog__body{ display:flex; flex-direction:column; gap:14px; }
+.maxesDialog__body{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
 .maxesDialog__primary{
   display:grid;
   grid-template-columns: 1fr 1fr;
@@ -590,7 +624,7 @@ details.day > summary::-webkit-details-marker{ display:none; }
   min-height:44px;
   padding:0 10px;
 }
-.maxesDialog__note{ margin:0; }
+.maxesDialog__note{ margin:0; line-height:1.6; }
 .maxesDialog__empty{
   margin:0;
   font-size:13px;
