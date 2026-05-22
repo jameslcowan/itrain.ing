@@ -600,14 +600,20 @@ details.day > summary::-webkit-details-marker{ display:none; }
   outline:none;
 }
 .loadInput__unit{
-  flex:0 0 auto;
+  flex:0 0 2.75rem;
+  width:2.75rem;
+  min-width:2.75rem;
+  max-width:2.75rem;
+  box-sizing:border-box;
   display:flex;
   align-items:center;
-  padding:0 10px;
+  justify-content:center;
+  padding:0 4px;
   font-family: var(--mono);
   font-size:0.9375rem;
   font-weight:500;
   color:var(--muted);
+  text-align:center;
   user-select:none;
   pointer-events:none;
   border-left:1px solid var(--border2);
@@ -861,7 +867,6 @@ html[data-theme="light"]{ color-scheme: light; }
   .colHeader div{ padding: 0 2px; }
 
   .rowGrid .field--load .loadInput__unit{
-    padding:0 8px;
     font-size:0.8125rem;
   }
 
