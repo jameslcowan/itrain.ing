@@ -514,7 +514,11 @@ details.day > summary::-webkit-details-marker{ display:none; }
   overflow-y:auto;
   overscroll-behavior:contain;
   -webkit-overflow-scrolling:touch;
-  scrollbar-gutter:stable;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+.dialog--modal .dialog__body::-webkit-scrollbar{
+  display:none;
 }
 .dialog__top{
   display:flex;
