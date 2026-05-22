@@ -630,7 +630,7 @@
 
     const week = app.program.weeks[idx];
     if (dom.unitsDd) {
-      dom.unitsDd.classList.add("dd--compact");
+      dom.unitsDd.classList.add("dd--compact", "dd--units");
       dom.unitsDd.innerHTML = "";
       dom.unitsDd.appendChild(
         renderDropdown({

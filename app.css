@@ -248,6 +248,28 @@ input[type="checkbox"]{ accent-color: var(--accent); }
   min-height: 44px;
 }
 .dd--compact .dd__btn{ padding:7px 10px; border-radius:var(--radius2); min-height: 44px; }
+
+/* Units (kg / lbs): fixed width so toggling does not shift the week bar */
+.dd--units{
+  width: 4.5rem;
+  min-width: 4.5rem;
+  max-width: 4.5rem;
+  flex-shrink: 0;
+}
+.dd--units .ddWrap{ width: 100%; }
+.dd--units .dd__btn{
+  width: 100%;
+  justify-content: center;
+  gap: 6px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.dd--units .dd__label{
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: center;
+}
+
 .dd__label{
   min-width:0;
   overflow:hidden;
