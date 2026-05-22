@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>powerlift.ing Blog</title>
+  <subtitle>Powerlifting programming, the builder, and shareable programs</subtitle>
+  <link href="https://powerlift.ing/feed.xml" rel="self"/>
+  <link href="https://powerlift.ing/" rel="alternate"/>
+  <id>https://powerlift.ing/blog/</id>
+  <updated>2026-05-22T00:00:00Z</updated>
+  <author><name>James L. Cowan</name></author>
+  <entry>
+    <title>Programming With %1RM and RPE on the Same Row</title>
+    <link href="https://powerlift.ing/blog/programming-with-percentages-and-rpe/" rel="alternate"/>
+    <id>https://powerlift.ing/blog/programming-with-percentages-and-rpe/</id>
+    <updated>2026-05-22T00:00:00Z</updated>
+    <summary>Use estimated maxes to fill load from percentages, or log RPE when percentages drift. Both fit in one row.</summary>
+  </entry>
+  <entry>
+    <title>Getting Started With the Program Builder</title>
+    <link href="https://powerlift.ing/blog/getting-started-with-the-builder/" rel="alternate"/>
+    <id>https://powerlift.ing/blog/getting-started-with-the-builder/</id>
+    <updated>2026-05-21T00:00:00Z</updated>
+    <summary>A quick walkthrough of mesocycles, weeks, days, and rows so you can ship your first shareable powerlifting plan.</summary>
+  </entry>
+  <entry>
+    <title>How Sharing Works on powerlift.ing</title>
+    <link href="https://powerlift.ing/blog/how-sharing-works/" rel="alternate"/>
+    <id>https://powerlift.ing/blog/how-sharing-works/</id>
+    <updated>2026-05-20T00:00:00Z</updated>
+    <summary>Your whole program lives in the URL. Here is what that means for privacy, updates, and sending plans to athletes.</summary>
+  </entry>
+</feed>
