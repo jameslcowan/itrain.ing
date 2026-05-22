@@ -1,77 +1,37 @@
 # powerlift.ing
 
-Static, zero-build program builder where **the entire program lives in the URL** (shareable links).
+Free powerlifting program builder — **the whole program lives in one shareable URL**.
 
-## What this is
-- Marketing landing at `/` (`index.html`, `landing.css`, `landing.js`)
-- Blog at `/blog/` (Markdown in `content/articles/`, built by `blog/build.mjs`; see [docs/BLOG.md](docs/BLOG.md))
-- FAQ at `/faq/` and on the landing page `#faq` (content in `content/faq-data.js`; `faq/build.mjs` generates both)
-- Program templates at `/programs/` (`content/programs-data.js`, `programs/build.mjs`)
-- Terms at `/terms/`, Privacy at `/privacy/` (`legal/build.mjs`)
-- Shared footer on marketing pages (`site/footer.mjs`, `site-footer.css`; not on `/app`)
-- Program builder at `/app` (`app.html`, `app.css`, `app.js`, `state-codec.js`, `theme.js`)
-- Client-only (no accounts, no backend yet)
-- Sharing = copy the URL
+## Documentation
 
-## Routing (public contract)
-- **Landing (indexed)**: `/`
-- **Builder**: `/app` → `app.html`
-- **Shared program (noindex)**: `/app/<STATE>` (legacy `/program/<STATE>` and `/p/<STATE>` still work)
-- **Legacy (still works)**: `/p/<STATE>`, `/#/p/<STATE>`
+All project docs live in **[docs/](docs/README.md)**:
 
-The builder updates the URL as you edit via `history.replaceState()` (no page reload).
+| Doc | Topic |
+|-----|--------|
+| [docs/SITE.md](docs/SITE.md) | Routes, build, deploy, repo layout |
+| [docs/ANALYTICS.md](docs/ANALYTICS.md) | Analytics setup and dashboard sign-in |
+| [docs/BLOG.md](docs/BLOG.md) | Writing and publishing articles |
+| [docs/SEO.md](docs/SEO.md) | Indexing and positioning |
+| [docs/TODO.md](docs/TODO.md) | Backlog and launch checklist |
 
-## Encoding (public contract)
-`<STATE>` is compressed JSON:
-- `JSON.stringify(state)`
-- `LZString.compressToUint8Array(...)`
-- base64url encode (replace `+`→`-`, `/`→`_`, remove `=` padding)
+## Quick start
 
-The app **decodes both older and newer payloads** for backward compatibility.
-
-## Program JSON (authoring schema, v1)
-This is the JSON shape the UI works with (keys are short to keep links small):
-
-```json
-{
-  "v": 1,
-  "u": "lb",
-  "c": [{ "n": "Meso 1" }],
-  "weeks": [
-    {
-      "c": 0,
-      "days": [
-        {
-          "label": "DAY 1 - MON",
-          "rows": [
-            { "ex": "", "mode": "", "sets": "", "reps": "", "load": "", "pct": "", "rpe": "", "rest": "" }
-          ]
-        }
-      ]
-    }
-  ]
-}
+```bash
+npm install
+npm run build
+python scripts/dev-server.py   # http://127.0.0.1:8080
 ```
 
-## Tests
 ```bash
 node --test tests/codec.test.mjs
 ```
 
-## Local usage
-Use the dev server so `/app`, `/app/*`, and legacy `/program/*` match production:
+## What ships
 
-```bash
-npm install && npm run build   # regenerate /blog, /faq, /programs, legal pages, 404.html, and footers
-python scripts/dev-server.py
-```
+- **/** — marketing landing
+- **/app** — builder (SPA; shared `/app/<STATE>` links are noindex)
+- **/programs/** — free template library
+- **/blog/**, **/faq/**, **/terms/**, **/privacy/**
+- **404.html** — branded not-found page
 
-Plain `python -m http.server` only serves `/`; shared `/app/…` links will 404 locally.
-
-## Deployment (Netlify)
-Publishes from repo root (`.`). `netlify.toml` routes `/app`, `/app/*`, legacy `/program/*`, and `/p/*` to `app.html`. `/` serves `index.html`.
-
-## Analytics
-First-party Netlify analytics (collect → daily rollup → GitHub snapshots). Sign in at `/.netlify/functions/analytics-login` after deploy. Setup: [docs/ANALYTICS.md](docs/ANALYTICS.md).
-
-
+Netlify: `npm ci && npm run build`, publish `.`. Details in [docs/SITE.md](docs/SITE.md).

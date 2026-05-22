@@ -1,50 +1,89 @@
-# Analytics (powerlift.ing)
+# Analytics
 
-First-party analytics on Netlify: browser collector → Blob queue → daily rollup → GitHub snapshots → password-protected dashboard.
+First-party pipeline (parallel to [jameslcowan](https://github.com/jameslcowan/jameslcowan)): browser → Netlify Blob queue → daily rollup → **GitHub API commit** → dashboard.
 
-## Netlify environment variables
+There is **no** `git push` from Netlify. Rollup creates commits on `main` via `GITHUB_TOKEN`; pull locally to sync.
+
+## Flow
+
+```text
+analytics.js  →  collect-analytics  →  Blob (analytics-events)
+                                              ↓
+                         rollup-analytics @ 05:00 UTC
+                                              ↓
+                         analytics/YYYY/M/D/analytics-scheduled.json
+                                              ↓
+                         dashboard (reads GitHub) ← analytics-login
+```
+
+## Netlify setup (required once)
+
+**Site → Project configuration → Environment variables**, then **redeploy**.
 
 | Variable | Required | Purpose |
 |----------|----------|---------|
-| `ANALYTICS_ADMIN_TOKEN` | Yes | Dashboard sign-in password, manual rollup auth, optional `?token=` URL access |
-| `ANALYTICS_SALT` | Yes | Salt for hashing visitor IPs at ingest |
-| `GITHUB_TOKEN` | Yes | Read/write rollup JSON in repo |
+| `ANALYTICS_ADMIN_TOKEN` | Yes | Dashboard password, manual rollup auth, optional `?token=` |
+| `ANALYTICS_SALT` | Yes | Salt for IP hashing at ingest |
+| `GITHUB_TOKEN` | Yes | PAT with **write** access to this repo |
 | `GITHUB_ANALYTICS_REPO` | Yes | e.g. `jameslcowan/powerlift.ing` |
 | `GITHUB_ANALYTICS_BRANCH` | No | Default `main` |
-| `BREVO_API_KEY` | No | Optional alert emails on rollup |
-| `CONTACT_NOTIFY_EMAIL` | No | Alert recipient |
 
-`MANUAL_ROLLUP_TOKEN` is accepted as a fallback alias for `ANALYTICS_ADMIN_TOKEN`.
+Optional: `BREVO_API_KEY`, `CONTACT_NOTIFY_EMAIL` for rollup alert emails.
 
-## URLs (production)
+`MANUAL_ROLLUP_TOKEN` works as an alias for `ANALYTICS_ADMIN_TOKEN`.
+
+### After deploy, verify
+
+1. **Functions → Scheduled** lists `rollup-analytics` (cron `0 5 * * *` UTC is defined in code — no extra `netlify.toml` cron).
+2. Visit `/programs/` → Network → `collect-analytics` → **204**.
+3. Open `https://powerlift.ing/.netlify/functions/analytics-login` → sign in → dashboard loads.
+4. After traffic + rollup: new commit under `analytics/…` on GitHub.
+
+Scheduled functions require a Netlify plan that supports them (same as jameslcowan).
+
+## URLs
 
 | URL | Purpose |
 |-----|---------|
-| `/.netlify/functions/analytics-login` | Sign in (sets 30-day session cookie) |
-| `/.netlify/functions/dashboard` | Traffic dashboard (requires sign-in or `?token=`) |
-| `/.netlify/functions/collect-analytics` | Ingest (called by `analytics.js`) |
+| `/.netlify/functions/analytics-login` | **Bookmark this** — sign-in form, 30-day session cookie |
+| `/.netlify/functions/dashboard` | Traffic report (requires session or `?token=`) |
+| `/.netlify/functions/collect-analytics` | Ingest (used by `analytics.js`) |
 
-Bookmark **analytics-login** for daily use.
+## Client behavior
 
-## Client
+- Loaded on landing, blog, FAQ, programs, legal, terms, and `/app`.
+- Events: `page_view`, `link_click`.
+- Shared program URLs are reported as path **`/app`** only (encoded state never sent).
+- DNT: server returns `204` and does not store when `DNT: 1`.
+- `localStorage` key `pl-analytics-visitor` (hashed before upload). Disclosed in [privacy policy](/privacy/).
 
-- `analytics.js` on marketing pages and `/app` (shared URLs reported as path `/app` only).
-- Honors browser DNT on the server; uses `localStorage` visitor id (hashed before send).
+## Rollup output
 
-## Rollup
+```
+analytics/{year}/{month}/{day}/analytics-scheduled.json
+analytics/{year}/{month}/{day}/analytics-manual.json
+```
 
-- Scheduled: daily `05:00` UTC via `rollup-analytics`
-- Manual: `npm run rollup:trigger` (see `scripts/manual-rollup.mjs`)
-- Output: `analytics/YYYY/M/D/analytics-scheduled.json` (and `-manual.json`)
+Month/day folders are **not** zero-padded. Files include `meta`, `traffic`, `performance`, and raw `events`.
 
-## Local CLI
+## Manual rollup
+
+Before the first scheduled run, or to backfill a day:
 
 ```bash
 ANALYTICS_ADMIN_TOKEN=secret ROLLUP_SITE_URL=https://powerlift.ing npm run rollup:trigger
+# optional date:
+npm run rollup:trigger -- 2026-05-20
 ```
 
-## Verification after deploy
+## Source files
 
-1. Visit `/programs/` — confirm `collect-analytics` returns `204` in Network tab.
-2. Sign in at `/.netlify/functions/analytics-login`.
-3. After events queue overnight, run manual rollup or wait for schedule; refresh dashboard.
+| File | Role |
+|------|------|
+| `analytics.js` | Browser collector |
+| `netlify/functions/collect-analytics.js` | Ingest |
+| `netlify/functions/rollup-analytics.js` | Scheduled rollup |
+| `netlify/functions/rollup-analytics-manual.js` | Manual rollup entry |
+| `netlify/functions/analytics-login.js` | Sign-in |
+| `netlify/functions/dashboard.js` | Dashboard HTML |
+| `scripts/manual-rollup.mjs` | CLI trigger |

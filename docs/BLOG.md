@@ -52,4 +52,6 @@ faq:
 | `/sitemap.xml` | Regenerated (includes blog URLs) |
 | `/feed.xml` | Atom feed |
 
-Shared `/app/*` routes stay noindex per `SEO.md`.
+Shared `/app/*` routes stay noindex per [SEO.md](SEO.md).
+
+See also [SITE.md](SITE.md) for the full build pipeline and [TODO.md](TODO.md) for content ideas.
