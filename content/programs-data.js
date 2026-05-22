@@ -32,6 +32,37 @@ const row = (ex, sets, reps, opts = {}) => ({
   rest: opts.rest || "",
 });
 
+/** @param {object} spec */
+function miniProgram(spec) {
+  const days = spec.days ?? [
+    {
+      label: "DAY 1",
+      rows: [row(spec.lift ?? "Squat", 3, 5, { rpe: "8", rest: "03:00" })],
+    },
+  ];
+  const weeks = Array.from({ length: spec.weeks ?? 1 }, (_, i) => ({
+    c: i,
+    days,
+  }));
+  return /** @type {ProgramCard} */ ({
+    id: spec.id,
+    title: spec.title,
+    subtitle: spec.subtitle ?? "Test template",
+    label: spec.label,
+    badge: spec.badge ?? `${days.length} day${days.length === 1 ? "" : "s"}`,
+    category: spec.category ?? "Test",
+    description:
+      spec.description ?? `Placeholder ${spec.title} for /programs/ grid and layout testing.`,
+    program: {
+      v: 1,
+      u: spec.u ?? "lb",
+      m: spec.m ?? { squat: "225", bench: "185", deadlift: "275" },
+      c: [{ n: spec.block ?? "Test block" }],
+      weeks,
+    },
+  });
+}
+
 /** @type {ProgramCard[]} */
 export const PROGRAMS = [
   {
@@ -332,4 +363,189 @@ export const PROGRAMS = [
       ],
     },
   },
+  // ——— Test templates (grid / layout) ———
+  miniProgram({ id: "test-squat-day", title: "Squat day", label: "Popular", lift: "Squat", category: "Squat" }),
+  miniProgram({
+    id: "test-bench-day",
+    title: "Bench day",
+    label: "High rated",
+    lift: "Bench Press",
+    category: "Bench",
+  }),
+  miniProgram({
+    id: "test-deadlift-day",
+    title: "Deadlift day",
+    lift: "Deadlift",
+    category: "Deadlift",
+    badge: "1 day",
+  }),
+  miniProgram({
+    id: "test-2-day-ul",
+    title: "2-day upper / lower",
+    badge: "2 days",
+    days: [
+      { label: "DAY 1 - UPPER", rows: [row("Bench Press", 3, 8, { pct: "70", rest: "02:30" })] },
+      { label: "DAY 2 - LOWER", rows: [row("Squat", 3, 8, { pct: "70", rest: "03:00" })] },
+    ],
+  }),
+  miniProgram({
+    id: "test-5-day",
+    title: "5-day split",
+    badge: "5 days",
+    category: "Hypertrophy",
+    days: [
+      { label: "DAY 1", rows: [row("Squat", 3, 6)] },
+      { label: "DAY 2", rows: [row("Bench Press", 3, 6)] },
+      { label: "DAY 3", rows: [row("Deadlift", 3, 5)] },
+      { label: "DAY 4", rows: [row("Overhead Press", 3, 8)] },
+      { label: "DAY 5", rows: [row("Barbell Row", 3, 10)] },
+    ],
+  }),
+  miniProgram({
+    id: "test-volume-squat",
+    title: "Volume squat",
+    subtitle: "Higher rep squats",
+    label: "Popular",
+    category: "Squat",
+    days: [{ label: "DAY 1", rows: [row("Squat", 5, 10, { rpe: "7", rest: "02:00" })] }],
+  }),
+  miniProgram({
+    id: "test-deload",
+    title: "Deload week",
+    label: "Recovery",
+    category: "Deload",
+    days: [
+      {
+        label: "DAY 1",
+        rows: [
+          row("Squat", 2, 5, { pct: "60", rest: "02:00" }),
+          row("Bench Press", 2, 5, { pct: "60", rest: "02:00" }),
+        ],
+      },
+    ],
+  }),
+  miniProgram({
+    id: "test-rpe-block",
+    title: "RPE block",
+    subtitle: "Autoregulated",
+    category: "RPE",
+    days: [{ label: "DAY 1", rows: [row("Squat", 4, 6, { rpe: "8", rest: "03:00" })] }],
+  }),
+  miniProgram({
+    id: "test-kg",
+    title: "KG template",
+    u: "kg",
+    m: { squat: "140", bench: "100", deadlift: "180" },
+    category: "Metric",
+  }),
+  miniProgram({
+    id: "test-2-week",
+    title: "2-week block",
+    weeks: 2,
+    badge: "2 days",
+    days: [
+      { label: "DAY 1", rows: [row("Squat", 3, 5)] },
+      { label: "DAY 2", rows: [row("Bench Press", 3, 5)] },
+    ],
+  }),
+  miniProgram({
+    id: "test-3-week-peak",
+    title: "3-week peak",
+    label: "Peaking",
+    weeks: 3,
+    category: "Meet prep",
+    days: [{ label: "DAY 1", rows: [row("Squat", 3, 3, { pct: "80", rest: "04:00" })] }],
+  }),
+  miniProgram({
+    id: "test-push-pull",
+    title: "Push / pull",
+    badge: "2 days",
+    days: [
+      { label: "PUSH", rows: [row("Bench Press", 4, 6)] },
+      { label: "PULL", rows: [row("Barbell Row", 4, 8)] },
+    ],
+  }),
+  miniProgram({
+    id: "test-accessories",
+    title: "Accessories only",
+    category: "Accessory",
+    days: [
+      {
+        label: "DAY 1",
+        rows: [
+          row("Lat Pulldown", 3, 12, { rpe: "8", rest: "01:30" }),
+          row("Leg Curl", 3, 12, { rpe: "8", rest: "01:30" }),
+        ],
+      },
+    ],
+  }),
+  miniProgram({
+    id: "test-home-gym",
+    title: "Home gym",
+    subtitle: "Minimal equipment",
+    label: "New lifter",
+    category: "Starter",
+    days: [{ label: "DAY 1", rows: [row("Bench Press", 3, 10, { load: "95", rest: "02:00" })] }],
+  }),
+  miniProgram({
+    id: "test-4-day-push",
+    title: "4-day push focus",
+    badge: "4 days",
+    category: "Bench",
+    days: [
+      { label: "DAY 1", rows: [row("Bench Press", 4, 5)] },
+      { label: "DAY 2", rows: [row("Close-Grip Bench", 3, 8)] },
+      { label: "DAY 3", rows: [row("Squat", 3, 6)] },
+      { label: "DAY 4", rows: [row("Overhead Press", 3, 8)] },
+    ],
+  }),
+  miniProgram({
+    id: "test-heavy-single",
+    title: "Heavy single",
+    label: "Classic",
+    category: "Percentage",
+    days: [{ label: "DAY 1", rows: [row("Deadlift", 1, 1, { pct: "90", rest: "05:00" })] }],
+  }),
+  miniProgram({
+    id: "test-pause-bench",
+    title: "Pause bench",
+    category: "Bench",
+    days: [{ label: "DAY 1", rows: [row("Pause Bench", 4, 4, { pct: "75", rest: "03:00" })] }],
+  }),
+  miniProgram({
+    id: "test-front-squat",
+    title: "Front squat day",
+    category: "Squat",
+    days: [{ label: "DAY 1", rows: [row("Front Squat", 4, 6, { rpe: "7.5", rest: "02:30" })] }],
+  }),
+  miniProgram({
+    id: "test-condensed-sbd",
+    title: "Condensed SBD",
+    subtitle: "One lift per day",
+    label: "Popular",
+    badge: "3 days",
+    category: "Full powerlifting",
+    days: [
+      { label: "SQUAT", rows: [row("Squat", 3, 5)] },
+      { label: "BENCH", rows: [row("Bench Press", 3, 5)] },
+      { label: "DEADLIFT", rows: [row("Deadlift", 3, 5)] },
+    ],
+  }),
+  miniProgram({
+    id: "test-6-day",
+    title: "6-day frequency",
+    badge: "6 days",
+    category: "Hypertrophy",
+    days: Array.from({ length: 6 }, (_, i) => ({
+      label: `DAY ${i + 1}`,
+      rows: [row("Bench Press", 2, 8, { rpe: "7", rest: "01:30" })],
+    })),
+  }),
+  miniProgram({
+    id: "test-technique",
+    title: "Technique day",
+    subtitle: "Light singles",
+    category: "Technique",
+    days: [{ label: "DAY 1", rows: [row("Squat", 5, 3, { pct: "65", rest: "02:00" })] }],
+  }),
 ];
