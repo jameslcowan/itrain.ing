@@ -5,6 +5,9 @@ Static, zero-build program builder where **the entire program lives in the URL**
 ## What this is
 - Marketing landing at `/` (`index.html`, `landing.css`, `landing.js`)
 - Blog at `/blog/` (Markdown in `content/articles/`, built by `blog/build.mjs`; see [docs/BLOG.md](docs/BLOG.md))
+- FAQ at `/faq/` and on the landing page `#faq` (content in `content/faq-data.js`; `faq/build.mjs` generates both)
+- Terms at `/terms/`, Privacy at `/privacy/` (`legal/build.mjs`)
+- Shared footer on marketing pages (`site/footer.mjs`, `site-footer.css`; not on `/app`)
 - Program builder at `/app` (`app.html`, `app.css`, `app.js`, `state-codec.js`, `theme.js`)
 - Client-only (no accounts, no backend yet)
 - Sharing = copy the URL
@@ -58,7 +61,7 @@ node --test tests/codec.test.mjs
 Use the dev server so `/app`, `/app/*`, and legacy `/program/*` match production:
 
 ```bash
-npm install && npm run build:blog   # regenerate /blog from Markdown
+npm install && npm run build   # regenerate /blog, /faq, /terms, /privacy, and footers
 python scripts/dev-server.py
 ```
 

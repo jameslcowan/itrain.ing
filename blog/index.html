@@ -28,8 +28,10 @@
     <link rel="stylesheet" href="/site-header.css" />
     <link rel="stylesheet" href="/site-menu.css" />
     <link rel="stylesheet" href="/landing.css" />
+    <link rel="stylesheet" href="/site-footer.css" />
     <link rel="stylesheet" href="/blog.css" />
     <link rel="stylesheet" href="/blog/hljs.css" />
+
     <script src="/fonts-boot.js"></script>
     <script src="/landing-boot.js"></script>
     <script type="application/ld+json">
@@ -59,7 +61,7 @@
         <nav class="site-header__nav" aria-label="Primary">
           <a href="/#how-it-works">How it works</a>
           <a href="/blog/" aria-current="page">Blog</a>
-          <a href="/#faq">FAQ</a>
+          <a href="/faq/">FAQ</a>
         </nav>
         <div class="site-header__actions">
           <a class="site-header__btn site-header__btn--primary site-header__cta--launch" href="/app">Launch App</a>
@@ -79,7 +81,7 @@
         <nav class="site-menu__nav" aria-label="Mobile">
           <a class="site-menu__link" href="/#how-it-works">How it works</a>
           <a class="site-menu__link" href="/blog/" aria-current="page">Blog</a>
-          <a class="site-menu__link" href="/#faq">FAQ</a>
+          <a class="site-menu__link" href="/faq/">FAQ</a>
         </nav>
         <div class="site-menu__foot">
           <a class="site-menu__btn site-menu__btn--primary" href="/app">Launch App</a>
@@ -117,24 +119,44 @@
     <li class="blog-card">
       <a class="blog-card__link" href="/blog/how-sharing-works/">
         <h2 class="blog-card__title">How Sharing Works on powerlift.ing</h2>
-        <p class="blog-card__desc">Your whole program lives in the URL. Here is what that means for privacy, updates, and sending plans to athletes.</p>
+        <p class="blog-card__desc">Your whole program lives in one open link. Send it to athletes, post it for lifters to learn from, and update it as you edit.</p>
         <p class="blog-card__meta"><time datetime="2026-05-20">May 20, 2026</time></p>
       </a>
     </li>
   </ul>
 </main>
-    <footer class="lp-footer">
-      <div class="lp-footer__inner">
-        <p class="lp-footer__credit">
-          © powerlift.ing · Made by
-          <a href="https://x.com/jameslcowan" target="_blank" rel="noopener noreferrer">James L. Cowan</a>
-        </p>
-        <div class="lp-footer__links">
-          <a href="/app">Launch App</a>
-          <a href="/blog/">Blog</a>
-        </div>
-      </div>
-    </footer>
+    <footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <a class="site-footer__logo" href="/">powerlift<span class="site-header__dot">.</span>ing</a>
+      <p class="site-footer__tagline">Free powerlifting program builder. Share whole programs as one open link.</p>
+    </div>
+    <nav class="site-footer__col" aria-label="Product">
+      <h2 class="site-footer__heading">Product</h2>
+      <ul class="site-footer__list">
+        <li><a href="/app">Launch App</a></li>
+        <li><a href="/#how-it-works">How it works</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+      </ul>
+    </nav>
+    <nav class="site-footer__col" aria-label="Resources">
+      <h2 class="site-footer__heading">Resources</h2>
+      <ul class="site-footer__list">
+        <li><a href="/blog/">Blog</a></li>
+      </ul>
+    </nav>
+    <nav class="site-footer__col" aria-label="Legal">
+      <h2 class="site-footer__heading">Legal</h2>
+      <ul class="site-footer__list">
+        <li><a href="/privacy/">Privacy Policy</a></li>
+        <li><a href="/terms/">Terms of Service</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="site-footer__bottom">
+    <p class="site-footer__copy">© 2026 powerlift.ing · Made by <a href="https://x.com/jameslcowan" target="_blank" rel="noopener noreferrer">James L. Cowan</a></p>
+  </div>
+</footer>
     <script src="/landing.js" defer></script>
   </body>
 </html>

@@ -7,7 +7,9 @@
   },
   "scripts": {
     "build:blog": "node blog/build.mjs",
-    "build": "node blog/build.mjs"
+    "build:faq": "node faq/build.mjs",
+    "build:legal": "node legal/build.mjs",
+    "build": "node blog/build.mjs && node faq/build.mjs && node legal/build.mjs"
   },
   "dependencies": {
     "highlight.js": "^11.11.1",

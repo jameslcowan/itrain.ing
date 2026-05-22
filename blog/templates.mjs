@@ -1,4 +1,5 @@
 import { BLOG_META, SITE_URL } from "../content/blog-meta.js";
+import { renderSiteFooter } from "../site/footer.mjs";
 
 export function escapeHtml(s) {
   return String(s ?? "")
@@ -14,6 +15,7 @@ function jsonLdScript(obj) {
 
 function siteMenu(navActive) {
   const blogCurrent = navActive === "blog" ? ' aria-current="page"' : "";
+  const faqCurrent = navActive === "faq" ? ' aria-current="page"' : "";
   return `
     <div id="landingMenu" class="site-menu" hidden>
       <button id="landingMenuClose" class="site-menu__close" type="button" aria-label="Close menu">
@@ -24,7 +26,7 @@ function siteMenu(navActive) {
         <nav class="site-menu__nav" aria-label="Mobile">
           <a class="site-menu__link" href="/#how-it-works">How it works</a>
           <a class="site-menu__link" href="/blog/"${blogCurrent}>Blog</a>
-          <a class="site-menu__link" href="/#faq">FAQ</a>
+          <a class="site-menu__link" href="/faq/"${faqCurrent}>FAQ</a>
         </nav>
         <div class="site-menu__foot">
           <a class="site-menu__btn site-menu__btn--primary" href="/app">Launch App</a>
@@ -46,6 +48,7 @@ export function renderShell({
   ogImage,
   mainHtml,
   jsonLd = [],
+  extraStylesheets = [],
 }) {
   const canonical = `${SITE_URL}${canonicalPath}`;
   const pageTitle = title.includes("powerlift") ? title : `${title} · ${BLOG_META.titleSuffix}`;
@@ -53,6 +56,12 @@ export function renderShell({
   const ld = jsonLd.map(jsonLdScript).join("\n");
 
   const blogNavCurrent = canonicalPath.startsWith("/blog") ? ' aria-current="page"' : "";
+  const faqNavCurrent = canonicalPath === "/faq/" ? ' aria-current="page"' : "";
+  const extraCss = extraStylesheets
+    .map((href) => `    <link rel="stylesheet" href="${escapeHtml(href)}" />`)
+    .join("\n");
+  const bodyClass =
+    canonicalPath === "/faq/" ? "landingPage blogPage faqPage" : "landingPage blogPage";
 
   return `<!doctype html>
 <html lang="en" class="lp-boot">
@@ -84,13 +93,15 @@ export function renderShell({
     <link rel="stylesheet" href="/site-header.css" />
     <link rel="stylesheet" href="/site-menu.css" />
     <link rel="stylesheet" href="/landing.css" />
+    <link rel="stylesheet" href="/site-footer.css" />
     <link rel="stylesheet" href="/blog.css" />
     <link rel="stylesheet" href="/blog/hljs.css" />
+${extraCss ? `${extraCss}\n` : ""}
     <script src="/fonts-boot.js"></script>
     <script src="/landing-boot.js"></script>
 ${ld}
   </head>
-  <body class="landingPage blogPage">
+  <body class="${bodyClass}">
     <a class="srOnly" href="#main">Skip to content</a>
     <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
       <symbol id="i-dark-mode" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -107,7 +118,7 @@ ${ld}
         <nav class="site-header__nav" aria-label="Primary">
           <a href="/#how-it-works">How it works</a>
           <a href="/blog/"${blogNavCurrent}>Blog</a>
-          <a href="/#faq">FAQ</a>
+          <a href="/faq/"${faqNavCurrent}>FAQ</a>
         </nav>
         <div class="site-header__actions">
           <a class="site-header__btn site-header__btn--primary site-header__cta--launch" href="/app">Launch App</a>
@@ -117,20 +128,9 @@ ${ld}
         </div>
       </div>
     </header>
-${siteMenu(canonicalPath.startsWith("/blog") ? "blog" : "")}
+${siteMenu(canonicalPath === "/faq/" ? "faq" : canonicalPath.startsWith("/blog") ? "blog" : "")}
     ${mainHtml}
-    <footer class="lp-footer">
-      <div class="lp-footer__inner">
-        <p class="lp-footer__credit">
-          © powerlift.ing · Made by
-          <a href="https://x.com/jameslcowan" target="_blank" rel="noopener noreferrer">James L. Cowan</a>
-        </p>
-        <div class="lp-footer__links">
-          <a href="/app">Launch App</a>
-          <a href="/blog/">Blog</a>
-        </div>
-      </div>
-    </footer>
+    ${renderSiteFooter()}
     <script src="/landing.js" defer></script>
   </body>
 </html>`;
