@@ -794,7 +794,7 @@ html[data-theme="light"]{ color-scheme: light; }
       minmax(0, 1.3fr)         /* Variation */
       72px                     /* Sets */
       72px                     /* Reps */
-      128px                    /* Load (+ unit suffix) */
+      112px                    /* Load (+ unit suffix) */
       72px                     /* %1RM */
       72px                     /* RPE */
       96px;                    /* Rest */
@@ -826,7 +826,7 @@ html[data-theme="light"]{ color-scheme: light; }
       minmax(0, 1.3fr)
       72px
       72px
-      128px
+      112px
       72px
       72px
       96px;
