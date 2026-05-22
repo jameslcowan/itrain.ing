@@ -71,4 +71,7 @@ Plain `python -m http.server` only serves `/`; shared `/app/…` links will 404 
 ## Deployment (Netlify)
 Publishes from repo root (`.`). `netlify.toml` routes `/app`, `/app/*`, legacy `/program/*`, and `/p/*` to `app.html`. `/` serves `index.html`.
 
+## Analytics
+First-party Netlify analytics (collect → daily rollup → GitHub snapshots). Sign in at `/.netlify/functions/analytics-login` after deploy. Setup: [docs/ANALYTICS.md](docs/ANALYTICS.md).
+
 

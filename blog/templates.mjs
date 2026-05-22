@@ -152,6 +152,7 @@ ${siteMenu(navActive)}
     ${mainHtml}
     ${renderSiteFooter()}
     <script src="/landing.js" defer></script>
+    <script type="module" src="/analytics.js" defer></script>
 ${extraJs ? `${extraJs}\n` : ""}
   </body>
 </html>`;
