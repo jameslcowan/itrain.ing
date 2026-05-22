@@ -36,4 +36,4 @@ Tap the share icon in the header. The link is copied to your clipboard. Send it 
 
 ## Next steps
 
-Read [how sharing works](/blog/how-sharing-works/) for open links and length notes. When the free program library ships, you will be able to open classic templates from `/programs/` and edit them in the same editor.
+Read [how sharing works](/blog/how-sharing-works/) for open links and length notes. Or start from a free template on [/programs/](/programs/) and edit it in the same editor.
