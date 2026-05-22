@@ -838,11 +838,6 @@ html[data-theme="light"]{ color-scheme: light; }
   }
   .colHeader div{ padding: 0 2px; }
 
-  .rowGrid .field--load .loadInput__value{
-    text-align:left;
-    padding-left:8px;
-    padding-right:4px;
-  }
   .rowGrid .field--load .loadInput__unit{
     padding:0 8px;
     font-size:0.8125rem;
