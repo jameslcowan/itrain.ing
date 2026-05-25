@@ -20,9 +20,13 @@
   --border: #e5e5e5;
   --border2: #d4d4d4;
 
-  /* Legacy names — same neutral ramp (shared CSS) */
-  --pl-plate: var(--text-strong);
-  --pl-plate-dim: var(--muted);
+  /* Hi-vis mark (sparingly — not for surfaces; see brand-typography.css) */
+  --brand-hi: #ccff00;
+  --brand-hi-dim: #a3d900;
+  --pl-plate: var(--brand-hi);
+  --pl-plate-dim: var(--brand-hi-dim);
+
+  /* Shared CSS hooks — stay neutral so clones do not wash pages in neon */
   --accent: var(--muted);
   --accent-muted: color-mix(in srgb, var(--text) 5%, transparent);
   --cta-bg: var(--text-strong);
@@ -30,7 +34,7 @@
   --cta-fg: #ffffff;
   --danger: #dc2626;
   --success: #16a34a;
-  --focus-ring: color-mix(in srgb, var(--text) 28%, transparent);
+  --focus-ring: color-mix(in srgb, var(--brand-hi) 38%, transparent);
 
   --shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);

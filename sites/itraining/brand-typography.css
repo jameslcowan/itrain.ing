@@ -1,5 +1,5 @@
 /**
- * itrain.ing — Outfit + DM Sans; true monochrome (no chroma).
+ * itrain.ing — Monochrome UI; hi-vis #ccff00 on marks only (no surface tints).
  */
 
 /* No accent wash in hero or page backgrounds */
@@ -40,7 +40,7 @@ body.landingPage .lp-hero__title em {
   font-size: 0.42em;
   letter-spacing: 0.08em;
   text-transform: none;
-  color: var(--muted);
+  color: var(--pl-plate-dim);
 }
 
 .site-header__brand,
@@ -68,7 +68,7 @@ html.fonts-loaded .site-header__nav a {
 .site-header__dot,
 .brand__dot,
 .site-menu__dot {
-  color: var(--muted);
+  color: var(--pl-plate);
 }
 
 .site-menu__link,
@@ -135,7 +135,7 @@ body.builderPage .site-menu__btn--primary:hover {
 }
 
 body.landingPage .lp-badge {
-  border: 1px solid var(--border);
+  border: 1px solid color-mix(in srgb, var(--pl-plate) 32%, var(--border));
   background: var(--panel2);
   color: var(--muted);
   font-family: var(--mono);
@@ -272,9 +272,23 @@ body.landingPage.notfoundPage .notfound__links a:hover {
   color: var(--text-strong);
 }
 
-/* App builder — monochrome chrome */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) body.landingPage .lp-hero__title em {
+    color: var(--pl-plate);
+  }
+}
+
+html[data-theme="dark"] body.landingPage .lp-hero__title em {
+  color: var(--pl-plate);
+}
+
+/* App builder — monochrome chrome; hi-vis on mark + focus only */
 body.builderPage input[type="checkbox"] {
-  accent-color: var(--text-strong);
+  accent-color: var(--pl-plate);
+}
+
+body.builderPage .brand__wordmark .brand__dot {
+  color: var(--pl-plate);
 }
 
 body.landingPage .legal-doc a {
