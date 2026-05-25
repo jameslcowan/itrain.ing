@@ -1,0 +1,161 @@
+/**
+ * FAQ on /faq/ and landing #faq — readable spacing for long answers
+ */
+
+.faqPage .blog-main,
+.landingPage .lp-faq-full {
+  max-width: 42rem;
+}
+
+.faq-page__head {
+  margin-bottom: var(--lp-space-6, 40px);
+}
+
+.faq-page__title {
+  margin: 0 0 var(--lp-space-3, 16px);
+  font-family: var(--font-display-fallback, system-ui, sans-serif);
+  font-size: var(--lp-display, 2.25rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.05;
+  color: var(--text-strong);
+}
+
+html.fonts-loaded .faq-page__title {
+  font-family: var(--font-display);
+}
+
+.faq-page__lead {
+  margin: 0 0 var(--lp-space-5, 28px);
+  font-size: var(--lp-lead, 1.125rem);
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 38rem;
+}
+
+.faq-page__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.faq-page__nav a {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: var(--radius-pill, 999px);
+  border: 1px solid var(--border2);
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  background: color-mix(in srgb, var(--panel) 88%, transparent);
+}
+
+.faq-page__nav a:hover {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border2));
+  color: var(--accent);
+}
+
+.faq-section {
+  margin-bottom: var(--lp-space-7, 56px);
+  scroll-margin-top: calc(var(--lp-header-h, 56px) + 20px);
+}
+
+.faq-section:last-of-type {
+  margin-bottom: var(--lp-space-6, 40px);
+}
+
+.faq-section__title {
+  margin: 0 0 var(--lp-space-5, 28px);
+  padding-bottom: var(--lp-space-3, 16px);
+  border-bottom: 1px solid var(--border);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-strong);
+}
+
+/* More space between questions */
+.lp-faq-full .lp-faq {
+  gap: var(--lp-space-4, 20px);
+}
+
+.lp-faq-full .lp-faq details {
+  border-color: var(--border2);
+}
+
+.lp-faq-full .lp-faq summary {
+  padding: var(--lp-space-4, 20px) var(--lp-space-4, 20px);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.lp-faq-full .lp-faq details[open] summary {
+  padding-bottom: var(--lp-space-3, 16px);
+}
+
+/* Answer body: room to read */
+.lp-faq-full .lp-faq p,
+.lp-faq-full .lp-faq ul {
+  margin: 0;
+  padding: var(--lp-space-4, 20px) var(--lp-space-5, 28px) var(--lp-space-5, 28px);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--text);
+  border-top: 1px solid var(--border);
+}
+
+.lp-faq-full .lp-faq ul {
+  padding-left: calc(var(--lp-space-5, 28px) + 1.25rem);
+  list-style: disc;
+}
+
+.lp-faq-full .lp-faq li + li {
+  margin-top: var(--lp-space-3, 16px);
+}
+
+.lp-faq-full .lp-faq li {
+  line-height: 1.75;
+  color: var(--text);
+}
+
+.lp-faq-full .lp-faq p a,
+.lp-faq-full .lp-faq li a {
+  color: var(--accent);
+  font-weight: 600;
+  text-underline-offset: 2px;
+}
+
+.lp-faq-full .lp-faq code {
+  font-size: 0.9em;
+  word-break: break-word;
+}
+
+.landingPage .lp-faq-full .faq-page__nav {
+  margin-bottom: var(--lp-space-6, 40px);
+}
+
+.faq-page__cta {
+  margin-top: var(--lp-space-7, 56px);
+  padding: var(--lp-space-5, 28px);
+  border-radius: var(--lp-radius, 14px);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border2));
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.faq-page__cta p {
+  margin: 0 0 var(--lp-space-4, 20px);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--muted);
+}
+
+.faq-page__cta .lp-btn {
+  display: inline-flex;
+}

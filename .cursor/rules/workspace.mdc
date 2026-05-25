@@ -1,0 +1,12 @@
+---
+description: Canonical itrain.ing monorepo workspace
+alwaysApply: true
+---
+
+# Workspace
+
+This repo is **itrain.ing** (`/home/jameslcowan/Documents/GitHub/itrain.ing`).
+
+- Do not edit `/home/jameslcowan/Documents/GitHub/powerlift.ing` (legacy clone).
+- Session context: `docs/HANDOFF.md`
+- Monorepo plan: `docs/MONOREPO.md`

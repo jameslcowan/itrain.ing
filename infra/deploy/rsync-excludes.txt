@@ -1,10 +1,4 @@
 .git
 .github
-.cursor
 node_modules
-infra
-docs
-sites
-*.code-workspace
-.env
-.env.*
+.cursor

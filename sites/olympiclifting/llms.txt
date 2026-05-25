@@ -1,0 +1,54 @@
+powerlift.ing
+
+Positioning (simple)
+- powerlift.ing is a **free powerlifting program builder**.
+- Build a squat/bench/deadlift program (SBD), then **share it as a single link**.
+- No signup. No spreadsheets. Works on mobile. Coach/training-partner friendly.
+
+Common search terms (what this covers)
+- powerlifting program / powerlifting program builder / strength program
+- periodization / mesocycle / hypertrophy block / strength block / peaking / meet prep
+- RPE / %1RM / rest times / squat bench deadlift
+
+Creator
+- James L. Cowan (@jameslcowan) — https://x.com/jameslcowan
+
+Routing (share link formats)
+- Current (default): /app/<STATE>
+- Legacy (still works): /p/<STATE>
+- Legacy (still works): /#/p/<STATE>
+
+Important: do not break shared links
+- The URL/state contract must remain backward compatible.
+
+Encoding (high level)
+- The app compresses program JSON using lz-string, then base64url encodes it.
+- The app currently emits a newer compact payload, but still decodes older payloads.
+
+Program JSON schema (authoring shape, v1)
+{
+  "v": 1,
+  "u": "lb" | "kg",
+  "c": [{ "n": "Meso 1" }, ...],
+  "weeks": [
+    {
+      "c": 0,
+      "days": [
+        {
+          "label": "DAY 1 - MON",
+          "rows": [
+            { "ex": "", "mode": "", "sets": "", "reps": "", "load": "", "pct": "", "rpe": "", "rest": "" }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+How to generate a real link
+- If you can execute code: follow the app’s encoding (lz-string + base64url) and output /app/<STATE>.
+- If you can’t: output the program JSON and tell the user to paste it into https://powerlift.ing/app (the editor encodes the URL as they work).
+
+Indexing guidance
+- The homepage should be indexable.
+- /app/*, /program/*, and /p/* should be noindex (user-generated, effectively infinite).

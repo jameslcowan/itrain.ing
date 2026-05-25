@@ -1,0 +1,74 @@
+powerlift.ing — AI assistant guide (short)
+
+If a user says “make me a workout for powerlift.ing”, they usually want a share link they can open in the app.
+
+What powerlift.ing is
+- A static, client-only program builder.
+- No accounts, no backend.
+- The entire program is stored in the URL.
+
+Routing (share link formats)
+- Current (default): https://powerlift.ing/app/<STATE>
+- Legacy (still works): https://powerlift.ing/p/<STATE>
+- Legacy (still works): https://powerlift.ing/#/p/<STATE>
+
+Do not break shared links
+- Existing links depend on the encoding contract below. Keep backward compatibility.
+
+How <STATE> works (encoding)
+- The app compresses JSON using lz-string, then base64url encodes it.
+- The app currently emits a newer compact payload, but still accepts/decodes older payloads.
+
+If you can’t execute code
+- Do NOT invent a fake <STATE>.
+- Instead output:
+  - the program (human readable)
+  - the program JSON (v1 schema below)
+  - and tell the user to open https://powerlift.ing/app and build the program there (the URL updates as they edit)
+
+Program JSON schema (authoring shape, v1)
+{
+  "v": 1,
+  "u": "lb" | "kg",
+  "c": [{ "n": "Meso 1" }, ...],
+  "weeks": [
+    {
+      "c": 0,
+      "days": [
+        {
+          "label": "DAY 1 - MON",
+          "rows": [
+            { "ex": "", "mode": "", "sets": "", "reps": "", "load": "", "pct": "", "rpe": "", "rest": "" }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+Minimal example JSON (1 week, 3 days)
+{
+  "v": 1,
+  "u": "kg",
+  "c": [{ "n": "Meso 1" }],
+  "weeks": [
+    {
+      "c": 0,
+      "days": [
+        { "label": "DAY 1 - MON", "rows": [
+          { "ex": "Squat", "mode": "", "sets": "4", "reps": "6", "load": "", "pct": "", "rpe": "7.5", "rest": "03:00" },
+          { "ex": "Bench Press", "mode": "", "sets": "4", "reps": "6", "load": "", "pct": "", "rpe": "7.5", "rest": "02:30" }
+        ]},
+        { "label": "DAY 2 - WED", "rows": [
+          { "ex": "Deadlift", "mode": "", "sets": "3", "reps": "5", "load": "", "pct": "", "rpe": "7.5", "rest": "03:30" }
+        ]},
+        { "label": "DAY 3 - FRI", "rows": [
+          { "ex": "Squat", "mode": "Paused (2s)", "sets": "3", "reps": "4", "load": "", "pct": "", "rpe": "8", "rest": "03:00" }
+        ]}
+      ]
+    }
+  ]
+}
+
+Where to get the machine-readable contract
+- https://powerlift.ing/llms.txt

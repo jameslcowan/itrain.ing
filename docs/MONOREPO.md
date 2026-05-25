@@ -24,15 +24,10 @@ itrain.ing/                          # GitHub repo name (rename from powerlift.i
 │   ├── ANALYTICS.md
 │   └── …
 ├── sites/
-│   ├── powerlift.ing/               # Today’s app (moved from repo root)
-│   │   ├── package.json
-│   │   ├── index.html, app.html, …
-│   │   ├── content/, blog/, faq/, programs/, legal/, site/
-│   │   ├── netlify.toml             # Until DO cutover; base dir = this folder
-│   │   └── tests/
-│   ├── olympiclift.ing/             # Scaffold → full site
-│   ├── powerbuild.ing/
-│   └── bootybuild.ing/
+│   ├── powerlifting/                # powerlift.ing (moved from repo root)
+│   ├── powerbuilding/               # powerbuild.ing (copy — rebrand TBD)
+│   ├── olympiclifting/              # olympiclift.ing (copy — rebrand TBD)
+│   └── bootybuilding/               # bootybuild.ing (copy — rebrand TBD)
 ├── packages/                        # Shared libraries (extract over time)
 │   ├── tokens/                      # design-tokens.css, fonts.css
 │   ├── site-shell/                  # header, footer, menu, theme.js
@@ -50,40 +45,39 @@ itrain.ing/                          # GitHub repo name (rename from powerlift.i
     └── systemd/                     # analytics.service, etc. (later)
 ```
 
-**Not at repo root after migration:** `index.html`, `app.js`, `content/`, etc. — only under `sites/powerlift.ing/`.
+**Not at repo root:** app code — only under `sites/<name>/`.
 
 ## Site identity
 
 | `site_id` (DB / analytics) | Domain | Folder |
 |----------------------------|--------|--------|
-| `powerlift` | powerlift.ing | `sites/powerlift.ing/` |
-| `olympiclift` | olympiclift.ing | `sites/olympiclift.ing/` |
-| `powerbuild` | powerbuild.ing | `sites/powerbuild.ing/` |
-| `bootybuild` | bootybuild.ing | `sites/bootybuild.ing/` |
+| `powerlift` | powerlift.ing | `sites/powerlifting/` |
+| `olympiclift` | olympiclift.ing | `sites/olympiclifting/` |
+| `powerbuild` | powerbuild.ing | `sites/powerbuilding/` |
+| `bootybuild` | bootybuild.ing | `sites/bootybuilding/` |
 
 Optional later: `itrain` for a hub at itrain.ing (marketing only).
 
 ## Phased migration
 
-### Phase 0 — Now (current)
+### Phase 0 — Deploy powerlifting
 
-- [x] `sites/*` scaffolds + `docs/SUITE.md`
-- [x] `infra/caddy`, `infra/deploy`, `.github/workflows/deploy.yml` (deploys **repo root**)
+- [x] Repo → `itrain.ing` on GitHub
+- [x] App under `sites/powerlifting/` (+ sister copies)
+- [x] `infra/caddy`, deploy workflow → `sites/powerlifting/`
 - [ ] DO droplet live for powerlift.ing (see [DEPLOY.md](DEPLOY.md))
 - [ ] GitHub Actions secrets + green deploy
 
-**Do not rename repo or move files until Phase 0 deploy works.**
-
 ### Phase 1 — Rename repo
 
-1. GitHub: **Rename** `powerlift.ing` → `itrain.ing` (Settings → General).
-2. Local: `git remote set-url origin git@github.com:<user>/itrain.ing.git`
-3. Update README title, `package.json` `"name"` → `itrain.ing` (root or after move).
-4. Netlify: reconnect site to renamed repo (GitHub redirect usually handles it).
-
-No file moves yet; deploy path unchanged.
+Done: **itrain.ing** repo exists.
 
 ### Phase 2 — Move powerlift into `sites/`
+
+Done: **`sites/powerlifting/`** (+ copies `powerbuilding`, `olympiclifting`, `bootybuilding`).
+
+<details>
+<summary>Original Phase 2 git mv notes (historical)</summary>
 
 One PR, single focus:
 
@@ -121,6 +115,8 @@ Add root `package.json` scripts:
   }
 }
 ```
+
+</details>
 
 ### Phase 3 — Multi-site deploy
 

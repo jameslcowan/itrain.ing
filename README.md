@@ -2,9 +2,16 @@
 
 Monorepo for the **itrain.ing** app suite — shareable program builders on `.ing` domains.
 
-**Live product:** [powerlift.ing](https://powerlift.ing) (repo root until [Phase 2](docs/MONOREPO.md#phase-2--move-powerlift-into-sites) moves it to `sites/powerlift.ing/`).
+## Sites (`sites/`)
 
-**New here?** Read [docs/HANDOFF.md](docs/HANDOFF.md) for migration context, then [docs/MONOREPO.md](docs/MONOREPO.md).
+| Folder | Domain |
+|--------|--------|
+| [powerlifting/](sites/powerlifting/) | [powerlift.ing](https://powerlift.ing) |
+| [powerbuilding/](sites/powerbuilding/) | powerbuild.ing |
+| [olympiclifting/](sites/olympiclifting/) | olympiclift.ing |
+| [bootybuilding/](sites/bootybuilding/) | bootybuild.ing |
+
+Sister copies need branding, content, and deploy wiring — only **powerlifting** deploys to production today.
 
 ## Documentation
 
@@ -13,27 +20,16 @@ Monorepo for the **itrain.ing** app suite — shareable program builders on `.in
 | [docs/HANDOFF.md](docs/HANDOFF.md) | Session context + infra status |
 | [docs/MONOREPO.md](docs/MONOREPO.md) | Monorepo plan and phases |
 | [docs/DEPLOY.md](docs/DEPLOY.md) | DigitalOcean + GitHub Actions |
-| [docs/SITE.md](docs/SITE.md) | powerlift.ing routes and build |
-| [docs/SUITE.md](docs/SUITE.md) | Site roster |
+| [docs/SITE.md](docs/SITE.md) | Routes and build (powerlifting) |
 | [docs/TODO.md](docs/TODO.md) | Backlog |
 
-## Quick start (powerlift.ing app at repo root)
+## Quick start (powerlifting)
 
 ```bash
-npm install
-npm run build
-python scripts/dev-server.py   # http://127.0.0.1:8080
+cd sites/powerlifting && npm install && npm run build
+npm run dev:powerlifting   # from repo root
 ```
 
 ```bash
-node --test tests/codec.test.mjs
+cd sites/powerlifting && node --test tests/codec.test.mjs
 ```
-
-## Suite sites
-
-| Domain | Folder |
-|--------|--------|
-| powerlift.ing | `/` (→ `sites/powerlift.ing/` after Phase 2) |
-| olympiclift.ing | `sites/olympiclift.ing/` |
-| powerbuild.ing | `sites/powerbuild.ing/` |
-| bootybuild.ing | `sites/bootybuild.ing/` |

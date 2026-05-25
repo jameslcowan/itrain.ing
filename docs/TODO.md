@@ -18,7 +18,7 @@ Living backlog for the itrain.ing monorepo (powerlift.ing and sister sites). See
 - [ ] **Phase 0:** DO droplet + Caddy + GitHub Actions deploy (repo root) — [DEPLOY.md](DEPLOY.md)
 - [ ] DNS cutover powerlift.ing; keep Netlify as rollback until smoke tests pass
 - [ ] **Phase 1:** Rename GitHub repo → `itrain.ing`
-- [ ] **Phase 2:** Move app to `sites/powerlift.ing/` — [MONOREPO.md](MONOREPO.md)
+- [x] **Phase 2:** App under `sites/powerlifting/` (+ sister copies) — [MONOREPO.md](MONOREPO.md)
 - [ ] **Phase 3:** Matrix deploy per site
 - [ ] Design analytics ingest + DB schema (`site_id`) — **Phase 5**
 - [ ] Remove obsolete Netlify analytics env vars from Netlify UI after deploy

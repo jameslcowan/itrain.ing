@@ -18,9 +18,14 @@ Use this file when opening **`/home/jameslcowan/Documents/GitHub/itrain.ing`** i
 | [SUITE.md](SUITE.md) | Site roster |
 | [TODO.md](TODO.md) | Backlog |
 
-## Current layout (Phase 0 — pre-move)
+## Current layout
 
-App code still lives at **repo root** (not yet `sites/powerlift.ing/`). That move is **Phase 2** in MONOREPO.md.
+App code lives under **`sites/`**:
+
+- `sites/powerlifting/` — powerlift.ing (production)
+- `sites/powerbuilding/`, `sites/olympiclifting/`, `sites/bootybuilding/` — full copies; rebrand TBD
+
+Repo root: `docs/`, `infra/`, `.github/` only.
 
 ## Infrastructure state
 

@@ -1,21 +1,12 @@
 {
   "name": "itrain.ing",
   "private": true,
-  "type": "module",
-  "engines": {
-    "node": ">=22.0.0"
-  },
   "scripts": {
-    "build:blog": "node blog/build.mjs",
-    "build:faq": "node faq/build.mjs",
-    "build:legal": "node legal/build.mjs",
-    "build:programs": "node programs/build.mjs",
-    "build:404": "node site/build-404.mjs",
-    "build": "node blog/build.mjs && node faq/build.mjs && node legal/build.mjs && node programs/build.mjs && node site/build-404.mjs"
-  },
-  "dependencies": {
-    "highlight.js": "^11.11.1",
-    "marked": "^11.1.1",
-    "marked-highlight": "^2.2.3"
+    "build": "npm run build --prefix sites/powerlifting",
+    "build:powerlifting": "npm run build --prefix sites/powerlifting",
+    "build:powerbuilding": "npm run build --prefix sites/powerbuilding",
+    "build:olympiclifting": "npm run build --prefix sites/olympiclifting",
+    "build:bootybuilding": "npm run build --prefix sites/bootybuilding",
+    "dev:powerlifting": "python sites/powerlifting/scripts/dev-server.py"
   }
 }

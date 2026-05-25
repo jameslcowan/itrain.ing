@@ -51,13 +51,13 @@ Repo → **Settings → Secrets and variables → Actions**:
 
 The matching **public** key must be in `/home/deploy/.ssh/authorized_keys` on the server.
 
-Workflow: [.github/workflows/deploy.yml](../.github/workflows/deploy.yml) — runs `npm ci && npm run build`, then rsync to `/var/www/powerlift.ing/`.
+Workflow: [.github/workflows/deploy.yml](../.github/workflows/deploy.yml) — builds `sites/powerlifting/`, rsyncs to `/var/www/powerlift.ing/`.
 
 ## Manual deploy (debug)
 
 ```bash
-npm ci && npm run build
-rsync -avzr --delete --exclude-from=infra/deploy/rsync-excludes.txt \
+cd sites/powerlifting && npm ci && npm run build
+rsync -avzr --delete --exclude-from=../../infra/deploy/rsync-excludes.txt \
   ./ deploy@YOUR_DROPLET_IP:/var/www/powerlift.ing/
 ```
 

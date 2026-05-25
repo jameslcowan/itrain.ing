@@ -1,0 +1,85 @@
+/**
+ * 404 page (Netlify serves /404.html for missing routes)
+ */
+
+.notfound-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: min(70vh, 32rem);
+  width: 100%;
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: var(--lp-space-6, 40px) max(var(--lp-pad-x, 24px), env(safe-area-inset-left, 0px))
+    calc(var(--lp-space-8, 72px) + env(safe-area-inset-bottom, 0px))
+    max(var(--lp-pad-x, 24px), env(safe-area-inset-right, 0px));
+  text-align: center;
+}
+
+.notfound__code {
+  margin: 0 0 var(--lp-space-2, 12px);
+  font-family: var(--font-display-fallback, system-ui, sans-serif);
+  font-size: clamp(3rem, 12vw, 4.5rem);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  color: var(--accent);
+}
+
+html.fonts-loaded .notfound__code {
+  font-family: var(--font-display);
+}
+
+.notfound__title {
+  margin: 0 0 var(--lp-space-3, 16px);
+  font-size: var(--lp-lead, 1.125rem);
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.notfound__lead {
+  margin: 0 0 var(--lp-space-5, 28px);
+  font-size: var(--lp-text, 1.0625rem);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.notfound__links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--lp-space-2, 12px);
+}
+
+.notfound__links a {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--lp-space-2, 12px) var(--lp-space-4, 20px);
+  border-radius: var(--lp-radius-md, 14px);
+  border: 1px solid var(--border2);
+  background: var(--panel);
+  color: var(--text);
+  font-size: var(--lp-text-sm, 0.9375rem);
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+}
+
+.notfound__links a:hover {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border2));
+  color: var(--accent);
+}
+
+.notfound__links a.lp-btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-fg, #fff);
+}
+
+.notfound__links a.lp-btn--primary:hover {
+  color: var(--accent-fg, #fff);
+  filter: brightness(1.05);
+}

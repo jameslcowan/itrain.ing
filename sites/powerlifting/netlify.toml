@@ -1,0 +1,41 @@
+[build]
+  command = "npm ci && npm run build"
+  publish = "."
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[headers]]
+  for = "/app/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+
+[[headers]]
+  for = "/program/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+
+[[headers]]
+  for = "/p/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+
+[[redirects]]
+  from = "/app"
+  to = "/app.html"
+  status = 200
+
+[[redirects]]
+  from = "/app/*"
+  to = "/app.html"
+  status = 200
+
+[[redirects]]
+  from = "/program/*"
+  to = "/app.html"
+  status = 200
+
+[[redirects]]
+  from = "/p/*"
+  to = "/app.html"
+  status = 200

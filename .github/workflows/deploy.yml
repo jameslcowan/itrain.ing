@@ -3,6 +3,10 @@ name: Deploy to DigitalOcean
 on:
   push:
     branches: [main]
+    paths:
+      - "sites/powerlifting/**"
+      - ".github/workflows/deploy.yml"
+      - "infra/**"
   workflow_dispatch:
 
 concurrency:
@@ -10,8 +14,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  deploy-powerlifting:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sites/powerlifting
     steps:
       - uses: actions/checkout@v4
 
@@ -19,13 +26,14 @@ jobs:
         with:
           node-version: "22"
           cache: npm
+          cache-dependency-path: sites/powerlifting/package-lock.json
 
       - run: npm ci && npm run build
 
       - name: Rsync to droplet
         uses: burnett01/rsync-deployments@7.0.1
         with:
-          switches: -avzr --delete --exclude-from=infra/deploy/rsync-excludes.txt
+          switches: -avzr --delete --exclude-from=../../infra/deploy/rsync-excludes.txt
           path: ./
           remote_path: /var/www/powerlift.ing/
           remote_host: ${{ secrets.DEPLOY_HOST }}
