@@ -1,6 +1,8 @@
-# powerlift.ing documentation
+# itrain.ing documentation
 
-Single place for how the site works, how to build it, and what to do next.
+Monorepo docs: suite plan, deploy, and powerlift.ing product details.
+
+**Context from prior workspace:** [HANDOFF.md](HANDOFF.md)
 
 | Doc | Purpose |
 |-----|---------|
