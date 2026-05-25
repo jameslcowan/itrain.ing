@@ -55,8 +55,8 @@ function miniProgram(spec) {
       spec.description ?? `Placeholder ${spec.title} for /programs/ grid and layout testing.`,
     program: {
       v: 1,
-      u: spec.u ?? "lb",
-      m: spec.m ?? { squat: "225", bench: "185", deadlift: "275" },
+      u: spec.u ?? "kg",
+      m: spec.m ?? { snatch: "100", "clean and jerk": "125" },
       c: [{ n: spec.block ?? "Test block" }],
       weeks,
     },
@@ -76,45 +76,45 @@ export const PROGRAMS = [
     program: null,
   },
   {
-    id: "3-day-sbd",
-    title: "3-day SBD",
-    subtitle: "Squat · bench · deadlift",
+    id: "3-day-olympic",
+    title: "3-day Olympic",
+    subtitle: "Snatch · C&J · technique",
     label: "Popular",
     badge: "3 days",
-    category: "Full strength",
+    category: "Competition lifts",
     description:
-      "Classic three-day full power layout: squat, bench, and deadlift each get a focused session. Percentages are left open so you can plug in your own maxes in Config.",
+      "Snatch day, clean & jerk day, and a technique/pull day. Set your competition maxes in Config so percentages fill in from your singles.",
     program: {
       v: 1,
-      u: "lb",
-      m: { squat: "315", bench: "225", deadlift: "365" },
-      c: [{ n: "Strength block" }],
+      u: "kg",
+      m: { snatch: "100", "clean and jerk": "125" },
+      c: [{ n: "Technique block" }],
       weeks: [
         {
           c: 0,
           days: [
             {
-              label: "DAY 1 - MON",
+              label: "DAY 1 - SNATCH",
               rows: [
-                row("Squat", 4, 6, { pct: "75", rest: "03:00" }),
-                row("Bench Press", 4, 8, { pct: "70", rest: "02:30" }),
-                row("Barbell Row", 3, 10, { rpe: "8", rest: "02:00" }),
+                row("Snatch", 5, 2, { pct: "78", rest: "03:00" }),
+                row("Hang Snatch", 3, 3, { pct: "72", rest: "02:30" }),
+                row("Snatch Pull", 3, 3, { rpe: "7.5", rest: "02:00" }),
               ],
             },
             {
-              label: "DAY 2 - WED",
+              label: "DAY 2 - C&J",
               rows: [
-                row("Deadlift", 3, 5, { pct: "78", rest: "03:30" }),
-                row("Overhead Press", 3, 8, { rpe: "7.5", rest: "02:00" }),
-                row("Pull-ups", 3, 8, { rpe: "8", rest: "02:00" }),
+                row("Clean & Jerk", 5, 2, { pct: "78", rest: "03:30" }),
+                row("Power Clean", 3, 3, { pct: "72", rest: "02:30" }),
+                row("Front Squat", 3, 4, { pct: "75", rest: "03:00" }),
               ],
             },
             {
-              label: "DAY 3 - FRI",
+              label: "DAY 3 - TECH",
               rows: [
-                row("Squat", 3, 4, { pct: "82", rest: "03:30" }),
-                row("Pause Bench", 4, 5, { pct: "75", rest: "03:00" }),
-                row("Romanian Deadlift", 3, 8, { rpe: "7.5", rest: "02:30" }),
+                row("Snatch", 3, 2, { pct: "70", rest: "03:00" }),
+                row("Clean & Jerk", 3, 2, { pct: "70", rest: "03:00" }),
+                row("Back Squat", 3, 5, { rpe: "8", rest: "03:00" }),
               ],
             },
           ],
