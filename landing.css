@@ -265,16 +265,17 @@ html.lp-intro-ready .lp-intro > .lp-intro__item:nth-child(6) { transition-delay:
   pointer-events: none;
 }
 
-/* Coarse grid behind hero copy */
+/* Coarse grid: lines match --bg; cells pick up a hint of contrast */
 .lp-hero::before {
   --lp-hero-grid: 24px;
+  --lp-hero-grid-line: var(--bg);
+  --lp-hero-grid-cell: color-mix(in srgb, var(--text) 5%, var(--bg));
   z-index: 0;
-  background-color: transparent;
+  background-color: var(--lp-hero-grid-cell);
   background-image:
-    linear-gradient(to right, color-mix(in srgb, var(--border) 65%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, var(--border) 65%, transparent) 1px, transparent 1px);
+    linear-gradient(to right, var(--lp-hero-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--lp-hero-grid-line) 1px, transparent 1px);
   background-size: var(--lp-hero-grid) var(--lp-hero-grid);
-  opacity: 0.55;
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
