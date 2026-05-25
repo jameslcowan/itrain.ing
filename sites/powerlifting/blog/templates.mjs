@@ -1,4 +1,5 @@
 import { BLOG_META, SITE_URL } from "../content/blog-meta.js";
+import { SITE_BRAND, brandWordmark } from "../content/site-brand.js";
 import { renderSiteFooter } from "../site/footer.mjs";
 
 export function escapeHtml(s) {
@@ -23,7 +24,7 @@ function siteMenu(navActive) {
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
       <div class="site-menu__inner" role="dialog" aria-modal="true" aria-label="Navigation">
-        <a class="site-menu__brand" href="/">powerlift<span class="site-menu__dot">.</span>ing</a>
+        <a class="site-menu__brand" href="/">${brandWordmark("site-menu__dot")}</a>
         <nav class="site-menu__nav" aria-label="Mobile">
           <a class="site-menu__link" href="/#how-it-works">How it works</a>
           <a class="site-menu__link" href="/programs/"${programsCurrent}>Programs</a>
@@ -58,7 +59,7 @@ export function renderShell({
 }) {
   const canonical = `${SITE_URL}${canonicalPath}`;
   const ogUrl = omitCanonical ? SITE_URL : canonical;
-  const pageTitle = title.includes("powerlift") ? title : `${title} · ${BLOG_META.titleSuffix}`;
+  const pageTitle = title.includes(SITE_BRAND.domain) ? title : `${title} · ${BLOG_META.titleSuffix}`;
   const image = ogImage || BLOG_META.defaultImage;
   const ld = jsonLd.map(jsonLdScript).join("\n");
 
@@ -105,12 +106,12 @@ ${noindex ? '    <meta name="robots" content="noindex, follow" />\n' : ""}${omit
     <meta property="og:image" content="${escapeHtml(image)}" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:creator" content="${escapeHtml(BLOG_META.twitter)}" />
-    <meta name="theme-color" content="#0d0d0f" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#f5f3ef" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="${SITE_BRAND.themeColorDark}" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="${SITE_BRAND.themeColorLight}" media="(prefers-color-scheme: light)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&display=swap" />
+    <link rel="stylesheet" href="${SITE_BRAND.googleFontsUrl}" />
     <script src="/theme.js"></script>
     <link rel="stylesheet" href="/fonts.css" />
     <link rel="stylesheet" href="/design-tokens.css" />
@@ -138,7 +139,7 @@ ${ld}
     </svg>
     <header class="site-header">
       <div class="site-header__row">
-        <a class="site-header__brand" href="/">powerlift<span class="site-header__dot">.</span>ing</a>
+        <a class="site-header__brand" href="/">${brandWordmark()}</a>
         <nav class="site-header__nav" aria-label="Primary">
           <a href="/#how-it-works">How it works</a>
           <a href="/programs/"${programsNavCurrent}>Programs</a>
