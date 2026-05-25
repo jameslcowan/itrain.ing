@@ -5,6 +5,7 @@ Single place for how the site works, how to build it, and what to do next.
 | Doc | Purpose |
 |-----|---------|
 | [SITE.md](SITE.md) | Architecture, routes, build pipeline, local dev, Netlify deploy |
+| [SUITE.md](SUITE.md) | Multi-site layout (`sites/`, shared infra plan) |
 | [ANALYTICS.md](ANALYTICS.md) | Analytics status (Netlify removed; Hetzner planned) |
 | [BLOG.md](BLOG.md) | Adding articles, frontmatter, SSG output |
 | [SEO.md](SEO.md) | Positioning, indexing rules, URL contract |
@@ -28,3 +29,4 @@ node --test tests/codec.test.mjs
 | `content/` | FAQ data, program templates, blog articles |
 | `blog/`, `faq/`, `legal/`, `programs/`, `site/` | Static page generators |
 | `404.html` | Generated; Netlify serves for missing URLs |
+| `sites/` | Scaffold folders for olympiclift.ing, powerbuild.ing, bootybuild.ing |

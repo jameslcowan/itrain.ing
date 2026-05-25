@@ -10,7 +10,7 @@ Netlify analytics (Blob ingest, scheduled rollup, dashboard functions) was **rem
 
 ## Planned (Hetzner)
 
-- One VPS serving multiple domains (`powerlift.ing`, `olympiclift.ing`, `powerbuild.ing`, …)
+- One VPS serving multiple domains (`powerlift.ing`, `olympiclift.ing`, `powerbuild.ing`, `bootybuild.ing`, …)
 - Central ingest + database (Postgres or similar) — not Netlify Blobs
 - Single admin dashboard across properties
 

@@ -13,6 +13,7 @@ All project docs live in **[docs/](docs/README.md)**:
 | [docs/BLOG.md](docs/BLOG.md) | Writing and publishing articles |
 | [docs/SEO.md](docs/SEO.md) | Indexing and positioning |
 | [docs/TODO.md](docs/TODO.md) | Backlog and launch checklist |
+| [docs/SUITE.md](docs/SUITE.md) | Sister sites under `sites/` |
 
 ## Quick start
 
@@ -35,3 +36,7 @@ node --test tests/codec.test.mjs
 - **404.html** — branded not-found page
 
 Netlify: `npm ci && npm run build`, publish `.`. Details in [docs/SITE.md](docs/SITE.md). Site deploy stays on Netlify until Hetzner cutover.
+
+## Suite
+
+Scaffolds for **olympiclift.ing**, **powerbuild.ing**, and **bootybuild.ing** live in [`sites/`](sites/). See [docs/SUITE.md](docs/SUITE.md).

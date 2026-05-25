@@ -15,7 +15,7 @@ Living backlog for powerlift.ing. Update as items ship.
 
 ## Now — infrastructure (Hetzner)
 
-- [ ] Provision Hetzner VPS + Cloudflare DNS (three domains later; powerlift.ing first)
+- [ ] Provision Hetzner VPS + Cloudflare DNS (suite: powerlift.ing first, then olympiclift.ing, powerbuild.ing, bootybuild.ing)
 - [ ] Design analytics ingest + DB schema (multi-site `site` id)
 - [ ] Deploy static powerlift.ing build to VPS (Caddy vhost)
 - [ ] Remove obsolete Netlify analytics env vars from Netlify UI after deploy
