@@ -21,7 +21,7 @@ export const SITE_BRANDS = {
     googleFontsUrl:
       "https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap",
     appGoogleFontsUrl:
-      "https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap",
+      "https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;600&display=swap",
     themeColorLight: "#f7f5f3",
     themeColorDark: "#0d0d0f",
     sport: "powerbuilding",
@@ -112,7 +112,7 @@ export const SITE_BRANDS = {
     googleFontsUrl:
       "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700&family=Inter:wght@400;600;700&display=swap",
     appGoogleFontsUrl:
-      "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap",
+      "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700&family=Inter:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;600&display=swap",
     themeColorLight: "#f4f6f8",
     themeColorDark: "#0c0e14",
     sport: "Olympic weightlifting",
@@ -205,7 +205,7 @@ export const SITE_BRANDS = {
     googleFontsUrl:
       "https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Nunito+Sans:wght@400;600;700&display=swap",
     appGoogleFontsUrl:
-      "https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Nunito+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap",
+      "https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;600&display=swap",
     themeColorLight: "#faf5f7",
     themeColorDark: "#0f0d10",
     sport: "glute training",

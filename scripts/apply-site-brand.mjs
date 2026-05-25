@@ -194,6 +194,7 @@ export const SITE_BRAND = {
   productLine: "${b.productLine}",
   tagline: "${b.tagline}",
   googleFontsUrl: "${b.googleFontsUrl}",
+  appGoogleFontsUrl: "${b.appGoogleFontsUrl}",
   themeColorLight: "${b.themeColorLight}",
   themeColorDark: "${b.themeColorDark}",
   programsTitle: "${b.programsTitle}",
@@ -383,7 +384,22 @@ function patchIndexHtml() {
   ]);
 }
 
+function patchAppFontsLink() {
+  const path = join(ROOT, "app.html");
+  let html = readFileSync(path, "utf8");
+  const next = html.replace(
+    /href="https:\/\/fonts\.googleapis\.com\/css2\?[^"]+"/,
+    `href="${b.appGoogleFontsUrl}"`
+  );
+  if (next === html) {
+    throw new Error("app.html: no Google Fonts stylesheet link found to replace");
+  }
+  writeFileSync(path, next);
+  console.log("  patched app.html (Google Fonts)");
+}
+
 function patchAppHtml() {
+  patchAppFontsLink();
   patch("app.html", [
     ["Program builder — powerlift.ing", b.appTitle],
     [
@@ -402,10 +418,6 @@ function patchAppHtml() {
     [
       "Create and share powerlifting programs instantly. No signup, no spreadsheets — just share a link. Free tool for athletes, coaches, and training partners.",
       `${b.appOgDescription} Free tool for athletes, coaches, and training partners.`,
-    ],
-    [
-      'href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;600&display=swap"',
-      `href="${b.appGoogleFontsUrl}"`,
     ],
     ['powerlift<span class="site-header__dot">.</span>ing', brandWordmark()],
     ['aria-label="powerlift.ing home"', `aria-label="${b.domain} home"`],
