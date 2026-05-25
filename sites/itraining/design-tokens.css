@@ -32,6 +32,10 @@
   --cta-bg: var(--text-strong);
   --cta-bg-hover: #262626;
   --cta-fg: #ffffff;
+  --btn-secondary-bg: var(--pl-plate);
+  --btn-secondary-bg-hover: var(--pl-plate-dim);
+  --btn-secondary-fg: #000000;
+  --btn-secondary-border: var(--pl-plate-dim);
   --danger: #dc2626;
   --success: #16a34a;
   --focus-ring: color-mix(in srgb, var(--brand-hi) 38%, transparent);

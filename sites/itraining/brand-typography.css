@@ -134,6 +134,20 @@ body.builderPage .site-menu__btn--primary:hover {
   border-color: var(--cta-bg-hover);
 }
 
+/* See How It Works — hi-vis in light and dark; Launch App stays monochrome primary */
+body.landingPage .lp-hero__actions a.lp-btn.lp-btn--ghost {
+  border: 1px solid var(--btn-secondary-border);
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-fg);
+}
+
+body.landingPage .lp-hero__actions a.lp-btn.lp-btn--ghost:hover {
+  filter: none;
+  background: var(--btn-secondary-bg-hover);
+  border-color: var(--btn-secondary-bg-hover);
+  color: var(--btn-secondary-fg);
+}
+
 body.landingPage .lp-badge {
   border: 1px solid color-mix(in srgb, var(--pl-plate) 32%, var(--border));
   background: var(--panel2);
