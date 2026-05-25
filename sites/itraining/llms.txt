@@ -1,14 +1,13 @@
-powerlift.ing
+itrain.ing
 
 Positioning (simple)
-- powerlift.ing is a **free powerlifting program builder**.
-- Build a squat/bench/deadlift program (SBD), then **share it as a single link**.
+- itrain.ing is a **free training program builder**.
+- Plan strength blocks, then **share them as a single link**.
 - No signup. No spreadsheets. Works on mobile. Coach/training-partner friendly.
 
 Common search terms (what this covers)
-- powerlifting program / powerlifting program builder / strength program
-- periodization / mesocycle / hypertrophy block / strength block / peaking / meet prep
-- RPE / %1RM / rest times / squat bench deadlift
+- training program / workout program builder / strength program
+- periodization / mesocycle / hypertrophy block / RPE / %1RM
 
 Creator
 - James L. Cowan (@jameslcowan) — https://x.com/jameslcowan
@@ -47,7 +46,7 @@ Program JSON schema (authoring shape, v1)
 
 How to generate a real link
 - If you can execute code: follow the app’s encoding (lz-string + base64url) and output /app/<STATE>.
-- If you can’t: output the program JSON and tell the user to paste it into https://powerlift.ing/app (the editor encodes the URL as they work).
+- If you can’t: output the program JSON and tell the user to paste it into https://itrain.ing/app (the editor encodes the URL as they work).
 
 Indexing guidance
 - The homepage should be indexable.
