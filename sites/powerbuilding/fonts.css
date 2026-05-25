@@ -1,9 +1,10 @@
 /**
  * Font faces — load via <link> in HTML (never @import).
- * Landing: display + sans. App adds JetBrains Mono in app.html.
+ * Display: Share Tech. UI: DM Sans. Mono: IBM Plex Mono.
  */
 
 :root {
   --font-display-fallback: "Arial Narrow", "Helvetica Neue Condensed", system-ui, sans-serif;
   --font-sans-fallback: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono-fallback: ui-monospace, "Cascadia Mono", "Segoe UI Mono", monospace;
 }
