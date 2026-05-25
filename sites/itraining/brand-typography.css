@@ -1,5 +1,5 @@
 /**
- * itrain.ing — Outfit + DM Sans; sleek fitness UI with restrained lime accent.
+ * itrain.ing — Outfit + DM Sans; monochrome UI with hi-vis accent used sparingly.
  */
 
 .landingPage {
@@ -65,7 +65,7 @@ html.fonts-loaded .site-header__nav a {
 .site-header__dot,
 .brand__dot,
 .site-menu__dot {
-  color: var(--accent-subtle);
+  color: var(--accent);
 }
 
 .site-menu__link,

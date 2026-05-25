@@ -3,8 +3,8 @@
 
 :root {
   /* Brand */
-  --pl-plate: #b0cc5c;
-  --pl-plate-dim: #8fa84a;
+  --pl-plate: #ccff00;
+  --pl-plate-dim: #a3d900;
   --pl-chalk: #f6f6fa;
   --pl-iron: #0a0a10;
   --pl-steel: #121218;
@@ -21,7 +21,7 @@
   --muted: #5c5c66;
   --border: #d8d6d0;
   --border2: #c4c2bc;
-  --accent: #8fa84a;
+  --accent: var(--pl-plate);
   --accent-muted: color-mix(in srgb, var(--pl-plate) 6%, transparent);
   --accent-subtle: color-mix(in srgb, var(--pl-plate) 35%, var(--muted));
   --cta-bg: var(--text-strong);
