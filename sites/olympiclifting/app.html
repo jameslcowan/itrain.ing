@@ -57,11 +57,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700&family=Inter:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Finlandica:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap"
     />
     <link rel="stylesheet" href="/fonts.css" />
     <script src="/theme.js"></script>
     <link rel="stylesheet" href="/design-tokens.css" />
+    <link rel="stylesheet" href="/brand-typography.css" />
     <link rel="stylesheet" href="/site-header.css" />
     <link rel="stylesheet" href="/site-menu.css" />
     <link rel="stylesheet" href="/app.css" />
@@ -136,7 +137,7 @@
 
     <header class="site-header">
       <div class="site-header__row">
-        <a class="site-header__brand" id="homeLink" href="/" aria-label="olympiclift.ing home">olympiclift<span class="site-header__dot">.</span>ing</a>
+        <a class="site-header__brand" id="homeLink" href="/" aria-label="Olympiclift.ing home">Olympiclift<span class="site-header__dot">.</span>ing</a>
         <nav class="site-header__nav" aria-label="Primary">
           <a href="/#how-it-works">How it works</a>
           <a href="/programs/">Programs</a>
@@ -169,7 +170,7 @@
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
       <div class="site-menu__inner" role="dialog" aria-modal="true" aria-label="Navigation">
-        <a class="site-menu__brand" href="/">olympiclift<span class="site-menu__dot">.</span>ing</a>
+        <a class="site-menu__brand" href="/">Olympiclift<span class="site-menu__dot">.</span>ing</a>
         <nav class="site-menu__nav" aria-label="Mobile">
           <a class="site-menu__link" href="/#how-it-works" style="--site-menu-delay: 60ms">How it works</a>
           <a class="site-menu__link" href="/programs/" style="--site-menu-delay: 85ms">Programs</a>
@@ -255,19 +256,19 @@
             <div class="unitToggle" role="group" aria-labelledby="maxesDialogUnitsHeading">
               <button
                 id="maxesDialogUnitLb"
-                class="unitToggle__btn is-active"
+                class="unitToggle__btn"
                 type="button"
                 data-maxes-unit="lb"
-                aria-pressed="true"
+                aria-pressed="false"
               >
                 lbs
               </button>
               <button
                 id="maxesDialogUnitKg"
-                class="unitToggle__btn"
+                class="unitToggle__btn is-active"
                 type="button"
                 data-maxes-unit="kg"
-                aria-pressed="false"
+                aria-pressed="true"
               >
                 kg
               </button>
@@ -278,7 +279,7 @@
           </p>
           <div class="maxesDialog__primary" id="maxesDialogPrimary"></div>
           <p id="maxesDialogSbdTotal" class="maxesDialog__sbdTotal" role="status" aria-live="polite">
-            SBD Total: —
+            Competition total: —
           </p>
           <div class="maxesDialog__customHead">
             <span class="maxesDialog__customTitle">Other lifts</span>
@@ -312,6 +313,29 @@
               <li>Tap <strong>Share</strong> when you want to send the program to someone else.</li>
             </ul>
           </section>
+          <div class="maxesDialog__units onboardingDialog__units">
+            <span class="maxesDialog__unitsLabel" id="onboardingDialogUnitsHeading">Units</span>
+            <div class="unitToggle" role="group" aria-labelledby="onboardingDialogUnitsHeading">
+              <button
+                id="onboardingDialogUnitLb"
+                class="unitToggle__btn"
+                type="button"
+                data-onboarding-unit="lb"
+                aria-pressed="false"
+              >
+                lbs
+              </button>
+              <button
+                id="onboardingDialogUnitKg"
+                class="unitToggle__btn is-active"
+                type="button"
+                data-onboarding-unit="kg"
+                aria-pressed="true"
+              >
+                kg
+              </button>
+            </div>
+          </div>
           <label class="control control--checkbox dialog__dontShow onboardingDialog__dontShow">
             <input id="onboardingDialogDontShow" type="checkbox" />
             <span>Don’t show this again</span>

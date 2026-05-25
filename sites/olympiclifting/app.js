@@ -19,6 +19,7 @@
 
   // Shared program in URL path (editor entry is bare /app)
   const ROUTE_PREFIX = "/app/";
+  const DEFAULT_UNIT = "kg";
 
   // Legacy share paths (still read; migrated to /app/ on load)
   const LEGACY_PROGRAM_PREFIX = "/program/";
@@ -126,6 +127,8 @@
     onboardingDialogCloseBtn: document.getElementById("onboardingDialogCloseBtn"),
     onboardingDialogOkBtn: document.getElementById("onboardingDialogOkBtn"),
     onboardingDialogDontShow: document.getElementById("onboardingDialogDontShow"),
+    onboardingDialogUnitLb: document.getElementById("onboardingDialogUnitLb"),
+    onboardingDialogUnitKg: document.getElementById("onboardingDialogUnitKg"),
   };
 
   const app = {
@@ -596,14 +599,43 @@
   }
 
   let syncingLoadPct = false;
-  let maxesDialogEditUnit = "lb";
+  let maxesDialogEditUnit = DEFAULT_UNIT;
+  let onboardingDialogUnit = DEFAULT_UNIT;
+
+  function programUnit(u) {
+    return u === "lb" ? "lb" : DEFAULT_UNIT;
+  }
+
+  function setProgramUnit(nextU) {
+    const target = programUnit(nextU);
+    const prev = programUnit(app.program.u);
+    if (target !== prev) {
+      convertAllProgramLoads(prev, target);
+      convertProgramMaxes(prev, target);
+    }
+    app.program.u = target;
+    maxesDialogEditUnit = target;
+    onboardingDialogUnit = target;
+    syncUnitToggleButtons(target);
+    scheduleUrlUpdate();
+  }
+
+  function syncUnitToggleButtons(u) {
+    const unit = programUnit(u);
+    const pairs = [
+      [dom.maxesDialogUnitLb, dom.maxesDialogUnitKg],
+      [dom.onboardingDialogUnitLb, dom.onboardingDialogUnitKg],
+    ];
+    for (const [lbBtn, kgBtn] of pairs) {
+      lbBtn?.classList.toggle("is-active", unit === "lb");
+      kgBtn?.classList.toggle("is-active", unit === "kg");
+      lbBtn?.setAttribute("aria-pressed", unit === "lb" ? "true" : "false");
+      kgBtn?.setAttribute("aria-pressed", unit === "kg" ? "true" : "false");
+    }
+  }
 
   function syncMaxesDialogUnitToggle() {
-    const u = maxesDialogEditUnit === "kg" ? "kg" : "lb";
-    dom.maxesDialogUnitLb?.classList.toggle("is-active", u === "lb");
-    dom.maxesDialogUnitKg?.classList.toggle("is-active", u === "kg");
-    dom.maxesDialogUnitLb?.setAttribute("aria-pressed", u === "lb" ? "true" : "false");
-    dom.maxesDialogUnitKg?.setAttribute("aria-pressed", u === "kg" ? "true" : "false");
+    syncUnitToggleButtons(maxesDialogEditUnit);
   }
 
   function setMaxesDialogUnit(nextU) {
@@ -721,6 +753,8 @@
     ]);
   }
 
+  const PRIMARY_MAX_COUNT = 2;
+
   function updateMaxesSbdTotal() {
     const outEl = dom.maxesDialogSbdTotal;
     if (!outEl) return;
@@ -741,23 +775,23 @@
     }
     const unit = loadUnitLabel(maxesDialogEditUnit);
     if (filled === 0) {
-      outEl.textContent = "SBD Total: —";
+      outEl.textContent = "Competition total: —";
       outEl.setAttribute(
         "aria-label",
-        "SBD total: enter squat, bench press, and deadlift to calculate"
+        "Competition total: enter snatch and clean and jerk to calculate"
       );
       return;
     }
-    if (filled < 3) {
-      outEl.textContent = `SBD Total: ${formatNumber(sum)} ${unit} (${filled} of 3 lifts)`;
+    if (filled < PRIMARY_MAX_COUNT) {
+      outEl.textContent = `Competition total: ${formatNumber(sum)} ${unit} (${filled} of ${PRIMARY_MAX_COUNT} lifts)`;
       outEl.setAttribute(
         "aria-label",
-        `SBD total so far ${formatNumber(sum)} ${unit} from ${filled} of 3 lifts`
+        `Competition total so far ${formatNumber(sum)} ${unit} from ${filled} of ${PRIMARY_MAX_COUNT} lifts`
       );
       return;
     }
-    outEl.textContent = `SBD Total: ${formatNumber(sum)} ${unit}`;
-    outEl.setAttribute("aria-label", `SBD total ${formatNumber(sum)} ${unit}`);
+    outEl.textContent = `Competition total: ${formatNumber(sum)} ${unit}`;
+    outEl.setAttribute("aria-label", `Competition total ${formatNumber(sum)} ${unit}`);
   }
 
   function renderMaxesPrimary(container, merged) {
@@ -886,19 +920,12 @@
           value: app.program.u === "kg" ? "kg" : "lb",
           label: (v) => loadUnitLabel(v),
           options: [
-            { value: "lb", label: "lbs" },
             { value: "kg", label: "kg" },
+            { value: "lb", label: "lbs" },
           ],
           onChange: (v) => {
-            const nextU = v === "kg" ? "kg" : "lb";
-            const prevU = app.program.u === "kg" ? "kg" : "lb";
-            if (nextU !== prevU) {
-              convertAllProgramLoads(prevU, nextU);
-              convertProgramMaxes(prevU, nextU);
-              app.program.u = nextU;
-              scheduleUrlUpdate();
-              render();
-            }
+            setProgramUnit(v);
+            render();
           },
         })
       );
@@ -969,7 +996,7 @@
       [
       el("div", { class: "field field--ex" }, [
         el("label", { for: rowFieldId(wi, di, ri, "ex"), text: "Exercise" }),
-        el("input", { id: rowFieldId(wi, di, ri, "ex"), class: "input", "aria-label": "Exercise", placeholder: showExamples ? "e.g. Squat" : "", value: row.ex, "data-field": "ex" }),
+        el("input", { id: rowFieldId(wi, di, ri, "ex"), class: "input", "aria-label": "Exercise", placeholder: showExamples ? "e.g. Snatch" : "", value: row.ex, "data-field": "ex" }),
       ]),
       el("div", { class: "field field--mode" }, [
         el("label", { for: rowFieldId(wi, di, ri, "mode"), text: "Variation" }),
@@ -1798,8 +1825,7 @@
     const enc = readStateFromUrl();
     if (enc) {
       try {
-        const decoded = decodeState(enc);
-        app.program = normalizeProgram(decoded);
+        app.program = normalizeProgram(decodeState(enc));
         app.currentWeek = 0;
         app.lastEncoded = enc; // prevent immediate re-write thrash
         setStatus("");
@@ -1811,6 +1837,7 @@
       }
     } else {
       app.program = defaultProgram();
+      app.program.u = DEFAULT_UNIT;
       app.currentWeek = 0;
       try {
         app.lastEncoded = encodeState(app.program);
@@ -1820,6 +1847,9 @@
       }
       setStatus("");
     }
+    maxesDialogEditUnit = programUnit(app.program.u);
+    onboardingDialogUnit = programUnit(app.program.u);
+    syncUnitToggleButtons(app.program.u);
     ensureProgramMaxes();
     render();
   }
@@ -1842,16 +1872,21 @@
   }
 
   function skipOnboardingToApp() {
+    setProgramUnit(onboardingDialogUnit);
     closeOnboardingDialog();
+    render();
   }
 
   function finishOnboardingWithMaxes() {
+    setProgramUnit(onboardingDialogUnit);
     closeOnboardingDialog();
     window.setTimeout(() => openMaxesDialog(), 0);
   }
 
   function initOnboarding() {
     if (!dom.onboardingDialog?.showModal) return;
+    onboardingDialogUnit = programUnit(app.program.u);
+    syncUnitToggleButtons(onboardingDialogUnit);
     try {
       if (localStorage.getItem(ONBOARDING_KEY) === "1") return;
     } catch {}
@@ -1880,6 +1915,14 @@
 
   dom.maxesDialogUnitLb?.addEventListener("click", () => setMaxesDialogUnit("lb"));
   dom.maxesDialogUnitKg?.addEventListener("click", () => setMaxesDialogUnit("kg"));
+  dom.onboardingDialogUnitLb?.addEventListener("click", () => {
+    onboardingDialogUnit = "lb";
+    syncUnitToggleButtons(onboardingDialogUnit);
+  });
+  dom.onboardingDialogUnitKg?.addEventListener("click", () => {
+    onboardingDialogUnit = "kg";
+    syncUnitToggleButtons(onboardingDialogUnit);
+  });
 
   dom.maxesDialog?.addEventListener("input", (e) => {
     if (e.target.closest("#maxesDialogPrimary")) updateMaxesSbdTotal();
@@ -1903,7 +1946,7 @@
   });
 
   dom.maxesDialogAddLiftBtn?.addEventListener("click", async () => {
-    const name = await appPrompt("Lift name (e.g. Romanian deadlift):", {
+    const name = await appPrompt("Lift name (e.g. Back squat):", {
       title: "Add Lift",
       inputLabel: "Exercise",
       okText: "Add",
@@ -1939,8 +1982,8 @@
   });
 
   initTheme();
-  initOnboarding();
   boot();
+  initOnboarding();
 })();
 
 
