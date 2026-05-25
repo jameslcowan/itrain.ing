@@ -1,10 +1,7 @@
-/* itrain.ing — design tokens (general training / platform hub) */
+/* itrain.ing — design tokens (true monochrome UI) */
 /* Fonts: load fonts.css (or Google <link>) in HTML before this file. */
 
 :root {
-  /* Brand */
-  --pl-plate: #ccff00;
-  --pl-plate-dim: #a3d900;
   --pl-chalk: #f6f6fa;
   --pl-iron: #0a0a10;
   --pl-steel: #121218;
@@ -21,7 +18,11 @@
   --muted: #5c5c66;
   --border: #d8d6d0;
   --border2: #c4c2bc;
-  --accent: var(--pl-plate);
+
+  /* Legacy vars — neutrals only (shared CSS still references these names) */
+  --pl-plate: var(--text-strong);
+  --pl-plate-dim: var(--muted);
+  --accent: var(--muted);
   --accent-muted: color-mix(in srgb, var(--text) 5%, transparent);
   --cta-bg: var(--text-strong);
   --cta-bg-hover: color-mix(in srgb, var(--text-strong) 88%, var(--muted));

@@ -1,5 +1,5 @@
 /**
- * itrain.ing — Outfit + DM Sans; monochrome surfaces, hi-vis accent on key marks only.
+ * itrain.ing — Outfit + DM Sans; true monochrome (no chroma).
  */
 
 /* No accent wash in hero or page backgrounds */
@@ -68,7 +68,7 @@ html.fonts-loaded .site-header__nav a {
 .site-header__dot,
 .brand__dot,
 .site-menu__dot {
-  color: var(--accent);
+  color: var(--muted);
 }
 
 .site-menu__link,
@@ -272,7 +272,14 @@ body.landingPage.notfoundPage .notfound__links a:hover {
   color: var(--text-strong);
 }
 
-/* App builder — monochrome chrome; accent only on wordmark dot (+ form controls) */
+/* App builder — monochrome chrome */
+body.builderPage input[type="checkbox"] {
+  accent-color: var(--text-strong);
+}
+
+body.landingPage .legal-doc a {
+  color: var(--text-strong);
+}
 body.builderPage .badge--alpha {
   border-color: var(--border2);
   background: color-mix(in srgb, var(--text) 6%, transparent);
