@@ -1,0 +1,75 @@
+/**
+ * Legal pages (/terms/, /privacy/)
+ */
+
+.legal-main {
+  width: 100%;
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: var(--lp-space-5, 28px) max(var(--lp-pad-x, 24px), env(safe-area-inset-left, 0px))
+    calc(var(--lp-space-8, 72px) + env(safe-area-inset-bottom, 0px))
+    max(var(--lp-pad-x, 24px), env(safe-area-inset-right, 0px));
+}
+
+.legal-doc__title {
+  margin: 0 0 var(--lp-space-2, 12px);
+  font-family: var(--font-display-fallback, system-ui, sans-serif);
+  font-size: var(--lp-display, 2.25rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.05;
+  color: var(--text-strong);
+}
+
+html.fonts-loaded .legal-doc__title {
+  font-family: var(--font-display);
+}
+
+.legal-doc__updated {
+  margin: 0 0 var(--lp-space-6, 40px);
+  font-size: var(--lp-text-sm, 0.875rem);
+  color: var(--muted);
+}
+
+.legal-doc h2 {
+  margin: var(--lp-space-6, 40px) 0 var(--lp-space-3, 16px);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-strong);
+}
+
+.legal-doc h2:first-of-type {
+  margin-top: 0;
+}
+
+.legal-doc p,
+.legal-doc li {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--text);
+}
+
+.legal-doc p {
+  margin: 0 0 var(--lp-space-4, 20px);
+}
+
+.legal-doc ul {
+  margin: 0 0 var(--lp-space-4, 20px);
+  padding-left: 1.35rem;
+}
+
+.legal-doc li + li {
+  margin-top: var(--lp-space-2, 12px);
+}
+
+.legal-doc a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.legal-doc strong {
+  color: var(--text-strong);
+}

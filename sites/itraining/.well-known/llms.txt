@@ -1,0 +1,5 @@
+powerlift.ing — LLM instructions
+
+Canonical: /llms.txt
+
+This file exists for agents that probe /.well-known/.
