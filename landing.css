@@ -247,7 +247,34 @@ html.lp-intro-ready .lp-intro > .lp-intro__item:nth-child(6) { transition-delay:
 
 /* —— Hero —— */
 .lp-hero {
+  position: relative;
+  isolation: isolate;
   padding: var(--lp-space-6) 0 var(--lp-space-7);
+}
+
+/* Grid texture behind hero copy (matches /programs/ 8px rhythm) */
+.lp-hero::before {
+  content: "";
+  position: absolute;
+  top: -var(--lp-space-4);
+  bottom: -var(--lp-space-3);
+  left: 50%;
+  z-index: 0;
+  width: 100vw;
+  max-width: none;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--text) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--text) 7%, transparent) 1px, transparent 1px);
+  background-size: 8px 8px;
+  mask-image: radial-gradient(ellipse 92% 88% at 50% 42%, #000 0%, rgba(0, 0, 0, 0.45) 48%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 92% 88% at 50% 42%, #000 0%, rgba(0, 0, 0, 0.45) 48%, transparent 78%);
+}
+
+.lp-intro {
+  position: relative;
+  z-index: 1;
 }
 
 .lp-badge {
