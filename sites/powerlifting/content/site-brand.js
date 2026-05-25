@@ -9,6 +9,8 @@ export const SITE_BRAND = {
   tagline: "Free powerlifting program builder. Share whole programs as one open link.",
   googleFontsUrl:
     "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&display=swap",
+  appGoogleFontsUrl:
+    "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@500;600&display=swap",
   themeColorLight: "#f5f3ef",
   themeColorDark: "#0d0d0f",
   programsTitle: "Free powerlifting programs",
