@@ -82,7 +82,7 @@ export const FAQ_SECTIONS = [
       },
       {
         q: "How do I set my the snatch and clean & jerk maxes on olympiclift.ing?",
-        a: "<p>In olympiclift.ing, tap <strong>Config</strong> (the sliders icon). Enter your one-rep maxes for squat, bench, deadlift, and any custom lifts. olympiclift.ing can walk you through maxes the first time you open olympiclift.ing.</p>",
+        a: "<p>In olympiclift.ing, tap <strong>Config</strong> (the sliders icon). Enter your one-rep maxes for the <strong>snatch</strong> and <strong>clean & jerk</strong>, plus any custom lifts. olympiclift.ing can walk you through maxes the first time you open the app.</p>",
       },
       {
         q: "How do percentages and weight work on olympiclift.ing?",
@@ -94,7 +94,7 @@ export const FAQ_SECTIONS = [
       },
       {
         q: "Can I add power variations and other variations on olympiclift.ing?",
-        a: "<p>Yes. Type any exercise name in olympiclift.ing. Names like power variations tie to your bench max. Add other lifts in Config if they need their own max.</p>",
+        a: "<p>Yes. Type any exercise name in olympiclift.ing. Names like <strong>hang snatch</strong> or <strong>power clean</strong> map to your snatch or clean & jerk max. Add other lifts in Config if they need their own max.</p>",
       },
     ],
   },

@@ -22,7 +22,7 @@ Switch weeks from the week picker. Add or remove weeks with the plus and trash i
 
 Each day is a collapsible section. Tap **Add Day** to extend the week up to seven days. Inside a day, **Add Exercise** creates a row with:
 
-- Exercise name (free text, e.g. "Paused bench")
+- Exercise name (free text, e.g. "Hang snatch")
 - Variation notes
 - Sets, reps, load, %1RM, RPE, rest
 

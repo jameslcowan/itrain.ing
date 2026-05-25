@@ -17,7 +17,7 @@ Most spreadsheets force you to pick either percentage work or RPE. olympiclift.i
 
 Open **Config** and enter best singles for the snatch and clean & jerk. Add other lifts (Romanian deadlift, close-grip bench) if you program them often. The dialog shows an **lifts total** as you type.
 
-Matching exercise names map to the right max. "Paused bench" uses your bench max. Custom names use the exact key you saved.
+Matching exercise names map to the right max. "Hang snatch" uses your snatch max; "power clean" uses your clean & jerk max. Custom names use the exact key you saved.
 
 ## Percentage-driven days
 
