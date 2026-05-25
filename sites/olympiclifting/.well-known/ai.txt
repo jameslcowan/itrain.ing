@@ -1,4 +1,4 @@
-powerlift.ing — AI assistant guide
+olympiclift.ing — AI assistant guide
 
 This is a convenience mirror of /ai.txt for agents that probe /.well-known/.
 

@@ -1,4 +1,4 @@
-powerlift.ing — LLM instructions
+olympiclift.ing — LLM instructions
 
 Canonical: /llms.txt
 

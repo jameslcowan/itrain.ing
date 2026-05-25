@@ -1,7 +1,7 @@
 ---
 slug: getting-started-with-the-builder
 title: Getting Started With the Program Builder
-description: A quick walkthrough of mesocycles, weeks, days, and rows so you can ship your first shareable powerlifting plan.
+description: A quick walkthrough of mesocycles, weeks, days, and rows so you can ship your first shareable Olympic lifting plan.
 published: 2026-05-21
 created: 2026-05-21
 updated: 2026-05-21
@@ -28,7 +28,7 @@ Each day is a collapsible section. Tap **Add Day** to extend the week up to seve
 
 ## Units and maxes
 
-Pick **lbs** or **kg** in the week bar. Open **Config** (sliders icon in the header) to enter squat, bench, and deadlift maxes plus custom lifts. When a max exists for an exercise, %1RM and load stay in sync on that row.
+Pick **lbs** or **kg** in the week bar. Open **Config** (sliders icon in the header) to enter the snatch and clean & jerk maxes plus custom lifts. When a max exists for an exercise, %1RM and load stay in sync on that row.
 
 ## Share
 

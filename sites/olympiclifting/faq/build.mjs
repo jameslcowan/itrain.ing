@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { BLOG_META } from "../content/blog-meta.js";
+import { SITE_BRAND } from "../content/site-brand.js";
 import { renderShell } from "../blog/templates.mjs";
 import {
   buildFaqPageSchema,
@@ -48,8 +48,7 @@ function buildFaqPage() {
 
   const html = renderShell({
     title: "FAQ",
-    description:
-      "Frequently asked questions about powerlift.ing: free program builder, open sharing, %1RM maxes, coaches, and technical support.",
+    description: SITE_BRAND.faqPageMeta,
     canonicalPath: "/faq/",
     mainHtml: renderFaqBody(),
     jsonLd: [buildFaqPageSchema()],
