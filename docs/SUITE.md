@@ -1,27 +1,34 @@
-# Lifting apps suite
+# Lifting apps suite (itrain.ing)
 
-Multiple static sites, one planned VPS (Hetzner) and shared analytics.
+Platform monorepo for the `.ing` family. Full plan: **[MONOREPO.md](MONOREPO.md)**.
 
 ## Sites
 
-| Site | Path | Status |
-|------|------|--------|
-| [powerlift.ing](https://powerlift.ing) | Repo root (`/`, `app.html`, …) | Live (Netlify) |
-| olympiclift.ing | [`sites/olympiclift.ing/`](../sites/olympiclift.ing/) | Scaffold |
-| powerbuild.ing | [`sites/powerbuild.ing/`](../sites/powerbuild.ing/) | Scaffold |
-| bootybuild.ing | [`sites/bootybuild.ing/`](../sites/bootybuild.ing/) | Scaffold |
+| Site | Folder | Status |
+|------|--------|--------|
+| [powerlift.ing](https://powerlift.ing) | `sites/powerlift.ing/` (repo root until Phase 2) | Live (Netlify) → DO in progress |
+| olympiclift.ing | `sites/olympiclift.ing/` | Scaffold |
+| powerbuild.ing | `sites/powerbuild.ing/` | Scaffold |
+| bootybuild.ing | `sites/bootybuild.ing/` | Scaffold |
 
-`powerlift.ing` remains at the repository root until a deliberate move into `sites/powerlift.ing/` (optional; preserves Netlify path and history).
+## Migration phase (summary)
 
-## Shared later
+| Phase | What |
+|-------|------|
+| **0** | Deploy current layout to DO; prove GitHub Actions |
+| **1** | Rename GitHub repo → `itrain.ing` |
+| **2** | `git mv` app into `sites/powerlift.ing/` |
+| **3** | Matrix deploy per site |
+| **4** | Extract `packages/*` |
+| **5** | `services/analytics` + Postgres |
+| **6** | Clone next product site |
 
-- Design tokens / header-footer patterns (copy from root as each site ships)
-- Analytics ingest + DB with per-site `site` id — see [ANALYTICS.md](ANALYTICS.md)
-- Caddy vhosts and deploy script under `infra/` (not created yet)
+## Shared stack (target)
+
+- **Edge:** Caddy on one DigitalOcean droplet (`infra/caddy/`)
+- **Deploy:** GitHub Actions → rsync per site (`infra/deploy/`)
+- **Data:** Postgres + `site_id` — see [ANALYTICS.md](ANALYTICS.md)
 
 ## Adding a new site
 
-1. Create `sites/<domain>/` with a README.
-2. Clone or extract the powerlift.ing shell (landing, app, programs, build scripts).
-3. Replace branding, `content/programs-data.js`, FAQ, and meta.
-4. Register domain + vhost on the VPS.
+See [MONOREPO.md — Phase 6](MONOREPO.md#phase-6--clone-next-site).

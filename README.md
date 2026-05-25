@@ -37,6 +37,6 @@ node --test tests/codec.test.mjs
 
 Netlify: `npm ci && npm run build`, publish `.`. Details in [docs/SITE.md](docs/SITE.md). Site deploy stays on Netlify until Hetzner cutover.
 
-## Suite
+## Suite (itrain.ing)
 
-Scaffolds for **olympiclift.ing**, **powerbuild.ing**, and **bootybuild.ing** live in [`sites/`](sites/). See [docs/SUITE.md](docs/SUITE.md).
+Monorepo plan: [docs/MONOREPO.md](docs/MONOREPO.md). Sister sites: [`sites/`](sites/) (olympiclift.ing, powerbuild.ing, bootybuild.ing). Roster: [docs/SUITE.md](docs/SUITE.md).

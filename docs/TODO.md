@@ -1,6 +1,6 @@
 # TODO and roadmap
 
-Living backlog for powerlift.ing. Update as items ship.
+Living backlog for the itrain.ing monorepo (powerlift.ing and sister sites). See [MONOREPO.md](MONOREPO.md) for phased migration.
 
 ## Done recently
 
@@ -13,11 +13,14 @@ Living backlog for powerlift.ing. Update as items ship.
 - [x] A11y fixes (skip link, labels, Escape, reduced motion)
 - [x] Share dialog no longer auto-closes on copy
 
-## Now — infrastructure (Hetzner)
+## Now — infrastructure (DigitalOcean + monorepo)
 
-- [ ] Provision Hetzner VPS + Cloudflare DNS (suite: powerlift.ing first, then olympiclift.ing, powerbuild.ing, bootybuild.ing)
-- [ ] Design analytics ingest + DB schema (multi-site `site` id)
-- [ ] Deploy static powerlift.ing build to VPS (Caddy vhost)
+- [ ] **Phase 0:** DO droplet + Caddy + GitHub Actions deploy (repo root) — [DEPLOY.md](DEPLOY.md)
+- [ ] DNS cutover powerlift.ing; keep Netlify as rollback until smoke tests pass
+- [ ] **Phase 1:** Rename GitHub repo → `itrain.ing`
+- [ ] **Phase 2:** Move app to `sites/powerlift.ing/` — [MONOREPO.md](MONOREPO.md)
+- [ ] **Phase 3:** Matrix deploy per site
+- [ ] Design analytics ingest + DB schema (`site_id`) — **Phase 5**
 - [ ] Remove obsolete Netlify analytics env vars from Netlify UI after deploy
 
 ## Now — ops and verification
@@ -41,10 +44,10 @@ Living backlog for powerlift.ing. Update as items ship.
 - [ ] Decide fate of AI helper files (`ai.txt`, `llms.txt`, `.well-known/*`) — simplify or remove
 - [ ] Support / contact path (GitHub issues link in footer or dedicated page)
 
-## Analytics (Hetzner)
+## Analytics (DO droplet / Postgres)
 
-- [ ] Shared collector script + API endpoint on VPS
-- [ ] Admin sign-in and dashboard (replace Netlify login/dashboard)
+- [ ] `services/analytics/` ingest API on VPS
+- [ ] Admin sign-in and dashboard
 - [ ] Funnel: landing → `/programs/` → `/app` (normalize `/app` paths in events)
 
 ## Marketing and launch
