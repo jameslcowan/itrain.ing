@@ -265,20 +265,35 @@ html.lp-intro-ready .lp-intro > .lp-intro__item:nth-child(6) { transition-delay:
     linear-gradient(to bottom, color-mix(in srgb, var(--border) 65%, transparent) 1px, transparent 1px);
   background-size: 8px 8px;
   opacity: 0.55;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 22%,
+    #000 78%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 22%,
+    #000 78%,
+    transparent 100%
+  );
 }
 
-/* Soft vignette so the grid fades at the edges, not under the type */
+/* Soft top/bottom vignette (sides fade via ::before mask) */
 .lp-hero::after {
   content: "";
   position: absolute;
   z-index: 1;
   inset: calc(-1 * var(--lp-space-4)) -20vw calc(-1 * var(--lp-space-3)) -20vw;
   pointer-events: none;
-  background: radial-gradient(
-    ellipse 75% 70% at 50% 38%,
-    transparent 0%,
-    transparent 42%,
-    color-mix(in srgb, var(--bg) 88%, transparent) 100%
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--bg) 92%, transparent) 0%,
+    transparent 22%,
+    transparent 78%,
+    color-mix(in srgb, var(--bg) 92%, transparent) 100%
   );
 }
 
