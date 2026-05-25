@@ -3,15 +3,17 @@
 export const SITE_BRAND = {
   domain: "powerbuild.ing",
   slug: "powerbuild",
+  wordmarkName: "Powerbuild",
   tld: "ing",
   siteUrl: "https://powerbuild.ing",
   productLine: "Powerbuilding program builder",
   tagline: "Free powerbuilding program builder. Share whole programs as one open link.",
-  googleFontsUrl: "https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap",
+  googleFontsUrl:
+    "https://fonts.googleapis.com/css2?family=Share+Tech&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap",
   appGoogleFontsUrl:
-    "https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;600&display=swap",
-  themeColorLight: "#f7f5f3",
-  themeColorDark: "#0d0d0f",
+    "https://fonts.googleapis.com/css2?family=Share+Tech&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap",
+  themeColorLight: "#f5f2ee",
+  themeColorDark: "#0a0a0c",
   programsTitle: "Free powerbuilding programs",
   programsLead: "Free strength and hypertrophy templates from powerbuild.ing. Pick a card, open it in the builder, edit anything, and share your version as one link. Use the <strong>Blank program</strong> card to start from scratch.",
   programsMeta: "Free powerbuilding program templates on powerbuild.ing: splits, volume blocks, and strength templates. Open in the builder and share one link.",
@@ -26,5 +28,6 @@ export const SITE_BRAND = {
 };
 
 export function brandWordmark(dotClass = "site-header__dot") {
-  return `${SITE_BRAND.slug}<span class="${dotClass}">.</span>${SITE_BRAND.tld}`;
+  const name = SITE_BRAND.wordmarkName ?? SITE_BRAND.slug;
+  return `${name}<span class="${dotClass}">.</span>${SITE_BRAND.tld}`;
 }
