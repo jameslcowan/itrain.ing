@@ -267,7 +267,7 @@ html.lp-intro-ready .lp-intro > .lp-intro__item:nth-child(6) { transition-delay:
 
 /* Coarse grid over the hero orange wash (same radial as .landingPage) */
 .lp-hero::before {
-  --lp-hero-grid: 24px;
+  --lp-hero-grid: 40px;
   --lp-hero-grid-line: var(--bg);
   z-index: 0;
   background-color: transparent;
