@@ -1,43 +1,44 @@
-/* itrain.ing — design tokens (true monochrome UI) */
+/* itrain.ing — design tokens (neutral black ↔ white grayscale) */
 /* Fonts: load fonts.css (or Google <link>) in HTML before this file. */
 
 :root {
-  --pl-chalk: #f6f6fa;
-  --pl-iron: #0a0a10;
-  --pl-steel: #121218;
-  --pl-rack: #1a1a24;
-  --pl-rack-up: #242430;
+  /* Surface ramp (sRGB neutrals only) */
+  --pl-chalk: #ffffff;
+  --pl-iron: #000000;
+  --pl-steel: #0a0a0a;
+  --pl-rack: #141414;
+  --pl-rack-up: #1a1a1a;
 
-  /* Semantic */
+  /* Semantic — light */
   --bg: var(--pl-chalk);
   --bg-elevated: #ffffff;
   --panel: #ffffff;
-  --panel2: #eeede8;
-  --text: #121214;
-  --text-strong: #0d0d0f;
-  --muted: #5c5c66;
-  --border: #d8d6d0;
-  --border2: #c4c2bc;
+  --panel2: #f5f5f5;
+  --text: #000000;
+  --text-strong: #000000;
+  --muted: #737373;
+  --border: #e5e5e5;
+  --border2: #d4d4d4;
 
-  /* Legacy vars — neutrals only (shared CSS still references these names) */
+  /* Legacy names — same neutral ramp (shared CSS) */
   --pl-plate: var(--text-strong);
   --pl-plate-dim: var(--muted);
   --accent: var(--muted);
   --accent-muted: color-mix(in srgb, var(--text) 5%, transparent);
   --cta-bg: var(--text-strong);
-  --cta-bg-hover: color-mix(in srgb, var(--text-strong) 88%, var(--muted));
-  --cta-fg: var(--bg);
+  --cta-bg-hover: #262626;
+  --cta-fg: #ffffff;
   --danger: #dc2626;
   --success: #16a34a;
   --focus-ring: color-mix(in srgb, var(--text) 28%, transparent);
 
-  --shadow: 0 4px 24px rgba(13, 13, 15, 0.08);
-  --shadow-lg: 0 12px 40px rgba(13, 13, 15, 0.12);
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
   --ghost-border: var(--border2);
 
   --sb-track: var(--pl-chalk);
-  --sb-thumb: #b8b6b0;
-  --sb-thumb-hover: #9a9892;
+  --sb-thumb: #d4d4d4;
+  --sb-thumb-hover: #a3a3a3;
 
   --radius: 12px;
   --radius2: 8px;
@@ -81,19 +82,21 @@
     --bg-elevated: var(--pl-steel);
     --panel: var(--pl-steel);
     --panel2: var(--pl-rack);
-    --text: #f4f4f5;
+    --text: #fafafa;
     --text-strong: #ffffff;
-    --muted: #9ca3af;
-    --border: #2e2e36;
-    --border2: #3a3a44;
+    --muted: #a3a3a3;
+    --border: #262626;
+    --border2: #404040;
     --accent-muted: color-mix(in srgb, var(--text) 6%, transparent);
-    --cta-bg-hover: color-mix(in srgb, var(--text-strong) 90%, var(--muted));
-    --shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
-    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.55);
+    --cta-bg: var(--text-strong);
+    --cta-bg-hover: #e5e5e5;
+    --cta-fg: #000000;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.6);
     --ghost-border: var(--border2);
     --sb-track: var(--pl-iron);
-    --sb-thumb: #3a3a44;
-    --sb-thumb-hover: #4a4a56;
+    --sb-thumb: #404040;
+    --sb-thumb-hover: #525252;
   }
 }
 
@@ -102,19 +105,21 @@ html[data-theme="light"] {
   --bg: var(--pl-chalk);
   --bg-elevated: #ffffff;
   --panel: #ffffff;
-  --panel2: #eeede8;
-  --text: #121214;
-  --text-strong: #0d0d0f;
-  --muted: #5c5c66;
-  --border: #d8d6d0;
-  --border2: #c4c2bc;
+  --panel2: #f5f5f5;
+  --text: #000000;
+  --text-strong: #000000;
+  --muted: #737373;
+  --border: #e5e5e5;
+  --border2: #d4d4d4;
   --accent-muted: color-mix(in srgb, var(--text) 5%, transparent);
-  --cta-bg-hover: color-mix(in srgb, var(--text-strong) 88%, var(--muted));
-  --shadow: 0 4px 24px rgba(13, 13, 15, 0.08);
-  --shadow-lg: 0 12px 40px rgba(13, 13, 15, 0.12);
+  --cta-bg: #000000;
+  --cta-bg-hover: #262626;
+  --cta-fg: #ffffff;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
   --sb-track: var(--pl-chalk);
-  --sb-thumb: #b8b6b0;
-  --sb-thumb-hover: #9a9892;
+  --sb-thumb: #d4d4d4;
+  --sb-thumb-hover: #a3a3a3;
 }
 
 html[data-theme="dark"] {
@@ -123,22 +128,20 @@ html[data-theme="dark"] {
   --bg-elevated: var(--pl-steel);
   --panel: var(--pl-steel);
   --panel2: var(--pl-rack);
-  --text: #f4f4f5;
+  --text: #fafafa;
   --text-strong: #ffffff;
-  --muted: #9ca3af;
-  --border: #2e2e36;
-  --border2: #3a3a44;
+  --muted: #a3a3a3;
+  --border: #262626;
+  --border2: #404040;
   --accent-muted: color-mix(in srgb, var(--text) 6%, transparent);
-  --cta-bg-hover: color-mix(in srgb, var(--text-strong) 90%, var(--muted));
-  --shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.55);
+  --cta-bg: #ffffff;
+  --cta-bg-hover: #e5e5e5;
+  --cta-fg: #000000;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.6);
   --sb-track: var(--pl-iron);
-  --sb-thumb: #3a3a44;
-  --sb-thumb-hover: #4a4a56;
-}
-
-html[data-theme="light"],
-html[data-theme="dark"] {
+  --sb-thumb: #404040;
+  --sb-thumb-hover: #525252;
 }
 
 html {
