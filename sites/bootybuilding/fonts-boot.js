@@ -1,5 +1,6 @@
 /**
  * Load display + body fonts before menu/hero render (landing + app).
+ * Families come from design-tokens.css (--sans, --font-display).
  */
 (function () {
   "use strict";
@@ -9,17 +10,29 @@
     root.classList.add("fonts-loaded");
   }
 
+  function primaryFamily(cssProp) {
+    var raw = getComputedStyle(root).getPropertyValue(cssProp).trim();
+    if (!raw) return "";
+    var first = raw.split(",")[0].trim();
+    return first.replace(/^['"]|['"]$/g, "");
+  }
+
   if (!document.fonts || !document.fonts.load) {
     markFontsLoaded();
     return;
   }
 
-  Promise.all([
-    document.fonts.load('400 1rem "DM Sans"'),
-    document.fonts.load('400 2.25rem "Bebas Neue"'),
-  ])
-    .then(markFontsLoaded)
-    .catch(markFontsLoaded);
+  var sans = primaryFamily("--sans");
+  var display = primaryFamily("--font-display");
+  var loads = [];
+  if (sans) loads.push(document.fonts.load('400 1rem "' + sans + '"'));
+  if (display) loads.push(document.fonts.load('400 2.25rem "' + display + '"'));
 
+  if (!loads.length) {
+    markFontsLoaded();
+    return;
+  }
+
+  Promise.all(loads).then(markFontsLoaded).catch(markFontsLoaded);
   setTimeout(markFontsLoaded, 2200);
 })();
