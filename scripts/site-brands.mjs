@@ -290,7 +290,7 @@ export const SITE_BRANDS = {
     slug: "itrain",
     wordmarkName: "iTrain",
     tld: "ing",
-    comment: "itrain.ing — design tokens (hi-vis accent, monochrome UI)",
+    comment: "itrain.ing — design tokens (hi-vis accent on marks only; monochrome UI)",
     primary: "#ccff00",
     primaryDim: "#a3d900",
     chalk: "#f6f6fa",
