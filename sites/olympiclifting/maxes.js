@@ -4,40 +4,46 @@
 (() => {
   "use strict";
 
-  const CACHE_KEY = "pli_maxes_v1";
+  const CACHE_KEY = "oli_maxes_v1";
   const LB_PER_KG = 2.204622621848775;
   const MAX_CACHE_LIFTS = 50;
 
   const PRIMARY_LIFTS = [
-    { key: "squat", label: "Squat" },
-    { key: "bench press", label: "Bench press" },
-    { key: "deadlift", label: "Deadlift" },
+    { key: "snatch", label: "Snatch" },
+    { key: "clean and jerk", label: "Clean & jerk" },
   ];
 
   /** Normalized alias → canonical primary (or exact) key */
   const ALIASES = {
-    squats: "squat",
-    "back squat": "squat",
-    "low bar squat": "squat",
-    "high bar squat": "squat",
-    "front squat": "squat",
-    "paused squat": "squat",
-    bench: "bench press",
-    bp: "bench press",
-    "bench press": "bench press",
-    "close grip bench": "bench press",
-    "close-grip bench": "bench press",
-    "cgbp": "bench press",
-    "spoto bench": "bench press",
-    "paused bench": "bench press",
-    "paused bench press": "bench press",
-    deadlifts: "deadlift",
-    dl: "deadlift",
-    "sumo deadlift": "deadlift",
-    "conventional deadlift": "deadlift",
-    "sumo dl": "deadlift",
+    snatches: "snatch",
+    "power snatch": "snatch",
+    "hang snatch": "snatch",
+    "muscle snatch": "snatch",
+    "snatch pull": "snatch",
+    "snatch balance": "snatch",
+    "snatch deadlift": "snatch",
+    "overhead squat": "snatch",
+    "squat snatch": "snatch",
+    "clean & jerk": "clean and jerk",
+    "clean and jerk": "clean and jerk",
+    cj: "clean and jerk",
+    "c&j": "clean and jerk",
+    cnj: "clean and jerk",
+    jerk: "clean and jerk",
+    "split jerk": "clean and jerk",
+    "power jerk": "clean and jerk",
+    "push jerk": "clean and jerk",
+    clean: "clean and jerk",
+    "power clean": "clean and jerk",
+    "hang clean": "clean and jerk",
+    "muscle clean": "clean and jerk",
+    "clean pull": "clean and jerk",
+    "front squat": "clean and jerk",
+    "squat clean": "clean and jerk",
     "romanian deadlift": "romanian deadlift",
     rdl: "romanian deadlift",
+    "back squat": "back squat",
+    "front squats": "clean and jerk",
   };
 
   function normalizeExerciseKey(name) {
