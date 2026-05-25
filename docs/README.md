@@ -5,6 +5,7 @@ Single place for how the site works, how to build it, and what to do next.
 | Doc | Purpose |
 |-----|---------|
 | [SITE.md](SITE.md) | Architecture, routes, build pipeline, local dev, Netlify deploy |
+| [DEPLOY.md](DEPLOY.md) | DigitalOcean droplet, GitHub Actions, DNS cutover |
 | [SUITE.md](SUITE.md) | Multi-site layout (`sites/`, shared infra plan) |
 | [ANALYTICS.md](ANALYTICS.md) | Analytics status (Netlify removed; Hetzner planned) |
 | [BLOG.md](BLOG.md) | Adding articles, frontmatter, SSG output |

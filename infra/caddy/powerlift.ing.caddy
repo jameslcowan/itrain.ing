@@ -1,0 +1,19 @@
+# Install: copy to /etc/caddy/sites/powerlift.ing.caddy and import from Caddyfile.
+# Debian: apt install caddy; drop-in import " /etc/caddy/sites/*.caddy " in main Caddyfile.
+
+powerlift.ing, www.powerlift.ing {
+	root * /var/www/powerlift.ing
+
+	@spa path /app /app/* /program/* /program/* /p/* /p/*
+	rewrite @spa /app.html
+
+	header @spa X-Robots-Tag "noindex, nofollow, noarchive"
+
+	encode gzip zstd
+	file_server
+
+	handle_errors {
+		rewrite * /404.html
+		file_server
+	}
+}
