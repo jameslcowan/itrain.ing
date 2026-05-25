@@ -7,10 +7,10 @@ Platform monorepo. Full plan: **[MONOREPO.md](MONOREPO.md)**. Branding: **[BRAND
 | Folder | Domain | Status |
 |--------|--------|--------|
 | `sites/powerlifting/` | powerlift.ing | Production; DO deploy |
-| `sites/powerbuilding/` | powerbuild.ing | Branded — local preview |
-| `sites/olympiclifting/` | olympiclift.ing | Branded — local preview |
-| `sites/bootybuilding/` | bootybuild.ing | Branded — local preview |
-| `sites/itraining/` | itrain.ing | Branded — local preview |
+| `sites/powerbuilding/` | powerbuild.ing | Production; DO deploy |
+| `sites/olympiclifting/` | olympiclift.ing | Production; DO deploy |
+| `sites/bootybuilding/` | bootybuild.ing | Production; DO deploy |
+| `sites/itraining/` | itrain.ing | Production; DO deploy |
 
 ## Repo layout
 

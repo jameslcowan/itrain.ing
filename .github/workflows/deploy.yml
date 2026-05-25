@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "sites/powerlifting/**"
+      - "sites/**"
       - ".github/workflows/deploy.yml"
       - "infra/**"
   workflow_dispatch:
@@ -14,11 +14,25 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy-powerlifting:
+  deploy:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - site: powerlifting
+            domain: powerlift.ing
+          - site: powerbuilding
+            domain: powerbuild.ing
+          - site: olympiclifting
+            domain: olympiclift.ing
+          - site: bootybuilding
+            domain: bootybuild.ing
+          - site: itraining
+            domain: itrain.ing
     defaults:
       run:
-        working-directory: sites/powerlifting
+        working-directory: sites/${{ matrix.site }}
     steps:
       - uses: actions/checkout@v4
 
@@ -26,7 +40,7 @@ jobs:
         with:
           node-version: "22"
           cache: npm
-          cache-dependency-path: sites/powerlifting/package-lock.json
+          cache-dependency-path: sites/${{ matrix.site }}/package-lock.json
 
       - run: npm ci && npm run build
 
@@ -35,7 +49,7 @@ jobs:
         with:
           switches: -avzr --delete --exclude-from=../../infra/deploy/rsync-excludes.txt
           path: ./
-          remote_path: /var/www/powerlift.ing/
+          remote_path: /var/www/${{ matrix.domain }}/
           remote_host: ${{ secrets.DEPLOY_HOST }}
           remote_user: ${{ secrets.DEPLOY_USER }}
           remote_key: ${{ secrets.SSH_PRIVATE_KEY }}

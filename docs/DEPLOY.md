@@ -22,9 +22,11 @@ SSH as root (or your admin user):
 apt update && apt install -y caddy rsync
 
 useradd -m -s /bin/bash deploy
-mkdir -p /var/www/powerlift.ing
-chown -R deploy:www-data /var/www/powerlift.ing
-chmod -R g+w /var/www/powerlift.ing
+for d in powerlift.ing powerbuild.ing olympiclift.ing bootybuild.ing itrain.ing; do
+  mkdir -p "/var/www/$d"
+done
+chown -R deploy:www-data /var/www/*.ing
+chmod -R g+w /var/www/*.ing
 
 mkdir -p /home/deploy/.ssh
 # Paste the *public* key (same pair as GitHub secret private key):
@@ -34,7 +36,7 @@ chmod 700 /home/deploy/.ssh
 chmod 600 /home/deploy/.ssh/authorized_keys
 
 mkdir -p /etc/caddy/sites
-# Copy infra/caddy/powerlift.ing.caddy from repo to /etc/caddy/sites/
+# Copy infra/caddy/*.caddy from repo to /etc/caddy/sites/
 # Ensure main /etc/caddy/Caddyfile contains: import /etc/caddy/sites/*.caddy
 systemctl reload caddy
 ```
@@ -51,9 +53,17 @@ Repo → **Settings → Secrets and variables → Actions**:
 
 The matching **public** key must be in `/home/deploy/.ssh/authorized_keys` on the server.
 
-Workflow: [.github/workflows/deploy.yml](../.github/workflows/deploy.yml) — builds `sites/powerlifting/`, rsyncs to `/var/www/powerlift.ing/`.
+Workflow: [.github/workflows/deploy.yml](../.github/workflows/deploy.yml) — matrix deploy: each `sites/*/` → `/var/www/<domain>/`.
 
 ## Manual deploy (debug)
+
+All sites:
+
+```bash
+./scripts/deploy-all-sites.sh
+```
+
+Single site (example):
 
 ```bash
 cd sites/powerlifting && npm ci && npm run build
@@ -70,6 +80,16 @@ rsync -avzr --delete --exclude-from=../../infra/deploy/rsync-excludes.txt \
 - [ ] Unknown path → `404.html`
 - [ ] HTTPS certificate valid
 
-## Later (monorepo + DB)
+## Sites on this droplet
 
-Same droplet: extra Caddy site files, extra `/var/www/<domain>/`, Postgres + API service. Bump droplet RAM when DB lands on the box.
+| Domain | Web root | Caddy config |
+|--------|----------|--------------|
+| powerlift.ing | `/var/www/powerlift.ing/` | `infra/caddy/powerlift.ing.caddy` |
+| powerbuild.ing | `/var/www/powerbuild.ing/` | `infra/caddy/powerbuild.ing.caddy` |
+| olympiclift.ing | `/var/www/olympiclift.ing/` | `infra/caddy/olympiclift.ing.caddy` |
+| bootybuild.ing | `/var/www/bootybuild.ing/` | `infra/caddy/bootybuild.ing.caddy` |
+| itrain.ing | `/var/www/itrain.ing/` | `infra/caddy/itrain.ing.caddy` |
+
+## Later (DB)
+
+Postgres + API service on same droplet. Bump droplet RAM when DB lands on the box.

@@ -23,7 +23,7 @@ Use this file when opening **`/home/jameslcowan/Documents/GitHub/itrain.ing`** i
 App code lives under **`sites/`**:
 
 - `sites/powerlifting/` — powerlift.ing (production)
-- `sites/powerbuilding/`, `sites/olympiclifting/`, `sites/bootybuilding/` — full copies; rebrand TBD
+- `sites/powerbuilding/`, `sites/olympiclifting/`, `sites/bootybuilding/`, `sites/itraining/` — branded; DO deploy
 
 Repo root: `docs/`, `infra/`, `.github/` only.
 
@@ -33,7 +33,7 @@ Repo root: `docs/`, `infra/`, `.github/` only.
 |------|--------|
 | **Netlify** | powerlift.ing still live; do not remove until DO verified |
 | **DigitalOcean** | Droplet provisioned (Debian 13, NYC/SFO); user setting up Caddy + `deploy` user |
-| **GitHub Actions** | `.github/workflows/deploy.yml` — rsync to `/var/www/powerlift.ing/` on push to `main` |
+| **GitHub Actions** | `.github/workflows/deploy.yml` — matrix rsync all sites to `/var/www/<domain>/` on push to `main` |
 | **Secrets needed** | `DEPLOY_HOST`, `DEPLOY_USER`, `SSH_PRIVATE_KEY` |
 | **Hetzner** | Abandoned (KYC); DO chosen instead |
 | **Analytics** | Removed from Netlify; Postgres + `services/analytics/` planned (Phase 5) |
@@ -42,8 +42,8 @@ Repo root: `docs/`, `infra/`, `.github/` only.
 
 - **OS:** Debian 13 stable (not Fedora on server).
 - **Size:** ~$16/mo (2 GB) sized for Postgres later; static-only could be $8.
-- **Web:** Caddy — `infra/caddy/powerlift.ing.caddy`
-- **Deploy path:** `/var/www/powerlift.ing/`
+- **Web:** Caddy — `infra/caddy/*.caddy` (five domains)
+- **Deploy paths:** `/var/www/{powerlift,powerbuild,olympiclift,bootybuild,itrain}.ing/`
 - **Fedora desktop:** use `wl-copy < ~/.ssh/id_ed25519.pub` (not `pbcopy`).
 
 ## Monorepo phases (summary)
