@@ -1,6 +1,6 @@
 ---
 slug: how-sharing-works
-title: How Sharing Works on powerlift.ing
+title: How Sharing Works on itrain.ing
 description: Your whole program lives in one open link. Send it to athletes, post it for lifters to learn from, and update it as you edit.
 image: https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&h=630&fit=crop&q=80
 alt: Coach reviewing training notes on a phone
@@ -11,19 +11,19 @@ tags:
   - sharing
   - coaching
 faq:
-  - "Can anyone open my link? | Yes. Anyone with the full URL gets your whole program in powerlift.ing — no login required. That open access is intentional so powerlifting programming can spread."
+  - "Can anyone open my link? | Yes. Anyone with the full URL gets your whole program in itrain.ing — no login required. That open access is intentional so training programming can spread."
   - "Does the link update when I edit? | Yes. The address bar updates as you type, so the latest version is always encoded in the link."
 ---
 
-When you tap **Share** in powerlift.ing, you copy a link that contains your program. There is no separate export step and no account required. The program is compressed into the path of the URL.
+When you tap **Share** in itrain.ing, you copy a link that contains your program. There is no separate export step and no account required. The program is compressed into the path of the URL.
 
 ## Open links by design
 
-powerlift.ing treats the share link as a feature, not a limitation. One URL opens the full grid for an athlete, a training partner, or a lifter you have never met who found your program in a forum or group chat. Coaches can pass along real blocks without paywalls or “request access” flows.
+itrain.ing treats the share link as a feature, not a limitation. One URL opens the full grid for an athlete, a training partner, or a lifter you have never met who found your program in a forum or group chat. Coaches can pass along real blocks without paywalls or “request access” flows.
 
-That matches what powerlift.ing is for: **open powerlifting knowledge** — programs people can actually use, not hoard.
+That matches what itrain.ing is for: **open training knowledge** — programs people can actually use, not hoard.
 
-Paid plans later will add **private programs** for coaches who need them. Free powerlift.ing will keep open one-link sharing at the center.
+Paid plans later will add **private programs** for coaches who need them. Free itrain.ing will keep open one-link sharing at the center.
 
 ## What gets encoded
 
@@ -33,7 +33,7 @@ Legacy links using `/program/` or `/p/` still open correctly. New shares use `/a
 
 ## Why this is useful for coaches
 
-You can text one link to an athlete and they see the same grid you use. Post a template publicly so other lifters can learn from your structure. When you change the plan, copy the link again if you want a fixed snapshot for a check-in. Many coaches keep powerlift.ing open on their phone and refresh the share link after a weekly review.
+You can text one link to an athlete and they see the same grid you use. Post a template publicly so other lifters can learn from your structure. When you change the plan, copy the link again if you want a fixed snapshot for a check-in. Many coaches keep itrain.ing open on their phone and refresh the share link after a weekly review.
 
 ## Limits to know
 
@@ -43,4 +43,4 @@ Individual shared program URLs are marked **noindex** so they do not flood Googl
 
 ## Try it
 
-[Launch powerlift.ing](/app) with a blank week, add a day, then share. You will see the URL change as you edit.
+[Launch itrain.ing](/app) with a blank week, add a day, then share. You will see the URL change as you edit.
