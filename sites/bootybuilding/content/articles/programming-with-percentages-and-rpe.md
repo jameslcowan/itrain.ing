@@ -11,11 +11,11 @@ tags:
   - %1RM
 ---
 
-Most spreadsheets force you to pick either percentage work or RPE. powerlift.ing keeps **%1RM**, **load**, and **RPE** on the same row because real meet prep uses all three.
+Most spreadsheets force you to pick either percentage work or RPE. bootybuild.ing keeps **%1RM**, **load**, and **RPE** on the same row because real meet prep uses all three.
 
 ## Set up maxes first
 
-Open **Config** and enter best singles for squat, bench, and deadlift. Add other lifts (Romanian deadlift, close-grip bench) if you program them often. The dialog shows an **SBD total** as you type.
+Open **Config** and enter best singles for your main lower-body lifts. Add other lifts (Romanian deadlift, close-grip bench) if you program them often. The dialog shows an **training total** as you type.
 
 Matching exercise names map to the right max. "Paused bench" uses your bench max. Custom names use the exact key you saved.
 

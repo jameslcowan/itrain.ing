@@ -1,4 +1,4 @@
-powerlift.ing — LLM instructions
+bootybuild.ing — LLM instructions
 
 Canonical: /llms.txt
 

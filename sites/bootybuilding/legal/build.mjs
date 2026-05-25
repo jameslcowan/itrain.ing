@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { renderShell } from "../blog/templates.mjs";
+import { SITE_BRAND } from "../content/site-brand.js";
 import { renderSiteFooter } from "../site/footer.mjs";
 import { LEGAL_UPDATED, TERMS_BODY, PRIVACY_BODY } from "./content.mjs";
 
@@ -57,15 +58,13 @@ function patchLandingFooter() {
 function build() {
   writeLegalPage("terms", {
     pageTitle: "Terms of Service",
-    metaDescription:
-      "Terms of Service for powerlift.ing: free program builder, open share links, disclaimers, and limitation of liability.",
+    metaDescription: `Terms of Service for ${SITE_BRAND.domain}: free program builder, open share links, disclaimers, and limitation of liability.`,
     canonicalPath: "/terms/",
     bodyHtml: TERMS_BODY,
   });
   writeLegalPage("privacy", {
     pageTitle: "Privacy Policy",
-    metaDescription:
-      "Privacy Policy for powerlift.ing: minimal data collection, programs in share links, and browser storage.",
+    metaDescription: `Privacy Policy for ${SITE_BRAND.domain}: minimal data collection, programs in share links, and browser storage.`,
     canonicalPath: "/privacy/",
     bodyHtml: PRIVACY_BODY,
   });

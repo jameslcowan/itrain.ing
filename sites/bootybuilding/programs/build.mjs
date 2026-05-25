@@ -3,6 +3,7 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { PROGRAMS } from "../content/programs-data.js";
 import { renderShell, escapeHtml } from "../blog/templates.mjs";
+import { SITE_BRAND } from "../content/site-brand.js";
 import { encodeProgram } from "./encode-state.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -62,7 +63,7 @@ function renderProgramCard(card) {
   <div class="prog-card prog-card--overlay" aria-hidden="true">
     <div class="prog-card__header">
       <h2 class="prog-card__title">${title}</h2>
-      <p class="prog-card__subtitle">Open in the powerlift.ing editor</p>
+      <p class="prog-card__subtitle">${SITE_BRAND.programsCardEditor}</p>
     </div>
     <button class="lp-btn lp-btn--primary prog-card__action" type="button" data-dialog-open>Open program</button>
   </div>
@@ -83,8 +84,8 @@ function renderProgramsBody(cards) {
   const grid = cards.map(renderProgramCard).join("\n");
   return `<main id="main" class="programs-main">
   <header class="programs-page__head">
-    <h1 class="programs-page__title lp-display">Free powerlifting programs</h1>
-    <p class="programs-page__lead">Free powerlifting templates from powerlift.ing. Pick a card, open it in the builder, edit anything, and share your version as one link. Use the <strong>Blank program</strong> card to start from scratch.</p>
+    <h1 class="programs-page__title lp-display">${SITE_BRAND.programsTitle}</h1>
+    <p class="programs-page__lead">${SITE_BRAND.programsLead}</p>
   </header>
   <section class="programs-grid" aria-label="Program templates">
     <div class="programs-grid__container">
@@ -101,9 +102,8 @@ function build() {
   mkdirSync(dir, { recursive: true });
 
   const html = renderShell({
-    title: "Free powerlifting programs",
-    description:
-      "Free powerlifting program templates on powerlift.ing: 3-day SBD, 5/3/1, bench focus, meet prep, and more. Open in the builder and share one link.",
+    title: SITE_BRAND.programsTitle,
+    description: SITE_BRAND.programsMeta,
     canonicalPath: "/programs/",
     mainHtml: renderProgramsBody(PROGRAMS),
     extraStylesheets: ["/programs.css"],

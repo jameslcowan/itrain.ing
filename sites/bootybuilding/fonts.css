@@ -1,9 +1,9 @@
 /**
  * Font faces — load via <link> in HTML (never @import).
- * Landing: Bebas Neue + DM Sans only. App adds JetBrains Mono in app.html.
+ * Landing: display + sans. App adds JetBrains Mono in app.html.
  */
 
 :root {
-  --font-display-fallback: "Arial Narrow", "Helvetica Neue Condensed", system-ui, sans-serif;
+  --font-display-fallback: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-sans-fallback: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }

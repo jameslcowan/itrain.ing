@@ -1,13 +1,15 @@
 /** Shared site footer (marketing pages, app, legal). */
 
+import { SITE_BRAND, brandWordmark } from "../content/site-brand.js";
+
 const YEAR = new Date().getFullYear();
 
 export function renderSiteFooter() {
   return `<footer class="site-footer">
   <div class="site-footer__inner">
     <div class="site-footer__brand">
-      <a class="site-footer__logo" href="/">powerlift<span class="site-header__dot">.</span>ing</a>
-      <p class="site-footer__tagline">Free powerlifting program builder. Share whole programs as one open link.</p>
+      <a class="site-footer__logo" href="/">${brandWordmark()}</a>
+      <p class="site-footer__tagline">${SITE_BRAND.tagline}</p>
     </div>
     <nav class="site-footer__col" aria-label="Product">
       <h2 class="site-footer__heading">Product</h2>
@@ -33,7 +35,7 @@ export function renderSiteFooter() {
     </nav>
   </div>
   <div class="site-footer__bottom">
-    <p class="site-footer__copy">© ${YEAR} powerlift.ing · Made by <a href="https://x.com/jameslcowan" target="_blank" rel="noopener noreferrer">James L. Cowan</a></p>
+    <p class="site-footer__copy">© ${YEAR} ${SITE_BRAND.domain} · Made by <a href="https://x.com/jameslcowan" target="_blank" rel="noopener noreferrer">James L. Cowan</a></p>
   </div>
 </footer>`;
 }
