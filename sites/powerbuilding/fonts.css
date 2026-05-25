@@ -1,6 +1,6 @@
 /**
  * Font faces — load via <link> in HTML (never @import).
- * Landing: Bebas Neue + DM Sans only. App adds JetBrains Mono in app.html.
+ * Landing: display + sans. App adds JetBrains Mono in app.html.
  */
 
 :root {

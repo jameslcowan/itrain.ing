@@ -72,7 +72,7 @@ export const PROGRAMS = [
     label: "Start here",
     category: "Starter",
     description:
-      "Open the powerlift.ing editor with a fresh week. Add mesocycles, days, and exercises, then share your link when you are ready.",
+      "Open the powerbuild.ing editor with a fresh week. Add mesocycles, days, and exercises, then share your link when you are ready.",
     program: null,
   },
   {
@@ -81,7 +81,7 @@ export const PROGRAMS = [
     subtitle: "Squat · bench · deadlift",
     label: "Popular",
     badge: "3 days",
-    category: "Full powerlifting",
+    category: "Full strength",
     description:
       "Classic three-day full power layout: squat, bench, and deadlift each get a focused session. Percentages are left open so you can plug in your own maxes in Config.",
     program: {
@@ -524,7 +524,7 @@ export const PROGRAMS = [
     subtitle: "One lift per day",
     label: "Popular",
     badge: "3 days",
-    category: "Full powerlifting",
+    category: "Full strength",
     days: [
       { label: "SQUAT", rows: [row("Squat", 3, 5)] },
       { label: "BENCH", rows: [row("Bench Press", 3, 5)] },

@@ -1,11 +1,11 @@
-/* powerlift.ing — design tokens (powerlifting / gym floor) */
+/* powerbuild.ing — design tokens (powerbuilding / hypertrophy) */
 /* Fonts: load fonts.css (or Google <link>) in HTML before this file. */
 
 :root {
   /* Brand */
-  --pl-plate: #ff5c00;
-  --pl-plate-dim: #e04e00;
-  --pl-chalk: #f5f3ef;
+  --pl-plate: #c41e3a;
+  --pl-plate-dim: #a31830;
+  --pl-chalk: #f7f5f3;
   --pl-iron: #0d0d0f;
   --pl-steel: #16161a;
   --pl-rack: #1e1e24;
@@ -46,7 +46,6 @@
   --space-5: 28px;
   --space-6: 36px;
 
-  /* Type scale (UI copy) */
   --text-sm: 0.875rem;
   --text-base: 1rem;
   --text-md: 1.0625rem;
@@ -63,8 +62,8 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
 
-  --font-display: "Bebas Neue", system-ui, sans-serif;
-  --sans: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-display: "Oswald", system-ui, sans-serif;
+  --sans: "Source Sans 3", system-ui, -apple-system, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, monospace;
 
   --topbar-h: 52px;
@@ -132,7 +131,6 @@ html[data-theme="dark"] {
 
 html[data-theme="light"],
 html[data-theme="dark"] {
-  /* manual theme wins over prefers-color-scheme */
 }
 
 html {

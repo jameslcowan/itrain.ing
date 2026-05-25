@@ -3,10 +3,10 @@
 export const LEGAL_UPDATED = "May 22, 2026";
 
 export const TERMS_BODY = `
-<p>These Terms of Service (“Terms”) govern your use of <strong>powerlift.ing</strong> (the “Service”), operated by James L. Cowan (“we,” “us,” or “our”). By using the Service, you agree to these Terms. If you do not agree, do not use the Service.</p>
+<p>These Terms of Service (“Terms”) govern your use of <strong>powerbuild.ing</strong> (the “Service”), operated by James L. Cowan (“we,” “us,” or “our”). By using the Service, you agree to these Terms. If you do not agree, do not use the Service.</p>
 
-<h2>1. What powerlift.ing is</h2>
-<p>powerlift.ing is a free, browser-based tool for building and sharing powerlifting training programs. The Service is provided for informational and planning purposes only. It is <strong>not</strong> medical advice, physical therapy, nutrition advice, or individualized coaching.</p>
+<h2>1. What powerbuild.ing is</h2>
+<p>powerbuild.ing is a free, browser-based tool for building and sharing powerbuilding and general strength training programs. The Service is provided for informational and planning purposes only. It is <strong>not</strong> medical advice, physical therapy, nutrition advice, or individualized coaching.</p>
 
 <h2>2. Your responsibility</h2>
 <p>You are solely responsible for how you train, whether you follow any program created or shared through the Service, and for decisions you make based on information in the Service. You should consult qualified professionals regarding health, injury, or training when appropriate. You use the Service at your own risk.</p>
@@ -41,7 +41,7 @@ export const TERMS_BODY = `
 `;
 
 export const PRIVACY_BODY = `
-<p>This Privacy Policy describes how <strong>powerlift.ing</strong> (“we,” “us,” or “our”) handles information when you use our website and program builder (the “Service”). We aim to collect as little as possible.</p>
+<p>This Privacy Policy describes how <strong>powerbuild.ing</strong> (“we,” “us,” or “our”) handles information when you use our website and program builder (the “Service”). We aim to collect as little as possible.</p>
 
 <h2>1. Summary</h2>
 <ul>
@@ -51,17 +51,17 @@ export const PRIVACY_BODY = `
 </ul>
 
 <h2>2. Information you provide</h2>
-<p>When you use powerlift.ing, you may enter training data (exercises, sets, reps, loads, RPE, maxes, etc.). That data stays in your session and in URLs you share unless you use a future account feature we may offer.</p>
+<p>When you use powerbuild.ing, you may enter training data (exercises, sets, reps, loads, RPE, maxes, etc.). That data stays in your session and in URLs you share unless you use a future account feature we may offer.</p>
 <p>If you contact us (for example via social media), we receive what you send us there.</p>
 
 <h2>3. Information collected automatically</h2>
 <p>Like most websites, our hosting provider may log technical data such as IP address, browser type, requested pages, and approximate timing. We use this to operate and secure the Service. We do not currently run advertising trackers or sell log data.</p>
 
 <h2>4. Local storage in your browser</h2>
-<p>powerlift.ing may store preferences on your device (for example theme choice or saved maxes) using browser storage so the app works smoothly. You can clear site data in your browser settings; doing so may reset local preferences.</p>
+<p>powerbuild.ing may store preferences on your device (for example theme choice or saved maxes) using browser storage so the app works smoothly. You can clear site data in your browser settings; doing so may reset local preferences.</p>
 
 <h2>5. Share links</h2>
-<p>When you share a program, the program data is encoded in the link. Anyone with that link can open the program in powerlift.ing. That is by design so knowledge and programs can spread openly. Do not put sensitive personal information in program notes if you would not want it visible to link holders.</p>
+<p>When you share a program, the program data is encoded in the link. Anyone with that link can open the program in powerbuild.ing. That is by design so knowledge and programs can spread openly. Do not put sensitive personal information in program notes if you would not want it visible to link holders.</p>
 <p>Shared program URLs are generally marked so they are not intended to appear in public search engine results on their own; you may still post links wherever you choose.</p>
 
 <h2>6. Third-party services</h2>

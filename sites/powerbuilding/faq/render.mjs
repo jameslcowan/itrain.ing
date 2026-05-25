@@ -1,4 +1,5 @@
 import { FAQ_SECTIONS } from "../content/faq-data.js";
+import { SITE_BRAND } from "../content/site-brand.js";
 import { escapeHtml } from "../blog/templates.mjs";
 
 export function stripHtml(html) {
@@ -98,12 +99,12 @@ export function renderFaqBody() {
   return `<main id="main" class="blog-main lp-faq-full">
   <header class="faq-page__head">
     <h1 class="faq-page__title">FAQ</h1>
-    <p class="faq-page__lead">Common questions about building, sharing, and using programs on powerlift.ing — in plain language.</p>
+    <p class="faq-page__lead">${SITE_BRAND.faqLandingLead} — in plain language.</p>
     ${renderFaqPageNav()}
   </header>
 ${renderFaqPageSections()}
   <aside class="faq-page__cta">
-    <p>Need more help? Read <a href="/blog/how-sharing-works/">how sharing works</a> or browse the <a href="/blog/">blog</a>, then open <a href="/app">powerlift.ing</a>.</p>
+    <p>Need more help? Read <a href="/blog/how-sharing-works/">how sharing works</a> or browse the <a href="/blog/">blog</a>, then open <a href="/app">${SITE_BRAND.domain}</a>.</p>
     <a class="lp-btn lp-btn--primary" href="/app">Launch App</a>
   </aside>
 </main>`;

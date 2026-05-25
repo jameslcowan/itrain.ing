@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://powerlift.ing/sitemap.xml
+Sitemap: https://powerbuild.ing/sitemap.xml

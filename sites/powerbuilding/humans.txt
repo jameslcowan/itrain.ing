@@ -4,6 +4,6 @@ Handle: @jameslcowan
 X: https://x.com/jameslcowan
 
 /* SITE */
-Site: powerlift.ing
+Site: powerbuild.ing
 Stack: Vanilla HTML/CSS/JS (static)
 Routing: /#/p/<STATE> and /p/<STATE> (state-in-URL)
