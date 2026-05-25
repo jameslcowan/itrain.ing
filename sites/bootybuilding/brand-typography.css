@@ -84,3 +84,10 @@ html.fonts-loaded .site-menu__brand,
 .builderPage .iconBtn--primary {
   background: linear-gradient(135deg, var(--pl-plate) 0%, var(--pl-plate-dim) 100%);
 }
+
+/* App builder: flat UI — drop shadows read as clutter on dense grids */
+.builderPage .dd__menu,
+.builderPage details.day,
+.builderPage .dialog {
+  box-shadow: none;
+}
