@@ -1,0 +1,131 @@
+/**
+ * itrain.ing — Outfit headlines + DM Sans UI + IBM Plex Mono wordmark.
+ */
+
+.landingPage {
+  --lp-accent-wash: color-mix(in srgb, var(--accent) 22%, var(--bg));
+}
+
+html[data-theme="dark"] .landingPage {
+  --lp-accent-wash: color-mix(in srgb, var(--accent) 28%, var(--bg));
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .landingPage {
+    --lp-accent-wash: color-mix(in srgb, var(--accent) 28%, var(--bg));
+  }
+}
+
+.landingPage .lp-display,
+html.fonts-loaded .landingPage .lp-display {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  line-height: 1.08;
+}
+
+.landingPage .lp-hero__title {
+  font-size: clamp(2.25rem, 9vw, 3.5rem);
+}
+
+.landingPage .lp-hero__title em {
+  display: block;
+  margin-top: 0.4em;
+  font-family: var(--mono);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.42em;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  color: var(--accent);
+}
+
+.site-header__brand,
+html.fonts-loaded .site-header__brand,
+.site-menu__brand,
+html.fonts-loaded .site-menu__brand,
+.site-footer__logo,
+html.fonts-loaded .site-footer__logo,
+.builderPage .brand__wordmark {
+  font-family: var(--font-wordmark);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.site-header__nav a,
+html.fonts-loaded .site-header__nav a {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+.site-header__dot,
+.brand__dot,
+.site-menu__dot {
+  color: var(--accent);
+}
+
+.site-menu__link,
+html.fonts-loaded .site-menu__link {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+.site-footer__heading,
+html.fonts-loaded .site-footer__heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.site-footer__list a {
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.landingPage .lp-btn {
+  font-family: var(--sans);
+  letter-spacing: 0.01em;
+  text-transform: none;
+  font-weight: 600;
+}
+
+.landingPage .lp-btn--primary {
+  border: none;
+  background: linear-gradient(135deg, var(--pl-plate) 0%, var(--pl-plate-dim) 100%);
+  box-shadow: 0 8px 28px color-mix(in srgb, var(--accent) 24%, transparent);
+}
+
+.landingPage .lp-btn--primary:hover {
+  filter: brightness(1.05);
+}
+
+.landingPage .lp-badge {
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  background: color-mix(in srgb, var(--accent) 8%, var(--panel));
+  color: var(--accent);
+  font-family: var(--mono);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  font-size: 0.68rem;
+}
+
+.builderPage .iconBtn--primary {
+  background: linear-gradient(135deg, var(--pl-plate) 0%, var(--pl-plate-dim) 100%);
+}
+
+.builderPage .dd__menu,
+.builderPage details.day,
+.builderPage .dialog {
+  box-shadow: none;
+}
