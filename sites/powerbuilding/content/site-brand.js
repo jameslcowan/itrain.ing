@@ -8,6 +8,8 @@ export const SITE_BRAND = {
   productLine: "Powerbuilding program builder",
   tagline: "Free powerbuilding program builder. Share whole programs as one open link.",
   googleFontsUrl: "https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap",
+  appGoogleFontsUrl:
+    "https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;600&display=swap",
   themeColorLight: "#f7f5f3",
   themeColorDark: "#0d0d0f",
   programsTitle: "Free powerbuilding programs",
