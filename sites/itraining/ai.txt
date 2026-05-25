@@ -1,16 +1,16 @@
-powerlift.ing — AI assistant guide (short)
+itrain.ing — AI assistant guide (short)
 
-If a user says “make me a workout for powerlift.ing”, they usually want a share link they can open in the app.
+If a user says “make me a workout for itrain.ing”, they usually want a share link they can open in the app.
 
-What powerlift.ing is
+What itrain.ing is
 - A static, client-only program builder.
 - No accounts, no backend.
 - The entire program is stored in the URL.
 
 Routing (share link formats)
-- Current (default): https://powerlift.ing/app/<STATE>
-- Legacy (still works): https://powerlift.ing/p/<STATE>
-- Legacy (still works): https://powerlift.ing/#/p/<STATE>
+- Current (default): https://itrain.ing/app/<STATE>
+- Legacy (still works): https://itrain.ing/p/<STATE>
+- Legacy (still works): https://itrain.ing/#/p/<STATE>
 
 Do not break shared links
 - Existing links depend on the encoding contract below. Keep backward compatibility.
@@ -24,7 +24,7 @@ If you can’t execute code
 - Instead output:
   - the program (human readable)
   - the program JSON (v1 schema below)
-  - and tell the user to open https://powerlift.ing/app and build the program there (the URL updates as they edit)
+  - and tell the user to open https://itrain.ing/app and build the program there (the URL updates as they edit)
 
 Program JSON schema (authoring shape, v1)
 {
@@ -71,4 +71,4 @@ Minimal example JSON (1 week, 3 days)
 }
 
 Where to get the machine-readable contract
-- https://powerlift.ing/llms.txt
+- https://itrain.ing/llms.txt
