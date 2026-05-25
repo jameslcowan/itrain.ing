@@ -7,6 +7,7 @@
   "use strict";
 
   const DOW = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+  const DEFAULT_UNIT = "kg";
 
   /** Soft/hard limits for /app/<STATE> path segment (chars in encoded payload). */
   const URL_STATE_SOFT = 1800;
@@ -84,7 +85,11 @@
   }
 
   function defaultProgram() {
-    return { v: 1, u: "lb", m: {}, c: [{ n: "Meso 1" }], weeks: [defaultWeek()] };
+    return { v: 1, u: DEFAULT_UNIT, m: {}, c: [{ n: "Meso 1" }], weeks: [defaultWeek()] };
+  }
+
+  function resolveUnit(u) {
+    return u === "lb" ? "lb" : DEFAULT_UNIT;
   }
 
   function normalizeProgram(input) {
@@ -101,7 +106,7 @@
 
     return {
       v: 1,
-      u: prog.u === "kg" ? "kg" : "lb",
+      u: resolveUnit(prog.u),
       m: normalizeMaxesMap(prog.m),
       c: safeCycles,
       weeks: weeks.map((w) => {
@@ -197,7 +202,7 @@
   function expandState(compact) {
     return {
       v: 1,
-      u: compact.u,
+      u: resolveUnit(compact.u),
       m: normalizeMaxesMap(compact.m),
       c: compact.c,
       weeks: compact.weeks.map((w) => ({
@@ -233,8 +238,8 @@
     if (!json) throw new Error("Invalid state");
 
     const parsed = JSON.parse(json);
-    if (parsed.v === 2) return expandState(parsed);
-    return parsed;
+    if (parsed.v === 2) return normalizeProgram(expandState(parsed));
+    return normalizeProgram(parsed);
   }
 
   function looksLikeProgramV1(obj) {
@@ -274,8 +279,10 @@
     usedDows,
     nextDowForWeek,
     defaultWeek,
+    DEFAULT_UNIT,
     defaultProgram,
     normalizeProgram,
+    resolveUnit,
     normalizeMaxesMap,
     encodeState,
     decodeState,

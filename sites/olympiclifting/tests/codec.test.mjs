@@ -62,22 +62,22 @@ test("encodeState + decodeState round-trip (v2 wire format)", () => {
   const enc = codec.encodeState(sampleV1);
   assert.ok(enc.length > 0);
   const decoded = codec.decodeState(enc);
-  const normalized = codec.normalizeProgram(decoded);
-  assert.equal(normalized.u, "kg");
-  assert.equal(normalized.weeks[0].days[0].rows[0].ex, "Squat");
-  assert.equal(normalized.weeks[0].days[0].rows[0].rpe, "7.5");
+  assert.equal(decoded.u, "kg");
+  assert.equal(decoded.weeks[0].days[0].rows[0].ex, "Squat");
+  assert.equal(decoded.weeks[0].days[0].rows[0].rpe, "7.5");
 });
 
 test("normalizeProgram fills missing rows and units", () => {
   const out = codec.normalizeProgram({ v: 1, weeks: [{ c: 0, days: [{ label: "DAY 1 - MON", rows: [] }] }] });
-  assert.equal(out.u, "lb");
+  assert.equal(out.u, "kg");
   assert.equal(out.weeks[0].days[0].rows.length, 1);
   assert.equal(out.weeks[0].days[0].rows[0].ex, "");
 });
 
 test("defaultProgram encodes and decodes", () => {
   const enc = codec.encodeState(codec.defaultProgram());
-  const decoded = codec.normalizeProgram(codec.decodeState(enc));
+  const decoded = codec.decodeState(enc);
+  assert.equal(decoded.u, "kg");
   assert.equal(decoded.weeks.length, 1);
   assert.equal(decoded.weeks[0].days.length, 3);
 });
