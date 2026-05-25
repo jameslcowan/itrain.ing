@@ -202,6 +202,11 @@ export const SITE_BRAND = {
   programsCardEditor: "${b.programsCardEditor}",
   faqLandingLead: "${b.faqLandingLead}",
   faqPageMeta: ${JSON.stringify(b.faqPageMeta)},
+  blogIndexLead: ${JSON.stringify(b.blogIndexLead)},
+  blogCtaText: ${JSON.stringify(b.blogCtaText)},
+  blogDefaultSection: ${JSON.stringify(b.blogDefaultSection)},
+  welcomeDialogTitle: ${JSON.stringify(b.welcomeDialogTitle)},
+  featuresVariablesHeading: ${JSON.stringify(b.featuresVariablesHeading)},
 };
 
 export function brandWordmark(dotClass = "site-header__dot") {
@@ -250,18 +255,47 @@ function llmsTxt() {
   return t;
 }
 
+function applyReplacementsToFile(rel) {
+  const path = join(ROOT, rel);
+  if (!existsSync(path)) return;
+  let text = readFileSync(path, "utf8");
+  let changed = false;
+  for (const [from, to] of b.faqReplacements) {
+    const next = text.replace(from, to);
+    if (next !== text) {
+      text = next;
+      changed = true;
+    }
+  }
+  if (changed) {
+    writeFileSync(path, text);
+    console.log(`  patched ${rel}`);
+  }
+}
+
 function applyFaqData() {
   const path = join(ROOT, "content/faq-data.js");
   let text = readFileSync(path, "utf8");
   text = text.replace(
-    /Answers use "powerlift\.ing".*/,
-    `Answers use "${b.domain}" (not "it" / "the app") for brand clarity.`
+    /Answers use "[^"]+" \(not/,
+    `Answers use "${b.domain}" (not`
   );
   for (const [from, to] of b.faqReplacements) {
     text = text.replace(from, to);
   }
   writeFileSync(path, text);
   console.log("  patched content/faq-data.js");
+}
+
+function patchMarketingCopy() {
+  applyReplacementsToFile("index.html");
+  patch("app.html", [
+    ["Welcome to Powerlift.ing", b.welcomeDialogTitle],
+    ["Welcome to powerlift.ing", b.welcomeDialogTitle],
+  ]);
+  applyReplacementsToFile("content/articles/programming-with-percentages-and-rpe.md");
+  applyReplacementsToFile("content/articles/getting-started-with-the-builder.md");
+  applyReplacementsToFile("content/articles/how-sharing-works.md");
 }
 
 function patchArticles() {
@@ -418,6 +452,7 @@ patchArticles();
 patchIndexHtml();
 patchAppHtml();
 patchLegal();
+patchMarketingCopy();
 
 function patchMisc() {
   patch("robots.txt", [[`https://powerlift.ing`, `https://${b.domain}`]]);
@@ -461,7 +496,8 @@ function finalizeDomainRefs() {
     let text = readFileSync(path, "utf8");
     const before = (text.match(/powerlift\.ing/g) || []).length;
     if (!before) continue;
-    text = text.replace(/powerlift\.ing/g, b.domain);
+    text = text.replace(/powerlift\.ing/gi, b.domain);
+    text = text.replace(/Powerlift\.ing/g, b.domain);
     writeFileSync(path, text);
     console.log(`  finalized ${rel} (${before} → 0)`);
   }
@@ -479,6 +515,8 @@ finalizeDomainRefs();
 
 const SHARED_FROM_POWERLIFTING = [
   "blog/templates.mjs",
+  "blog/build.mjs",
+  "blog/schema.mjs",
   "site/footer.mjs",
   "faq/build.mjs",
   "faq/render.mjs",

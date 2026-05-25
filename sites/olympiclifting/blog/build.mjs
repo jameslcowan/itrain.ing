@@ -8,6 +8,7 @@ import hljsJavascript from "highlight.js/lib/languages/javascript";
 import hljsJson from "highlight.js/lib/languages/json";
 import hljsMarkdown from "highlight.js/lib/languages/markdown";
 import { BLOG_META, SITE_URL } from "../content/blog-meta.js";
+import { SITE_BRAND } from "../content/site-brand.js";
 import {
   parseFrontmatter,
   parseFrontmatterDateToUtcTimestamp,
@@ -115,7 +116,7 @@ ${html}
     </div>
     <aside class="blog-cta">
       <p class="blog-cta__title">Build your own program</p>
-      <p class="blog-cta__text">Plan mesocycles, log SBD work with %1RM and RPE, and share one link. Free, no signup.</p>
+      <p class="blog-cta__text">${SITE_BRAND.blogCtaText}</p>
       <a class="lp-btn lp-btn--primary" href="/app">Launch App</a>
     </aside>
   </article>
@@ -190,7 +191,7 @@ function build() {
   const indexMain = `<main id="main" class="blog-main">
   <header class="blog-index__head">
     <h1 class="blog-index__title">Blog</h1>
-    <p class="blog-index__lead">Powerlifting programming, how the builder works, and tips for sharing training plans.</p>
+    <p class="blog-index__lead">${SITE_BRAND.blogIndexLead}</p>
   </header>
   <ul class="blog-list">
 ${listItems}

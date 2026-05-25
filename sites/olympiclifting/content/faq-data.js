@@ -78,7 +78,7 @@ export const FAQ_SECTIONS = [
       },
       {
         q: "What is a mesocycle on olympiclift.ing?",
-        a: "<p>On olympiclift.ing, a mesocycle is a training block — like a hypertrophy phase, strength block, or meet prep. Pick or rename the block from the mesocycle menu. Weeks belong to the block you have selected.</p>",
+        a: "<p>On olympiclift.ing, a mesocycle is a training block — like a technique phase, strength block, or competition prep. Pick or rename the block from the mesocycle menu. Weeks belong to the block you have selected.</p>",
       },
       {
         q: "How do I set my the snatch and clean & jerk maxes on olympiclift.ing?",
@@ -140,7 +140,7 @@ export const FAQ_SECTIONS = [
     items: [
       {
         q: "Does olympiclift.ing have free program templates?",
-        a: "<p>Yes. Browse <a href=\"/programs/\">free templates</a> on olympiclift.ing — 3-day lifts, 5/3/1, bench focus, meet prep, and more. Each opens in the same editor so you can edit and share your version.</p>",
+        a: "<p>Yes. Browse <a href=\"/programs/\">free templates</a> on olympiclift.ing — technique weeks, snatch focus, meet prep, and more. Each opens in the same editor so you can edit and share your version.</p>",
       },
       {
         q: "Will olympiclift.ing let me save programs to an account?",

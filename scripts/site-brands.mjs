@@ -61,6 +61,14 @@ export const SITE_BRANDS = {
     llmsSearchTerms:
       "- powerbuilding program / hypertrophy program builder / strength program\n- periodization / mesocycle / volume block / strength block / RPE / %1RM",
     legalSport: "powerbuilding and general strength training",
+    blogIndexLead:
+      "Powerbuilding programming, how the builder works, and tips for sharing training plans.",
+    blogCtaText:
+      "Plan mesocycles, log sets with %1RM and RPE, and share one link. Free, no signup.",
+    blogDefaultSection: "Powerbuilding",
+    welcomeDialogTitle: "Welcome to powerbuild.ing",
+    featuresVariablesHeading: "Training variables",
+    articleMeetPrepLine: "real training blocks use all three",
     faqReplacements: [
       [/powerlift\.ing/g, "powerbuild.ing"],
       [/powerlifting/gi, (m) => (m[0] === "P" ? "Powerbuilding" : "powerbuilding")],
@@ -74,6 +82,14 @@ export const SITE_BRANDS = {
       [/powerlifting templates/gi, "powerbuilding templates"],
       [/powerlifting knowledge/gi, "powerbuilding knowledge"],
       [/3-day SBD, 5\/3\/1, bench focus, meet prep/g, "splits, volume blocks, and strength templates"],
+      [/hypertrophy phase, strength block, or meet prep/g, "hypertrophy phase, strength block, or peaking block"],
+      [/bench focus/g, "upper-body focus"],
+      [/3-day training, 5\/3\/1/g, "push/pull splits"],
+      [/real meet prep uses all three/g, "real training blocks use all three"],
+      [/log SBD work with/g, "log your work with"],
+      [/Powerlifting programming/g, "Powerbuilding programming"],
+      [/Welcome to Powerlift\.ing/gi, "Welcome to powerbuild.ing"],
+      [/Welcome to powerlift\.ing/gi, "Welcome to powerbuild.ing"],
     ],
   },
   olympiclifting: {
@@ -136,6 +152,14 @@ export const SITE_BRANDS = {
     llmsSearchTerms:
       "- Olympic lifting program / weightlifting program builder / snatch and clean & jerk\n- periodization / mesocycle / technique block / strength block / RPE / %1RM",
     legalSport: "Olympic weightlifting and strength training",
+    blogIndexLead:
+      "Olympic lifting programming, the builder, and shareable training weeks.",
+    blogCtaText:
+      "Plan mesocycles, log snatch and C&J work with %1RM and RPE, and share one link. Free, no signup.",
+    blogDefaultSection: "Olympic lifting",
+    welcomeDialogTitle: "Welcome to olympiclift.ing",
+    featuresVariablesHeading: "Lift variables",
+    articleMeetPrepLine: "competition prep uses all three",
     faqReplacements: [
       [/powerlift\.ing/g, "olympiclift.ing"],
       [/powerlifting/gi, (m) => (m[0] === "P" ? "Olympic lifting" : "Olympic lifting")],
@@ -150,6 +174,15 @@ export const SITE_BRANDS = {
       [/powerlifting knowledge/gi, "weightlifting knowledge"],
       [/3-day SBD, 5\/3\/1, bench focus, meet prep/g, "technique weeks, strength blocks, and peaking"],
       [/pause bench/g, "power variations"],
+      [/hypertrophy phase, strength block, or meet prep/g, "technique phase, strength block, or competition prep"],
+      [/bench focus/g, "snatch focus"],
+      [/3-day lifts, 5\/3\/1/g, "technique weeks"],
+      [/real meet prep uses all three/g, "competition prep uses all three"],
+      [/log SBD work with/g, "log snatch and C&J work with"],
+      [/Powerlifting programming/g, "Olympic lifting programming"],
+      [/Welcome to Powerlift\.ing/gi, "Welcome to olympiclift.ing"],
+      [/Welcome to powerlift\.ing/gi, "Welcome to olympiclift.ing"],
+      [/SBD variables/g, "Lift variables"],
     ],
   },
   bootybuilding: {
@@ -212,6 +245,14 @@ export const SITE_BRANDS = {
     llmsSearchTerms:
       "- glute program / leg day program builder / hip thrust program\n- periodization / mesocycle / hypertrophy block / RPE / %1RM",
     legalSport: "general strength and hypertrophy training",
+    blogIndexLead:
+      "Glute-focused programming, the builder, and shareable leg-day blocks.",
+    blogCtaText:
+      "Plan mesocycles, log lower-body work with %1RM and RPE, and share one link. Free, no signup.",
+    blogDefaultSection: "Glute training",
+    welcomeDialogTitle: "Welcome to bootybuild.ing",
+    featuresVariablesHeading: "Training variables",
+    articleMeetPrepLine: "hard hypertrophy blocks use all three",
     faqReplacements: [
       [/powerlift\.ing/g, "bootybuild.ing"],
       [/powerlifting/gi, (m) => (m[0] === "P" ? "Glute training" : "glute training")],
@@ -226,6 +267,15 @@ export const SITE_BRANDS = {
       [/powerlifting knowledge/gi, "training knowledge"],
       [/3-day SBD, 5\/3\/1, bench focus, meet prep/g, "glute splits, hip thrust blocks, and leg templates"],
       [/pause bench/g, "variations"],
+      [/hypertrophy phase, strength block, or meet prep/g, "hypertrophy phase, strength block, or deload"],
+      [/bench focus/g, "glute focus"],
+      [/3-day training, 5\/3\/1/g, "glute splits"],
+      [/real meet prep uses all three/g, "hard hypertrophy blocks use all three"],
+      [/log SBD work with/g, "log lower-body work with"],
+      [/Powerlifting programming/g, "Glute-focused programming"],
+      [/Welcome to Powerlift\.ing/gi, "Welcome to bootybuild.ing"],
+      [/Welcome to powerlift\.ing/gi, "Welcome to bootybuild.ing"],
+      [/SBD variables/g, "Training variables"],
     ],
   },
 };

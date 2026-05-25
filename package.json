@@ -11,6 +11,7 @@
     "brand:powerbuilding": "node scripts/apply-site-brand.mjs powerbuilding",
     "brand:olympiclifting": "node scripts/apply-site-brand.mjs olympiclifting",
     "brand:bootybuilding": "node scripts/apply-site-brand.mjs bootybuilding",
+    "audit:clones": "node scripts/audit-clone-remnants.mjs",
     "dev:powerlifting": "python scripts/dev-server.py sites/powerlifting 8080",
     "dev:powerbuilding": "python scripts/dev-server.py sites/powerbuilding 8081",
     "dev:olympiclifting": "python scripts/dev-server.py sites/olympiclifting 8082",

@@ -78,7 +78,7 @@ export const FAQ_SECTIONS = [
       },
       {
         q: "What is a mesocycle on powerbuild.ing?",
-        a: "<p>On powerbuild.ing, a mesocycle is a training block — like a hypertrophy phase, strength block, or meet prep. Pick or rename the block from the mesocycle menu. Weeks belong to the block you have selected.</p>",
+        a: "<p>On powerbuild.ing, a mesocycle is a training block — like a hypertrophy phase, strength block, or peaking block. Pick or rename the block from the mesocycle menu. Weeks belong to the block you have selected.</p>",
       },
       {
         q: "How do I set my your main lifts maxes on powerbuild.ing?",
@@ -140,7 +140,7 @@ export const FAQ_SECTIONS = [
     items: [
       {
         q: "Does powerbuild.ing have free program templates?",
-        a: "<p>Yes. Browse <a href=\"/programs/\">free templates</a> on powerbuild.ing — 3-day training, 5/3/1, bench focus, meet prep, and more. Each opens in the same editor so you can edit and share your version.</p>",
+        a: "<p>Yes. Browse <a href=\"/programs/\">free templates</a> on powerbuild.ing — push/pull splits, upper-body focus, meet prep, and more. Each opens in the same editor so you can edit and share your version.</p>",
       },
       {
         q: "Will powerbuild.ing let me save programs to an account?",

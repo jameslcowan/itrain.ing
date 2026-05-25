@@ -16,6 +16,11 @@ export const SITE_BRAND = {
   programsCardEditor: "Open in the bootybuild.ing editor",
   faqLandingLead: "Common questions about building, sharing, and using programs on bootybuild.ing.",
   faqPageMeta: "Frequently asked questions about bootybuild.ing: free program builder, open sharing, %1RM maxes, coaches, and technical support.",
+  blogIndexLead: "Glute-focused programming, the builder, and shareable leg-day blocks.",
+  blogCtaText: "Plan mesocycles, log lower-body work with %1RM and RPE, and share one link. Free, no signup.",
+  blogDefaultSection: "Glute training",
+  welcomeDialogTitle: "Welcome to bootybuild.ing",
+  featuresVariablesHeading: "Training variables",
 };
 
 export function brandWordmark(dotClass = "site-header__dot") {

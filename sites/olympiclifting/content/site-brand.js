@@ -16,6 +16,11 @@ export const SITE_BRAND = {
   programsCardEditor: "Open in the olympiclift.ing editor",
   faqLandingLead: "Common questions about building, sharing, and using programs on olympiclift.ing.",
   faqPageMeta: "Frequently asked questions about olympiclift.ing: free program builder, open sharing, %1RM maxes, coaches, and technical support.",
+  blogIndexLead: "Olympic lifting programming, the builder, and shareable training weeks.",
+  blogCtaText: "Plan mesocycles, log snatch and C&J work with %1RM and RPE, and share one link. Free, no signup.",
+  blogDefaultSection: "Olympic lifting",
+  welcomeDialogTitle: "Welcome to olympiclift.ing",
+  featuresVariablesHeading: "Lift variables",
 };
 
 export function brandWordmark(dotClass = "site-header__dot") {

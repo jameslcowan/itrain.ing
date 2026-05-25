@@ -45,6 +45,12 @@ npm run dev:powerbuilding       # single site
 
 Run `npm ci` once inside each new clone under `sites/<name>/` before the first build.
 
+Verify clones contain no `powerlift.ing` in marketing files:
+
+```bash
+npm run audit:clones
+```
+
 ## Out of scope (later)
 
 - `app.js` exercise defaults / sport-specific lifts

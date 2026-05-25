@@ -1,4 +1,5 @@
 import { BLOG_META, SITE_URL } from "../content/blog-meta.js";
+import { SITE_BRAND } from "../content/site-brand.js";
 
 export function buildArticleSchema(article) {
   const tags = Array.isArray(article.tags) ? article.tags : [];
@@ -23,7 +24,7 @@ export function buildArticleSchema(article) {
       url: SITE_URL,
     },
     wordCount,
-    articleSection: tags[0] || "Powerlifting",
+    articleSection: tags[0] || SITE_BRAND.blogDefaultSection,
     mainEntityOfPage: `${SITE_URL}/blog/${article.slug}/`,
   };
 }

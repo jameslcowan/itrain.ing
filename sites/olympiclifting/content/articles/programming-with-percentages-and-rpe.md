@@ -11,7 +11,7 @@ tags:
   - %1RM
 ---
 
-Most spreadsheets force you to pick either percentage work or RPE. olympiclift.ing keeps **%1RM**, **load**, and **RPE** on the same row because real meet prep uses all three.
+Most spreadsheets force you to pick either percentage work or RPE. olympiclift.ing keeps **%1RM**, **load**, and **RPE** on the same row because competition prep uses all three.
 
 ## Set up maxes first
 

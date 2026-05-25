@@ -78,7 +78,7 @@ export const FAQ_SECTIONS = [
       },
       {
         q: "What is a mesocycle on bootybuild.ing?",
-        a: "<p>On bootybuild.ing, a mesocycle is a training block — like a hypertrophy phase, strength block, or meet prep. Pick or rename the block from the mesocycle menu. Weeks belong to the block you have selected.</p>",
+        a: "<p>On bootybuild.ing, a mesocycle is a training block — like a hypertrophy phase, strength block, or deload. Pick or rename the block from the mesocycle menu. Weeks belong to the block you have selected.</p>",
       },
       {
         q: "How do I set my your main lower-body lifts maxes on bootybuild.ing?",
@@ -140,7 +140,7 @@ export const FAQ_SECTIONS = [
     items: [
       {
         q: "Does bootybuild.ing have free program templates?",
-        a: "<p>Yes. Browse <a href=\"/programs/\">free templates</a> on bootybuild.ing — 3-day training, 5/3/1, bench focus, meet prep, and more. Each opens in the same editor so you can edit and share your version.</p>",
+        a: "<p>Yes. Browse <a href=\"/programs/\">free templates</a> on bootybuild.ing — glute splits, glute focus, meet prep, and more. Each opens in the same editor so you can edit and share your version.</p>",
       },
       {
         q: "Will bootybuild.ing let me save programs to an account?",

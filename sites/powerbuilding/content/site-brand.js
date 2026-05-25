@@ -16,6 +16,11 @@ export const SITE_BRAND = {
   programsCardEditor: "Open in the powerbuild.ing editor",
   faqLandingLead: "Common questions about building, sharing, and using programs on powerbuild.ing.",
   faqPageMeta: "Frequently asked questions about powerbuild.ing: free program builder, open sharing, %1RM maxes, coaches, and technical support.",
+  blogIndexLead: "Powerbuilding programming, how the builder works, and tips for sharing training plans.",
+  blogCtaText: "Plan mesocycles, log sets with %1RM and RPE, and share one link. Free, no signup.",
+  blogDefaultSection: "Powerbuilding",
+  welcomeDialogTitle: "Welcome to powerbuild.ing",
+  featuresVariablesHeading: "Training variables",
 };
 
 export function brandWordmark(dotClass = "site-header__dot") {

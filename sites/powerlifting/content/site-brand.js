@@ -20,6 +20,13 @@ export const SITE_BRAND = {
   faqLandingLead: "Common questions about building, sharing, and using programs on powerlift.ing.",
   faqPageMeta:
     "Frequently asked questions about powerlift.ing: free program builder, open sharing, %1RM maxes, coaches, and technical support.",
+  blogIndexLead:
+    "Powerlifting programming, how the builder works, and tips for sharing training plans.",
+  blogCtaText:
+    "Plan mesocycles, log SBD work with %1RM and RPE, and share one link. Free, no signup.",
+  blogDefaultSection: "Powerlifting",
+  welcomeDialogTitle: "Welcome to powerlift.ing",
+  featuresVariablesHeading: "SBD variables",
 };
 
 export function brandWordmark(dotClass = "site-header__dot") {
