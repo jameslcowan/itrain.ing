@@ -7,13 +7,25 @@ alwaysApply: true
 
 After **every** completed logical change in this repo, create a **separate git commit** before continuing or ending the session. Do not accumulate multi-topic diffs across a conversation.
 
+**Micro means small.** A good commit is usually **1–5 files**, **one concern**, and easy to review in under a minute. If a commit touches multiple sites, multiple layers (source + unrelated generated HTML), or both docs and product code, **split it**.
+
+## Hard limits (default)
+
+| Rule | Guideline |
+|------|-----------|
+| Files per commit | Prefer **1–3**, max **~8** only when source + its single generated output |
+| Sites per commit | **One site folder** (`sites/<name>/`) unless the change is repo-root tooling that affects all sites equally |
+| Topics per commit | **One**: e.g. tokens only, fonts only, FAQ copy only, one build output |
+| Bad lump | ❌ “Brand powerbuilding site” with 38 files — split into tokens → fonts → copy sources → rebuild |
+
 ## When to commit
 
 Commit immediately after each focused unit, for example:
 
 - One feature or fix (even small)
-- Build output regeneration (`programs/index.html`, FAQ/legal patches) **with** the source that produced it
-- CSS-only vs JS-only vs data/build-only changes → **separate commits** when they are independent steps
+- Build output regeneration **in the commit immediately after** the source commit (or same commit only if ≤2 files: e.g. `build.mjs` + one `index.html`)
+- CSS-only vs JS-only vs data/build-only → **always separate** when independent
+- Each **sister site** branded → separate commit per site, per layer when possible
 
 ## When the session ends
 
@@ -31,14 +43,16 @@ Commit immediately after each focused unit, for example:
 
 ## Splitting guidance
 
-| Change type | Typical commit |
-|-------------|----------------|
-| `content/*.js` + `*/build.mjs` + generated HTML | Data/markup + rebuild |
-| `*.css` only | Styles |
-| `*.js` behavior only | Script behavior |
-| README / docs only | Docs |
+| Change type | Commits (typical) |
+|-------------|-------------------|
+| FAQ data change | 1) `faq-data.js` 2) `npm run build:faq` → `faq/index.html` + landing FAQ patch |
+| Theme tokens | 1) `design-tokens.css` only |
+| Fonts | 1) `fonts.css` + font `<link>` in HTML |
+| Landing copy | 1) `index.html` hero/meta only |
+| Repo script | 1) `scripts/*.mjs` only — not bundled with site HTML |
+| Three clone sites | **Three commits minimum** (one per site), not one |
 
-If the user asks "micro committed?" or similar, check `git status` first; if dirty, commit now in logical slices.
+If the user asks "micro committed?" or similar, check `git status` first; if dirty, commit now in logical slices. If past commits were too large, do not rewrite history unless asked — apply this rule going forward.
 
 ## Example flow
 
