@@ -26,7 +26,7 @@ Marketing-only customization for the three clones. **`sites/powerlifting/`** is 
 | powerlifting | `#ff5c00` | Bebas Neue + DM Sans |
 | powerbuilding | `#c41e3a` | Oswald + Source Sans 3 |
 | olympiclifting | `#2563eb` | Barlow Condensed + Inter |
-| bootybuilding | `#e11d73` | Outfit + Nunito Sans |
+| bootybuilding | `#ff2a8f` (electric) on plum | Syne + Plus Jakarta Sans |
 
 Definitions live in [`scripts/site-brands.mjs`](../scripts/site-brands.mjs). Re-apply after editing:
 
