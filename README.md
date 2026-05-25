@@ -9,7 +9,7 @@ All project docs live in **[docs/](docs/README.md)**:
 | Doc | Topic |
 |-----|--------|
 | [docs/SITE.md](docs/SITE.md) | Routes, build, deploy, repo layout |
-| [docs/ANALYTICS.md](docs/ANALYTICS.md) | Analytics setup and dashboard sign-in |
+| [docs/ANALYTICS.md](docs/ANALYTICS.md) | Analytics (Hetzner planned; Netlify removed) |
 | [docs/BLOG.md](docs/BLOG.md) | Writing and publishing articles |
 | [docs/SEO.md](docs/SEO.md) | Indexing and positioning |
 | [docs/TODO.md](docs/TODO.md) | Backlog and launch checklist |
@@ -34,4 +34,4 @@ node --test tests/codec.test.mjs
 - **/blog/**, **/faq/**, **/terms/**, **/privacy/**
 - **404.html** — branded not-found page
 
-Netlify: `npm ci && npm run build`, publish `.`. Details in [docs/SITE.md](docs/SITE.md).
+Netlify: `npm ci && npm run build`, publish `.`. Details in [docs/SITE.md](docs/SITE.md). Site deploy stays on Netlify until Hetzner cutover.

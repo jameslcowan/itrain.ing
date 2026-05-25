@@ -8,17 +8,20 @@ Living backlog for powerlift.ing. Update as items ship.
 - [x] Terms, privacy, shared footer on marketing pages
 - [x] `/programs/` template library (grid layout, square cards, fluid columns)
 - [x] Custom `404.html`
-- [x] First-party analytics (collect, rollup, login, dashboard)
+- [x] ~~Netlify analytics~~ (removed — moving to Hetzner suite stack)
 - [x] Micro-commit Cursor rule (`.cursor/rules/micro-commits.mdc`)
 - [x] A11y fixes (skip link, labels, Escape, reduced motion)
 - [x] Share dialog no longer auto-closes on copy
 
+## Now — infrastructure (Hetzner)
+
+- [ ] Provision Hetzner VPS + Cloudflare DNS (three domains later; powerlift.ing first)
+- [ ] Design analytics ingest + DB schema (multi-site `site` id)
+- [ ] Deploy static powerlift.ing build to VPS (Caddy vhost)
+- [ ] Remove obsolete Netlify analytics env vars from Netlify UI after deploy
+
 ## Now — ops and verification
 
-- [ ] Set Netlify env vars for analytics ([ANALYTICS.md](ANALYTICS.md)) and redeploy
-- [ ] Confirm scheduled `rollup-analytics` appears under Functions → Scheduled
-- [ ] Trigger first manual rollup after real traffic; confirm `analytics/…` commit on GitHub
-- [ ] Bookmark `/.netlify/functions/analytics-login`
 - [ ] Google Search Console: verify site, submit `sitemap.xml`
 - [ ] Cross-browser / mobile smoke test (Chrome, Firefox, Safari, iOS, Android)
 - [ ] Load time check on `/` and `/programs/` (target &lt; 2s on mobile)
@@ -38,11 +41,11 @@ Living backlog for powerlift.ing. Update as items ship.
 - [ ] Decide fate of AI helper files (`ai.txt`, `llms.txt`, `.well-known/*`) — simplify or remove
 - [ ] Support / contact path (GitHub issues link in footer or dedicated page)
 
-## Analytics (phase 2)
+## Analytics (Hetzner)
 
-- [ ] Review dashboard after 7 days of data; tune alert thresholds if using Brevo
-- [ ] Funnel questions: landing → `/programs/` → `/app` (path breakdown in rollups)
-- [ ] Consider excluding your own IP or using a staging Netlify site for dev traffic
+- [ ] Shared collector script + API endpoint on VPS
+- [ ] Admin sign-in and dashboard (replace Netlify login/dashboard)
+- [ ] Funnel: landing → `/programs/` → `/app` (normalize `/app` paths in events)
 
 ## Marketing and launch
 

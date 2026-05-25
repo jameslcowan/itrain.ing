@@ -5,7 +5,7 @@ Single place for how the site works, how to build it, and what to do next.
 | Doc | Purpose |
 |-----|---------|
 | [SITE.md](SITE.md) | Architecture, routes, build pipeline, local dev, Netlify deploy |
-| [ANALYTICS.md](ANALYTICS.md) | First-party analytics: env vars, sign-in, rollup, dashboard |
+| [ANALYTICS.md](ANALYTICS.md) | Analytics status (Netlify removed; Hetzner planned) |
 | [BLOG.md](BLOG.md) | Adding articles, frontmatter, SSG output |
 | [SEO.md](SEO.md) | Positioning, indexing rules, URL contract |
 | [TODO.md](TODO.md) | Prioritized backlog and launch checklist |
@@ -27,6 +27,4 @@ node --test tests/codec.test.mjs
 | `app.html`, `app.js`, `state-codec.js` | Program builder |
 | `content/` | FAQ data, program templates, blog articles |
 | `blog/`, `faq/`, `legal/`, `programs/`, `site/` | Static page generators |
-| `netlify/functions/` | Analytics ingest, rollup, dashboard, login |
-| `analytics.js` | Browser collector (marketing + `/app`) |
 | `404.html` | Generated; Netlify serves for missing URLs |

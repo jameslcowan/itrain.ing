@@ -61,7 +61,7 @@ Plain `python -m http.server` only works for `/`; shared program URLs 404 locall
 - **SPA:** `netlify.toml` rewrites `/app` and legacy paths to `app.html`
 - **Headers:** `X-Robots-Tag: noindex` on `/app/*`, `/program/*`, `/p/*`
 
-Functions live in `netlify/functions/` (analytics). See [ANALYTICS.md](ANALYTICS.md).
+Static hosting only on Netlify today (`netlify.toml` SPA rewrites). Analytics will live on Hetzner — see [ANALYTICS.md](ANALYTICS.md).
 
 ## Conventions for agents
 
