@@ -99,7 +99,7 @@ export function renderFaqBody() {
   return `<main id="main" class="blog-main lp-faq-full">
   <header class="faq-page__head">
     <h1 class="faq-page__title">FAQ</h1>
-    <p class="faq-page__lead">${SITE_BRAND.faqLandingLead} — in plain language.</p>
+    <p class="faq-page__lead">${SITE_BRAND.faqLandingLead.replace(/\.\s*$/, "")} — in plain language.</p>
     ${renderFaqPageNav()}
   </header>
 ${renderFaqPageSections()}
