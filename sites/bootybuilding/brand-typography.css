@@ -1,0 +1,37 @@
+/**
+ * bootybuild.ing — editorial display overrides (shared landing/app CSS is gym-neutral).
+ */
+
+.landingPage .lp-display,
+html.fonts-loaded .landingPage .lp-display {
+  font-weight: 600;
+  letter-spacing: 0.012em;
+  text-transform: none;
+  line-height: 1.15;
+}
+
+.landingPage .lp-hero__title em {
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.site-header__brand,
+html.fonts-loaded .site-header__brand,
+.site-menu__brand,
+html.fonts-loaded .site-menu__brand,
+.builderPage .brand__wordmark {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.landingPage .lp-section__title.lp-display,
+.landingPage .lp-btn {
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.landingPage .lp-btn--primary {
+  font-weight: 600;
+}
