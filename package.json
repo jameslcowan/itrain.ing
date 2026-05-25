@@ -7,15 +7,18 @@
     "build:powerbuilding": "npm run build --prefix sites/powerbuilding",
     "build:olympiclifting": "npm run build --prefix sites/olympiclifting",
     "build:bootybuilding": "npm run build --prefix sites/bootybuilding",
-    "build:all": "npm run build:powerlifting && npm run build:powerbuilding && npm run build:olympiclifting && npm run build:bootybuilding",
+    "build:itraining": "npm run build --prefix sites/itraining",
+    "build:all": "npm run build:powerlifting && npm run build:powerbuilding && npm run build:olympiclifting && npm run build:bootybuilding && npm run build:itraining",
     "brand:powerbuilding": "node scripts/apply-site-brand.mjs powerbuilding",
     "brand:olympiclifting": "node scripts/apply-site-brand.mjs olympiclifting",
     "brand:bootybuilding": "node scripts/apply-site-brand.mjs bootybuilding",
+    "brand:itraining": "node scripts/apply-site-brand.mjs itraining",
     "audit:clones": "node scripts/audit-clone-remnants.mjs",
     "dev:powerlifting": "python scripts/dev-server.py sites/powerlifting 8080",
     "dev:powerbuilding": "python scripts/dev-server.py sites/powerbuilding 8081",
     "dev:olympiclifting": "python scripts/dev-server.py sites/olympiclifting 8082",
     "dev:bootybuilding": "python scripts/dev-server.py sites/bootybuilding 8083",
+    "dev:itraining": "python scripts/dev-server.py sites/itraining 8084",
     "dev:all": "python scripts/dev-all.py"
   }
 }

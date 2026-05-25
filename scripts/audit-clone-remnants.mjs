@@ -6,7 +6,7 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
-const CLONES = ["powerbuilding", "olympiclifting", "bootybuilding"];
+const CLONES = ["powerbuilding", "olympiclifting", "bootybuilding", "itraining"];
 const SKIP_DIRS = new Set(["node_modules", ".git"]);
 const MARKETING_EXT = new Set([".html", ".md", ".mjs", ".txt", ".xml", ".json"]);
 const SKIP_FILES = new Set(["package-lock.json", "app.js", "state-codec.js", "maxes.js", "theme.js", "landing.js"]);

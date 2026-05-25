@@ -10,6 +10,7 @@ Platform monorepo. Full plan: **[MONOREPO.md](MONOREPO.md)**. Branding: **[BRAND
 | `sites/powerbuilding/` | powerbuild.ing | Branded — local preview |
 | `sites/olympiclifting/` | olympiclift.ing | Branded — local preview |
 | `sites/bootybuilding/` | bootybuild.ing | Branded — local preview |
+| `sites/itraining/` | itrain.ing | Branded — local preview |
 
 ## Repo layout
 
@@ -21,11 +22,12 @@ itrain.ing/
     powerbuilding/  … hypertrophy brand
     olympiclifting/ … Olympic lifting brand
     bootybuilding/  … glute-focused brand
+    itraining/      … general training / platform hub
 ```
 
 ## Quick commands
 
 ```bash
-npm run dev:all       # four dev servers (8080–8083)
+npm run dev:all       # five dev servers (8080–8084)
 npm run build:all     # build every site
 ```

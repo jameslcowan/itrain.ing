@@ -15,6 +15,7 @@ SITES = (
     ("sites/powerbuilding", 8081),
     ("sites/olympiclifting", 8082),
     ("sites/bootybuilding", 8083),
+    ("sites/itraining", 8084),
 )
 
 

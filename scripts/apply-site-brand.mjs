@@ -14,7 +14,7 @@ const REPO = join(__dirname, "..");
 
 const key = process.argv[2];
 if (!key || !SITE_BRANDS[key]) {
-  console.error("Usage: node scripts/apply-site-brand.mjs <powerbuilding|olympiclifting|bootybuilding>");
+  console.error("Usage: node scripts/apply-site-brand.mjs <powerbuilding|olympiclifting|bootybuilding|itraining>");
   process.exit(1);
 }
 
@@ -38,7 +38,8 @@ function patch(rel, pairs) {
 }
 
 function brandWordmark(dotClass = "site-header__dot") {
-  return `${b.slug}<span class="${dotClass}">.</span>${b.tld}`;
+  const name = b.wordmarkName || b.slug;
+  return `${name}<span class="${dotClass}">.</span>${b.tld}`;
 }
 
 function designTokensCss() {
@@ -189,6 +190,7 @@ function siteBrandJs() {
 export const SITE_BRAND = {
   domain: "${b.domain}",
   slug: "${b.slug}",
+  wordmarkName: "${b.wordmarkName || b.slug}",
   tld: "${b.tld}",
   siteUrl: "https://${b.domain}",
   productLine: "${b.productLine}",
@@ -211,7 +213,8 @@ export const SITE_BRAND = {
 };
 
 export function brandWordmark(dotClass = "site-header__dot") {
-  return \`\${SITE_BRAND.slug}<span class="\${dotClass}">.</span>\${SITE_BRAND.tld}\`;
+  const name = SITE_BRAND.wordmarkName ?? SITE_BRAND.slug;
+  return \`\${name}<span class="\${dotClass}">.</span>\${SITE_BRAND.tld}\`;
 }
 `;
 }
