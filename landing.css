@@ -79,9 +79,10 @@ html.fonts-loaded .lp-display {
   font-size: var(--lp-text);
   line-height: 1.65;
   color: var(--text);
+  --lp-accent-wash: color-mix(in srgb, var(--accent) 22%, transparent);
   background-color: var(--bg);
   background-image:
-    radial-gradient(100% 60% at 50% -10%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 55%);
+    radial-gradient(100% 60% at 50% -10%, var(--lp-accent-wash), transparent 55%);
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   scroll-padding-top: calc(var(--lp-header-h) + var(--safe-top) + 8px);
@@ -265,24 +266,41 @@ html.lp-intro-ready .lp-intro > .lp-intro__item:nth-child(6) { transition-delay:
   pointer-events: none;
 }
 
-/* Coarse grid over the hero orange wash (same radial as .landingPage) */
+/* Orange wash — unmasked so it stays full strength under the grid */
 .lp-hero::before {
+  z-index: 0;
+  background-image: radial-gradient(100% 60% at 50% -10%, var(--lp-accent-wash), transparent 55%);
+  background-size: 100% 100%;
+}
+
+/* Coarse grid + light edge vignette (mask fades grid only, not the wash) */
+.lp-hero::after {
   --lp-hero-grid: 40px;
   --lp-hero-grid-line: var(--bg);
-  z-index: 0;
+  z-index: 1;
   background-color: transparent;
   background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--bg) 45%, transparent) 0%,
+      transparent 10%,
+      transparent 90%,
+      color-mix(in srgb, var(--bg) 45%, transparent) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--bg) 40%, transparent) 0%,
+      transparent 20%,
+      transparent 80%,
+      color-mix(in srgb, var(--bg) 40%, transparent) 100%
+    ),
     linear-gradient(to right, var(--lp-hero-grid-line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--lp-hero-grid-line) 1px, transparent 1px),
-    radial-gradient(
-      100% 60% at 50% -10%,
-      color-mix(in srgb, var(--accent) 12%, transparent),
-      transparent 55%
-    );
+    linear-gradient(to bottom, var(--lp-hero-grid-line) 1px, transparent 1px);
   background-size:
+    100% 100%,
+    100% 100%,
     var(--lp-hero-grid) var(--lp-hero-grid),
-    var(--lp-hero-grid) var(--lp-hero-grid),
-    100% 100%;
+    var(--lp-hero-grid) var(--lp-hero-grid);
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
@@ -297,26 +315,6 @@ html.lp-intro-ready .lp-intro > .lp-intro__item:nth-child(6) { transition-delay:
     #000 92%,
     transparent 100%
   );
-}
-
-/* Vignette: top/bottom + subtle wash at viewport left/right */
-.lp-hero::after {
-  z-index: 1;
-  background-image:
-    linear-gradient(
-      to right,
-      color-mix(in srgb, var(--bg) 80%, transparent) 0%,
-      transparent 12%,
-      transparent 88%,
-      color-mix(in srgb, var(--bg) 80%, transparent) 100%
-    ),
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--bg) 75%, transparent) 0%,
-      transparent 22%,
-      transparent 78%,
-      color-mix(in srgb, var(--bg) 75%, transparent) 100%
-    );
 }
 
 .lp-intro {
