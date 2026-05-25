@@ -17,7 +17,7 @@ export const SITE_BRAND = {
   programsMeta:
     "Free powerlifting program templates on powerlift.ing: 3-day SBD, 5/3/1, bench focus, meet prep, and more. Open in the builder and share one link.",
   programsCardEditor: "Open in the powerlift.ing editor",
-  faqLandingLead: "Common questions about building, sharing, and using programs on powerlift.ing.",
+  faqLandingLead: "Common questions about building, sharing, and using programs on powerlift.ing",
   faqPageMeta:
     "Frequently asked questions about powerlift.ing: free program builder, open sharing, %1RM maxes, coaches, and technical support.",
   blogIndexLead:
