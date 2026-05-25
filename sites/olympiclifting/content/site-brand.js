@@ -8,6 +8,8 @@ export const SITE_BRAND = {
   productLine: "Olympic lifting program builder",
   tagline: "Free Olympic lifting program builder. Share whole programs as one open link.",
   googleFontsUrl: "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700&family=Inter:wght@400;600;700&display=swap",
+  appGoogleFontsUrl:
+    "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700&family=Inter:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;600&display=swap",
   themeColorLight: "#f4f6f8",
   themeColorDark: "#0c0e14",
   programsTitle: "Free Olympic lifting programs",
