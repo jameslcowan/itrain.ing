@@ -8,6 +8,8 @@ export const SITE_BRAND = {
   productLine: "Glute program builder",
   tagline: "Free glute program builder. Share whole programs as one open link.",
   googleFontsUrl: "https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Nunito+Sans:wght@400;600;700&display=swap",
+  appGoogleFontsUrl:
+    "https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;600&display=swap",
   themeColorLight: "#faf5f7",
   themeColorDark: "#0f0d10",
   programsTitle: "Free glute & leg programs",
