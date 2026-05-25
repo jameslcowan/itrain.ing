@@ -7,11 +7,12 @@ export const SITE_BRAND = {
   siteUrl: "https://bootybuild.ing",
   productLine: "Glute program builder",
   tagline: "Free glute program builder. Share whole programs as one open link.",
-  googleFontsUrl: "https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Nunito+Sans:wght@400;600;700&display=swap",
+  googleFontsUrl:
+    "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Mulish:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap",
   appGoogleFontsUrl:
-    "https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;600&display=swap",
-  themeColorLight: "#faf5f7",
-  themeColorDark: "#0f0d10",
+    "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Mulish:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;600&display=swap",
+  themeColorLight: "#fdf8fa",
+  themeColorDark: "#1a1218",
   programsTitle: "Free glute & leg programs",
   programsLead: "Free lower-body templates from bootybuild.ing. Pick a card, open it in the builder, edit anything, and share your version as one link. Use the <strong>Blank program</strong> card to start from scratch.",
   programsMeta: "Free glute and leg program templates on bootybuild.ing: hip thrusts, RDLs, splits, and more. Open in the builder and share one link.",

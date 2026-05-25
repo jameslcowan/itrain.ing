@@ -118,6 +118,7 @@ ${noindex ? '    <meta name="robots" content="noindex, follow" />\n' : ""}${omit
     <link rel="stylesheet" href="/site-header.css" />
     <link rel="stylesheet" href="/site-menu.css" />
     <link rel="stylesheet" href="/landing.css" />
+    <link rel="stylesheet" href="/brand-typography.css" />
     <link rel="stylesheet" href="/site-footer.css" />
     <link rel="stylesheet" href="/blog.css" />
     <link rel="stylesheet" href="/blog/hljs.css" />
