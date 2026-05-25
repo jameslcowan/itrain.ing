@@ -1,10 +1,17 @@
 # Sites
 
-| Folder | Domain (target) | Status |
-|--------|-------------------|--------|
-| `powerlifting/` | powerlift.ing | Production app (from original repo root) |
-| `powerbuilding/` | powerbuild.ing | Copy — rebrand TBD |
-| `olympiclifting/` | olympiclift.ing | Copy — rebrand TBD |
-| `bootybuilding/` | bootybuild.ing | Copy — rebrand TBD |
+| Folder | Domain | Status |
+|--------|--------|--------|
+| `powerlifting/` | powerlift.ing | Production — reference brand |
+| `powerbuilding/` | powerbuild.ing | Branded clone (hypertrophy / strength) |
+| `olympiclifting/` | olympiclift.ing | Branded clone (Olympic lifting) |
+| `bootybuilding/` | bootybuild.ing | Branded clone (glute-focused) |
 
-Each folder is a full copy of the builder stack (`package.json`, `npm run build`, `scripts/dev-server.py`).
+Each folder is a full static stack: `npm ci && npm run build`, then preview from the repo root:
+
+```bash
+npm run dev:powerbuilding   # http://127.0.0.1:8081/
+npm run dev:all             # ports 8080–8083
+```
+
+Branding is applied via [`scripts/apply-site-brand.mjs`](../scripts/apply-site-brand.mjs) — see [docs/BRANDING.md](../docs/BRANDING.md).

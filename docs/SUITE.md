@@ -1,24 +1,31 @@
 # Lifting apps suite (itrain.ing)
 
-Platform monorepo. Full plan: **[MONOREPO.md](MONOREPO.md)**.
+Platform monorepo. Full plan: **[MONOREPO.md](MONOREPO.md)**. Branding: **[BRANDING.md](BRANDING.md)**.
 
 ## Sites
 
 | Folder | Domain | Status |
 |--------|--------|--------|
-| `sites/powerlifting/` | powerlift.ing | Live stack; DO deploy |
-| `sites/powerbuilding/` | powerbuild.ing | Copy — rebrand TBD |
-| `sites/olympiclifting/` | olympiclift.ing | Copy — rebrand TBD |
-| `sites/bootybuilding/` | bootybuild.ing | Copy — rebrand TBD |
+| `sites/powerlifting/` | powerlift.ing | Production; DO deploy |
+| `sites/powerbuilding/` | powerbuild.ing | Branded — local preview |
+| `sites/olympiclifting/` | olympiclift.ing | Branded — local preview |
+| `sites/bootybuilding/` | bootybuild.ing | Branded — local preview |
 
 ## Repo layout
 
 ```text
 itrain.ing/
-  docs/ infra/ .github/
+  docs/ infra/ .github/ scripts/
   sites/
-    powerlifting/   … production
-    powerbuilding/  … copy
-    olympiclifting/ … copy
-    bootybuilding/  … copy
+    powerlifting/   … production reference
+    powerbuilding/  … hypertrophy brand
+    olympiclifting/ … Olympic lifting brand
+    bootybuilding/  … glute-focused brand
+```
+
+## Quick commands
+
+```bash
+npm run dev:all       # four dev servers (8080–8083)
+npm run build:all     # build every site
 ```
