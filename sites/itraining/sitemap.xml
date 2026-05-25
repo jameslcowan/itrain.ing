@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://powerlift.ing/</loc><lastmod>2026-05-25</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://powerlift.ing/blog/</loc><lastmod>2026-05-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://powerlift.ing/programs/</loc><lastmod>2026-05-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://powerlift.ing/faq/</loc><lastmod>2026-05-25</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://powerlift.ing/terms/</loc><lastmod>2026-05-25</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://powerlift.ing/privacy/</loc><lastmod>2026-05-25</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://powerlift.ing/blog/programming-with-percentages-and-rpe/</loc><lastmod>2026-05-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://powerlift.ing/blog/getting-started-with-the-builder/</loc><lastmod>2026-05-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://powerlift.ing/blog/how-sharing-works/</loc><lastmod>2026-05-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://powerlift.ing/llms.txt</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://itrain.ing/</loc><lastmod>2026-05-25</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://itrain.ing/blog/</loc><lastmod>2026-05-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://itrain.ing/programs/</loc><lastmod>2026-05-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://itrain.ing/faq/</loc><lastmod>2026-05-25</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://itrain.ing/terms/</loc><lastmod>2026-05-25</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://itrain.ing/privacy/</loc><lastmod>2026-05-25</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://itrain.ing/blog/programming-with-percentages-and-rpe/</loc><lastmod>2026-05-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://itrain.ing/blog/getting-started-with-the-builder/</loc><lastmod>2026-05-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://itrain.ing/blog/how-sharing-works/</loc><lastmod>2026-05-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://itrain.ing/llms.txt</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
 </urlset>
