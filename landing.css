@@ -265,36 +265,45 @@ html.lp-intro-ready .lp-intro > .lp-intro__item:nth-child(6) { transition-delay:
     linear-gradient(to bottom, color-mix(in srgb, var(--border) 65%, transparent) 1px, transparent 1px);
   background-size: 8px 8px;
   opacity: 0.55;
+  /* Light edge fade on the grid itself (center stays full strength) */
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
-    #000 22%,
-    #000 78%,
+    #000 6%,
+    #000 94%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
     transparent 0%,
-    #000 22%,
-    #000 78%,
+    #000 6%,
+    #000 94%,
     transparent 100%
   );
 }
 
-/* Soft top/bottom vignette (sides fade via ::before mask) */
+/* Vignette: top/bottom + subtle wash at left/right extremities */
 .lp-hero::after {
   content: "";
   position: absolute;
   z-index: 1;
-  inset: calc(-1 * var(--lp-space-4)) -20vw calc(-1 * var(--lp-space-3)) -20vw;
+  inset: calc(-1 * var(--lp-space-4)) -40vw calc(-1 * var(--lp-space-3)) -40vw;
   pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--bg) 92%, transparent) 0%,
-    transparent 22%,
-    transparent 78%,
-    color-mix(in srgb, var(--bg) 92%, transparent) 100%
-  );
+  background:
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--bg) 92%, transparent) 0%,
+      transparent 22%,
+      transparent 78%,
+      color-mix(in srgb, var(--bg) 92%, transparent) 100%
+    ),
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--bg) 70%, transparent) 0%,
+      transparent 11%,
+      transparent 89%,
+      color-mix(in srgb, var(--bg) 70%, transparent) 100%
+    );
 }
 
 .lp-intro {
