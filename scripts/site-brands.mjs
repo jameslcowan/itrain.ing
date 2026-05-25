@@ -40,7 +40,7 @@ export const SITE_BRANDS = {
     programsMeta:
       "Free powerbuilding program templates on powerbuild.ing: splits, volume blocks, and strength templates. Open in the builder and share one link.",
     programsCardEditor: "Open in the powerbuild.ing editor",
-    faqLandingLead: "Common questions about building, sharing, and using programs on powerbuild.ing.",
+    faqLandingLead: "Common questions about building, sharing, and using programs on powerbuild.ing",
     faqPageMeta:
       "Frequently asked questions about powerbuild.ing: free program builder, open sharing, %1RM maxes, coaches, and technical support.",
     tagline: "Free powerbuilding program builder. Share whole programs as one open link.",
@@ -131,7 +131,7 @@ export const SITE_BRANDS = {
     programsMeta:
       "Free Olympic lifting program templates on olympiclift.ing: technique weeks, strength blocks, and more. Open in the builder and share one link.",
     programsCardEditor: "Open in the olympiclift.ing editor",
-    faqLandingLead: "Common questions about building, sharing, and using programs on olympiclift.ing.",
+    faqLandingLead: "Common questions about building, sharing, and using programs on olympiclift.ing",
     faqPageMeta:
       "Frequently asked questions about olympiclift.ing: free program builder, open sharing, %1RM maxes, coaches, and technical support.",
     tagline: "Free Olympic lifting program builder. Share whole programs as one open link.",
@@ -224,7 +224,7 @@ export const SITE_BRANDS = {
     programsMeta:
       "Free glute and leg program templates on bootybuild.ing: hip thrusts, RDLs, splits, and more. Open in the builder and share one link.",
     programsCardEditor: "Open in the bootybuild.ing editor",
-    faqLandingLead: "Common questions about building, sharing, and using programs on bootybuild.ing.",
+    faqLandingLead: "Common questions about building, sharing, and using programs on bootybuild.ing",
     faqPageMeta:
       "Frequently asked questions about bootybuild.ing: free program builder, open sharing, %1RM maxes, coaches, and technical support.",
     tagline: "Free glute program builder. Share whole programs as one open link.",
