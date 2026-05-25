@@ -1,19 +1,38 @@
 /**
- * bootybuild.ing — editorial display overrides (shared landing/app CSS is gym-neutral).
+ * bootybuild.ing — sleek display + neon accent (overrides shared gym styling).
  */
+
+.landingPage {
+  --lp-accent-wash: color-mix(in srgb, var(--accent) 32%, var(--bg));
+}
+
+html[data-theme="dark"] .landingPage {
+  --lp-accent-wash: color-mix(in srgb, var(--accent) 38%, var(--bg));
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .landingPage {
+    --lp-accent-wash: color-mix(in srgb, var(--accent) 38%, var(--bg));
+  }
+}
 
 .landingPage .lp-display,
 html.fonts-loaded .landingPage .lp-display {
-  font-weight: 600;
-  letter-spacing: 0.012em;
+  font-weight: 700;
+  letter-spacing: -0.03em;
   text-transform: none;
-  line-height: 1.15;
+  line-height: 1.08;
 }
 
 .landingPage .lp-hero__title em {
-  font-style: italic;
-  font-weight: 500;
-  letter-spacing: 0;
+  display: block;
+  margin-top: 0.35em;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.72em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 
 .site-header__brand,
@@ -21,17 +40,47 @@ html.fonts-loaded .site-header__brand,
 .site-menu__brand,
 html.fonts-loaded .site-menu__brand,
 .builderPage .brand__wordmark {
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: none;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
 }
 
-.landingPage .lp-section__title.lp-display,
+.site-header__dot,
+.brand__dot,
+.site-menu__dot {
+  color: var(--accent);
+}
+
+.landingPage .lp-section__title.lp-display {
+  letter-spacing: -0.02em;
+}
+
 .landingPage .lp-btn {
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   text-transform: none;
+  font-weight: 600;
 }
 
 .landingPage .lp-btn--primary {
+  border: none;
+  background: linear-gradient(135deg, var(--pl-plate) 0%, var(--pl-plate-dim) 100%);
+  box-shadow: 0 10px 32px color-mix(in srgb, var(--accent) 38%, transparent);
+}
+
+.landingPage .lp-btn--primary:hover {
+  filter: brightness(1.06);
+}
+
+.landingPage .lp-badge {
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--panel));
+  color: var(--accent);
   font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+
+.builderPage .iconBtn--primary {
+  background: linear-gradient(135deg, var(--pl-plate) 0%, var(--pl-plate-dim) 100%);
 }
