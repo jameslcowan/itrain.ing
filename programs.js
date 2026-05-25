@@ -1,5 +1,5 @@
 /**
- * /programs/ — dialogs (grid.bz-style: open trigger + full-screen on mobile).
+ * /programs/ — program card dialogs (open trigger + full-screen on mobile).
  */
 (() => {
   "use strict";
@@ -26,7 +26,7 @@
       return;
     }
 
-    /* Touch: tap card body opens dialog (grid.bz relies on overlay button; we allow whole card) */
+    /* Touch: tap card body opens dialog (whole card, not only the overlay button) */
     if (window.matchMedia("(hover: hover)").matches) return;
 
     if (target.closest(".prog-dialog__open, [data-dialog-open], [data-dialog-close]")) return;

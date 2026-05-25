@@ -1,8 +1,8 @@
 /**
- * /programs/ — grid layout aligned with grid.bz cardsgrid; powerlift.ing theme tokens.
+ * /programs/ — template library grid and cards.
  */
 
-/* Page shell: full width, grid section carries edge padding (like grid.bz gutter) */
+/* Page shell: full width, grid section carries edge padding */
 .programsPage .blog-main {
   width: 100%;
   max-width: none;
@@ -103,7 +103,7 @@
   opacity: 0.35;
 }
 
-/* Corner rows (grid.bz card__content-top / bottom) */
+/* Corner rows (top / bottom) */
 .prog-card__content-top,
 .prog-card__content-bottom {
   display: flex;
@@ -283,7 +283,7 @@
   }
 }
 
-/* Dialog — desktop sheet; mobile full-screen (grid.bz .dialog) */
+/* Dialog — desktop sheet; mobile full-screen */
 .prog-dialog {
   width: min(calc(100% - 2 * var(--lp-pad-x, 24px)), 32rem);
   max-height: min(90dvh, 520px);

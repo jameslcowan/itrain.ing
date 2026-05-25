@@ -1,4 +1,4 @@
-/** Minimal YAML-like frontmatter parser (from jameslcowan build.js, trimmed). */
+/** Minimal YAML-like frontmatter parser for blog posts. */
 
 export function parseFrontmatter(content) {
   const match = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
