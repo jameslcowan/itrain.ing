@@ -115,6 +115,7 @@ ${noindex ? '    <meta name="robots" content="noindex, follow" />\n' : ""}${omit
     <script src="/theme.js"></script>
     <link rel="stylesheet" href="/fonts.css" />
     <link rel="stylesheet" href="/design-tokens.css" />
+    <link rel="stylesheet" href="/brand-typography.css" />
     <link rel="stylesheet" href="/site-header.css" />
     <link rel="stylesheet" href="/site-menu.css" />
     <link rel="stylesheet" href="/landing.css" />
