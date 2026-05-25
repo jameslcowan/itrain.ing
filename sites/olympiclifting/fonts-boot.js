@@ -1,6 +1,6 @@
 /**
  * Load display + body fonts before menu/hero render (landing + app).
- * Families come from design-tokens.css (--sans, --font-display).
+ * Families come from design-tokens.css (--sans, --font-display, --mono).
  */
 (function () {
   "use strict";
@@ -24,9 +24,11 @@
 
   var sans = primaryFamily("--sans");
   var display = primaryFamily("--font-display");
+  var mono = primaryFamily("--mono");
   var loads = [];
   if (sans) loads.push(document.fonts.load('400 1rem "' + sans + '"'));
-  if (display) loads.push(document.fonts.load('400 2.25rem "' + display + '"'));
+  if (display) loads.push(document.fonts.load('600 2.25rem "' + display + '"'));
+  if (mono) loads.push(document.fonts.load('600 1rem "' + mono + '"'));
 
   if (!loads.length) {
     markFontsLoaded();
