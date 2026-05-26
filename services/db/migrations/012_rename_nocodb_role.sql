@@ -2,10 +2,14 @@
 
 DO $$
 BEGIN
-  IF EXISTS (SELECT FROM pg_roles WHERE rolname = 'itrain_nocodb') THEN
+  IF EXISTS (SELECT FROM pg_roles WHERE rolname = 'itrain_nocodb')
+     AND NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'panax_nocodb') THEN
     ALTER ROLE itrain_nocodb RENAME TO panax_nocodb;
   ELSIF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'panax_nocodb') THEN
     CREATE ROLE panax_nocodb LOGIN;
+  ELSIF EXISTS (SELECT FROM pg_roles WHERE rolname = 'itrain_nocodb')
+     AND EXISTS (SELECT FROM pg_roles WHERE rolname = 'panax_nocodb') THEN
+    DROP ROLE itrain_nocodb;
   END IF;
 END
 $$;
