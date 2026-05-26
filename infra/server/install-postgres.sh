@@ -5,6 +5,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 DB_NAME=itrain
 ENV_FILE=/etc/itrain/postgrest.env
+MIGRATIONS_DIR="$REPO_ROOT/services/db/migrations"
 
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -qq
@@ -15,7 +16,21 @@ AUTH_PASS="$(openssl rand -hex 24)"
 
 sudo -u postgres createdb "$DB_NAME" 2>/dev/null || true
 
-sudo -u postgres psql -v ON_ERROR_STOP=1 -d "$DB_NAME" -f "$REPO_ROOT/services/db/migrations/001_init.sql"
+run_migration() {
+  local file="$1"
+  echo "Applying $(basename "$file")..."
+  sudo -u postgres psql -v ON_ERROR_STOP=1 -d "$DB_NAME" -f "$file"
+}
+
+# Ordered migrations (001 bootstrap; 009 legacy drop optional via env)
+for file in "$MIGRATIONS_DIR"/[0-9][0-9][0-9]_*.sql; do
+  base=$(basename "$file")
+  if [[ "$base" == "009_drop_legacy_events.sql" && "${APPLY_DROP_LEGACY:-0}" != "1" ]]; then
+    echo "Skipping $base (set APPLY_DROP_LEGACY=1 after RPC smoke test)"
+    continue
+  fi
+  run_migration "$file"
+done
 
 sudo -u postgres psql -v ON_ERROR_STOP=1 -d "$DB_NAME" <<SQL
 ALTER ROLE authenticator WITH LOGIN PASSWORD '$AUTH_PASS';
