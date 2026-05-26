@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-readonly ITRAINING_CANONICAL_NAME="James L. Cowan Jr."
-readonly ITRAINING_PRIMARY_EMAIL="jameslloydcowan@gmail.com"
-readonly ITRAINING_NOREPLY_EMAIL="112015792+jameslcowan@users.noreply.github.com"
+readonly PANAX_CANONICAL_NAME="James L. Cowan Jr."
+readonly PANAX_PRIMARY_EMAIL="jameslloydcowan@gmail.com"
+readonly PANAX_NOREPLY_EMAIL="112015792+jameslcowan@users.noreply.github.com"
 
 reject_attribution() {
   printf '%s\n' "$*" >&2
@@ -11,7 +11,7 @@ reject_attribution() {
 
 is_allowed_email() {
   case "$1" in
-    "$ITRAINING_PRIMARY_EMAIL"|"$ITRAINING_NOREPLY_EMAIL") return 0 ;;
+    "$PANAX_PRIMARY_EMAIL"|"$PANAX_NOREPLY_EMAIL") return 0 ;;
     *) return 1 ;;
   esac
 }
@@ -26,32 +26,32 @@ check_commit_object() {
   committer_email="$(git show -s --format='%ce' "$sha")"
   body="$(git show -s --format='%B' "$sha")"
 
-  if [[ "$author_name" != "$ITRAINING_CANONICAL_NAME" ]]; then
+  if [[ "$author_name" != "$PANAX_CANONICAL_NAME" ]]; then
     reject_attribution \
       "Rejected push: commit $sha has author '$author_name'." \
-      "Expected '$ITRAINING_CANONICAL_NAME'."
+      "Expected '$PANAX_CANONICAL_NAME'."
   fi
 
-  if [[ "$committer_name" != "$ITRAINING_CANONICAL_NAME" ]]; then
+  if [[ "$committer_name" != "$PANAX_CANONICAL_NAME" ]]; then
     reject_attribution \
       "Rejected push: commit $sha has committer '$committer_name'." \
-      "Expected '$ITRAINING_CANONICAL_NAME'."
+      "Expected '$PANAX_CANONICAL_NAME'."
   fi
 
   if ! is_allowed_email "$author_email"; then
     reject_attribution \
       "Rejected push: commit $sha has author email '$author_email'." \
-      "Use '$ITRAINING_PRIMARY_EMAIL' or '$ITRAINING_NOREPLY_EMAIL'."
+      "Use '$PANAX_PRIMARY_EMAIL' or '$PANAX_NOREPLY_EMAIL'."
   fi
 
   if ! is_allowed_email "$committer_email"; then
     reject_attribution \
       "Rejected push: commit $sha has committer email '$committer_email'." \
-      "Use '$ITRAINING_PRIMARY_EMAIL' or '$ITRAINING_NOREPLY_EMAIL'."
+      "Use '$PANAX_PRIMARY_EMAIL' or '$PANAX_NOREPLY_EMAIL'."
   fi
 
   if grep -Eiq \
-    '(^Co-authored-by:[[:space:]]*Cursor[[:space:]]*<|cursoragent@cursor\.com|root@itrain\.ing)' \
+    '(^Co-authored-by:[[:space:]]*Cursor[[:space:]]*<|cursoragent@cursor\.com|root@itrain\.ing|root@panax)' \
     <<<"$body"; then
     reject_attribution \
       "Rejected push: commit $sha still contains blocked attribution metadata." \
