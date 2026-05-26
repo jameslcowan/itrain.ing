@@ -32,7 +32,9 @@ sudo ./infra/server/install-postgres.sh
 sudo ./infra/server/install-postgrest.sh
 sudo cp infra/caddy/api.itrain.ing.caddy /etc/caddy/sites/
 sudo systemctl reload caddy
-./scripts/smoke-api.sh
+./scripts/test-db-migrations.sh   # local
+./scripts/smoke-api.sh            # droplet (SMOKE_HTTP=1 before TLS)
+sudo ./scripts/apply-pending-migrations.sh   # upgrade existing DB
 ```
 
 Drop legacy table after smoke:

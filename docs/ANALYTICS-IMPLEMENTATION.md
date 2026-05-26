@@ -77,7 +77,7 @@ Server work; split git commits for scripts/docs vs one-time apply.
 | C1 | `infra: run ordered migrations in install-postgres` | Update `install-postgres.sh` to apply `002+` | `psql \dt` shows new tables |
 | C2 | `infra: postgrest systemd and healthcheck` | `install-postgrest.sh`, enable unit | `curl 127.0.0.1:3000/` |
 | C3 | `infra: document pre-DNS API testing` | `DNS.md` + comment in `api.itrain.ing.caddy` | — |
-| C4 | `scripts: add smoke-api.sh for PostgREST RPCs` | Run script on droplet | all checks pass |
+| C4 | `scripts: add smoke-api.sh` + `test-db-migrations.sh` | Local + droplet | all checks pass |
 
 ### First-time install (if Postgres not yet on box)
 

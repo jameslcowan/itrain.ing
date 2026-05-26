@@ -13,9 +13,12 @@
 
 ## What PostgREST gives you
 
-- Auto REST from tables/views + **RPC** from SQL functions (`collect_event`, etc.)
-- No Node ORM required for CRUD and ingest
+- **RPC** from SQL functions: `start_session`, `record_page_view`, `record_custom_event`
+- Per-site read **views** (e.g. `powerlift_page_views`) for future admin dashboards
+- No Node ORM required for ingest
 - JWT + Postgres roles when you add auth for panax / admin
+
+See [ANALYTICS-SCHEMA.md](ANALYTICS-SCHEMA.md) (3NF design) and [ANALYTICS-IMPLEMENTATION.md](ANALYTICS-IMPLEMENTATION.md).
 
 ## What PostgREST does not replace
 
@@ -28,15 +31,16 @@
 One database, many brands:
 
 ```text
-sites (id, domain)     — powerlift, bootybuild, itrain, panax (later)
-events (site_id, …)    — analytics
--- later: users, programs, subscriptions keyed by site_id / org_id
+platforms (id, slug, …)
+sites (id, platform_id, domain, …)
+sessions, page_views, custom_events  — site_id on all facts
 ```
 
 `panax.ai` is a future row in `sites` and a future frontend — not a separate database.
 
 ## Hosting
 
-- **Self-hosted** on the DigitalOcean droplet (your choice; no managed DB)
-- Config: `services/postgrest/postgrest.conf`
-- Secrets: `/etc/itrain/postgrest.env` (generated on server, never committed)
+- **Self-hosted** on the DigitalOcean droplet (no managed DB)
+- Migrations: `services/db/migrations/`
+- PostgREST env: `/etc/itrain/postgrest.env` (generated on server, never committed)
+- Local test: `./scripts/test-db-migrations.sh`

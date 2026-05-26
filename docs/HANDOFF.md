@@ -34,7 +34,7 @@ Repo root: `docs/`, `infra/`, `.github/` only.
 | **Netlify** | **Not used by this repo.** Legacy powerlift-only Netlify site is a separate repo — shut down after DNS cutover |
 | **DigitalOcean** | Droplet live: Caddy, five static sites, hardening (`jameslcowan`) |
 | **GitHub Actions** | Optional auto-deploy — [DEPLOY.md](DEPLOY.md) |
-| **Database** | Self-hosted Postgres + PostgREST — `services/` — [DATABASE.md](DATABASE.md) |
+| **Database** | Schema + RPCs in repo; **droplet apply pending** — [ANALYTICS-STATUS.md](ANALYTICS-STATUS.md), [DATABASE.md](DATABASE.md) |
 | **DNS** | Manual at Porkbun / NS1 — [DNS.md](DNS.md) |
 
 ## Droplet quick reference
