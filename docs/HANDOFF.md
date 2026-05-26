@@ -45,6 +45,7 @@ Repo root: `docs/`, `infra/`, `.github/` only.
 - **Web:** Caddy — `infra/caddy/*.caddy` (five domains)
 - **Deploy paths:** `/var/www/{powerlift,powerbuild,olympiclift,bootybuild,itrain}.ing/`
 - **Fedora desktop:** use `wl-copy < ~/.ssh/id_ed25519.pub` (not `pbcopy`).
+- **SSH login:** `jameslcowan@137.184.37.56` (root SSH disabled). See [SECURITY-HARDENING.md](SECURITY-HARDENING.md).
 
 ## Monorepo phases (summary)
 
