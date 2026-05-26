@@ -36,7 +36,10 @@ BEGIN
     RETURNING id INTO v_type_id;
   END IF;
 
-  v_when := COALESCE(p_occurred_at, now());
+  IF p_occurred_at IS NULL THEN
+    RAISE EXCEPTION 'p_occurred_at is required (client event time, ISO 8601)';
+  END IF;
+  v_when := p_occurred_at;
   IF p_path IS NOT NULL THEN
     v_path_id := upsert_path(p_site_id, p_path);
   END IF;
