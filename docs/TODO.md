@@ -59,7 +59,8 @@ Open items from failed runs: **[CI-TODO.md](CI-TODO.md)** and GitHub issues labe
 - [x] DB schema + PostgREST RPCs in repo
 - [x] Droplet: install Postgres/PostgREST + `./scripts/smoke-api.sh`
 - [ ] Front-end beacon per site (after privacy policy) — `packages/analytics/`
-- [ ] Admin sign-in and dashboard
+- [x] NocoDB visual admin (optional) — [NOCODB.md](NOCODB.md)
+- [ ] Admin sign-in and dashboard (product UI; separate from NocoDB)
 - [ ] Funnel: landing → `/programs/` → `/app` (normalize `/app` paths in events)
 
 ## Marketing and launch

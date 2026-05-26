@@ -44,3 +44,4 @@ sessions, page_views, custom_events  — site_id on all facts
 - Migrations: `services/db/migrations/`
 - PostgREST env: `/etc/itrain/postgrest.env` (generated on server, never committed)
 - Local test: `./scripts/test-db-migrations.sh`
+- Visual admin (optional): [NOCODB.md](NOCODB.md) — read-only `itrain_nocodb` role
