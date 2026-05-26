@@ -1,13 +1,15 @@
+# Deploy to DigitalOcean — does NOT run on every push (avoids red X when secrets missing).
+#
+# Manual: Actions → Deploy to DigitalOcean → Run workflow
+# Auto after green CI: set repo variable AUTO_DEPLOY=true + deploy secrets
 name: Deploy to DigitalOcean
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "sites/**"
-      - ".github/workflows/deploy.yml"
-      - "infra/**"
   workflow_dispatch:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
 
 concurrency:
   group: deploy-production
@@ -15,6 +17,9 @@ concurrency:
 
 jobs:
   deploy:
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' && vars.AUTO_DEPLOY == 'true')
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
