@@ -1,8 +1,10 @@
--- Read-only Postgres role for NocoDB / SQL inspectors (password set on server by install-nocodb.sh).
+-- Rename NocoDB reader role to match Panax platform naming.
 
 DO $$
 BEGIN
-  IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'panax_nocodb') THEN
+  IF EXISTS (SELECT FROM pg_roles WHERE rolname = 'itrain_nocodb') THEN
+    ALTER ROLE itrain_nocodb RENAME TO panax_nocodb;
+  ELSIF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'panax_nocodb') THEN
     CREATE ROLE panax_nocodb LOGIN;
   END IF;
 END

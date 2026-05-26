@@ -3,7 +3,7 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-DB="${DB_NAME:-itrain}"
+DB="${DB_NAME:-panax}"
 MIGRATIONS_DIR="$REPO_ROOT/services/db/migrations"
 
 if [[ "$(id -u)" -ne 0 ]]; then
