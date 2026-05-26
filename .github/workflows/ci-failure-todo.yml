@@ -1,0 +1,131 @@
+# On CI or Deploy failure: append docs/CI-TODO.md and open/update a GitHub issue.
+name: CI failure → TODO
+
+on:
+  workflow_run:
+    workflows: [CI, "Deploy to DigitalOcean"]
+    types: [completed]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  track:
+    if: github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Collect failed jobs
+        id: jobs
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const runId = context.payload.workflow_run.id;
+            const { data } = await github.rest.actions.listJobsForWorkflowRun({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: runId,
+            });
+            const failed = data.jobs.filter((j) => j.conclusion === 'failure');
+            const lines = failed.map((j) => {
+              const steps = (j.steps || [])
+                .filter((s) => s.conclusion === 'failure')
+                .map((s) => s.name)
+                .join(', ');
+              return `- **${j.name}** — failed step(s): ${steps || '(see log)'}`;
+            });
+            const fs = require('fs');
+            const summary = lines.join('\n') || '- (see workflow log)';
+            fs.writeFileSync(process.env.RUNNER_TEMP + '/failed-jobs.md', summary);
+            core.setOutput('summary', summary);
+
+      - name: Update docs/CI-TODO.md
+        env:
+          WF_NAME: ${{ github.event.workflow_run.name }}
+          WF_URL: ${{ github.event.workflow_run.html_url }}
+          WF_SHA: ${{ github.event.workflow_run.head_sha }}
+          WF_BRANCH: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          SHA_SHORT="${WF_SHA:0:7}"
+          WHEN="$(date -u +"%Y-%m-%d %H:%M UTC")"
+          BLOCK="${RUNNER_TEMP}/ci-block.md"
+          {
+            echo "- [ ] **${WF_NAME}** (${WF_BRANCH}) @ [\`${SHA_SHORT}\`](https://github.com/${{ github.repository }}/commit/${WF_SHA}) — ${WHEN} — [logs](${WF_URL})"
+            echo ""
+            cat "${RUNNER_TEMP}/failed-jobs.md"
+          } > "$BLOCK"
+          node scripts/ci-todo-append.mjs "$BLOCK"
+
+      - name: Commit CI-TODO.md
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/CI-TODO.md
+          if git diff --staged --quiet; then
+            echo "No CI-TODO.md changes"
+            exit 0
+          fi
+          git commit -m "chore(ci): record failure in CI-TODO (${{ github.event.workflow_run.name }})"
+          git push
+
+      - name: Create or comment on tracking issue
+        uses: actions/github-script@v7
+        env:
+          JOB_SUMMARY: ${{ steps.jobs.outputs.summary }}
+        with:
+          script: |
+            const run = context.payload.workflow_run;
+            const repo = `${context.repo.owner}/${context.repo.repo}`;
+            const title = `[CI TODO] ${run.name} failed on ${run.head_branch}`;
+            const body = [
+              `Workflow: [${run.name}](${run.html_url})`,
+              `Commit: [\`${run.head_sha.slice(0, 7)}\`](https://github.com/${repo}/commit/${run.head_sha})`,
+              `Branch: ${run.head_branch}`,
+              '',
+              '### Failed jobs',
+              process.env.JOB_SUMMARY,
+              '',
+              `Tracked in [docs/CI-TODO.md](https://github.com/${repo}/blob/main/docs/CI-TODO.md).`,
+              '',
+              'Close when CI is green.',
+            ].join('\n');
+            const label = 'ci-todo';
+            try {
+              await github.rest.issues.createLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: label,
+                color: 'd73a4a',
+                description: 'Automated CI failure backlog',
+              });
+            } catch (e) {
+              if (e.status !== 422) throw e;
+            }
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: label,
+              per_page: 20,
+            });
+            const existing = issues.find((i) => i.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body: `Another failure (${new Date().toISOString()}):\n\n${body}`,
+              });
+              return;
+            }
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              body,
+              labels: [label, 'automated'],
+            });
