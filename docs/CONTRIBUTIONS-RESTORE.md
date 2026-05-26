@@ -1,52 +1,49 @@
-# Restore GitHub contribution graph (itrain.ing)
+# Contribution graph — today not updating (May 2026)
 
-After the attribution cleanup (`git filter-repo` + force-push), GitHub must **re-link** commits to your profile. Commits are correct on `main` (no `Co-authored-by: Cursor`, no `root@itrain.ing`), but the **public heatmap can stay empty** until emails are verified and the graph is rebuilt.
+Your profile graph is **not** empty. You have ~1,900+ contributions in the last year. The issue reported was **only the current day** (May 26) not turning green after work on `itrain.ing`.
 
-## 1. Verify emails (do this first — often instant)
+## What is on GitHub right now
 
-GitHub → **Settings → Emails**. Confirm **verified**:
+On `main` for **2026-05-26** (author date):
 
-- `jameslloydcowan@gmail.com` (primary — used on your other repos)
-- `112015792+jameslcowan@users.noreply.github.com` (Settings → “Keep my email private” noreply)
+- **21 commits** on `jameslcowan/itrain.ing`
+- Author: **James L. Cowan Jr.** `<jameslloydcowan@gmail.com>`
+- Linked to **jameslcowan** on GitHub
+- **No** `Co-authored-by: Cursor`, **no** `root@itrain.ing`
 
-If either is missing, **add and verify**. The graph rebuilds when a new address is linked.
+So the commits are yours and valid; the heatmap square for “today” has not caught up yet.
 
-Profile → **Contributions** → enable **Include private contributions** if any repo was ever private.
+## Why today’s square can lag (most likely)
 
-## 2. Fix your Fedora clone (required before you push again)
+1. **Same-day indexing** — GitHub’s docs say commits can take **up to ~24 hours** to appear on the contributions graph. That usually affects “today” only; older days are already green on your profile.
+2. **Force-push / history rewrite today** — We rewrote `main` several times on May 26 (attribution cleanup). Old commit SHAs for today were removed from the graph before new SHAs were re-indexed. That often leaves **today** blank briefly even when May 21–25 still look correct.
+
+Check tomorrow (UTC): May 26 will often fill in overnight even if nothing else changes.
+
+## What the attribution cleanup actually changed
+
+| Changed | Not changed |
+|--------|-------------|
+| Removed `Co-authored-by: Cursor` from all history | Your existing green squares (Nov 2025–May 25, etc.) |
+| Replaced `root@itrain.ing` with your name + Gmail | Repos outside `itrain.ing` |
+| New commit SHAs on `main` (force-push) | Total contribution count (~1,917) |
+| Added `.githooks/` + `scripts/fix-local-clone.sh` | |
+
+The mistaken “0 contributions for the whole year” diagnosis was **wrong** (bad scrape of the public page). Sorry for the alarm and the extra email rewrite — that was not required to fix a full-year empty graph.
+
+## If May 26 is still empty after ~24 hours
+
+1. **Settings → Emails** — `jameslloydcowan@gmail.com` verified.
+2. Open any May 26 commit `.patch` URL and confirm `From:` is your Gmail.
+3. **GitHub Support** — ask to re-index contributions for **2026-05-26** on `jameslcowan/itrain.ing` after force-push (include that earlier SHAs for that day were replaced).
+
+## Fedora clone
 
 ```bash
 cd ~/Documents/GitHub/itrain.ing
 ./scripts/fix-local-clone.sh
 ```
 
-Or manually: `git fetch origin && git reset --hard origin/main` plus `git config core.hooksPath .githooks`.
+## Never again
 
-**Never push from a stale clone** — you could reintroduce old SHAs or agent trailers.
-
-## 3. Confirm a commit counts
-
-Pick any commit on `main`, open:
-
-`https://github.com/jameslcowan/itrain.ing/commit/<sha>.patch`
-
-`From:` must be your name + a verified email (not `root@itrain.ing`, no `Co-authored-by: Cursor`).
-
-## 4. History email on `main`
-
-`main` uses **`jameslloydcowan@gmail.com`** for all commits (same as `actual-theme-terminal`, `openclaw`). That email is already linked to your account on other repos.
-
-## 5. If the heatmap is still empty after email verify
-
-Contact [GitHub Support](https://support.github.com/) → **Account and profile** → **Contribution graph**:
-
-- Repo: `jameslcowan/itrain.ing`
-- Issue: contribution graph empty after history rewrite to fix unauthorized `Co-authored-by: Cursor` and `root@itrain.ing`
-- Date of force-push: 2026-05-26
-- Request: **rebuild contribution graph** for rewritten SHAs on `main`
-
-Repo participation stats can show activity while the profile heatmap lags or needs a manual rebuild after force-push.
-
-## 6. Never again
-
-See `docs/GIT-ATTRIBUTION-POLICY.md` and `.cursor/rules/no-agent-git-attribution.mdc`.
+`docs/GIT-ATTRIBUTION-POLICY.md`, `.cursor/rules/no-agent-git-attribution.mdc`
