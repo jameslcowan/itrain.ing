@@ -14,7 +14,7 @@
 ## Target tree
 
 ```text
-panax/                             # GitHub: jameslcowan/panax (see RENAME.md)
+panax/                             # GitHub: jameslcowan/panax — clone at ~/panax
 ├── README.md
 ├── docs/                          # PANAX-VISION, DNS, DEPLOY, …
 ├── sites/

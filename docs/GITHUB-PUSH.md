@@ -36,25 +36,25 @@ git push origin main
 
 After a history rewrite, run `./scripts/fix-local-clone.sh` (resets to `origin/main` and configures hooks).
 
-## Droplet (`root@itrain`)
+## Droplet (`jameslcowan@panax`)
 
 Push uses a **dedicated deploy key** at `/root/.ssh/github_push` (not the CI rsync key).
 
 ### One-time setup
 
-1. Repo → **Settings → Deploy keys → Add deploy key**
-2. Title: `itrain-droplet-push`
+1. Repo **`jameslcowan/panax`** → **Settings → Deploy keys → Add deploy key**
+2. Title: `panax-droplet-push`
 3. Key:
 
 ```
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII9Nx3x8QVdYHEFcB4vamebEvK2qMcxE01cqWKM5Lql9 itrain-droplet-git-push
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII9Nx3x8QVdYHEFcB4vamebEvK2qMcxE01cqWKM5Lql9 panax-droplet-git-push
 ```
 
 4. Enable **Allow write access**
 5. On the droplet:
 
 ```bash
-cd /root/panax && ./infra/server/git-push.sh
+sudo /home/jameslcowan/panax/infra/server/git-push.sh /home/jameslcowan/panax
 ```
 
 Show public key on server:
