@@ -32,10 +32,10 @@ Schema: [ANALYTICS-SCHEMA.md](ANALYTICS-SCHEMA.md) (3NF minimum, approved).
 | Step | Commit | Status |
 |------|--------|--------|
 | A1 | `docs/ANALYTICS-SCHEMA.md` — design + 3NF proof | ✅ `292e3f4` |
-| A2 | `docs/ANALYTICS-IMPLEMENTATION.md` — this file | In progress |
-| A3 | `docs/TODO.md`, `docs/ANALYTICS.md` — pointers | Pending |
+| A2 | `docs/ANALYTICS-IMPLEMENTATION.md` — this file | ✅ |
+| A3 | `docs/TODO.md`, `docs/ANALYTICS.md` — pointers | ✅ |
 
-**Gate:** A3 done → start Track B.
+**Gate:** Track B migrations in repo → apply on droplet (Track C).
 
 ---
 
