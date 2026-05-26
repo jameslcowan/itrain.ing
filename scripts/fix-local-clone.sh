@@ -8,6 +8,9 @@ cd "$REPO_ROOT"
 HUMAN_NAME="${GIT_HUMAN_NAME:-James L. Cowan Jr.}"
 HUMAN_EMAIL="${GIT_HUMAN_EMAIL:-jameslloydcowan@gmail.com}"
 
+echo "==> SSH remote (project standard)"
+"$(dirname "$0")/git-use-ssh-remote.sh"
+
 echo "==> Fetching origin"
 git fetch origin
 

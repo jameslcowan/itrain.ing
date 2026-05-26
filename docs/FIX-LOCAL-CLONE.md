@@ -11,6 +11,7 @@ cd ~/Documents/GitHub/itrain.ing
 
 This script:
 
+- Sets `origin` to `git@github.com:jameslcowan/itrain.ing.git` (SSH)
 - `git fetch` + `git reset --hard origin/main`
 - Sets `user.name` / `user.email` to your GitHub identity
 - Enables repo hooks at `.githooks/` (strips `Co-authored-by: Cursor`)
