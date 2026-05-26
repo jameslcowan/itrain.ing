@@ -22,12 +22,17 @@ while read -r local_ref local_sha remote_ref remote_sha; do
     main_local_sha="$local_sha"
   fi
 
+  rev_range="$local_sha"
+  if [[ "$remote_sha" != "$null_sha" ]]; then
+    rev_range="${remote_sha}..${local_sha}"
+  fi
+
   while read -r sha; do
     [[ -z "$sha" ]] && continue
     [[ -n "${seen_commits[$sha]:-}" ]] && continue
     seen_commits["$sha"]=1
     check_commit_object "$sha"
-  done < <(git rev-list "$local_sha")
+  done < <(git rev-list "$rev_range")
 done
 
 if [[ "$had_updates" -eq 0 ]]; then
