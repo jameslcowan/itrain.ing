@@ -1,5 +1,10 @@
 # NocoDB — visual admin for `itrain` Postgres
 
+**Where it runs:** on the **DigitalOcean droplet** (`137.184.37.56`), not on your laptop.  
+`systemctl status nocodb` and Docker container `nocodb` live on the server.
+
+**Why docs say `localhost`:** NocoDB listens on **`127.0.0.1:8080` on the droplet only** (not exposed to the whole internet). From Fedora you reach it with an **SSH tunnel** — your browser shows `localhost:8080`, but traffic goes to the server.
+
 NocoDB is an **optional** spreadsheet-style UI on top of the existing analytics database. It does **not** replace PostgREST, migrations, or site ingest.
 
 | System | Role |
@@ -40,13 +45,16 @@ Postgres user `itrain_nocodb` is **read-only** at the database layer. NocoDB can
 
 ## Access
 
-### You (SSH tunnel from Fedora)
+### You (from Fedora → droplet via SSH tunnel)
+
+Run this **on your laptop** (forwards laptop port 8080 → **server** port 8080):
 
 ```bash
 ssh -L 8080:127.0.0.1:8080 jameslcowan@137.184.37.56
 ```
 
-Browser: **http://localhost:8080**
+Then open in your laptop browser: **http://localhost:8080**  
+(that is the droplet’s NocoDB, not a local install)
 
 ### Pre-DNS on the droplet IP
 
