@@ -1,0 +1,12 @@
+---
+description: Never add agent attribution to git commits
+alwaysApply: true
+---
+
+# Git attribution — strict
+
+- **Never** add `Co-authored-by: Cursor`, `Co-authored-by: cursoragent@cursor.com`, or any agent/device co-author trailer to commit messages.
+- **Never** commit as `root@itrain.ing`, `Cursor`, or any non-human identity.
+- **Never** run `git commit` or `git push` unless the user explicitly asks in that turn.
+- If the user asks for a commit, use only the human author (James L. Cowan Jr. / their GitHub noreply email). Message body = user intent only, no attribution footer.
+- Prefer the user committing locally on Fedora; if committing on-server is required, verify `git log -1` has **no** `Co-authored-by` line before push.
