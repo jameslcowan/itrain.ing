@@ -71,9 +71,19 @@ rsync -avzr --delete --exclude-from=../../infra/deploy/rsync-excludes.txt \
   ./ deploy@YOUR_DROPLET_IP:/var/www/powerlift.ing/
 ```
 
+## Rsync excludes (production surface)
+
+[`infra/deploy/rsync-excludes.txt`](../infra/deploy/rsync-excludes.txt) omits dev-only paths from `/var/www/`:
+
+- `tests/`, `scripts/`, `package.json`, `package-lock.json`, `netlify.toml`
+- `*.mjs` (build scripts) and `content/articles/` (Markdown sources)
+
+Built HTML, CSS, and JS remain. After deploy, `https://<domain>/package.json` should **404**.
+
 ## Smoke test checklist
 
 - [ ] `/` landing
+- [ ] `/package.json` → 404 (not publicly served)
 - [ ] `/programs/`
 - [ ] `/app` and a shared `/app/<STATE>` link
 - [ ] `/blog/`, `/faq/`, `/terms/`, `/privacy/`
