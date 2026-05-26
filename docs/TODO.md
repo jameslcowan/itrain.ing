@@ -30,7 +30,7 @@ Open items from failed runs: **[CI-TODO.md](CI-TODO.md)** and GitHub issues labe
 - [x] **Phase 2:** App under `sites/powerlifting/` (+ sister copies) — [MONOREPO.md](MONOREPO.md)
 - [x] **Phase 3:** Matrix deploy workflow in repo
 - [x] **Phase 5:** Analytics schema + migrations — [ANALYTICS-IMPLEMENTATION.md](ANALYTICS-IMPLEMENTATION.md)
-- [ ] Postgres + PostgREST **applied and smoke-tested on droplet**
+- [x] Postgres + PostgREST **applied and smoke-tested on droplet** (`install-analytics-stack.sh`)
 - [ ] Shut down legacy Netlify powerlift repo/site after DNS verified
 
 ## Now — ops and verification
@@ -57,7 +57,7 @@ Open items from failed runs: **[CI-TODO.md](CI-TODO.md)** and GitHub issues labe
 ## Analytics (DO droplet / Postgres)
 
 - [x] DB schema + PostgREST RPCs in repo
-- [ ] Droplet: install Postgres/PostgREST + `./scripts/smoke-api.sh`
+- [x] Droplet: install Postgres/PostgREST + `./scripts/smoke-api.sh`
 - [ ] Front-end beacon per site (after privacy policy) — `packages/analytics/`
 - [ ] Admin sign-in and dashboard
 - [ ] Funnel: landing → `/programs/` → `/app` (normalize `/app` paths in events)
