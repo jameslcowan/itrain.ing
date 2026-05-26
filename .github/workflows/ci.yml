@@ -1,0 +1,95 @@
+# Required checks: build all sites, codec tests, analytics migrations.
+# Deploy is separate (manual or AUTO_DEPLOY) — see deploy.yml.
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "sites/**"
+      - "services/**"
+      - "scripts/**"
+      - "packages/**"
+      - ".github/**"
+      - "package.json"
+      - "package-lock.json"
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: build (${{ matrix.site }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        site:
+          - powerlifting
+          - powerbuilding
+          - olympiclifting
+          - bootybuilding
+          - itraining
+    defaults:
+      run:
+        working-directory: sites/${{ matrix.site }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: sites/${{ matrix.site }}/package-lock.json
+
+      - run: npm ci && npm run build
+
+  test-codec:
+    name: codec tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Run codec tests (all sites)
+        run: |
+          for site in powerlifting powerbuilding olympiclifting bootybuilding itraining; do
+            echo "==> $site"
+            node --test "sites/$site/tests/codec.test.mjs"
+          done
+
+  test-db:
+    name: analytics migrations
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      GITHUB_ACTIONS: true
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: postgres
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install PostgreSQL client
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
+
+      - run: ./scripts/test-db-migrations.sh
