@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+hook_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$hook_dir/_attribution-guard.sh"
+
+remote_main_ref="refs/remotes/origin/main"
+null_sha="0000000000000000000000000000000000000000"
+
+declare -A seen_commits=()
+needs_main_check=0
+main_local_sha=""
+had_updates=0
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [[ -z "${local_ref:-}" ]] && continue
+  [[ "$local_sha" == "$null_sha" ]] && continue
+
+  had_updates=1
+  if [[ "$remote_ref" == "refs/heads/main" ]]; then
+    needs_main_check=1
+    main_local_sha="$local_sha"
+  fi
+
+  while read -r sha; do
+    [[ -z "$sha" ]] && continue
+    [[ -n "${seen_commits[$sha]:-}" ]] && continue
+    seen_commits["$sha"]=1
+    check_commit_object "$sha"
+  done < <(git rev-list "$local_sha")
+done
+
+if [[ "$had_updates" -eq 0 ]]; then
+  exit 0
+fi
+
+if [[ "$needs_main_check" -eq 1 ]] && git rev-parse --verify "$remote_main_ref" >/dev/null 2>&1; then
+  if ! git merge-base --is-ancestor "$remote_main_ref" "$main_local_sha"; then
+    reject_attribution \
+      "Rejected push: local main is not based on the current origin/main." \
+      "Run './scripts/fix-local-clone.sh' before pushing again."
+  fi
+fi

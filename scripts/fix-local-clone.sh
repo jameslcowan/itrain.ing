@@ -19,9 +19,9 @@ echo "==> Human git identity (repo-local)"
 git config user.name "$HUMAN_NAME"
 git config user.email "$HUMAN_EMAIL"
 
-echo "==> Repo git hooks (blocks Co-authored-by: Cursor)"
+echo "==> Repo git hooks (blocks bad trailers and stale-history pushes)"
 git config core.hooksPath .githooks
-chmod +x .githooks/commit-msg .githooks/prepare-commit-msg 2>/dev/null || true
+chmod +x .githooks/* 2>/dev/null || true
 
 echo "==> Cursor attribution off (project)"
 if [ -f .cursor/cli.json ]; then

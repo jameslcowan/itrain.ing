@@ -17,6 +17,9 @@ Monorepo docs: suite plan, deploy, and powerlift.ing product details.
 | [ANALYTICS.md](ANALYTICS.md) | Analytics ingest (Postgres + PostgREST) |
 | [BLOG.md](BLOG.md) | Adding articles, frontmatter, SSG output |
 | [SEO.md](SEO.md) | Positioning, indexing rules, URL contract |
+| [FIX-LOCAL-CLONE.md](FIX-LOCAL-CLONE.md) | Reset a stale clone after the 2026-05-26 history rewrite |
+| [CONTRIBUTIONS-RESTORE.md](CONTRIBUTIONS-RESTORE.md) | GitHub heatmap recovery after the attribution rewrite |
+| [GIT-ATTRIBUTION-POLICY.md](GIT-ATTRIBUTION-POLICY.md) | Allowed git identity, hooks, and no-agent rules |
 | [TODO.md](TODO.md) | Prioritized backlog and launch checklist |
 
 ## Quick commands
@@ -25,6 +28,7 @@ Monorepo docs: suite plan, deploy, and powerlift.ing product details.
 npm run build:powerlifting   # or npm run build:all
 npm run dev:all              # :8080–8083 — all suite sites
 npm run dev:powerlifting     # single site
+./scripts/fix-local-clone.sh # realign a stale clone and enable repo hooks
 ```
 
 Per-site tests (powerlifting): `cd sites/powerlifting && node --test tests/codec.test.mjs`
