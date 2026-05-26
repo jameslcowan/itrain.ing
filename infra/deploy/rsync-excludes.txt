@@ -2,3 +2,12 @@
 .github
 node_modules
 .cursor
+
+# Dev / build tooling (not needed in static web root)
+tests/
+scripts/
+package.json
+package-lock.json
+netlify.toml
+*.mjs
+content/articles/
