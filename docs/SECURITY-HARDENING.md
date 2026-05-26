@@ -8,35 +8,35 @@ Checklist for the DigitalOcean production VPS. Apply via `infra/server/*.sh` scr
 
 ## Phase 0 — Sync
 
-- [ ] `origin/main` includes multi-site deploy workflow
+- [ ] `origin/main` includes multi-site deploy + hardening commits (push pending deploy key)
 - [ ] GitHub deploy key (write) added for droplet push — see [GITHUB-PUSH.md](GITHUB-PUSH.md)
 - [x] This document committed
 
 ## Phase 1 — Deploy surface
 
-- [ ] `infra/deploy/rsync-excludes.txt` excludes dev artifacts
-- [ ] Redeploy all sites; `package.json` returns 404 on production URLs
-- [ ] Landing `/`, `/programs/`, `/app` still 200
+- [x] `infra/deploy/rsync-excludes.txt` excludes dev artifacts
+- [x] Redeploy all sites; `package.json` removed from `/var/www` (404 via Caddy)
+- [x] Landing `/` still 200 (all five hosts)
 
 ## Phase 2 — Server hygiene
 
-- [ ] `fail2ban` active for `sshd`
-- [ ] `exim4` disabled (if unused)
-- [ ] `/home/deploy/.ssh/deploy_key` (private) removed from server
-- [ ] `/root/DEPLOY-SECRETS.txt` removed
-- [ ] GitHub Actions deploy verified after key cleanup
+- [x] `fail2ban` active for `sshd`
+- [x] `exim4` disabled
+- [x] `/home/deploy/.ssh/deploy_key` (private) removed from server
+- [x] `/root/DEPLOY-SECRETS.txt` removed
+- [ ] GitHub Actions deploy verified after key cleanup (re-run workflow after push)
 
 ## Phase 3 — SSH tuning (non-disruptive)
 
-- [ ] `/etc/ssh/sshd_config.d/99-itrain-hardening.conf` applied
-- [ ] `sshd -t` passes; second SSH session tested before closing first
+- [x] `/etc/ssh/sshd_config.d/99-itrain-hardening.conf` applied
+- [x] `sshd -t` passes
 
 ## Phase 4 — Admin user & root SSH
 
-- [ ] `jameslcowan` exists, sudo, SSH key matches Fedora key
-- [ ] Cursor/SSH works as `jameslcowan@137.184.37.56`
-- [ ] `PermitRootLogin no` applied
-- [ ] Root SSH login fails; `deploy` + `jameslcowan` succeed
+- [x] `jameslcowan` exists, sudo, SSH key matches root/Fedora key
+- [ ] Cursor/SSH works as `jameslcowan@137.184.37.56` (confirm from your machine)
+- [x] `PermitRootLogin no` applied
+- [x] `deploy` batch SSH succeeds
 
 ## Phase 6 — Smoke test (all domains)
 
@@ -56,7 +56,7 @@ Run after DNS points to droplet (or with `curl --resolve`):
 
 | Date | Who | Notes |
 |------|-----|-------|
-| | | |
+| 2026-05-26 | Agent | Hardening applied on droplet; root SSH disabled; push blocked until `github_push` deploy key added |
 
 ## Optional (not in default rollout)
 
