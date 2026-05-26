@@ -56,7 +56,7 @@ See **[GITHUB-ACTIONS.md](GITHUB-ACTIONS.md)** for secrets and verification. Dep
 | olympiclift.ing | `/var/www/olympiclift.ing/` | `infra/caddy/olympiclift.ing.caddy` |
 | bootybuild.ing | `/var/www/bootybuild.ing/` | `infra/caddy/bootybuild.ing.caddy` |
 | itrain.ing | `/var/www/itrain.ing/` | `infra/caddy/itrain.ing.caddy` |
-| api.itrain.ing | PostgREST `:3000` | `infra/caddy/api.itrain.ing.caddy` |
+| api.panax.ai | PostgREST `:3000` | `infra/caddy/api.panax.ai.caddy` |
 
 ## Old Netlify repo
 

@@ -1,12 +1,12 @@
 ---
-description: Canonical itrain.ing monorepo workspace
+description: Canonical Panax platform monorepo workspace
 alwaysApply: true
 ---
 
 # Workspace
 
-This repo is **itrain.ing** (`/home/jameslcowan/Documents/GitHub/itrain.ing`).
-
-- Do not edit `/home/jameslcowan/Documents/GitHub/powerlift.ing` (legacy clone).
-- Session context: `docs/HANDOFF.md`
-- Monorepo plan: `docs/MONOREPO.md`
+- **Platform:** Panax (panax.ai) — owns all product apps and shared Postgres.
+- **Products:** `sites/*` → `.ing` domains (powerlift, itrain.ing, …). **itrain.ing is one product**, not the platform.
+- **Repo:** may live at `~/itrain.ing` or `~/panax` until [docs/RENAME.md](../docs/RENAME.md).
+- **API host:** `api.panax.ai` (not `api.itrain.ing`).
+- Micro-commits per [.cursor/rules/micro-commits.mdc](micro-commits.mdc). No agent git attribution.

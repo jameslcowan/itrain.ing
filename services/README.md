@@ -19,7 +19,7 @@ Self-hosted on the itrain droplet — **not** Netlify, **not** managed cloud DB.
 
 ## API (after install)
 
-- Base URL: `https://api.itrain.ing/` (pre-DNS: `./scripts/smoke-api.sh`)
+- Base URL: `https://api.panax.ai/` (pre-DNS: `./scripts/smoke-api.sh`)
 - `POST /rpc/start_session` — begin visit; returns `session_id`
 - `POST /rpc/record_page_view` — page load / unload metrics
 - `POST /rpc/record_custom_event` — product events (`program_card_open`, etc.)
@@ -30,7 +30,7 @@ Self-hosted on the itrain droplet — **not** Netlify, **not** managed cloud DB.
 sudo ./infra/server/install-swap.sh
 sudo ./infra/server/install-postgres.sh
 sudo ./infra/server/install-postgrest.sh
-sudo cp infra/caddy/api.itrain.ing.caddy /etc/caddy/sites/
+sudo cp infra/caddy/api.panax.ai.caddy /etc/caddy/sites/
 sudo systemctl reload caddy
 ./scripts/test-db-migrations.sh   # local
 ./scripts/smoke-api.sh            # droplet (SMOKE_HTTP=1 before TLS)

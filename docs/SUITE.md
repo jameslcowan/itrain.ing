@@ -1,33 +1,22 @@
-# Lifting apps suite (itrain.ing)
+# Product suite (Panax platform)
 
-Platform monorepo. Full plan: **[MONOREPO.md](MONOREPO.md)**. Branding: **[BRANDING.md](BRANDING.md)**.
+**Panax** operates these apps. Full plan: [MONOREPO.md](MONOREPO.md). Branding: [BRANDING.md](BRANDING.md).
 
 ## Sites
 
 | Folder | Domain | Status |
 |--------|--------|--------|
-| `sites/powerlifting/` | powerlift.ing | Production; DO deploy |
-| `sites/powerbuilding/` | powerbuild.ing | Production; DO deploy |
-| `sites/olympiclifting/` | olympiclift.ing | Production; DO deploy |
-| `sites/bootybuilding/` | bootybuild.ing | Production; DO deploy |
-| `sites/itraining/` | itrain.ing | Production; DO deploy |
+| `sites/powerlifting/` | powerlift.ing | Production reference |
+| `sites/powerbuilding/` | powerbuild.ing | Branded clone |
+| `sites/olympiclifting/` | olympiclift.ing | Branded clone |
+| `sites/bootybuilding/` | bootybuild.ing | Branded clone |
+| `sites/itraining/` | itrain.ing | General training product (implement like others) |
 
-## Repo layout
-
-```text
-itrain.ing/
-  docs/ infra/ .github/ scripts/
-  sites/
-    powerlifting/   … production reference
-    powerbuilding/  … hypertrophy brand
-    olympiclifting/ … Olympic lifting brand
-    bootybuilding/  … glute-focused brand
-    itraining/      … general training / platform hub
-```
+**panax.ai** — platform home + future AI app ([PANAX-VISION.md](PANAX-VISION.md)).
 
 ## Quick commands
 
 ```bash
 npm run dev:all       # five dev servers (8080–8084)
-npm run build:all     # build every site
+npm run build:all     # build every product site
 ```

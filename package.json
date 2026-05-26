@@ -1,5 +1,5 @@
 {
-  "name": "itrain.ing",
+  "name": "panax-platform",
   "private": true,
   "scripts": {
     "build": "npm run build --prefix sites/powerlifting",

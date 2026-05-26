@@ -1,10 +1,10 @@
 /**
- * Multisite analytics beacon — PostgREST RPCs on api.itrain.ing
+ * Multisite analytics beacon — PostgREST RPCs on api.panax.ai
  * Enable per site after privacy policy update.
  *
  * <script src="/path/to/analytics.js" defer
  *   data-site-id="powerlift"
- *   data-api-base="https://api.itrain.ing"></script>
+ *   data-api-base="https://api.panax.ai"></script>
  */
 (function () {
   'use strict';
@@ -13,7 +13,7 @@
   if (!script) return;
 
   var siteId = script.getAttribute('data-site-id');
-  var apiBase = (script.getAttribute('data-api-base') || 'https://api.itrain.ing').replace(/\/$/, '');
+  var apiBase = (script.getAttribute('data-api-base') || 'https://api.panax.ai').replace(/\/$/, '');
   if (!siteId) {
     console.warn('[analytics] missing data-site-id');
     return;

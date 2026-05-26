@@ -9,7 +9,7 @@ Schema: [ANALYTICS-SCHEMA.md](ANALYTICS-SCHEMA.md) (3NF minimum, approved).
 | Rule | Detail |
 |------|--------|
 | Micro-commits | One concern per commit; see `.cursor/rules/micro-commits.mdc` |
-| No DNS yet | Sites + `api.itrain.ing` tested via IP + `Host` / `--resolve` |
+| No DNS yet | Sites + `api.panax.ai` tested via IP + `Host` / `--resolve` |
 | PostgREST only | Ingest via RPCs; no Node/Bun sidecar for v1 |
 | 3NF floor | Migrations must match schema doc; no new `meta`-only facts |
 | Git | No agent co-author; no push unless explicitly requested |
@@ -76,7 +76,7 @@ Server work; split git commits for scripts/docs vs one-time apply.
 |------|----------------------|---------------|--------|
 | C1 | `infra: run ordered migrations in install-postgres` | Update `install-postgres.sh` to apply `002+` | `psql \dt` shows new tables |
 | C2 | `infra: postgrest systemd and healthcheck` | `install-postgrest.sh`, enable unit | `curl 127.0.0.1:3000/` |
-| C3 | `infra: document pre-DNS API testing` | `DNS.md` + comment in `api.itrain.ing.caddy` | — |
+| C3 | `infra: document pre-DNS API testing` | `DNS.md` + comment in `api.panax.ai.caddy` | — |
 | C4 | `scripts: add smoke-api.sh` + `test-db-migrations.sh` | Local + droplet | all checks pass |
 
 ### First-time install (if Postgres not yet on box)
@@ -85,7 +85,7 @@ Server work; split git commits for scripts/docs vs one-time apply.
 sudo ./infra/server/install-swap.sh
 sudo ./infra/server/install-postgres.sh    # 001 + 002… when C1 merged
 sudo ./infra/server/install-postgrest.sh
-sudo cp infra/caddy/api.itrain.ing.caddy /etc/caddy/sites/
+sudo cp infra/caddy/api.panax.ai.caddy /etc/caddy/sites/
 sudo systemctl reload caddy
 ```
 
@@ -96,28 +96,28 @@ DROPLET=137.184.37.56
 
 # PostgREST root (may 404 JSON — proves proxy)
 curl -sS -o /dev/null -w "%{http_code}\n" \
-  --resolve "api.itrain.ing:443:${DROPLET}" \
-  "https://api.itrain.ing/"
+  --resolve "api.panax.ai:443:${DROPLET}" \
+  "https://api.panax.ai/"
 
 # Start session
 curl -sS -X POST \
-  --resolve "api.itrain.ing:443:${DROPLET}" \
+  --resolve "api.panax.ai:443:${DROPLET}" \
   -H "Content-Type: application/json" \
-  "https://api.itrain.ing/rpc/start_session" \
+  "https://api.panax.ai/rpc/start_session" \
   -d '{"p_site_id":"powerlift","p_visitor_id":"00000000-0000-4000-8000-000000000001","p_ua_raw":"smoke-test"}'
 
 # Page view (use session_id from response)
 curl -sS -X POST \
-  --resolve "api.itrain.ing:443:${DROPLET}" \
+  --resolve "api.panax.ai:443:${DROPLET}" \
   -H "Content-Type: application/json" \
-  "https://api.itrain.ing/rpc/record_page_view" \
+  "https://api.panax.ai/rpc/record_page_view" \
   -d '{"p_site_id":"powerlift","p_session_id":"<uuid>","p_path":"/programs/","p_occurred_at":"2026-05-26T12:00:00Z","p_document_title":"Programs"}'
 ```
 
-HTTP on port 80 if TLS cert not ready for `api.itrain.ing`:
+HTTP on port 80 if TLS cert not ready for `api.panax.ai`:
 
 ```bash
-curl -sS -H "Host: api.itrain.ing" "http://${DROPLET}/"
+curl -sS -H "Host: api.panax.ai" "http://${DROPLET}/"
 ```
 
 **Gate for Track C:** `scripts/smoke-api.sh` exits 0; rows visible in `page_views` for `site_id = powerlift`.
@@ -147,7 +147,7 @@ Beacon must send:
 ## Track E — Later (explicitly out of scope here)
 
 - [ ] GitHub Actions deploy verification (`DEPLOY_HOST`, `DEPLOY_USER`, `SSH_PRIVATE_KEY`)
-- [ ] Porkbun DNS cutover — all apex + `api.itrain.ing` ([DNS.md](DNS.md))
+- [ ] Porkbun DNS cutover — all apex + `api.panax.ai` ([DNS.md](DNS.md))
 - [ ] Shut down legacy Netlify `powerlift` repo
 - [ ] Admin read role + dashboard (not `web_anon`)
 - [ ] Monthly partitions on `page_views` when volume warrants

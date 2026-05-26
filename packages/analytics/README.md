@@ -1,13 +1,13 @@
 # Analytics beacon (client)
 
-Posts to PostgREST RPCs on `api.itrain.ing`. **Do not enable on production HTML until privacy policies are updated.**
+Posts to PostgREST RPCs on `api.panax.ai`. **Do not enable on production HTML until privacy policies are updated.**
 
 ## Usage
 
 ```html
 <script src="/packages/analytics/analytics.js" defer
   data-site-id="powerlift"
-  data-api-base="https://api.itrain.ing"></script>
+  data-api-base="https://api.panax.ai"></script>
 ```
 
 ## Session entry flag

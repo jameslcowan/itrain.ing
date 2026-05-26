@@ -11,7 +11,7 @@ Monorepo docs: suite plan, deploy, and powerlift.ing product details.
 | [DNS.md](DNS.md) | Porkbun DNS cutover (when ready) |
 | [GITHUB-ACTIONS.md](GITHUB-ACTIONS.md) | CI deploy workflow + secrets |
 | [DEPLOY.md](DEPLOY.md) | DigitalOcean droplet, GitHub Actions, DNS cutover |
-| [MONOREPO.md](MONOREPO.md) | itrain.ing monorepo plan (phases, tree, DB sketch) |
+| [MONOREPO.md](MONOREPO.md) | Panax platform monorepo plan (phases, tree, DB sketch) |
 | [SUITE.md](SUITE.md) | Site roster and migration summary |
 | [BRANDING.md](BRANDING.md) | Per-site fonts, theme, wording (marketing only) |
 | [ANALYTICS.md](ANALYTICS.md) | Analytics ingest (Postgres + PostgREST) |

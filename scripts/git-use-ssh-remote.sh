@@ -5,6 +5,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
 
+# After GitHub rename: git@github.com:jameslcowan/panax.git
 SSH_URL="git@github.com:jameslcowan/itrain.ing.git"
 current="$(git remote get-url origin 2>/dev/null || true)"
 

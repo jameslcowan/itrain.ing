@@ -1,6 +1,6 @@
 # Analytics schema — design and normalization (3NF minimum)
 
-Living design doc for **PostgreSQL + PostgREST** multisite analytics on the itrain droplet.  
+Living design doc for **PostgreSQL + PostgREST** multisite analytics on the Panax droplet.  
 **Gate:** schema migrations (`002`–`008`) land only after this doc is approved.
 
 ## Goals
@@ -8,7 +8,7 @@ Living design doc for **PostgreSQL + PostgREST** multisite analytics on the itra
 | Goal | Approach |
 |------|----------|
 | Multisite + future sites | Shared tables; `site_id` FK on every fact row |
-| Umbrella may rename (itrain → panax, etc.) | `platforms` table; `sites.platform_id` FK |
+| Platform owner Panax | `platforms` table; `sites.platform_id` FK → `panax` |
 | Maximum capture | Atomic columns for all common dimensions; versioned `extras` JSONB only for rare extensions |
 | PostgREST-only ingest | `SECURITY DEFINER` RPCs; no separate Node ingest service |
 | Normalization floor | **Minimum 3NF** on all tables; BCNF where cheap (lookup tables) |
@@ -56,16 +56,16 @@ erDiagram
 
 ### `platforms`
 
-Umbrella brand that may change name without rewriting analytics.
+Platform owner (Panax). Product domains stay separate; analytics rows use `site_id`.
 
 | Column | Type | Notes |
 |--------|------|-------|
-| `id` | `TEXT` PK | e.g. `itrain`, later `panax` |
+| `id` | `TEXT` PK | `panax` |
 | `slug` | `TEXT` UNIQUE NOT NULL | URL-safe identifier |
 | `display_name` | `TEXT` NOT NULL | Human label |
 | `created_at` | `TIMESTAMPTZ` NOT NULL DEFAULT `now()` |
 
-**Seed:** one row `itrain` until umbrella changes.
+**Seed:** one row `panax`.
 
 ### `sites`
 
@@ -74,7 +74,7 @@ Tenant registry — one row per `.ing` (and future domains).
 | Column | Type | Notes |
 |--------|------|-------|
 | `id` | `TEXT` PK | `powerlift`, `powerbuild`, … |
-| `platform_id` | `TEXT` NOT NULL FK → `platforms(id)` | Umbrella |
+| `platform_id` | `TEXT` NOT NULL FK → `platforms(id)` | Panax platform |
 | `domain` | `TEXT` UNIQUE NOT NULL | `powerlift.ing` |
 | `display_name` | `TEXT` NOT NULL | |
 | `is_active` | `BOOLEAN` NOT NULL DEFAULT `true` | Soft-disable ingest |

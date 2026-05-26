@@ -1,86 +1,64 @@
-# DNS — custom domains to the droplet
+# DNS — Panax platform + product domains
 
-**Hold DNS changes until the stack is ready.** `powerlift.ing` is still live on its current hosting; cutting over early would send real users to an unfinished droplet.
+**Droplet IPv4:** `137.184.37.56`
 
-**Droplet IPv4 (for later):** `137.184.37.56`
+**Hold product cutovers** until each site is ready on the droplet. **panax.ai** can point now for platform TLS and API.
 
-## Registrar: Porkbun (all suite domains)
+## panax.ai zone (platform — Porkbun or your registrar)
 
-You register and manage DNS at [porkbun.com](https://porkbun.com) for the suite:
+| Type | Host | Answer | Purpose |
+|------|------|--------|---------|
+| A | `@` | `137.184.37.56` | panax.ai home |
+| A | `www` | `137.184.37.56` | redirect/www |
+| A | `api` | `137.184.37.56` | PostgREST ingest |
+| A | `nocodb` | `137.184.37.56` | NocoDB admin (optional; restrict who knows URL) |
 
-| Site folder | Apex domain |
-|-------------|-------------|
-| `sites/powerlifting/` | `powerlift.ing` |
-| `sites/powerbuilding/` | `powerbuild.ing` |
-| `sites/olympiclifting/` | `olympiclift.ing` |
-| `sites/bootybuilding/` | `bootybuild.ing` |
-| `sites/itraining/` | `itrain.ing` |
-
-**API (PostgREST, when ready):** `api.itrain.ing` → same droplet (A record `api` in the `itrain.ing` zone).
-
-### powerlift.ing nameservers (check before cutover)
-
-Other domains may already use Porkbun NS (`*.ns.porkbun.com`). **`powerlift.ing` has historically used Netlify/NS1 nameservers** — if `host -t NS powerlift.ing` still shows `nsone.net`, switch the domain to **Porkbun nameservers** in Porkbun before editing A records there.
-
-## Pre-launch testing (no DNS change)
-
-Deploy to the droplet with GitHub Actions or `./scripts/deploy-all-sites.sh`, then test **without** changing public DNS:
+On the droplet after DNS propagates:
 
 ```bash
-# From your machine — correct Host header, droplet IP
-curl -sI -H "Host: powerlift.ing" http://137.184.37.56/ | head -5
-curl -sI -H "Host: powerbuild.ing" http://137.184.37.56/ | head -5
-# … repeat for olympiclift.ing, bootybuild.ing, itrain.ing
+sudo ./infra/server/install-panax-caddy.sh   # TLS via Caddy
+SMOKE_HTTP=1 ./scripts/smoke-api.sh          # or HTTPS once certs exist
+curl -sI https://panax.ai/
 ```
 
-Optional local override (your laptop only):
+Caddy vhosts: `infra/caddy/panax.ai.caddy`, `api.panax.ai.caddy`, `nocodb.panax.ai.caddy`.
 
-```text
-137.184.37.56  powerlift.ing www.powerlift.ing
-```
+## Product `.ing` domains (separate zones)
 
-HTTPS on the droplet needs DNS pointing here (or temporary hosts + Caddy certs) — use HTTP smoke tests until cutover.
+Each product keeps its **own** domain and Porkbun zone:
 
-### API (`api.itrain.ing`) — no DNS change
+| Folder | Apex |
+|--------|------|
+| `sites/powerlifting/` | powerlift.ing |
+| `sites/powerbuilding/` | powerbuild.ing |
+| `sites/olympiclifting/` | olympiclift.ing |
+| `sites/bootybuilding/` | bootybuild.ing |
+| `sites/itraining/` | itrain.ing |
 
-PostgREST analytics ingest (see [ANALYTICS.md](ANALYTICS.md)):
-
-```bash
-cd /path/to/itrain.ing
-./scripts/smoke-api.sh
-# or: DROPLET=137.184.37.56 curl --resolve "api.itrain.ing:443:137.184.37.56" ...
-```
-
-Caddy must have `infra/caddy/api.itrain.ing.caddy` in `/etc/caddy/sites/` on the droplet. TLS for `api.itrain.ing` works with `--resolve` once a cert exists (Caddy on-demand or temporary DNS for ACME only).
-
-## When you are ready: records (all sites, same pattern)
-
-For **each** apex domain in Porkbun:
+Per zone:
 
 | Type | Host | Answer |
 |------|------|--------|
 | A | `@` | `137.184.37.56` |
 | A | `www` | `137.184.37.56` |
 
-For API (under `itrain.ing`):
+**Do not** use `api.itrain.ing` for the shared API — use **`api.panax.ai`** only.
 
-| Type | Host | Answer |
-|------|------|--------|
-| A | `api` | `137.184.37.56` |
+### powerlift.ing nameservers
 
-Cut over **all** sites when you are satisfied — not only `powerlift.ing`. Suggested order:
+If `host -t NS powerlift.ing` still shows Netlify/NS1, move nameservers to Porkbun before A records.
 
-1. Lower TTL a day ahead (optional).
-2. Point **non-live** domains first (`powerbuild.ing`, `olympiclift.ing`, `bootybuild.ing`, `itrain.ing`) and verify.
-3. Point `powerlift.ing` + `www` when ready to replace Netlify.
-4. Shut down the **legacy Netlify powerlift repo/site** (separate from this monorepo).
-5. Add `api.itrain.ing` when PostgREST is installed and tested.
-
-## Verify after cutover
+## Pre-launch testing (no product DNS change)
 
 ```bash
-host powerlift.ing powerbuild.ing itrain.ing
-curl -sI https://powerlift.ing/ | head -3
+curl -sI -H "Host: powerlift.ing" http://137.184.37.56/ | head -5
+curl -sI -H "Host: api.panax.ai" http://137.184.37.56/ | head -5
+./scripts/smoke-api.sh
 ```
 
-Caddy issues Let's Encrypt certificates once DNS points at the droplet.
+## Suggested cutover order
+
+1. **panax.ai** + `api` + `nocodb` → droplet; verify HTTPS and smoke-api.
+2. Non-live **product** domains → droplet; verify each vhost.
+3. **powerlift.ing** when ready to leave Netlify.
+4. Enable analytics beacon with `data-api-base="https://api.panax.ai"`.

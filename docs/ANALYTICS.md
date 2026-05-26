@@ -13,7 +13,7 @@ Netlify analytics was removed from this monorepo. Ingest is **PostgreSQL + Postg
 
 - **PostgreSQL** — normalized `page_views`, `sessions`, `custom_events` (`site_id` tenancy)
 - **PostgREST** — `POST /rpc/start_session`, `record_page_view`, `record_custom_event`
-- **Caddy** — `https://api.itrain.ing/` → PostgREST (DNS held until cutover; test with `--resolve`)
+- **Caddy** — `https://api.panax.ai/` → PostgREST (DNS held until cutover; test with `--resolve`)
 
 See [DATABASE.md](DATABASE.md) and [services/README.md](../services/README.md).
 
@@ -23,7 +23,7 @@ See [DATABASE.md](DATABASE.md) and [services/README.md](../services/README.md).
 sudo ./infra/server/install-swap.sh
 sudo ./infra/server/install-postgres.sh
 sudo ./infra/server/install-postgrest.sh
-sudo cp infra/caddy/api.itrain.ing.caddy /etc/caddy/sites/
+sudo cp infra/caddy/api.panax.ai.caddy /etc/caddy/sites/
 sudo systemctl reload caddy
 ```
 
@@ -43,9 +43,9 @@ sudo -u postgres psql -d itrain -f services/db/migrations/009_drop_legacy_events
 
 ```bash
 DROPLET=137.184.37.56
-curl -sS -X POST --resolve "api.itrain.ing:443:${DROPLET}" \
+curl -sS -X POST --resolve "api.panax.ai:443:${DROPLET}" \
   -H "Content-Type: application/json" \
-  "https://api.itrain.ing/rpc/start_session" \
+  "https://api.panax.ai/rpc/start_session" \
   -d '{"p_site_id":"powerlift","p_visitor_id":"00000000-0000-4000-8000-000000000001","p_ua_raw":"curl"}'
 ```
 

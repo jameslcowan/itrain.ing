@@ -1,78 +1,41 @@
-# Session handoff — itrain.ing monorepo
+# Session handoff — Panax platform monorepo
 
-Use this file when opening **`/home/jameslcowan/Documents/GitHub/itrain.ing`** in a new Cursor workspace. It carries context from the powerlift.ing → suite migration chat.
+Open **`~/panax`** or **`~/itrain.ing`** (same clone until [RENAME.md](RENAME.md) is done).
 
 ## What this repo is
 
-- **itrain.ing** — umbrella monorepo for the `.ing` app family.
-- **First product:** [powerlift.ing](https://powerlift.ing) (free powerlifting program builder; whole program in one URL).
-- **Planned sites:** olympiclift.ing, powerbuild.ing, bootybuild.ing (scaffolds in `sites/`).
-- **Origin:** cloned from `powerlift.ing` repo with full git history (May 2026).
+- **Panax** ([panax.ai](https://panax.ai)) — platform brand; future mega AI app + shared accounts.
+- **Product apps** — powerlift.ing, itrain.ing, etc. under `sites/`; each has its own domain and `site_id`.
+- **This repository** — single deploy unit for all products + shared Postgres/PostgREST.
+
+See [PANAX-VISION.md](PANAX-VISION.md).
 
 ## Read first
 
 | Doc | Purpose |
 |-----|---------|
-| [MONOREPO.md](MONOREPO.md) | Target tree, phases 0–6, DB sketch |
-| [DEPLOY.md](DEPLOY.md) | DigitalOcean droplet + GitHub Actions |
+| [PANAX-VISION.md](PANAX-VISION.md) | Platform vs products |
+| [MONOREPO.md](MONOREPO.md) | Tree, phases |
+| [DEPLOY.md](DEPLOY.md) | Droplet + GitHub Actions |
 | [SUITE.md](SUITE.md) | Site roster |
+| [DNS.md](DNS.md) | panax.ai + product DNS |
 | [TODO.md](TODO.md) | Backlog |
 
-## Current layout
-
-App code lives under **`sites/`**:
-
-- `sites/powerlifting/` — powerlift.ing (production)
-- `sites/powerbuilding/`, `sites/olympiclifting/`, `sites/bootybuilding/`, `sites/itraining/` — branded; DO deploy
-
-Repo root: `docs/`, `infra/`, `.github/` only.
-
-## Infrastructure state
+## Infrastructure (droplet `137.184.37.56`)
 
 | Item | Status |
 |------|--------|
-| **Netlify** | **Not used by this repo.** Legacy powerlift-only Netlify site is a separate repo — shut down after DNS cutover |
-| **DigitalOcean** | Droplet live: Caddy, five static sites, hardening (`jameslcowan`) |
-| **GitHub Actions** | Optional auto-deploy — [DEPLOY.md](DEPLOY.md) |
-| **Database** | Schema + RPCs in repo; **droplet apply pending** — [ANALYTICS-STATUS.md](ANALYTICS-STATUS.md), [DATABASE.md](DATABASE.md) |
-| **DNS** | Manual at Porkbun / NS1 — [DNS.md](DNS.md) |
+| **Products** | Five `.ing` vhosts + `/var/www/*.ing/` |
+| **panax.ai** | Placeholder at `/var/www/panax.ai/` |
+| **api.panax.ai** | PostgREST |
+| **nocodb.panax.ai** | NocoDB (internal) |
+| **Postgres** | DB `itrain`, `platform_id = panax` |
+| **DNS** | Point panax.ai + products at Porkbun when ready |
 
-## Droplet quick reference
+## SSH
 
-- **OS:** Debian 13 stable (not Fedora on server).
-- **Size:** ~$16/mo (2 GB) sized for Postgres later; static-only could be $8.
-- **Web:** Caddy — `infra/caddy/*.caddy` (five domains)
-- **Deploy paths:** `/var/www/{powerlift,powerbuild,olympiclift,bootybuild,itrain}.ing/`
-- **Fedora desktop:** use `wl-copy < ~/.ssh/id_ed25519.pub` (not `pbcopy`).
-- **SSH login:** `jameslcowan@137.184.37.56` (root SSH disabled). See [SECURITY-HARDENING.md](SECURITY-HARDENING.md).
+`jameslcowan@137.184.37.56` — see [SECURITY-HARDENING.md](SECURITY-HARDENING.md).
 
-## Monorepo phases (summary)
+## Clone path
 
-0. **Now:** deploy from repo root to DO; DNS cutover per [DNS.md](DNS.md).
-1. Rename GitHub remote to `itrain.ing` (this repo).
-2. `git mv` app → `sites/powerlift.ing/`.
-3. Matrix deploy per site.
-4. Extract `packages/*`.
-5. `services/` Postgres + PostgREST (in progress).
-6. Clone next site from powerlift template.
-
-## Recent product work (landed in git)
-
-- Landing hero: coarse grid, orange wash (theme-tuned light/dark), viewport-aligned side fade.
-- Programs grid: square cards, 40px cells, corner layout, test templates in `content/programs-data.js`.
-- Removed grid.bz / jameslcowan **repo** references; author links to @jameslcowan on X unchanged.
-- `sites/{olympiclift,powerbuild,bootybuild}.ing/` scaffolds + deploy infra.
-
-## Old repo
-
-`/home/jameslcowan/Documents/GitHub/powerlift.ing` — can archive after this clone is canonical and DNS/deploy point here. Until then, avoid divergent edits in both trees.
-
-## Open in Cursor
-
-**File → Open Folder** → `/home/jameslcowan/Documents/GitHub/itrain.ing`
-
-Optional: open `itrain.ing.code-workspace` in this folder.
-
-## Agent transcript (full chat)
-
-Cursor transcript ID for the migration session: `5659285c-3067-4791-b215-b5972fa2d398` (under the powerlift.ing project path in Cursor metadata). Reference if the IDE supports transcript lookup.
+Droplet: `/home/jameslcowan/itrain.ing` (rename to `panax` optional per [RENAME.md](RENAME.md)).

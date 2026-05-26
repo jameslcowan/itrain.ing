@@ -1,4 +1,4 @@
--- itrain.ing platform schema (multisite: site_id on all tenant data)
+-- Panax platform schema (multisite: site_id on all tenant data)
 
 CREATE TABLE IF NOT EXISTS sites (
   id TEXT PRIMARY KEY,

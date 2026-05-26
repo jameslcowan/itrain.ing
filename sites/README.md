@@ -6,7 +6,7 @@
 | `powerbuilding/` | powerbuild.ing | Branded clone (hypertrophy / strength) |
 | `olympiclifting/` | olympiclift.ing | Branded clone (Olympic lifting) |
 | `bootybuilding/` | bootybuild.ing | Branded clone (glute-focused) |
-| `itraining/` | itrain.ing | Branded clone (general training / platform) |
+| `itraining/` | itrain.ing | General training product (same pattern as other sites) |
 
 Each folder is a full static stack: `npm ci && npm run build`, then preview from the repo root:
 

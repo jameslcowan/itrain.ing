@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Smoke-test PostgREST analytics RPCs (pre-DNS).
-# HTTPS: --resolve api.itrain.ing:443:DROPLET
+# HTTPS: --resolve api.panax.ai:443:DROPLET
 # HTTP:  SMOKE_HTTP=1 uses Host header on port 80 (no TLS)
 set -euo pipefail
 
@@ -9,17 +9,17 @@ VISITOR_ID="${VISITOR_ID:-00000000-0000-4000-8000-000000000099}"
 
 if [[ "${SMOKE_HTTP:-0}" == "1" ]]; then
   BASE="${API_BASE:-http://${DROPLET}}"
-  CURL=(curl -sS -f -H "Host: api.itrain.ing")
+  CURL=(curl -sS -f -H "Host: api.panax.ai")
 else
-  BASE="${API_BASE:-https://api.itrain.ing}"
-  CURL=(curl -sS -f --resolve "api.itrain.ing:443:${DROPLET}")
+  BASE="${API_BASE:-https://api.panax.ai}"
+  CURL=(curl -sS -f --resolve "api.panax.ai:443:${DROPLET}")
 fi
 
 check_not_default_site() {
   local body="$1"
-  if echo "$body" | grep -q 'itrain.ing suite'; then
-    echo "ERROR: api.itrain.ing is not routed to PostgREST (got default Caddy page)." >&2
-    echo "Install infra/caddy/api.itrain.ing.caddy and reload Caddy." >&2
+  if echo "$body" | grep -q 'Panax platform'; then
+    echo "ERROR: api.panax.ai is not routed to PostgREST (got default Caddy page)." >&2
+    echo "Run sudo ./infra/server/install-panax-caddy.sh and reload Caddy." >&2
     exit 1
   fi
 }
