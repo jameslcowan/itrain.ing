@@ -6,7 +6,7 @@ Last verified on droplet **2026-05-26**.
 
 | Component | Status |
 |-----------|--------|
-| PostgreSQL `itrain` DB | **Running** — `platform_id = panax` (migration `011`) |
+| PostgreSQL `panax` DB | **Running** — `platform_id = panax` (migration `011`) |
 | PostgREST `:3000` | **Running** |
 | Caddy `api.panax.ai` | Install via `install-panax-caddy.sh` after DNS |
 | `panax.ai` placeholder | `/var/www/panax.ai/` |

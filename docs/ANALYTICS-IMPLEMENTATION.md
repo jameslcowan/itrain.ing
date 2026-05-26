@@ -22,7 +22,7 @@ Schema: [ANALYTICS-SCHEMA.md](ANALYTICS-SCHEMA.md) (3NF minimum, approved).
 | IPv4 | `137.184.37.56` |
 | Static roots | `/var/www/{powerlift,powerbuild,olympiclift,bootybuild,itrain}.ing/` |
 | API (local) | PostgREST `127.0.0.1:3000` behind Caddy |
-| DB name | `itrain` |
+| DB name | `panax` |
 | Secrets | `/etc/panax/postgrest.env` (generated on server, never commit) |
 
 ---
@@ -58,7 +58,7 @@ Run on droplet only after each migration file is committed. Order is fixed.
 
 ```bash
 cd ~/panax
-sudo -u postgres psql -v ON_ERROR_STOP=1 -d itrain -f services/db/migrations/002_platforms.sql
+sudo -u postgres psql -v ON_ERROR_STOP=1 -d panax -f services/db/migrations/002_platforms.sql
 # … repeat for 003–008 in order
 ```
 
@@ -161,7 +161,7 @@ Beacon must send:
 |-------|------------------|----------|
 | Postgres running | `systemctl is-active postgresql` | `active` |
 | PostgREST running | `systemctl is-active postgrest` | `active` |
-| Tables exist | `\dt` in `psql -d itrain` | `platforms`, `sites`, `page_views`, … |
+| Tables exist | `\dt` in `psql -d panax` | `platforms`, `sites`, `page_views`, … |
 | 3NF | Review migration SQL vs schema doc | No core fields only in JSONB |
 | Ingest | `smoke-api.sh` | exit 0 |
 | Static sites | `curl -H "Host: powerlift.ing" http://137.184.37.56/` | 200 |

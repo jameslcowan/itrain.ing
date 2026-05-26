@@ -30,7 +30,7 @@ sudo systemctl reload caddy
 After RPC smoke: `sudo APPLY_DROP_LEGACY=1 ./infra/server/install-postgres.sh` skips 001–008 and only needs `009` — or run:
 
 ```bash
-sudo -u postgres psql -d itrain -f services/db/migrations/009_drop_legacy_events.sql
+sudo -u postgres psql -d panax -f services/db/migrations/009_drop_legacy_events.sql
 ```
 
 ## Smoke test (no DNS)

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Apply analytics migrations 002+ on an existing itrain database (droplet).
+# Apply analytics migrations 002+ on an existing panax database (droplet).
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"

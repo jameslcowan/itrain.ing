@@ -1,4 +1,4 @@
-# NocoDB — visual admin for `itrain` Postgres
+# NocoDB — visual admin for `panax` Postgres
 
 **Where it runs:** on the **DigitalOcean droplet** (`137.184.37.56`), not on your laptop.  
 `systemctl status nocodb` and Docker container `nocodb` live on the server.
@@ -9,11 +9,11 @@ NocoDB is an **optional** spreadsheet-style UI on top of the existing analytics 
 
 | System | Role |
 |--------|------|
-| **PostgreSQL `itrain`** | Source of truth (unchanged) |
+| **PostgreSQL `panax`** | Source of truth (unchanged) |
 | **PostgREST** | Public RPC API for sites (`api.panax.ai`) |
 | **NocoDB** | Internal browse/filter/export for humans |
 
-NocoDB’s own config (users, views, invites) lives in **`/var/lib/panax/nocodb`** (SQLite inside the container volume), not in the `itrain` database.
+NocoDB’s own config (users, views, invites) lives in **`/var/lib/panax/nocodb`** (SQLite inside the container volume), not in the `panax` database.
 
 ## Install (droplet)
 
@@ -36,7 +36,7 @@ sudo ./infra/server/install-nocodb-caddy.sh
    - **Create base** → **Connect to external database** → **PostgreSQL**
    - Host: `host.docker.internal` (from the server UI; use `127.0.0.1` only if connecting via SSH tunnel from your laptop)
    - Port: `5432`
-   - Database: `itrain`
+   - Database: `panax`
    - User / password: from `/etc/panax/nocodb.env` (`NOCODB_PG_USER`, `NOCODB_PG_PASSWORD`) — `sudo cat /etc/panax/nocodb.env`
 4. Select schemas/tables: `sites`, `sessions`, `page_views`, `custom_events`, etc.
 5. **Invite family** (e.g. viewer): workspace → **Members** → invite email → role **Viewer** or **Editor** (see below).
