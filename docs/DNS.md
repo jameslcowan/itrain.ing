@@ -41,6 +41,18 @@ Optional local override (your laptop only):
 
 HTTPS on the droplet needs DNS pointing here (or temporary hosts + Caddy certs) — use HTTP smoke tests until cutover.
 
+### API (`api.itrain.ing`) — no DNS change
+
+PostgREST analytics ingest (see [ANALYTICS.md](ANALYTICS.md)):
+
+```bash
+cd /path/to/itrain.ing
+./scripts/smoke-api.sh
+# or: DROPLET=137.184.37.56 curl --resolve "api.itrain.ing:443:137.184.37.56" ...
+```
+
+Caddy must have `infra/caddy/api.itrain.ing.caddy` in `/etc/caddy/sites/` on the droplet. TLS for `api.itrain.ing` works with `--resolve` once a cert exists (Caddy on-demand or temporary DNS for ACME only).
+
 ## When you are ready: records (all sites, same pattern)
 
 For **each** apex domain in Porkbun:
