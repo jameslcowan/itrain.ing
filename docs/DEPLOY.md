@@ -1,22 +1,21 @@
 # Deploy (DigitalOcean droplet)
 
-Keep **Netlify live** until the droplet is verified. Cut DNS only after smoke tests pass.
+This monorepo is **independent of Netlify**. Production is Caddy + static files under `/var/www/`, optional Postgres + PostgREST on the same droplet.
+
+**Droplet IPv4:** `137.184.37.56`  
+**DNS:** [DNS.md](DNS.md) — **hold until ready** (all domains on Porkbun; cut over together when stack is verified).
 
 ## Order of operations
 
-1. **Droplet:** Debian 13, SSH key, firewall (22, 80, 443).
-2. **Server once:** create deploy user, web root, Caddy (below).
-3. **GitHub:** add Actions secrets, push `main` → workflow deploys.
-4. **Test:** hit the droplet by IP or `staging.powerlift.ing` before touching apex DNS.
-5. **DNS:** point `powerlift.ing` A/AAAA to the droplet (Cloudflare or DO DNS).
-6. **Smoke test** production URL.
-7. **Then** disable Netlify deploy / remove site (or leave as rollback for a few days).
-
-Do **not** remove Netlify first — you lose zero-downtime rollback.
+1. **Droplet:** Debian 13, SSH (`jameslcowan`), firewall (22, 80, 443).
+2. **Server once:** Caddy, `deploy` user, web roots — below.
+3. **GitHub Actions (recommended):** Auto-deploy on push — [GITHUB-ACTIONS.md](GITHUB-ACTIONS.md).
+4. **Pre-DNS test:** Deploy via CI or `./scripts/deploy-all-sites.sh`; smoke-test with `Host:` header + droplet IP — [DNS.md](DNS.md).
+5. **Database (when ready):** `install-swap.sh`, `install-postgres.sh`, `install-postgrest.sh` — [DATABASE.md](DATABASE.md).
+6. **DNS cutover (later):** Point **all** `.ing` domains at the droplet in Porkbun — only when ready to go live.
+7. **Retire** legacy Netlify powerlift site (separate repo).
 
 ## Server setup (one time)
-
-SSH as root (or your admin user):
 
 ```bash
 apt update && apt install -y caddy rsync
@@ -28,67 +27,25 @@ done
 chown -R deploy:www-data /var/www/*.ing
 chmod -R g+w /var/www/*.ing
 
-mkdir -p /home/deploy/.ssh
-# Paste the *public* key (same pair as GitHub secret private key):
-nano /home/deploy/.ssh/authorized_keys
-chown -R deploy:deploy /home/deploy/.ssh
-chmod 700 /home/deploy/.ssh
-chmod 600 /home/deploy/.ssh/authorized_keys
-
 mkdir -p /etc/caddy/sites
-# Copy infra/caddy/*.caddy from repo to /etc/caddy/sites/
-# Ensure main /etc/caddy/Caddyfile contains: import /etc/caddy/sites/*.caddy
+cp infra/caddy/*.caddy /etc/caddy/sites/
+# Main Caddyfile: import /etc/caddy/sites/*.caddy
 systemctl reload caddy
 ```
 
-## GitHub Actions secrets
+## GitHub Actions (recommended)
 
-Repo → **Settings → Secrets and variables → Actions**:
+See **[GITHUB-ACTIONS.md](GITHUB-ACTIONS.md)** for secrets and verification. Deploys **all five sites** on each qualifying push to `main`.
 
-| Secret | Value |
-|--------|--------|
-| `DEPLOY_HOST` | Droplet public IPv4 |
-| `DEPLOY_USER` | `deploy` |
-| `SSH_PRIVATE_KEY` | Full private key (`id_ed25519`), including `-----BEGIN` / `END-----` lines |
-
-The matching **public** key must be in `/home/deploy/.ssh/authorized_keys` on the server.
-
-Workflow: [.github/workflows/deploy.yml](../.github/workflows/deploy.yml) — matrix deploy: each `sites/*/` → `/var/www/<domain>/`.
-
-## Manual deploy (debug)
-
-All sites:
+## Manual deploy
 
 ```bash
 ./scripts/deploy-all-sites.sh
 ```
 
-Single site (example):
-
-```bash
-cd sites/powerlifting && npm ci && npm run build
-rsync -avzr --delete --exclude-from=../../infra/deploy/rsync-excludes.txt \
-  ./ deploy@YOUR_DROPLET_IP:/var/www/powerlift.ing/
-```
-
 ## Rsync excludes (production surface)
 
-[`infra/deploy/rsync-excludes.txt`](../infra/deploy/rsync-excludes.txt) omits dev-only paths from `/var/www/`:
-
-- `tests/`, `scripts/`, `package.json`, `package-lock.json`, `netlify.toml`
-- `*.mjs` (build scripts) and `content/articles/` (Markdown sources)
-
-Built HTML, CSS, and JS remain. After deploy, `https://<domain>/package.json` should **404**.
-
-## Smoke test checklist
-
-- [ ] `/` landing
-- [ ] `/package.json` → 404 (not publicly served)
-- [ ] `/programs/`
-- [ ] `/app` and a shared `/app/<STATE>` link
-- [ ] `/blog/`, `/faq/`, `/terms/`, `/privacy/`
-- [ ] Unknown path → `404.html`
-- [ ] HTTPS certificate valid
+[`infra/deploy/rsync-excludes.txt`](../infra/deploy/rsync-excludes.txt) omits dev-only paths from `/var/www/`.
 
 ## Sites on this droplet
 
@@ -99,7 +56,8 @@ Built HTML, CSS, and JS remain. After deploy, `https://<domain>/package.json` sh
 | olympiclift.ing | `/var/www/olympiclift.ing/` | `infra/caddy/olympiclift.ing.caddy` |
 | bootybuild.ing | `/var/www/bootybuild.ing/` | `infra/caddy/bootybuild.ing.caddy` |
 | itrain.ing | `/var/www/itrain.ing/` | `infra/caddy/itrain.ing.caddy` |
+| api.itrain.ing | PostgREST `:3000` | `infra/caddy/api.itrain.ing.caddy` |
 
-## Later (DB)
+## Old Netlify repo
 
-Postgres + API service on same droplet. Bump droplet RAM when DB lands on the box.
+The legacy **powerlift.ing-only** Netlify repo is separate. Shut it down in the Netlify UI after DNS points here. This monorepo does not use Netlify.

@@ -9,7 +9,7 @@ npm install
 npm run build:blog
 ```
 
-Netlify runs `npm run build` before publish.
+CI or `./scripts/deploy-all-sites.sh` runs `npm run build` before rsync to the droplet.
 
 ## Add an article
 

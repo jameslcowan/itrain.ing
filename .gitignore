@@ -20,7 +20,7 @@ Thumbs.db
 *.local
 .env.local
 
-# Local Netlify folder
+# Legacy local folders (not used)
 .netlify
 
 # Dependencies

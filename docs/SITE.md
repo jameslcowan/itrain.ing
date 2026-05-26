@@ -2,7 +2,7 @@
 
 ## Product shape
 
-**powerlift.ing** is a static site on Netlify plus a client-only program builder. The full program is encoded in shareable URLs — no accounts, no program database on the server.
+**powerlift.ing** is a static site on the DigitalOcean droplet (Caddy) plus a client-only program builder. The full program is encoded in shareable URLs — no accounts, no program database on the server for the builder itself.
 
 | Surface | URL | Notes |
 |---------|-----|--------|
@@ -41,7 +41,7 @@ The app decodes older payloads for backward compatibility. Tests: `tests/codec.t
 
 Individual targets: `npm run build:blog`, `build:faq`, `build:legal`, `build:programs`, `build:404`.
 
-**Commit generated HTML** when you change templates or content sources (same as CI on Netlify).
+**Commit generated HTML** when you change templates or content sources (same as CI on the droplet).
 
 ## Local development
 
@@ -50,18 +50,17 @@ npm install && npm run build
 python scripts/dev-server.py   # http://127.0.0.1:8080
 ```
 
-The dev server rewrites `/app`, `/app/*`, `/program/*`, and `/p/*` to `app.html` (Netlify-like). It serves `404.html` for missing paths.
+The dev server rewrites `/app`, `/app/*`, `/program/*`, and `/p/*` to `app.html` (same rules as Caddy in production). It serves `404.html` for missing paths.
 
 Plain `python -m http.server` only works for `/`; shared program URLs 404 locally.
 
-## Netlify deployment
+## Production deployment (DigitalOcean)
 
-- **Publish:** repo root (`.`)
-- **Build:** `npm ci && npm run build` (`netlify.toml`)
-- **SPA:** `netlify.toml` rewrites `/app` and legacy paths to `app.html`
-- **Headers:** `X-Robots-Tag: noindex` on `/app/*`, `/program/*`, `/p/*`
+- **Build:** `npm ci && npm run build` in `sites/<name>/`
+- **Host:** Caddy — `infra/caddy/<domain>.caddy` (SPA rewrites, `noindex` on shared program routes)
+- **Publish:** rsync to `/var/www/<domain>/` — [DEPLOY.md](DEPLOY.md)
 
-Static hosting only on Netlify today (`netlify.toml` SPA rewrites). Analytics will live on Hetzner — see [ANALYTICS.md](ANALYTICS.md).
+This repo does **not** use Netlify. Analytics/API: Postgres + PostgREST — [ANALYTICS.md](ANALYTICS.md).
 
 ## Conventions for agents
 

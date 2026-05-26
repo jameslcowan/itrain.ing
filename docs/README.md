@@ -6,12 +6,15 @@ Monorepo docs: suite plan, deploy, and powerlift.ing product details.
 
 | Doc | Purpose |
 |-----|---------|
-| [SITE.md](SITE.md) | Architecture, routes, build pipeline, local dev, Netlify deploy |
+| [SITE.md](SITE.md) | Architecture, routes, build pipeline, local dev, DO deploy |
+| [DATABASE.md](DATABASE.md) | Postgres + PostgREST (multisite) |
+| [DNS.md](DNS.md) | Porkbun DNS cutover (when ready) |
+| [GITHUB-ACTIONS.md](GITHUB-ACTIONS.md) | CI deploy workflow + secrets |
 | [DEPLOY.md](DEPLOY.md) | DigitalOcean droplet, GitHub Actions, DNS cutover |
 | [MONOREPO.md](MONOREPO.md) | itrain.ing monorepo plan (phases, tree, DB sketch) |
 | [SUITE.md](SUITE.md) | Site roster and migration summary |
 | [BRANDING.md](BRANDING.md) | Per-site fonts, theme, wording (marketing only) |
-| [ANALYTICS.md](ANALYTICS.md) | Analytics status (Netlify removed; Hetzner planned) |
+| [ANALYTICS.md](ANALYTICS.md) | Analytics ingest (Postgres + PostgREST) |
 | [BLOG.md](BLOG.md) | Adding articles, frontmatter, SSG output |
 | [SEO.md](SEO.md) | Positioning, indexing rules, URL contract |
 | [TODO.md](TODO.md) | Prioritized backlog and launch checklist |

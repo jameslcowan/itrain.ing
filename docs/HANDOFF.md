@@ -31,12 +31,11 @@ Repo root: `docs/`, `infra/`, `.github/` only.
 
 | Item | Status |
 |------|--------|
-| **Netlify** | powerlift.ing still live; do not remove until DO verified |
-| **DigitalOcean** | Droplet provisioned (Debian 13, NYC/SFO); user setting up Caddy + `deploy` user |
-| **GitHub Actions** | `.github/workflows/deploy.yml` — matrix rsync all sites to `/var/www/<domain>/` on push to `main` |
-| **Secrets needed** | `DEPLOY_HOST`, `DEPLOY_USER`, `SSH_PRIVATE_KEY` |
-| **Hetzner** | Abandoned (KYC); DO chosen instead |
-| **Analytics** | Removed from Netlify; Postgres + `services/analytics/` planned (Phase 5) |
+| **Netlify** | **Not used by this repo.** Legacy powerlift-only Netlify site is a separate repo — shut down after DNS cutover |
+| **DigitalOcean** | Droplet live: Caddy, five static sites, hardening (`jameslcowan`) |
+| **GitHub Actions** | Optional auto-deploy — [DEPLOY.md](DEPLOY.md) |
+| **Database** | Self-hosted Postgres + PostgREST — `services/` — [DATABASE.md](DATABASE.md) |
+| **DNS** | Manual at Porkbun / NS1 — [DNS.md](DNS.md) |
 
 ## Droplet quick reference
 
@@ -49,12 +48,12 @@ Repo root: `docs/`, `infra/`, `.github/` only.
 
 ## Monorepo phases (summary)
 
-0. **Now:** deploy from repo root to DO; keep Netlify.
+0. **Now:** deploy from repo root to DO; DNS cutover per [DNS.md](DNS.md).
 1. Rename GitHub remote to `itrain.ing` (this repo).
 2. `git mv` app → `sites/powerlift.ing/`.
 3. Matrix deploy per site.
 4. Extract `packages/*`.
-5. `services/analytics` + Postgres.
+5. `services/` Postgres + PostgREST (in progress).
 6. Clone next site from powerlift template.
 
 ## Recent product work (landed in git)

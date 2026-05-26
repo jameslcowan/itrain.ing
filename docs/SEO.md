@@ -21,7 +21,7 @@ Use natural powerlifting terms (don’t spam): powerlifting program, program bui
 | Yes | `/`, `/blog/`, `/blog/*`, `/faq/`, `/programs/`, `/terms/`, `/privacy/` |
 | No | `/app`, `/app/*`, `/program/*`, `/p/*` (user-generated, effectively infinite) |
 
-Enforced via `netlify.toml` headers on shared-program routes. Marketing pages use normal meta + canonical from `renderShell`.
+Enforced via Caddy (`X-Robots-Tag` on shared-program routes in `infra/caddy/*.caddy`). Marketing pages use normal meta + canonical from `renderShell`.
 
 ## URL and state contract
 

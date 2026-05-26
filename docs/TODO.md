@@ -8,7 +8,7 @@ Living backlog for the itrain.ing monorepo (powerlift.ing and sister sites). See
 - [x] Terms, privacy, shared footer on marketing pages
 - [x] `/programs/` template library (grid layout, square cards, fluid columns)
 - [x] Custom `404.html`
-- [x] ~~Netlify analytics~~ (removed — moving to Hetzner suite stack)
+- [x] Netlify removed from monorepo (DO + Caddy only)
 - [x] Micro-commit Cursor rule (`.cursor/rules/micro-commits.mdc`)
 - [x] A11y fixes (skip link, labels, Escape, reduced motion)
 - [x] Share dialog no longer auto-closes on copy
@@ -16,12 +16,13 @@ Living backlog for the itrain.ing monorepo (powerlift.ing and sister sites). See
 ## Now — infrastructure (DigitalOcean + monorepo)
 
 - [ ] **Phase 0:** DO droplet + Caddy + GitHub Actions deploy (repo root) — [DEPLOY.md](DEPLOY.md)
-- [ ] DNS cutover powerlift.ing; keep Netlify as rollback until smoke tests pass
+- [ ] DNS cutover all `.ing` domains — [DNS.md](DNS.md)
 - [ ] **Phase 1:** Rename GitHub repo → `itrain.ing`
 - [x] **Phase 2:** App under `sites/powerlifting/` (+ sister copies) — [MONOREPO.md](MONOREPO.md)
 - [ ] **Phase 3:** Matrix deploy per site
 - [ ] Design analytics ingest + DB schema (`site_id`) — **Phase 5**
-- [ ] Remove obsolete Netlify analytics env vars from Netlify UI after deploy
+- [ ] Shut down legacy Netlify powerlift repo/site after DNS verified
+- [ ] Postgres + PostgREST on droplet; `api.itrain.ing` DNS
 
 ## Now — ops and verification
 

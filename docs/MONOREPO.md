@@ -9,7 +9,7 @@ Umbrella platform for the `.ing` app family. **Product domains stay the brands**
 | One VPS, many vhosts | `infra/caddy/*.caddy` + `/var/www/<domain>/` |
 | Shared analytics + DB | `services/analytics/` + Postgres `site_id` |
 | Copy a site to launch another | `sites/<domain>/` from powerlift template |
-| Safe migration | No big-bang; powerlift stays live on Netlify until DO is proven |
+| Safe migration | DNS cutover per domain; legacy Netlify repo retired separately |
 
 ## Target tree
 
@@ -203,8 +203,8 @@ For each new domain:
 | Monorepo layout | `sites/<domain>/` + `services/` + `infra/` |
 | First production site | powerlift.ing only |
 | Host | DigitalOcean droplet, Debian 13, Caddy |
-| DB | Postgres on droplet initially (one instance, `site_id` column) |
-| Netlify | Keep until DO + DNS verified; then disable |
+| DB | Postgres + PostgREST on droplet (`site_id` column) |
+| Netlify | **Not used** — this monorepo is DO-only |
 
 ## Open questions
 
