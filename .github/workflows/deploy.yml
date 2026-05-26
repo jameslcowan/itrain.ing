@@ -47,7 +47,7 @@ jobs:
       - name: Rsync to droplet
         uses: burnett01/rsync-deployments@7.0.1
         with:
-          switches: -avzr --delete --exclude-from=../../infra/deploy/rsync-excludes.txt
+          switches: -avzr --delete --delete-excluded --exclude-from=../../infra/deploy/rsync-excludes.txt
           path: ./
           remote_path: /var/www/${{ matrix.domain }}/
           remote_host: ${{ secrets.DEPLOY_HOST }}

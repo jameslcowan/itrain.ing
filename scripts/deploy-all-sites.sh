@@ -23,7 +23,7 @@ for folder in "${!SITES[@]}"; do
   cd "$src"
   npm ci
   npm run build
-  rsync -avzr --delete --exclude-from="$EXCLUDES" ./ "$dest/"
+  rsync -avzr --delete --delete-excluded --exclude-from="$EXCLUDES" ./ "$dest/"
 done
 
 chown -R deploy:www-data /var/www/*.ing
