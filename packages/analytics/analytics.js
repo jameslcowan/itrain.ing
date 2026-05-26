@@ -113,11 +113,16 @@
     });
   }
 
+  function clientOccurredAt() {
+    return new Date().toISOString();
+  }
+
   function recordPageView(sessionId, opts) {
     var body = Object.assign(
       {
         p_site_id: siteId,
         p_session_id: sessionId,
+        p_occurred_at: clientOccurredAt(),
         p_path: location.pathname,
         p_referrer_url: document.referrer || null,
         p_full_url: location.href,
@@ -159,6 +164,7 @@
     var payload = {
       p_site_id: siteId,
       p_session_id: sid,
+      p_occurred_at: clientOccurredAt(),
       p_path: location.pathname,
       p_is_exit: true,
       p_duration_ms: null,
@@ -177,6 +183,7 @@
               p_site_id: siteId,
               p_session_id: sid,
               p_event_type: eventType,
+              p_occurred_at: clientOccurredAt(),
               p_path: location.pathname,
             },
             extra || {}

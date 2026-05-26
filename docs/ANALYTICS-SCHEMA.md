@@ -265,8 +265,8 @@ Maintaining **3NF** keeps a clean logical model. Denormalized read models (mater
 | RPC | Purpose |
 |-----|---------|
 | `start_session(...)` | Create session; return `session_id` + `visitor_id` |
-| `record_page_view(...)` | Insert path (upsert), page_view row; bump `sessions.last_seen_at` |
-| `record_custom_event(...)` | Insert custom event |
+| `record_page_view(...)` | Insert path (upsert), page_view row; bump `sessions.last_seen_at`. **`p_occurred_at` required** (maps to NOT NULL `page_views.occurred_at`). |
+| `record_custom_event(...)` | Insert custom event. **`p_occurred_at` required** (maps to NOT NULL `custom_events.occurred_at`). |
 
 - Roles: `authenticator` → `web_anon` (ingest only).
 - Admin/read role (later): separate role; not `web_anon`.
