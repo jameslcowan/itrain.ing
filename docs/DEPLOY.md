@@ -21,7 +21,7 @@ This monorepo is **independent of Netlify**. Production is Caddy + static files 
 apt update && apt install -y caddy rsync
 
 useradd -m -s /bin/bash deploy
-for d in powerlift.ing powerbuild.ing olympiclift.ing bootybuild.ing itrain.ing; do
+for d in powerlift.ing powerbuild.ing olympiclift.ing bootybuild.ing itrain.ing panax.ai; do
   mkdir -p "/var/www/$d"
 done
 chown -R deploy:www-data /var/www/*.ing
@@ -56,7 +56,9 @@ See **[GITHUB-ACTIONS.md](GITHUB-ACTIONS.md)** for secrets and verification. Dep
 | olympiclift.ing | `/var/www/olympiclift.ing/` | `infra/caddy/olympiclift.ing.caddy` |
 | bootybuild.ing | `/var/www/bootybuild.ing/` | `infra/caddy/bootybuild.ing.caddy` |
 | itrain.ing | `/var/www/itrain.ing/` | `infra/caddy/itrain.ing.caddy` |
+| panax.ai | `/var/www/panax.ai/` | `infra/caddy/panax.ai.caddy` |
 | api.panax.ai | PostgREST `:3000` | `infra/caddy/api.panax.ai.caddy` |
+| nocodb.panax.ai | NocoDB `:8080` | `infra/caddy/nocodb.panax.ai.caddy` |
 
 ## Old Netlify repo
 
