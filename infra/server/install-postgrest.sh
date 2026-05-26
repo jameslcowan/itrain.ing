@@ -3,8 +3,8 @@
 set -euo pipefail
 
 VERSION=12.2.8
-ARCH=linux-x64
-URL="https://github.com/PostgREST/postgrest/releases/download/v${VERSION}/postgrest-${VERSION}-${ARCH}.tar.xz"
+ARCH=linux-static-x86-64
+URL="https://github.com/PostgREST/postgrest/releases/download/v${VERSION}/postgrest-v${VERSION}-${ARCH}.tar.xz"
 BIN=/usr/local/bin/postgrest
 
 [[ -f /etc/itrain/postgrest.env ]] || { echo "Run install-postgres.sh first."; exit 1; }
