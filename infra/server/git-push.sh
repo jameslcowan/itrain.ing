@@ -2,8 +2,8 @@
 # Push main to GitHub via SSH deploy key (requires write deploy key on repo).
 set -euo pipefail
 
-REPO=/root/itrain.ing
 KEY=/root/.ssh/github_push
+REPO="${1:-/root/itrain.ing}"
 
 cd "$REPO"
 if [[ ! -f "$KEY" ]]; then
