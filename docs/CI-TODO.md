@@ -7,4 +7,9 @@ Fix items, push, and confirm [CI workflow](https://github.com/jameslcowan/itrain
 
 ## Open failures (newest first)
 
+- [ ] **CI** (main) @ [`e484bdf`](https://github.com/jameslcowan/itrain.ing/commit/e484bdfe6eba6e5e3eac5e145c092e785ccf6523) — 2026-05-26 20:08 UTC — [logs](https://github.com/jameslcowan/itrain.ing/actions/runs/26472252669)
+
+- **analytics migrations** — failed step(s): Run ./scripts/test-db-migrations.sh
+
+
 <!-- Entries added by .github/workflows/ci-failure-todo.yml -->
