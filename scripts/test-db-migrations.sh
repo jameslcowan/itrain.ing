@@ -28,9 +28,16 @@ SESSION_ID=$(run_psql -d "$DB" -tAc \
 [[ -n "$SESSION_ID" ]] || { echo "start_session failed"; exit 1; }
 
 run_psql -d "$DB" -tAc \
-  "SELECT record_page_view('powerlift', '${SESSION_ID}'::uuid, '/programs/', null);"
+  "SELECT record_page_view('powerlift', '${SESSION_ID}'::uuid, '/programs/', null, now());"
 run_psql -d "$DB" -tAc \
-  "SELECT record_custom_event('powerlift', '${SESSION_ID}'::uuid, 'program_card_open', '/programs/', null, 'test-template', null, null);"
+  "SELECT record_custom_event('powerlift', '${SESSION_ID}'::uuid, 'program_card_open', '/programs/', now(), 'test-template', null, null);"
+
+echo "    expect p_occurred_at required"
+if run_psql -d "$DB" -tAc \
+  "SELECT record_page_view('powerlift', '${SESSION_ID}'::uuid, '/fail', null, null);" 2>/dev/null; then
+  echo "ERROR: record_page_view should reject null p_occurred_at" >&2
+  exit 1
+fi
 
 PV=$(run_psql -d "$DB" -tAc "SELECT count(*) FROM page_views;")
 CE=$(run_psql -d "$DB" -tAc "SELECT count(*) FROM custom_events;")

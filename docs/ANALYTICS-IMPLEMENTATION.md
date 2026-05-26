@@ -111,7 +111,7 @@ curl -sS -X POST \
   --resolve "api.itrain.ing:443:${DROPLET}" \
   -H "Content-Type: application/json" \
   "https://api.itrain.ing/rpc/record_page_view" \
-  -d '{"p_site_id":"powerlift","p_session_id":"<uuid>","p_path":"/programs/","p_document_title":"Programs"}'
+  -d '{"p_site_id":"powerlift","p_session_id":"<uuid>","p_path":"/programs/","p_occurred_at":"2026-05-26T12:00:00Z","p_document_title":"Programs"}'
 ```
 
 HTTP on port 80 if TLS cert not ready for `api.itrain.ing`:

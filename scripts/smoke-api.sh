@@ -36,16 +36,17 @@ SESSION_JSON=$("${CURL[@]}" -X POST "${BASE}/rpc/start_session" \
 check_not_default_site "$SESSION_JSON"
 echo "$SESSION_JSON"
 SESSION_ID=$(echo "$SESSION_JSON" | python3 -c "import sys,json; print(json.load(sys.stdin)['session_id'])")
+OCCURRED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
 echo "==> record_page_view"
 PV=$("${CURL[@]}" -X POST "${BASE}/rpc/record_page_view" \
   -H "Content-Type: application/json" \
-  -d "{\"p_site_id\":\"powerlift\",\"p_session_id\":\"${SESSION_ID}\",\"p_path\":\"/programs/\",\"p_document_title\":\"Programs\",\"p_is_entry\":true}")
+  -d "{\"p_site_id\":\"powerlift\",\"p_session_id\":\"${SESSION_ID}\",\"p_path\":\"/programs/\",\"p_occurred_at\":\"${OCCURRED_AT}\",\"p_document_title\":\"Programs\",\"p_is_entry\":true}")
 check_not_default_site "$PV"
 
 echo "==> record_custom_event"
 "${CURL[@]}" -X POST "${BASE}/rpc/record_custom_event" \
   -H "Content-Type: application/json" \
-  -d "{\"p_site_id\":\"powerlift\",\"p_session_id\":\"${SESSION_ID}\",\"p_event_type\":\"program_card_open\",\"p_path\":\"/programs/\",\"p_template_id\":\"smoke-test\"}" >/dev/null
+  -d "{\"p_site_id\":\"powerlift\",\"p_session_id\":\"${SESSION_ID}\",\"p_event_type\":\"program_card_open\",\"p_path\":\"/programs/\",\"p_occurred_at\":\"${OCCURRED_AT}\",\"p_template_id\":\"smoke-test\"}" >/dev/null
 
 echo "OK: analytics RPC smoke passed"
