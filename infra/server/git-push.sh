@@ -3,7 +3,7 @@
 set -euo pipefail
 
 KEY=/root/.ssh/github_push
-REPO="${1:-/root/itrain.ing}"
+REPO="${1:-/home/jameslcowan/panax}"
 
 cd "$REPO"
 if [[ ! -f "$KEY" ]]; then
@@ -12,5 +12,5 @@ if [[ ! -f "$KEY" ]]; then
 fi
 
 export GIT_SSH_COMMAND="ssh -i $KEY -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new"
-git remote set-url origin git@github.com:jameslcowan/itrain.ing.git
+git remote set-url origin git@github.com:jameslcowan/panax.git
 git push origin main

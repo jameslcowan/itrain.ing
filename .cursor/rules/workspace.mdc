@@ -7,6 +7,6 @@ alwaysApply: true
 
 - **Platform:** Panax (panax.ai) — owns all product apps and shared Postgres.
 - **Products:** `sites/*` → `.ing` domains (powerlift, itrain.ing, …). **itrain.ing is one product**, not the platform.
-- **Repo:** may live at `~/itrain.ing` or `~/panax` until [docs/RENAME.md](../docs/RENAME.md).
-- **API host:** `api.panax.ai` (not `api.itrain.ing`).
+- **Clone path:** `~/panax` (GitHub: `jameslcowan/panax`).
+- **API:** `api.panax.ai` · **Secrets:** `/etc/panax/` on droplet · **DB:** `panax`
 - Micro-commits per [.cursor/rules/micro-commits.mdc](micro-commits.mdc). No agent git attribution.

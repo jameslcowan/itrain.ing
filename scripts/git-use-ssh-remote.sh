@@ -5,8 +5,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
 
-# After GitHub rename: git@github.com:jameslcowan/panax.git
-SSH_URL="git@github.com:jameslcowan/itrain.ing.git"
+SSH_URL="git@github.com:jameslcowan/panax.git"
 current="$(git remote get-url origin 2>/dev/null || true)"
 
 if [[ "$current" == "$SSH_URL" ]]; then
@@ -16,5 +15,5 @@ fi
 
 git remote set-url origin "$SSH_URL"
 echo "origin -> $SSH_URL"
-echo "Ensure ~/.ssh/id_ed25519 is added to https://github.com/settings/keys"
+echo "Ensure GitHub repo is named panax (Settings → General → Repository name)."
 echo "Test: ssh -T git@github.com"

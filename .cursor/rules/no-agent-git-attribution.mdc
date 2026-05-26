@@ -10,7 +10,7 @@ Unauthorized `Co-authored-by`, wrong author emails, or device identities are a *
 ## Forbidden (never do without explicit user request)
 
 - `Co-authored-by: Cursor`, `cursoragent@cursor.com`, or any agent/tool co-author trailer
-- Commit/push as `root@itrain.ing`, `Cursor`, or any non-human identity
+- Commit/push as `root@panax`, `Cursor`, or any non-human identity
 - `git commit` / `git push` on the user's repos (unless the user explicitly asks in that message)
 - Any trailer, footer, or message line the user did not ask for
 
