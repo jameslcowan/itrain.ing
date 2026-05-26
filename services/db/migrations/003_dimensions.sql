@@ -49,7 +49,7 @@ IMMUTABLE
 AS $$
   SELECT CASE
     WHEN p_path IS NULL OR btrim(p_path) = '' THEN '/'
-    ELSE '/' || btrim(both '/' FROM btrim(p_path))
+    ELSE '/' || trim(both '/' from btrim(p_path))
   END;
 $$;
 
