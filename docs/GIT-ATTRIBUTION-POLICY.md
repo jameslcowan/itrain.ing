@@ -24,6 +24,15 @@ git config --global core.hooksPath ~/.config/git/hooks
 2. Commit on your **Fedora machine** (your hooks, your identity).
 3. Or on-server: `git commit-tree` with an explicit message (bypasses injection).
 
+## Repo-local hooks (every clone)
+
+```bash
+git config core.hooksPath .githooks
+chmod +x .githooks/*
+```
+
+Or run `./scripts/fix-local-clone.sh` after clone/pull.
+
 ## History cleanup
 
-May 2026: full `main` history was rewritten to remove `Co-authored-by: Cursor` and `root@itrain.ing` authors. See `docs/FIX-LOCAL-CLONE.md` to reset local clones.
+May 2026: full `main` history was rewritten to remove `Co-authored-by: Cursor` and `root@itrain.ing` authors. Commits use `jameslloydcowan@gmail.com` for contribution attribution. See `docs/FIX-LOCAL-CLONE.md` and `docs/CONTRIBUTIONS-RESTORE.md`.

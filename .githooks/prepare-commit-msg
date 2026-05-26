@@ -1,0 +1,6 @@
+#!/bin/sh
+MSG="$1"
+[ -f "$MSG" ] || exit 0
+sed -i '/^Co-authored-by: Cursor /d' "$MSG"
+sed -i '/^Co-authored-by:.*cursoragent@cursor\.com/d' "$MSG"
+exit 0
