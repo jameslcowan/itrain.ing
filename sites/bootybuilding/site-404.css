@@ -1,5 +1,5 @@
 /**
- * 404 page (Netlify serves /404.html for missing routes)
+ * 404 page (Caddy serves /404.html for missing routes)
  */
 
 .notfound-main {

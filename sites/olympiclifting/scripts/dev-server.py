@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static dev server with Netlify-like SPA routes for /app and legacy /program/."""
+"""Static dev server with Caddy-like SPA routes for /app and legacy /program/."""
 
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 import os
