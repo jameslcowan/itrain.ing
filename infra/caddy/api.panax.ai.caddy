@@ -1,0 +1,12 @@
+# Analytics ingest API — PostgREST on :3000
+# HTTP block: smoke tests + pre-DNS; HTTPS block: production after DNS propagates.
+
+http://api.panax.ai {
+	encode gzip
+	reverse_proxy 127.0.0.1:3000
+}
+
+api.panax.ai {
+	encode gzip
+	reverse_proxy 127.0.0.1:3000
+}

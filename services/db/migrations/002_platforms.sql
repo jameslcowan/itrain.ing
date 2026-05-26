@@ -1,4 +1,4 @@
--- Platforms (umbrella) and extend sites for multisite tenancy.
+-- Platforms (Panax owner) and extend sites for multisite tenancy.
 
 CREATE TABLE IF NOT EXISTS platforms (
   id TEXT PRIMARY KEY,
@@ -8,14 +8,14 @@ CREATE TABLE IF NOT EXISTS platforms (
 );
 
 INSERT INTO platforms (id, slug, display_name) VALUES
-  ('itrain', 'itrain', 'itrain.ing platform')
+  ('panax', 'panax', 'Panax')
 ON CONFLICT (id) DO NOTHING;
 
 ALTER TABLE sites
   ADD COLUMN IF NOT EXISTS platform_id TEXT REFERENCES platforms(id),
   ADD COLUMN IF NOT EXISTS is_active BOOLEAN NOT NULL DEFAULT true;
 
-UPDATE sites SET platform_id = 'itrain' WHERE platform_id IS NULL;
+UPDATE sites SET platform_id = 'panax' WHERE platform_id IS NULL;
 
 ALTER TABLE sites
   ALTER COLUMN platform_id SET NOT NULL;

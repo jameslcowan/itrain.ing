@@ -1,7 +1,0 @@
-# NocoDB admin UI — pre-DNS HTTP only (see docs/NOCODB.md).
-# After DNS: switch to `nocodb.itrain.ing {` for automatic HTTPS.
-
-http://nocodb.itrain.ing {
-	encode gzip
-	reverse_proxy 127.0.0.1:8080
-}

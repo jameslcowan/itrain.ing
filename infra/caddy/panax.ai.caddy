@@ -1,0 +1,13 @@
+# Panax platform home (placeholder until mega AI app ships)
+
+http://panax.ai, http://www.panax.ai {
+	root * /var/www/panax.ai
+	encode gzip zstd
+	file_server
+}
+
+panax.ai, www.panax.ai {
+	root * /var/www/panax.ai
+	encode gzip zstd
+	file_server
+}

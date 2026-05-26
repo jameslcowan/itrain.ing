@@ -3,8 +3,9 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-SRC="$REPO_ROOT/infra/server/sshd/99-itrain-hardening.conf"
-DEST=/etc/ssh/sshd_config.d/99-itrain-hardening.conf
+SRC="$REPO_ROOT/infra/server/sshd/99-panax-hardening.conf"
+DEST=/etc/ssh/sshd_config.d/99-panax-hardening.conf
+rm -f /etc/ssh/sshd_config.d/99-itrain-hardening.conf
 
 install -d -m 0755 /etc/ssh/sshd_config.d
 cp "$SRC" "$DEST"

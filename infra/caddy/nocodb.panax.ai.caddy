@@ -1,0 +1,11 @@
+# Internal data browser — NocoDB on :8080
+
+http://nocodb.panax.ai {
+	encode gzip
+	reverse_proxy 127.0.0.1:8080
+}
+
+nocodb.panax.ai {
+	encode gzip
+	reverse_proxy 127.0.0.1:8080
+}

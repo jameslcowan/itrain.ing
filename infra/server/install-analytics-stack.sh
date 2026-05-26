@@ -14,7 +14,7 @@ fi
 "$REPO_ROOT/infra/server/install-postgrest.sh"
 "$REPO_ROOT/infra/server/install-api-caddy.sh"
 
-echo "==> smoke-api (HTTP, Host: api.itrain.ing)"
+echo "==> smoke-api (HTTP, Host: api.panax.ai)"
 SMOKE_HTTP=1 DROPLET=127.0.0.1 "$REPO_ROOT/scripts/smoke-api.sh"
 
-echo "Analytics stack ready. After DNS: switch api.itrain.ing.caddy to HTTPS and run smoke without SMOKE_HTTP."
+echo "Analytics stack ready. Run install-panax-caddy.sh after panax.ai DNS; then smoke without SMOKE_HTTP."

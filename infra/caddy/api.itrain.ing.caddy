@@ -1,9 +1,0 @@
-# PostgREST API — Caddy → 127.0.0.1:3000
-#
-# Pre-DNS: http:// serves port 80 without TLS redirect (SMOKE_HTTP=1).
-# After DNS cutover: change to `api.itrain.ing {` for automatic HTTPS.
-
-http://api.itrain.ing {
-	encode gzip
-	reverse_proxy 127.0.0.1:3000
-}
