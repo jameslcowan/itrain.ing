@@ -10,6 +10,14 @@ Posts to PostgREST RPCs on `api.itrain.ing`. **Do not enable on production HTML 
   data-api-base="https://api.itrain.ing"></script>
 ```
 
+## Session entry flag
+
+`p_is_entry` is set on the **first page view of a session** (new `session_id` in `sessionStorage`), not when `document.referrer` is empty. A visitor from a search engine still gets `p_is_entry: true` on their landing page.
+
+## Session entry flag
+
+`p_is_entry` is set on the **first page view of a session** (new `session_id` in `sessionStorage`), not when `document.referrer` is empty. A visitor from a search engine still gets `p_is_entry: true` on their landing page.
+
 ## Custom events
 
 ```js

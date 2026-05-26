@@ -143,17 +143,19 @@
 
   function ensureSession() {
     var existing = getSessionId();
-    if (existing) return Promise.resolve(existing);
+    if (existing) {
+      return Promise.resolve({ sessionId: existing, isEntry: false });
+    }
     return startSession().then(function (data) {
       setSessionId(data.session_id);
-      return data.session_id;
+      return { sessionId: data.session_id, isEntry: true };
     });
   }
 
   function onLoad() {
     ensureSession()
-      .then(function (sid) {
-        return recordPageView(sid, { p_is_entry: !document.referrer });
+      .then(function (session) {
+        return recordPageView(session.sessionId, { p_is_entry: session.isEntry });
       })
       .catch(function () { /* silent */ });
   }
@@ -175,13 +177,13 @@
 
   window.itrainAnalytics = {
     track: function (eventType, extra) {
-      return ensureSession().then(function (sid) {
+      return ensureSession().then(function (session) {
         return rpc(
           'record_custom_event',
           Object.assign(
             {
               p_site_id: siteId,
-              p_session_id: sid,
+              p_session_id: session.sessionId,
               p_event_type: eventType,
               p_occurred_at: clientOccurredAt(),
               p_path: location.pathname,
