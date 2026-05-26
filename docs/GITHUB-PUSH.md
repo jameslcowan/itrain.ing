@@ -42,7 +42,7 @@ Push uses a **dedicated deploy key** at `/root/.ssh/github_push` (not the CI rsy
 
 ### One-time setup
 
-1. Repo **`jameslcowan/panax`** → **Settings → Deploy keys → Add deploy key**
+1. Repo **`jameslcowan/itrain.ing`** (rename to **`panax`** in GitHub Settings when ready) → **Settings → Deploy keys → Add deploy key**
 2. Title: `panax-droplet-push`
 3. Key:
 
@@ -55,6 +55,7 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII9Nx3x8QVdYHEFcB4vamebEvK2qMcxE01cqWKM5Lql9
 
 ```bash
 sudo /home/jameslcowan/panax/infra/server/git-push.sh /home/jameslcowan/panax
+# After GitHub rename: GIT_PUSH_REMOTE=git@github.com:jameslcowan/panax.git sudo ...
 ```
 
 Show public key on server:
