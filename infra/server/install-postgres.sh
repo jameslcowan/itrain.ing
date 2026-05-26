@@ -19,7 +19,7 @@ sudo -u postgres createdb "$DB_NAME" 2>/dev/null || true
 run_migration() {
   local file="$1"
   echo "Applying $(basename "$file")..."
-  sudo -u postgres psql -v ON_ERROR_STOP=1 -d "$DB_NAME" -f "$file"
+  sudo -u postgres psql -v ON_ERROR_STOP=1 -d "$DB_NAME" -f - <"$file"
 }
 
 # Ordered migrations (001 bootstrap; 009 legacy drop optional via env)
