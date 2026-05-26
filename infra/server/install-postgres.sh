@@ -11,7 +11,7 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update -qq
 apt-get install -y -qq postgresql postgresql-contrib
 
-install -d -m 0750 root/postgres /etc/itrain
+install -d -m 0750 -o root -g postgres /etc/itrain
 AUTH_PASS="$(openssl rand -hex 24)"
 
 sudo -u postgres createdb "$DB_NAME" 2>/dev/null || true
@@ -44,7 +44,8 @@ PGRST_DB_ANON_ROLE=web_anon
 PGRST_SERVER_HOST=127.0.0.1
 PGRST_SERVER_PORT=3000
 EOF
-chmod 600 "$ENV_FILE"
+chown root:postgres "$ENV_FILE"
+chmod 640 "$ENV_FILE"
 
 systemctl enable postgresql
 systemctl restart postgresql
