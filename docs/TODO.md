@@ -12,17 +12,21 @@ Living backlog for the itrain.ing monorepo (powerlift.ing and sister sites). See
 - [x] Micro-commit Cursor rule (`.cursor/rules/micro-commits.mdc`)
 - [x] A11y fixes (skip link, labels, Escape, reduced motion)
 - [x] Share dialog no longer auto-closes on copy
+- [x] Analytics schema (3NF) — [ANALYTICS-SCHEMA.md](ANALYTICS-SCHEMA.md)
+- [x] Analytics migrations `002`–`009` + PostgREST RPCs
+- [x] `scripts/smoke-api.sh` pre-DNS API tests
 
 ## Now — infrastructure (DigitalOcean + monorepo)
 
-- [ ] **Phase 0:** DO droplet + Caddy + GitHub Actions deploy (repo root) — [DEPLOY.md](DEPLOY.md)
-- [ ] DNS cutover all `.ing` domains — [DNS.md](DNS.md)
-- [ ] **Phase 1:** Rename GitHub repo → `itrain.ing`
+- [x] **Phase 0:** DO droplet + Caddy (five sites live on IP)
+- [ ] **Phase 0:** GitHub Actions deploy verified — [DEPLOY.md](DEPLOY.md)
+- [ ] DNS cutover all `.ing` domains — **hold** until tested — [DNS.md](DNS.md)
+- [ ] **Phase 1:** Rename GitHub repo → `itrain.ing` (optional; remote may already match)
 - [x] **Phase 2:** App under `sites/powerlifting/` (+ sister copies) — [MONOREPO.md](MONOREPO.md)
-- [ ] **Phase 3:** Matrix deploy per site
-- [ ] Design analytics ingest + DB schema (`site_id`) — **Phase 5**
+- [x] **Phase 3:** Matrix deploy workflow in repo
+- [x] **Phase 5:** Analytics schema + migrations — [ANALYTICS-IMPLEMENTATION.md](ANALYTICS-IMPLEMENTATION.md)
+- [ ] Postgres + PostgREST **applied and smoke-tested on droplet**
 - [ ] Shut down legacy Netlify powerlift repo/site after DNS verified
-- [ ] Postgres + PostgREST on droplet; `api.itrain.ing` DNS
 
 ## Now — ops and verification
 
@@ -47,7 +51,9 @@ Living backlog for the itrain.ing monorepo (powerlift.ing and sister sites). See
 
 ## Analytics (DO droplet / Postgres)
 
-- [ ] `services/analytics/` ingest API on VPS
+- [x] DB schema + PostgREST RPCs in repo
+- [ ] Droplet: install Postgres/PostgREST + `./scripts/smoke-api.sh`
+- [ ] Front-end beacon per site (after privacy policy) — `packages/analytics/`
 - [ ] Admin sign-in and dashboard
 - [ ] Funnel: landing → `/programs/` → `/app` (normalize `/app` paths in events)
 
