@@ -1,0 +1,7 @@
+# API subdomain — PostgREST behind Caddy
+# DNS: api.itrain.ing A → droplet (see docs/DNS.md)
+
+api.itrain.ing {
+	encode gzip
+	reverse_proxy 127.0.0.1:3000
+}
