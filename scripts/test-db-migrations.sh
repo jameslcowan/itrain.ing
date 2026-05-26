@@ -4,7 +4,15 @@ set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DB="${TEST_DB:-itrain_migration_test}"
-PSQL=(sudo -u postgres psql -v ON_ERROR_STOP=1)
+
+if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+  export PGHOST="${PGHOST:-localhost}"
+  export PGUSER="${PGUSER:-postgres}"
+  export PGPASSWORD="${PGPASSWORD:-postgres}"
+  PSQL=(psql -v ON_ERROR_STOP=1)
+else
+  PSQL=(sudo -u postgres psql -v ON_ERROR_STOP=1)
+fi
 
 run_psql() { "${PSQL[@]}" "$@"; }
 
