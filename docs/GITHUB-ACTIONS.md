@@ -49,7 +49,7 @@ See key setup below. **Not used by CI.**
 ## CI failure backlog
 
 - **[docs/CI-TODO.md](CI-TODO.md)** — checklist updated automatically on failure  
-- **GitHub Issues** — label [`ci-todo`](https://github.com/jameslcowan/itrain.ing/issues?q=is%3Aissue+is%3Aopen+label%3Aci-todo)  
+- **GitHub Issues** — label [`ci-todo`](https://github.com/jameslcowan/panax/issues?q=is%3Aissue+is%3Aopen+label%3Aci-todo)  
 
 Clear items when fixed; close issues when CI is green.
 

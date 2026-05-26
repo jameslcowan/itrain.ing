@@ -42,6 +42,6 @@ sessions, page_views, custom_events  — site_id on all facts
 
 - **Self-hosted** on the DigitalOcean droplet (no managed DB)
 - Migrations: `services/db/migrations/`
-- PostgREST env: `/etc/itrain/postgrest.env` (generated on server, never committed)
+- PostgREST env: `/etc/panax/postgrest.env` (generated on server, never committed)
 - Local test: `./scripts/test-db-migrations.sh`
-- Visual admin (optional): [NOCODB.md](NOCODB.md) — read-only `itrain_nocodb` role
+- Visual admin (optional): [NOCODB.md](NOCODB.md) — read-only `panax_nocodb` role

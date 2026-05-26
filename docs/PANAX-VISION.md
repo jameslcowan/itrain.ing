@@ -9,7 +9,7 @@
 | **Platform** | panax.ai, api.panax.ai | Owner, AI app, auth (future), ops |
 | **Products** | powerlift.ing, itrain.ing, … | Focused builders users use daily |
 
-**itrain.ing is a product**, not the platform. The git repo may still be named `itrain.ing` on disk until [RENAME.md](RENAME.md) steps are done.
+**itrain.ing is a product**, not the platform. GitHub repo and clone: **`jameslcowan/panax`**, path **`~/panax`**.
 
 ## Data flow
 

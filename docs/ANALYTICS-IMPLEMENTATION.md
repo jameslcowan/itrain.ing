@@ -23,7 +23,7 @@ Schema: [ANALYTICS-SCHEMA.md](ANALYTICS-SCHEMA.md) (3NF minimum, approved).
 | Static roots | `/var/www/{powerlift,powerbuild,olympiclift,bootybuild,itrain}.ing/` |
 | API (local) | PostgREST `127.0.0.1:3000` behind Caddy |
 | DB name | `itrain` |
-| Secrets | `/etc/itrain/postgrest.env` (generated on server, never commit) |
+| Secrets | `/etc/panax/postgrest.env` (generated on server, never commit) |
 
 ---
 
@@ -57,7 +57,7 @@ Run on droplet only after each migration file is committed. Order is fixed.
 **Apply on droplet** (after pulling repo):
 
 ```bash
-cd /path/to/itrain.ing   # or /root/itrain.ing / ~/itrain.ing
+cd ~/panax
 sudo -u postgres psql -v ON_ERROR_STOP=1 -d itrain -f services/db/migrations/002_platforms.sql
 # … repeat for 003–008 in order
 ```
@@ -174,7 +174,7 @@ Beacon must send:
 | Failure | Action |
 |---------|--------|
 | Bad migration | Restore DB snapshot or `pg_restore`; fix SQL; re-apply from failed file |
-| PostgREST down | `journalctl -u postgrest`; check `/etc/itrain/postgrest.env` |
+| PostgREST down | `journalctl -u postgrest`; check `/etc/panax/postgrest.env` |
 | Wrong data in `extras` | Bump `extras_schema_version`; document keys in future `ANALYTICS-EXTRAS.md` |
 
 Do **not** force-push `main` to fix migrations; add forward-fix migration `010_*.sql` instead.

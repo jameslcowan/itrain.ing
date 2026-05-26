@@ -1,4 +1,4 @@
-# Security hardening — itrain.ing droplet
+# Security hardening — Panax droplet
 
 Checklist for the DigitalOcean production VPS. Apply via `infra/server/*.sh` scripts and tracked config in this repo.
 

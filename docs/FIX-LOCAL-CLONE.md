@@ -5,7 +5,7 @@
 ## Fedora (one command)
 
 ```bash
-cd ~/Documents/GitHub/itrain.ing
+cd ~/panax
 ./scripts/fix-local-clone.sh
 ```
 
@@ -19,7 +19,7 @@ This script:
 ## Manual steps
 
 ```bash
-cd ~/Documents/GitHub/itrain.ing
+cd ~/panax
 git fetch origin
 git checkout main
 git reset --hard origin/main
@@ -47,7 +47,7 @@ git reset --hard origin/main
 
 ## Droplet
 
-`/root/itrain.ing` tracks `origin/main`. Run `./scripts/fix-local-clone.sh` after each pull if unsure.
+`/root/panax` tracks `origin/main`. Run `./scripts/fix-local-clone.sh` after each pull if unsure.
 
 ## Contributions still missing?
 

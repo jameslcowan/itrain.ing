@@ -22,7 +22,6 @@ Monorepo for the **Panax** platform ([panax.ai](https://panax.ai)) and its **`.i
 | [docs/MONOREPO.md](docs/MONOREPO.md) | Repo layout and phases |
 | [docs/DNS.md](docs/DNS.md) | Domains (panax.ai + `.ing` products) |
 | [docs/DEPLOY.md](docs/DEPLOY.md) | DigitalOcean + GitHub Actions |
-| [docs/RENAME.md](docs/RENAME.md) | Rename GitHub repo / clone path |
 | [docs/TODO.md](docs/TODO.md) | Backlog |
 
 ## Quick start (powerlifting)

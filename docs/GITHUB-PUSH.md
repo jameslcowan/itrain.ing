@@ -24,7 +24,7 @@ Host github.com
 3. **Clone remote** (once per repo):
 
 ```bash
-cd ~/itrain.ing   # or your clone path
+cd ~/panax   # or your clone path
 ./scripts/git-use-ssh-remote.sh
 ```
 
@@ -54,7 +54,7 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII9Nx3x8QVdYHEFcB4vamebEvK2qMcxE01cqWKM5Lql9
 5. On the droplet:
 
 ```bash
-cd /root/itrain.ing && ./infra/server/git-push.sh
+cd /root/panax && ./infra/server/git-push.sh
 ```
 
 Show public key on server:

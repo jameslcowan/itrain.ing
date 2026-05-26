@@ -1,12 +1,12 @@
 # Session handoff — Panax platform monorepo
 
-Open **`~/panax`** or **`~/itrain.ing`** (same clone until [RENAME.md](RENAME.md) is done).
+Open **`~/panax`** (`git@github.com:jameslcowan/panax.git`).
 
 ## What this repo is
 
 - **Panax** ([panax.ai](https://panax.ai)) — platform brand; future mega AI app + shared accounts.
 - **Product apps** — powerlift.ing, itrain.ing, etc. under `sites/`; each has its own domain and `site_id`.
-- **This repository** — single deploy unit for all products + shared Postgres/PostgREST.
+- **This repository** — `jameslcowan/panax` on GitHub; clone at `~/panax`.
 
 See [PANAX-VISION.md](PANAX-VISION.md).
 
@@ -25,17 +25,14 @@ See [PANAX-VISION.md](PANAX-VISION.md).
 
 | Item | Status |
 |------|--------|
+| **Hostname** | `panax` |
+| **Clone** | `/home/jameslcowan/panax` |
 | **Products** | Five `.ing` vhosts + `/var/www/*.ing/` |
-| **panax.ai** | Placeholder at `/var/www/panax.ai/` |
+| **panax.ai** | `/var/www/panax.ai/` |
 | **api.panax.ai** | PostgREST |
-| **nocodb.panax.ai** | NocoDB (internal) |
-| **Postgres** | DB `itrain`, `platform_id = panax` |
-| **DNS** | Point panax.ai + products at Porkbun when ready |
+| **nocodb.panax.ai** | NocoDB |
+| **Postgres** | database `panax`, `platform_id = panax` |
 
 ## SSH
 
 `jameslcowan@137.184.37.56` — see [SECURITY-HARDENING.md](SECURITY-HARDENING.md).
-
-## Clone path
-
-Droplet: `/home/jameslcowan/itrain.ing` (rename to `panax` optional per [RENAME.md](RENAME.md)).

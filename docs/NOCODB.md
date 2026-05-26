@@ -13,7 +13,7 @@ NocoDB is an **optional** spreadsheet-style UI on top of the existing analytics 
 | **PostgREST** | Public RPC API for sites (`api.panax.ai`) |
 | **NocoDB** | Internal browse/filter/export for humans |
 
-NocoDB’s own config (users, views, invites) lives in **`/var/lib/itrain/nocodb`** (SQLite inside the container volume), not in the `itrain` database.
+NocoDB’s own config (users, views, invites) lives in **`/var/lib/panax/nocodb`** (SQLite inside the container volume), not in the `itrain` database.
 
 ## Install (droplet)
 
@@ -37,11 +37,11 @@ sudo ./infra/server/install-nocodb-caddy.sh
    - Host: `host.docker.internal` (from the server UI; use `127.0.0.1` only if connecting via SSH tunnel from your laptop)
    - Port: `5432`
    - Database: `itrain`
-   - User / password: from `/etc/itrain/nocodb.env` (`NOCODB_PG_USER`, `NOCODB_PG_PASSWORD`) — `sudo cat /etc/itrain/nocodb.env`
+   - User / password: from `/etc/panax/nocodb.env` (`NOCODB_PG_USER`, `NOCODB_PG_PASSWORD`) — `sudo cat /etc/panax/nocodb.env`
 4. Select schemas/tables: `sites`, `sessions`, `page_views`, `custom_events`, etc.
 5. **Invite family** (e.g. viewer): workspace → **Members** → invite email → role **Viewer** or **Editor** (see below).
 
-Postgres user `itrain_nocodb` is **read-only** at the database layer. NocoDB cannot delete rows via SQL unless you grant more privileges and enable edit in the UI.
+Postgres user `panax_nocodb` is **read-only** at the database layer. NocoDB cannot delete rows via SQL unless you grant more privileges and enable edit in the UI.
 
 ## Access
 
@@ -70,7 +70,7 @@ Browser (awkward): you’d need Host header or `/etc/hosts` — tunnel is simple
 1. Point `nocodb.panax.ai` → droplet ([DNS.md](DNS.md)).
 2. Change `infra/caddy/nocodb.panax.ai.caddy` from `http://nocodb.panax.ai` to `nocodb.panax.ai {` for HTTPS.
 3. `sudo ./infra/server/install-nocodb-caddy.sh && sudo systemctl reload caddy`
-4. Set `NC_PUBLIC_URL=https://nocodb.panax.ai` in `/etc/itrain/nocodb.env` and `sudo systemctl restart nocodb`.
+4. Set `NC_PUBLIC_URL=https://nocodb.panax.ai` in `/etc/panax/nocodb.env` and `sudo systemctl restart nocodb`.
 5. Invite users by email in NocoDB — they sign in with a link (no SSH).
 
 ## Roles for family / collaborators
@@ -81,7 +81,7 @@ Browser (awkward): you’d need Host header or `/etc/hosts` — tunnel is simple
 | **Editor** | Update cells where you allow it (still read-only in Postgres today) |
 | **Creator** | Add views; avoid for casual users |
 
-Keep **Owner** to yourself. Do not share the `itrain_nocodb` Postgres password; use NocoDB invites only.
+Keep **Owner** to yourself. Do not share the `panax_nocodb` Postgres password; use NocoDB invites only.
 
 ## What stays untouched
 
@@ -103,8 +103,8 @@ Uninstall (keeps Postgres data):
 ```bash
 sudo systemctl disable --now nocodb
 sudo docker rm -f nocodb
-sudo rm -rf /var/lib/itrain/nocodb /etc/itrain/nocodb.env
-# optional: DROP ROLE itrain_nocodb;
+sudo rm -rf /var/lib/panax/nocodb /etc/panax/nocodb.env
+# optional: DROP ROLE panax_nocodb;
 ```
 
 ## Grant write access (optional, not default)
@@ -113,7 +113,7 @@ If you need grid editing against production tables:
 
 ```sql
 -- as postgres, only if you accept the risk
-GRANT INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO itrain_nocodb;
+GRANT INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO panax_nocodb;
 ```
 
 Prefer read-only + exports for family; use SQL migrations for structural changes.

@@ -1,4 +1,4 @@
-# itrain.ing documentation
+# Panax platform documentation
 
 Monorepo docs: suite plan, deploy, and powerlift.ing product details.
 

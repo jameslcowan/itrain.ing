@@ -6,7 +6,7 @@ Your profile graph is **not** empty. You have ~1,900+ contributions in the last 
 
 On `main` for **2026-05-26** (author date):
 
-- **21 commits** on `jameslcowan/itrain.ing`
+- **21 commits** on `jameslcowan/panax`
 - Author: **James L. Cowan Jr.** `<jameslloydcowan@gmail.com>`
 - Linked to **jameslcowan** on GitHub
 - **No** `Co-authored-by: Cursor`, **no** `root@itrain.ing`
@@ -25,7 +25,7 @@ Check tomorrow (UTC): May 26 will often fill in overnight even if nothing else c
 | Changed | Not changed |
 |--------|-------------|
 | Removed `Co-authored-by: Cursor` from all history | Your existing green squares (Nov 2025–May 25, etc.) |
-| Replaced `root@itrain.ing` with your name + Gmail | Repos outside `itrain.ing` |
+| Replaced `root@itrain.ing` with your name + Gmail | Repos outside `panax` |
 | New commit SHAs on `main` (force-push) | Total contribution count (~1,917) |
 | Added `.githooks/` + `scripts/fix-local-clone.sh` | |
 
@@ -35,12 +35,12 @@ The mistaken “0 contributions for the whole year” diagnosis was **wrong** (b
 
 1. **Settings → Emails** — `jameslloydcowan@gmail.com` verified.
 2. Open any May 26 commit `.patch` URL and confirm `From:` is your Gmail.
-3. **GitHub Support** — ask to re-index contributions for **2026-05-26** on `jameslcowan/itrain.ing` after force-push (include that earlier SHAs for that day were replaced).
+3. **GitHub Support** — ask to re-index contributions for **2026-05-26** on `jameslcowan/panax` after force-push (include that earlier SHAs for that day were replaced).
 
 ## Fedora clone
 
 ```bash
-cd ~/Documents/GitHub/itrain.ing
+cd ~/panax
 ./scripts/fix-local-clone.sh
 ```
 
