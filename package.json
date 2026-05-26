@@ -19,6 +19,7 @@
     "dev:olympiclifting": "python scripts/dev-server.py sites/olympiclifting 8082",
     "dev:bootybuilding": "python scripts/dev-server.py sites/bootybuilding 8083",
     "dev:itraining": "python scripts/dev-server.py sites/itraining 8084",
-    "dev:all": "python scripts/dev-all.py"
+    "dev:all": "python scripts/dev-all.py",
+    "test:codec": "node --test sites/powerlifting/tests/codec.test.mjs && node --test sites/powerbuilding/tests/codec.test.mjs && node --test sites/olympiclifting/tests/codec.test.mjs && node --test sites/bootybuilding/tests/codec.test.mjs && node --test sites/itraining/tests/codec.test.mjs"
   }
 }

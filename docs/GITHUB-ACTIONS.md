@@ -1,62 +1,78 @@
-# GitHub Actions — deploy workflow
+# GitHub Actions
 
-Automatic **build + rsync** to the droplet on push to `main` (or manual run). Improves workflow: push code → all five sites deploy without SSH.
+## Workflows
 
-**Does not replace DNS** — sites stay on current hosting until you cut over in [DNS.md](DNS.md).
+| Workflow | When | Purpose |
+|----------|------|---------|
+| [**CI**](../.github/workflows/ci.yml) | Push/PR to `main` (code paths) | **Required checks** — build all sites, codec tests, DB migrations |
+| [**Deploy**](../.github/workflows/deploy.yml) | Manual, or after CI if `AUTO_DEPLOY=true` | Rsync to droplet (needs secrets) |
+| [**CI failure → TODO**](../.github/workflows/ci-failure-todo.yml) | After CI/Deploy fails | Appends [CI-TODO.md](CI-TODO.md), opens `ci-todo` issue |
 
-## One-time setup
+### Why deploy was failing every push
 
-Repo → **Settings → Secrets and variables → Actions → New repository secret**
+Deploy ran on every `main` push but **Rsync failed** when `DEPLOY_HOST` / `DEPLOY_USER` / `SSH_PRIVATE_KEY` were missing or wrong. That produced constant red X on the repo.
+
+**Fix:** Deploy no longer runs on push by default. **CI** is the check that must pass on push.
+
+## CI (green checks on push)
+
+Runs on changes under `sites/`, `services/`, `scripts/`, `packages/`, `.github/`, `package.json`.
+
+1. **build** — matrix: `npm ci && npm run build` per site  
+2. **test-codec** — `node --test` on all five sites  
+3. **test-db** — Postgres 17 service + `./scripts/test-db-migrations.sh`
+
+## Deploy (production)
+
+### Manual (recommended until secrets verified)
+
+**Actions → Deploy to DigitalOcean → Run workflow**
+
+### Auto-deploy after green CI
+
+1. Add secrets (below)  
+2. Repo → **Settings → Secrets and variables → Actions → Variables**  
+3. Set `AUTO_DEPLOY` = `true`  
+
+Deploy runs only when **CI succeeds** on `main`.
+
+## Secrets (deploy only)
 
 | Secret | Value |
 |--------|--------|
 | `DEPLOY_HOST` | `137.184.37.56` |
 | `DEPLOY_USER` | `deploy` |
-| `SSH_PRIVATE_KEY` | Full private key for CI deploy (see below) |
+| `SSH_PRIVATE_KEY` | Private key whose public half is in `/home/deploy/.ssh/authorized_keys` |
 
-### SSH key for `SSH_PRIVATE_KEY`
+See key setup below. **Not used by CI.**
 
-This is the **`github-actions-deploy`** key pair — **not** the `github_push` key used for `git push` from the droplet.
+## CI failure backlog
 
-On the droplet, only the **public** key should exist:
+- **[docs/CI-TODO.md](CI-TODO.md)** — checklist updated automatically on failure  
+- **GitHub Issues** — label [`ci-todo`](https://github.com/jameslcowan/itrain.ing/issues?q=is%3Aissue+is%3Aopen+label%3Aci-todo)  
 
-```bash
-cat /home/deploy/.ssh/authorized_keys
-# github-actions-deploy
-```
+Clear items when fixed; close issues when CI is green.
 
-If you no longer have the private key, generate a new pair:
+## SSH key for `SSH_PRIVATE_KEY`
+
+Pair name: **`github-actions-deploy`** (not `github_push`).
 
 ```bash
 ssh-keygen -t ed25519 -f deploy-ci -N "" -C "github-actions-deploy"
-# Public → append to /home/deploy/.ssh/authorized_keys on droplet
-# Private → paste entire file into GitHub secret SSH_PRIVATE_KEY
+# Public → /home/deploy/.ssh/authorized_keys on droplet
+# Private → GitHub secret SSH_PRIVATE_KEY
 ```
 
-## What the workflow does
+## Branch protection (recommended)
 
-File: [.github/workflows/deploy.yml](../.github/workflows/deploy.yml)
+**Settings → Branches → main → Require status checks:**
 
-- Triggers on push to `main` when `sites/**`, `infra/**`, or the workflow file changes
-- **Matrix:** builds and rsyncs all five sites in parallel
-- Target: `/var/www/<domain>/` on the droplet
-- Uses `--delete-excluded` so dev files stay out of the web root
-
-Manual run: **Actions → Deploy to DigitalOcean → Run workflow**
-
-## Verify
-
-1. Push a small change under `sites/powerlifting/` (or run workflow manually).
-2. Actions tab should show five jobs (or one matrix with five legs).
-3. On droplet: `ls -la /var/www/powerlift.ing/index.html` — timestamp updated.
-
-## Pre-DNS smoke test after CI deploy
-
-```bash
-curl -sI -H "Host: powerbuild.ing" http://137.184.37.56/ | head -3
-```
+- `build (powerlifting)` … or require all matrix `build` jobs  
+- `codec tests`  
+- `analytics migrations`  
 
 ## Related
 
-- Manual deploy: `./scripts/deploy-all-sites.sh`
-- Git push from droplet: [GITHUB-PUSH.md](GITHUB-PUSH.md) (different key)
+- Manual deploy: `./scripts/deploy-all-sites.sh`  
+- Droplet push: [GITHUB-PUSH.md](GITHUB-PUSH.md)  
+- Pre-DNS smoke: [DNS.md](DNS.md)

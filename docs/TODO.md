@@ -16,10 +16,15 @@ Living backlog for the itrain.ing monorepo (powerlift.ing and sister sites). See
 - [x] Analytics migrations `002`–`009` + PostgREST RPCs
 - [x] `scripts/smoke-api.sh` pre-DNS API tests
 
+## CI failures (auto-tracked)
+
+Open items from failed runs: **[CI-TODO.md](CI-TODO.md)** and GitHub issues labeled `ci-todo`.  
+**CI** workflow must pass on push; deploy is manual unless `AUTO_DEPLOY=true` — [GITHUB-ACTIONS.md](GITHUB-ACTIONS.md).
+
 ## Now — infrastructure (DigitalOcean + monorepo)
 
 - [x] **Phase 0:** DO droplet + Caddy (five sites live on IP)
-- [ ] **Phase 0:** GitHub Actions deploy verified — [DEPLOY.md](DEPLOY.md)
+- [ ] **Phase 0:** GitHub Actions deploy verified (secrets + manual workflow) — [GITHUB-ACTIONS.md](GITHUB-ACTIONS.md)
 - [ ] DNS cutover all `.ing` domains — **hold** until tested — [DNS.md](DNS.md)
 - [ ] **Phase 1:** Rename GitHub repo → `itrain.ing` (optional; remote may already match)
 - [x] **Phase 2:** App under `sites/powerlifting/` (+ sister copies) — [MONOREPO.md](MONOREPO.md)
