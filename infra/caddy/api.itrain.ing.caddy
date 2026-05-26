@@ -1,5 +1,5 @@
 # API subdomain — PostgREST behind Caddy
-# DNS: api.itrain.ing A → droplet (see docs/DNS.md)
+# DNS: HOLD until cutover — test: ./scripts/smoke-api.sh (see docs/DNS.md)
 
 api.itrain.ing {
 	encode gzip
