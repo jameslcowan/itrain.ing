@@ -50,11 +50,18 @@ check_commit_object() {
       "Use '$PANAX_PRIMARY_EMAIL' or '$PANAX_NOREPLY_EMAIL'."
   fi
 
-  if grep -Eiq \
-    '(^Co-authored-by:[[:space:]]*Cursor[[:space:]]*<|cursoragent@cursor\.com|root@itrain\.ing|root@panax)' \
-    <<<"$body"; then
+  case "$author_email|$committer_email" in
+    *root@itrain.ing*|*root@panax*|*cursoragent@cursor.com*)
+      reject_attribution \
+        "Rejected push: commit $sha uses a blocked device/agent email." \
+        "Use '$PANAX_PRIMARY_EMAIL' or '$PANAX_NOREPLY_EMAIL'."
+      ;;
+  esac
+
+  if grep -Eiq '^Co-authored-by:[[:space:]]*Cursor[[:space:]]*<' <<<"$body" \
+    || grep -Eiq '^Co-authored-by:.*cursoragent@cursor\.com' <<<"$body"; then
     reject_attribution \
-      "Rejected push: commit $sha still contains blocked attribution metadata." \
+      "Rejected push: commit $sha still contains blocked Co-authored-by metadata." \
       "Run './scripts/fix-local-clone.sh' if this clone predates the 2026-05-26 rewrite."
   fi
 }
