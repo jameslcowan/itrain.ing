@@ -4,8 +4,6 @@ set -euo pipefail
 
 KEY=/root/.ssh/github_push
 REPO="${1:-/home/jameslcowan/panax}"
-# Until GitHub repo is renamed to panax, push to itrain.ing (redirects after rename).
-PUSH_REMOTE="${GIT_PUSH_REMOTE:-git@github.com:jameslcowan/itrain.ing.git}"
 
 cd "$REPO"
 if [[ ! -f "$KEY" ]]; then
@@ -14,4 +12,5 @@ if [[ ! -f "$KEY" ]]; then
 fi
 
 export GIT_SSH_COMMAND="ssh -i $KEY -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new"
-git push "$PUSH_REMOTE" main:main
+git remote set-url origin git@github.com:jameslcowan/panax.git
+git push origin main
