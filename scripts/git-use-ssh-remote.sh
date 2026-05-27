@@ -15,5 +15,4 @@ fi
 
 git remote set-url origin "$SSH_URL"
 echo "origin -> $SSH_URL"
-echo "Ensure GitHub repo is named panax (Settings → General → Repository name)."
 echo "Test: ssh -T git@github.com"
