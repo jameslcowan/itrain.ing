@@ -40,7 +40,7 @@ Checklist for the DigitalOcean production VPS. Apply via `infra/server/*.sh` scr
 
 ## Phase 6 — Smoke test (all domains)
 
-Run after DNS points to droplet (or with `curl --resolve`):
+Run after DNS points to droplet (or with `curl -H "Host: …"` to the droplet IP — **itrain.ing DNS not set yet**):
 
 | URL | Expected |
 |-----|----------|

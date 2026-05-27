@@ -26,6 +26,7 @@ Open items from failed runs: **[CI-TODO.md](CI-TODO.md)** and GitHub issues labe
 - [x] **Phase 0:** DO droplet + Caddy (five sites live on IP)
 - [ ] **Phase 0:** GitHub Actions deploy verified (secrets + manual workflow) — [GITHUB-ACTIONS.md](GITHUB-ACTIONS.md)
 - [ ] DNS cutover all `.ing` domains — **hold** until tested — [DNS.md](DNS.md)
+- [ ] **itrain.ing** Porkbun A `@` + `www` → `137.184.37.56` (never done; site only on droplet + pre-DNS curl)
 - [x] **Phase 1:** GitHub repo / clone → `jameslcowan/panax`, `~/panax`
 - [x] **Phase 2:** App under `sites/powerlifting/` (+ sister copies) — [MONOREPO.md](MONOREPO.md)
 - [x] **Phase 3:** Matrix deploy workflow in repo

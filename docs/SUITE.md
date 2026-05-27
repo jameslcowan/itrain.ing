@@ -10,7 +10,7 @@
 | `sites/powerbuilding/` | powerbuild.ing | Branded clone |
 | `sites/olympiclifting/` | olympiclift.ing | Branded clone |
 | `sites/bootybuilding/` | bootybuild.ing | Branded clone |
-| `sites/itraining/` | itrain.ing | General training product (implement like others) |
+| `sites/itraining/` | itrain.ing | Built + on droplet; **DNS not configured** (not public yet) |
 
 **panax.ai** — platform home + future AI app ([PANAX-VISION.md](PANAX-VISION.md)).
 

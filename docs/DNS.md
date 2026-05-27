@@ -4,6 +4,29 @@
 
 **Hold product cutovers** until each site is ready on the droplet. **panax.ai** can point now for platform TLS and API.
 
+## Current DNS status (2026-05-27)
+
+Nothing in the **itrain.ing** zone points at the droplet yet. Public DNS still resolves elsewhere (not `137.184.37.56`). The app is only reachable via **pre-DNS** tests (droplet IP + `Host: itrain.ing` header, or `/etc/hosts`).
+
+| Zone | Points to droplet? | Notes |
+|------|-------------------|--------|
+| **itrain.ing** | **No** | Never cut over; Porkbun A records not set to `137.184.37.56` |
+| **panax.ai** | **No** (check before cutover) | Platform API/Caddy ready on server; DNS separate step |
+| **powerlift.ing** | **No** | Still on legacy Netlify IPs |
+| Other `.ing` products | **No** | Same hold as suite — see [TODO.md](TODO.md) |
+
+**On the droplet already:** static files at `/var/www/itrain.ing/`, Caddy vhost `infra/caddy/itrain.ing.caddy`, matrix deploy includes `sites/itraining/`. DNS is the missing piece for a public URL.
+
+### Pre-DNS smoke (itrain.ing — works today)
+
+```bash
+curl -sI -H "Host: itrain.ing" http://137.184.37.56/ | head -5
+# or from the droplet:
+curl -sI -H "Host: itrain.ing" http://127.0.0.1/ | head -5
+```
+
+When ready to go live, add Porkbun A records for `@` and `www` → `137.184.37.56` (see table below). **Do not** add `api.itrain.ing` — analytics use **`api.panax.ai`** only.
+
 ## panax.ai zone (platform — Porkbun or your registrar)
 
 | Type | Host | Answer | Purpose |

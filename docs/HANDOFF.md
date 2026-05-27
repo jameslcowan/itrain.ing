@@ -27,7 +27,9 @@ See [PANAX-VISION.md](PANAX-VISION.md).
 |------|--------|
 | **Hostname** | `panax` |
 | **Clone** | `/home/jameslcowan/panax` |
-| **Products** | Five `.ing` vhosts + `/var/www/*.ing/` |
+| **Products** | Five `.ing` vhosts + `/var/www/*.ing/` on server |
+| **itrain.ing DNS** | **Not set** — zone never pointed at droplet; test with `Host:` header only |
+| **Product DNS (all `.ing`)** | **Hold** — see [DNS.md](DNS.md) |
 | **panax.ai** | `/var/www/panax.ai/` |
 | **api.panax.ai** | PostgREST |
 | **nocodb.panax.ai** | NocoDB |
