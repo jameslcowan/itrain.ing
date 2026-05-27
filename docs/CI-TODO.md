@@ -7,6 +7,11 @@ Fix items, push, and confirm [CI workflow](https://github.com/jameslcowan/panax/
 
 ## Open failures (newest first)
 
+- [ ] **CI** (main) @ [`4c132a0`](https://github.com/jameslcowan/panax/commit/4c132a02e4fbaf63ace79c376a389331dcb0584a) — 2026-05-27 16:04 UTC — [logs](https://github.com/jameslcowan/panax/actions/runs/26522978997)
+
+- **analytics migrations** — failed step(s): Run ./scripts/test-db-migrations.sh
+
+
 - [ ] **CI** (main) @ [`99470c9`](https://github.com/jameslcowan/panax/commit/99470c9f758b0526583d1fe5b41d1ae6e7c1a043) — 2026-05-26 21:27 UTC — [logs](https://github.com/jameslcowan/panax/actions/runs/26476120297)
 
 - **analytics migrations** — failed step(s): Run ./scripts/test-db-migrations.sh
